@@ -24,6 +24,5 @@ log
 # idea files
 .idea
 
-k8s_job/*
 examples/checkpoints/*
 envs/*
