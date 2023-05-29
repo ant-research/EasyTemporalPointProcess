@@ -1,9 +1,0 @@
-sphinx
-sphinx_rtd_theme
-myst_parser
-nbsphinx
-nbsphinx_link
-sphinx_fontawesome
-sphinx-autobuild
-recommonmark
-sphinx_markdown_tables
