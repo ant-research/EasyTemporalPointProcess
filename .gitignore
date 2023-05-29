@@ -1,0 +1,29 @@
+# python build
+build
+dist
+easy_tpp.egg-info
+
+# python temp
+*.pyc
+
+# proto
+protoc
+protoc-3.4.0.tar.gz
+*_pb2.py
+
+# misc
+experiments
+log
+*.swp
+*.swo
+.vscode
+
+
+
+
+# idea files
+.idea
+
+k8s_job/*
+examples/checkpoints/*
+envs/*
