@@ -1,0 +1,23 @@
+=============================================================
+EasyTPP is a open source tool developed by Machine Intelligence Team
+Copyright (c) 2020-2022, Ant Group Holding Limited.
+Licensed under the Apache License, Version 2.0
+
+=============================================================
+This toolkit contains various third-party components under
+different open source licenses
+
+-----------------------------
+Training evaluation pipeline
+Apache License, Version 2.0
+FuxiCTR authors
+
+----------------------------
+Training evaluation pipeline
+Apache License, Version 2.0
+EasyNLP, Alibaba Inc.
+
+----------------------------
+Tokenizer and DataLoader
+Apache License, Version 2.0
+The HuggingFace Inc. team
