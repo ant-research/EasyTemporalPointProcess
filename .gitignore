@@ -25,4 +25,3 @@ log
 .idea
 
 examples/checkpoints/*
-envs/*
