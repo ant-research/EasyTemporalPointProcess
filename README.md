@@ -11,7 +11,7 @@
 
 
 
-| <a href='#features'>Features</a>|<a href='#requirement'>Install</a>  | <a href='#model-list'>Model List</a> | <a href='#dataset'>Dataset</a>  | <a href='#quick-start'>Quick Start</a> | <a href='#doc'>Documentation</a> | <a href='#citation'>Citation</a> |<a href='#acknowledgment'>Acknowledgement</a> | 
+| <a href='#features'>Features</a>|<a href='#requirement'>Install</a>  | <a href='#model-list'>Model List</a> | <a href='#dataset'>Dataset</a>  | <a href='#quick-start'>Quick Start</a> | <a href='#doc'>Documentation</a> | <a href='#citation'>Citation</a> |<a href='#acknowledgment'>Acknowledgement</a> | <a href='#star-history'>Star History</a> | 
 
 ## News
 <span id='news'/>
@@ -47,6 +47,36 @@ We preprocessed one synthetic and five real world datasets from widely-cited wor
 
   All datasets are preprocess to the `Gatech` format dataset widely used for TPP researchers, and saved at [Google Drive](https://drive.google.com/drive/u/0/folders/1f8k82-NL6KFKuNMsUwozmbzDSFycYvz7) with a public access.
 
+
+
+## License <a href='#top'>[Back to Top]</a>
+
+This project is licensed under the [Apache License (Version 2.0)](https://github.com/alibaba/EasyNLP/blob/master/LICENSE). This toolkit also contains some code modified from other repos under other open-source licenses. See the [NOTICE](https://github.com/ant-research/EasyTPP/blob/master/NOTICE) file for more information.
+
+
+## Citation <a href='#top'>[Back to Top]</a>
+
+<span id='citation'/>
+
+If you find `EasyTPP` useful for your research or development, please cite the following <a href="https://arxiv.org/abs/2204.05011" target="_blank">paper</a>:
+```
+comming soon
+```
+
+## Acknowledgment <a href='#top'>[Back to Top]</a>
+<span id='acknowledgment'/>
+
+The project is jointly initiated by Machine Intelligence Group, Alipay and DAMO Academy, Alibaba. 
+
+The following repositories are used in `EasyTPP`, either in close to original form or as an inspiration:
+
+- [EasyRec](https://github.com/alibaba/EasyRec)
+- [EasyNLP](https://github.com/alibaba/EasyNLP)
+- [FuxiCTR](https://github.com/xue-pai/FuxiCTR)
+- [Neural Hawkes Process](https://github.com/hongyuanmei/neurawkes)
+- [Neural Hawkes Particle Smoothing](https://github.com/hongyuanmei/neural-hawkes-particle-smoothing)
+- [Attentive Neural Hawkes Process](https://github.com/yangalan123/anhp-andtt)
+- [Huggingface - transformers](https://github.com/huggingface/transformers)
 
 
 ## Star History <a href='#top'>[Back to Top]</a>
