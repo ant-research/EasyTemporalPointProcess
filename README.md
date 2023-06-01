@@ -49,3 +49,8 @@ We preprocessed one synthetic and five real world datasets from widely-cited wor
 
 
 
+## Star History <a href='#top'>[Back to Top]</a>
+<span id='star-history'/>
+
+![Star History Chart](https://api.star-history.com/svg?repos=ant-research/EasyTemporalPointProcess&type=Date)
+
