@@ -2,7 +2,7 @@
 
 ![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)
 ![](https://img.shields.io/badge/license-Apache-000000.svg)
-[![Contributing](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://federatedscope.io/docs/contributor/)
+![GitHub last commit]([https://img.shields.io/github/last-commit/enze5088/Chatterbox](https://img.shields.io/github/last-commit/ant-research/EasyTemporalPointProcess))
 
 ** We are actively updating the repo now. We will try to finish the first version in a few days. **
 
