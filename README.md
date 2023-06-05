@@ -2,7 +2,9 @@
 
 ![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)
 ![](https://img.shields.io/badge/license-Apache-000000.svg)
-![GitHub last commit]([https://img.shields.io/github/last-commit/enze5088/Chatterbox](https://img.shields.io/github/last-commit/ant-research/EasyTemporalPointProcess))
+![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-green) 
+![GitHub last commit](https://img.shields.io/github/last-commit/ant-research/EasyTemporalPointProcess)
+![Stars](https://img.shields.io/github/stars/ant-research/EasyTemporalPointProcess)
 
 ** We are actively updating the repo now. We will try to finish the first version in a few days. **
 
