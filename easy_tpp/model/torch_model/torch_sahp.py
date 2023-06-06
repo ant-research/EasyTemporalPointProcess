@@ -2,13 +2,16 @@ import torch
 import torch.nn as nn
 
 from easy_tpp.model.torch_model.torch_baselayer import EncoderLayer, MultiHeadAttention, \
-    TimeShiftedPositionalEncoding, GELU
+    TimeShiftedPositionalEncoding
 from easy_tpp.model.torch_model.torch_basemodel import TorchBaseModel
 
 
 class SAHP(TorchBaseModel):
     """Torch implementation of Self-Attentive Hawkes Process, ICML 2020.
     Part of the code is collected from https://github.com/yangalan123/anhp-andtt/blob/master/sahp
+
+    I slightly modify the original code because it is not stable.
+
     """
 
     def __init__(self, model_config):
@@ -31,10 +34,8 @@ class SAHP(TorchBaseModel):
         self.dropout = model_config.dropout_rate
 
         # convert hidden vectors into a scalar
-        self.inten_linear = nn.Linear(self.d_model, self.num_event_types)
-        self.softplus = nn.Softmax()
-
-        self.layer_intensity = nn.Sequential(self.inten_linear, self.softplus)
+        self.layer_intensity_hidden = nn.Linear(self.d_model, self.num_event_types)
+        self.softplus = nn.Softplus()
 
         self.stack_layers = nn.ModuleList(
             [EncoderLayer(
@@ -46,25 +47,28 @@ class SAHP(TorchBaseModel):
                 dropout=self.dropout
             ) for _ in range(self.n_layers)])
 
+        if self.use_norm:
+            self.norm = nn.LayerNorm(self.d_model)
+
         # Equation (12): mu
-        self.layer_converge = nn.Sequential(
-            nn.Linear(self.d_model, self.d_model, bias=True), GELU())
-
+        self.mu = torch.empty([self.d_model, self.num_event_types])
         # Equation (13): eta
-        self.layer_init = nn.Sequential(
-            nn.Linear(self.d_model, self.d_model, bias=True), GELU())
-
+        self.eta = torch.empty([self.d_model, self.num_event_types])
         # Equation (14): gamma
-        self.layer_decay = nn.Sequential(
-            nn.Linear(self.d_model, self.d_model, bias=True), nn.Softplus())
+        self.gamma = torch.empty([self.d_model, self.num_event_types])
 
-    def state_decay(self, init_factor, converge_factor, decay_factor, duration_t):
+        nn.init.xavier_normal_(self.mu)
+        nn.init.xavier_normal_(self.eta)
+        nn.init.xavier_normal_(self.gamma)
+
+    def state_decay(self, encode_state, mu, eta, gamma, duration_t):
         """Equation (15), which computes the pre-intensity states
 
         Args:
-            init_factor (tensor): [batch_size, seq_len, hidden_size].
-            converge_factor (tensor): [batch_size, seq_len, hidden_size].
-            decay_factor (tensor): [batch_size, seq_len, hidden_size].
+            encode_state (tensor): [batch_size, seq_len, hidden_size].
+            mu (tensor): [batch_size, seq_len, hidden_size].
+            eta (tensor): [batch_size, seq_len, hidden_size].
+            gamma (tensor): [batch_size, seq_len, hidden_size].
             duration_t (tensor): [batch_size, seq_len, num_sample].
 
         Returns:
@@ -72,8 +76,9 @@ class SAHP(TorchBaseModel):
         """
 
         # [batch_size, hidden_dim]
-        states = nn.Softplus()(
-            converge_factor + (init_factor - converge_factor) * torch.exp(- decay_factor * duration_t))
+        states = torch.matmul(encode_state, mu) + (
+                torch.matmul(encode_state, eta) - torch.matmul(encode_state, mu)) * torch.exp(
+            -torch.matmul(encode_state, gamma) * duration_t)
         return states
 
     def forward(self, time_seqs, time_delta_seqs, event_seqs, attention_mask):
@@ -97,13 +102,10 @@ class SAHP(TorchBaseModel):
             enc_output = enc_layer(
                 enc_output,
                 mask=attention_mask)
-
-        start_factor = self.layer_init(enc_output)
-        converge_factor = self.layer_converge(enc_output)
-        decay_factor = self.layer_decay(enc_output)
-
+            if self.use_norm:
+                enc_output = self.norm(enc_output)
         # [batch_size, seq_len, hidden_dim]
-        return start_factor, converge_factor, decay_factor
+        return enc_output
 
     def loglike_loss(self, batch):
         """Compute the loglike loss.
@@ -118,15 +120,14 @@ class SAHP(TorchBaseModel):
 
         enc_out = self.forward(time_seqs[:, :-1], time_delta_seqs[:, 1:], type_seqs[:, :-1], attention_mask[:, 1:, :-1])
 
-        start_factor, converge_factor, decay_factor = enc_out
-
-        cell_t = self.state_decay(converge_factor,
-                                  start_factor,
-                                  decay_factor,
-                                  time_delta_seqs[:, 1:, None])
+        cell_t = self.state_decay(encode_state=enc_out,
+                                  mu=self.mu[None, ...],
+                                  eta=self.eta[None, ...],
+                                  gamma=self.gamma[None, ...],
+                                  duration_t=time_delta_seqs[:, 1:, None])
 
         # [batch_size, seq_len, num_event_types]
-        lambda_at_event = self.layer_intensity(cell_t)
+        lambda_at_event = self.softplus(cell_t)
 
         # 2. compute non-event-loglik (using MC sampling to compute integral)
         # 2.1 sample times
@@ -135,7 +136,7 @@ class SAHP(TorchBaseModel):
 
         # 2.2 compute intensities at sampled times
         # [batch_size, num_times = max_len - 1, num_sample, event_num]
-        state_t_sample = self.compute_states_at_sample_times(encoder_output=enc_out,
+        state_t_sample = self.compute_states_at_sample_times(encode_state=enc_out,
                                                              sample_dtimes=sample_dtimes)
         lambda_t_sample = self.softplus(state_t_sample)
 
@@ -151,22 +152,22 @@ class SAHP(TorchBaseModel):
         return loss, num_events
 
     def compute_states_at_sample_times(self,
-                                       encoder_output,
+                                       encode_state,
                                        sample_dtimes):
         """Compute the hidden states at sampled times.
 
         Args:
-            encoder_output (tuple): three tensors with each shape [batch_size, seq_len, hidden_size].
+            encode_state (tensor): three tensors with each shape [batch_size, seq_len, hidden_size].
             sample_dtimes (tensor): [batch_size, seq_len, num_samples].
 
         Returns:
             tensor: [batch_size, seq_len, num_samples, hidden_size]， hidden state at each sampled time.
         """
-        start_factor, converge_factor, decay_factor = encoder_output
 
-        cell_states = self.state_decay(start_factor[:, :, None, :],
-                                       converge_factor[:, :, None, :],
-                                       decay_factor[:, :, None, :],
+        cell_states = self.state_decay(encode_state[:, :, None, :],
+                                       self.mu[None, None, ...],
+                                       self.eta[None, None, ...],
+                                       self.gamma[None, None, ...],
                                        sample_dtimes[:, :, :, None])
 
         return cell_states
@@ -204,8 +205,8 @@ class SAHP(TorchBaseModel):
         encoder_output = self.compute_states_at_sample_times(enc_out, sample_dtimes)
 
         if compute_last_step_only:
-            lambdas = self.layer_intensity(encoder_output[:, -1:, :, :])
+            lambdas = self.softplus(encoder_output[:, -1:, :, :])
         else:
             # [batch_size, seq_len, num_samples, num_event_types]
-            lambdas = self.layer_intensity(encoder_output)
+            lambdas = self.softplus(encoder_output)
         return lambdas

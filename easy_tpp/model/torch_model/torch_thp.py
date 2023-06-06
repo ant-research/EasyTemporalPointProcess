@@ -25,10 +25,10 @@ class THP(TorchBaseModel):
         self.n_head = model_config.num_heads
         self.dropout = model_config.dropout_rate
 
-        self.layer_temporal_encoding = TimePositionalEncoding(self.d_model, device=self.device)
+        self.layer_temporal_encoding = TimePositionalEncoding(self.d_model)
 
-        self.factor_intensity_base = torch.empty([1, self.num_event_types]).to(self.device)
-        self.factor_intensity_decay = torch.empty([1, self.num_event_types]).to(self.device)
+        self.factor_intensity_base = torch.empty([1, self.num_event_types])
+        self.factor_intensity_decay = torch.empty([1, self.num_event_types])
         nn.init.xavier_normal_(self.factor_intensity_base)
         nn.init.xavier_normal_(self.factor_intensity_decay)
 
@@ -45,8 +45,6 @@ class THP(TorchBaseModel):
                 use_residual=False,
                 dropout=self.dropout
             ) for _ in range(self.n_layers)])
-
-        self.model_to_device()
 
     def forward(self, time_seqs, type_seqs, attention_mask):
         """Call the model

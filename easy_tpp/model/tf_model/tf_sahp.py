@@ -1,7 +1,6 @@
 import tensorflow as tf
-from tensorflow.python.keras import layers
 
-from easy_tpp.model.tf_model.tf_baselayer import EncoderLayer, TimeShiftedPositionalEncoding, gelu
+from easy_tpp.model.tf_model.tf_baselayer import EncoderLayer, TimeShiftedPositionalEncoding
 from easy_tpp.model.tf_model.tf_basemodel import TfBaseModel
 from easy_tpp.utils.tf_utils import get_shape_list
 
@@ -39,15 +38,18 @@ class SAHP(TfBaseModel):
             self.layer_position_emb = TimeShiftedPositionalEncoding(self.hidden_size)
 
             # Equation (12) - (14)
-            # tf does not have built-in gelu activations
-            self.layer_init = layers.Dense(
-                self.num_event_types, activation=tf.nn.relu, name='eta_layer')
-            self.layer_decay = layers.Dense(
-                self.num_event_types, activation=gelu, name='decay_layer')
-            self.layer_converge = layers.Dense(
-                self.num_event_types, activation=tf.nn.relu, name='mu_layer')
-
-            self.layer_intensity = layers.Dense(self.num_event_types, activation=tf.nn.softplus)
+            # Equation (12): mu
+            self.mu = tf.get_variable(name='mu',
+                                      shape=[self.d_model, self.num_event_types],
+                                      initializer=tf.keras.initializers.glorot_uniform())
+            # Equation (13): eta
+            self.eta = tf.get_variable(name='eta',
+                                       shape=[self.d_model, self.num_event_types],
+                                       initializer=tf.keras.initializers.glorot_uniform())
+            # Equation (14): gamma
+            self.gamma = tf.get_variable(name='gamma',
+                                         shape=[self.d_model, self.num_event_types],
+                                         initializer=tf.keras.initializers.glorot_uniform())
 
             self.stack_layers = [EncoderLayer(hidden_size=self.d_model,
                                               num_heads=self.n_head,
@@ -70,13 +72,14 @@ class SAHP(TfBaseModel):
                                                              self.type_seqs,
                                                              num_step=self.gen_config.num_step_gen)
 
-    def state_decay(self, init_factor, converge_factor, decay_factor, duration_t):
+    def state_decay(self, encode_state, mu, eta, gamma, duration_t):
         """Equation (15), which computes the pre-intensity states
 
         Args:
-            init_factor (tensor): [batch_size, seq_len, hidden_size].
-            converge_factor (tensor): [batch_size, seq_len, hidden_size].
-            decay_factor (tensor): [batch_size, seq_len, hidden_size].
+            encode_state (tensor): [batch_size, seq_len, hidden_size].
+            mu (tensor): [batch_size, seq_len, hidden_size].
+            eta (tensor): [batch_size, seq_len, hidden_size].
+            gamma (tensor): [batch_size, seq_len, hidden_size].
             duration_t (tensor): [batch_size, seq_len, num_sample].
 
         Returns:
@@ -84,7 +87,10 @@ class SAHP(TfBaseModel):
         """
 
         # [batch_size, hidden_dim]
-        states = tf.nn.softplus(converge_factor + (init_factor - converge_factor) * tf.exp(- decay_factor * duration_t))
+        # i did not use the exp operation here because it can easily explode!
+        states = tf.matmul(encode_state, mu) + (
+                tf.matmul(encode_state, eta) - tf.matmul(encode_state, mu)) * tf.matmul(encode_state, gamma) * duration_t
+
         return states
 
     def forward(self, time_seqs, time_delta_seqs, event_seqs, attention_mask):
@@ -109,12 +115,8 @@ class SAHP(TfBaseModel):
                 (enc_output,
                  attention_mask))
 
-        start_factor = self.layer_init(enc_output)
-        converge_factor = self.layer_converge(enc_output)
-        decay_factor = self.layer_decay(enc_output)
-
         # [batch_size, seq_len, hidden_dim]
-        return start_factor, converge_factor, decay_factor
+        return enc_output
 
     def loglike_loss(self):
         """Compute the loglike loss.
@@ -128,15 +130,14 @@ class SAHP(TfBaseModel):
                                self.type_seqs[:, :-1],
                                self.attention_mask[:, 1:, :-1])
 
-        start_factor, converge_factor, decay_factor = enc_out
-
-        cell_t = self.state_decay(converge_factor,
-                                  start_factor,
-                                  decay_factor,
-                                  self.time_delta_seqs[:, 1:, None])
+        cell_t = self.state_decay(encode_state=enc_out,
+                                  mu=self.mu[None, ...],
+                                  eta=self.eta[None, ...],
+                                  gamma=self.gamma[None, ...],
+                                  duration_t=self.time_delta_seqs[:, 1:, None])
 
         # [batch_size, seq_len, num_event_types]
-        lambda_at_event = self.layer_intensity(cell_t)
+        lambda_at_event = tf.nn.softplus(cell_t)
 
         # 2. compute non-event-loglik (using MC sampling to compute integral)
         # 2.1 sample times
@@ -145,11 +146,9 @@ class SAHP(TfBaseModel):
 
         # 2.2 compute intensities at sampled times
         # [batch_size, num_times = max_len - 1, num_sample, event_num]
-        lambda_t_sample = self.compute_intensities_at_sample_times(self.time_seqs[:, :-1],
-                                                                   self.time_delta_seqs[:, 1:],
-                                                                   self.type_seqs[:, :-1],
-                                                                   sample_dtimes,
-                                                                   attention_mask=self.attention_mask[:, 1:, :-1])
+        state_t_sample = self.compute_states_at_sample_times(encode_state=enc_out,
+                                                             sample_dtimes=sample_dtimes)
+        lambda_t_sample = tf.nn.softplus(state_t_sample)
 
         event_ll, non_event_ll, num_events = self.compute_loglikelihood(lambda_at_event=lambda_at_event,
                                                                         lambdas_loss_samples=lambda_t_sample,
@@ -163,22 +162,22 @@ class SAHP(TfBaseModel):
         return loss, num_events
 
     def compute_states_at_sample_times(self,
-                                       encoder_output,
+                                       encode_state,
                                        sample_dtimes):
         """Compute the hidden states at sampled times.
 
         Args:
-            encoder_output (tuple): three tensors with each shape [batch_size, seq_len, hidden_size].
+            encode_state (tensor): three tensors with each shape [batch_size, seq_len, hidden_size].
             sample_dtimes (tensor): [batch_size, seq_len, num_samples].
 
         Returns:
-            tensor: [batch_size, seq_len, num_samples, hidden_size], hidden state at each sampled time.
+            tensor: [batch_size, seq_len, num_samples, hidden_size]， hidden state at each sampled time.
         """
-        start_factor, converge_factor, decay_factor = encoder_output
 
-        cell_states = self.state_decay(start_factor[:, :, None, :],
-                                       converge_factor[:, :, None, :],
-                                       decay_factor[:, :, None, :],
+        cell_states = self.state_decay(encode_state[:, :, None, :],
+                                       self.mu[None, None, ...],
+                                       self.eta[None, None, ...],
+                                       self.gamma[None, None, ...],
                                        sample_dtimes[:, :, :, None])
 
         return cell_states
@@ -216,8 +215,8 @@ class SAHP(TfBaseModel):
         encoder_output = self.compute_states_at_sample_times(enc_out, sample_dtimes)
 
         if compute_last_step_only:
-            lambdas = self.layer_intensity(encoder_output[:, -1:, :, :])
+            lambdas = tf.nn.softplus(encoder_output[:, -1:, :, :])
         else:
             # [batch_size, seq_len, num_samples, num_event_types]
-            lambdas = self.layer_intensity(encoder_output)
+            lambdas = tf.nn.softplus(encoder_output)
         return lambdas

@@ -37,9 +37,11 @@ class RMTPP(TfBaseModel):
             self.layer_hidden = layers.Dense(self.num_event_types)
 
             self.factor_intensity_base = tf.get_variable(name='intensity_base',
-                                                         shape=[1, 1, self.num_event_types])
+                                                         shape=[1, 1, self.num_event_types],
+                                                         initializer=tf.keras.initializers.glorot_uniform())
             self.factor_intensity_current_influence = tf.get_variable(name='intensity_current_influence',
-                                                                      shape=[1, 1, self.num_event_types])
+                                                                      shape=[1, 1, self.num_event_types],
+                                                                      initializer=tf.keras.initializers.glorot_uniform())
 
             # Compute the loss
             self.loss, self.num_event = self.loglike_loss()

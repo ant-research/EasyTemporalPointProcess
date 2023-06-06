@@ -28,6 +28,7 @@ class RMTPP(TorchBaseModel):
         self.factor_intensity_current_influence = torch.empty([1, 1, self.num_event_types])
 
         nn.init.xavier_normal_(self.factor_intensity_base)
+        nn.init.xavier_normal_(self.factor_intensity_current_influence)
 
     def state_decay(self, states_to_decay, duration_t):
         """Equation (11), which computes intensity
@@ -37,8 +38,9 @@ class RMTPP(TorchBaseModel):
         states_to_decay_ = self.layer_hidden(states_to_decay)
 
         # [batch_size, seq_len, num_event_types]
+        # put a max number to avoid explode during HPO
         intensity = torch.exp(
-            states_to_decay_ + self.factor_intensity_current_influence * duration_t + self.factor_intensity_base)
+            states_to_decay_ + self.factor_intensity_current_influence * duration_t + self.factor_intensity_base).clamp(max=1e5)
         return intensity
 
     def forward(self, time_seqs, time_delta_seqs, type_seqs, **kwargs):
