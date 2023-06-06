@@ -39,7 +39,7 @@
 ## Model List <a href='#top'>[Back to Top]</a>
 <span id='model-list'/>
 
-We provide reference implementations of various sequence modeling papers:
+We provide reference implementations of various state-of-the-art TPP papers:
 
 | No  | Publication |     Model     | Paper                                                                                                                                    | Implementation                                                                                                             |
 |:---:|:-----------:|:-------------:|:-----------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------|
