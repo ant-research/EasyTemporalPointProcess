@@ -6,6 +6,9 @@ class ExplicitEnum(str, Enum):
     Enum with more explicit error message for missing values.
     """
 
+    def __str__(self):
+        return str(self.value)
+
     @classmethod
     def _missing_(cls, value):
         raise ValueError(
@@ -15,7 +18,7 @@ class ExplicitEnum(str, Enum):
 
 class PaddingStrategy(ExplicitEnum):
     """
-    Possible values for the `padding` argument in [`EventTokenizerBase.__call__`]. Useful for tab-completion in an
+    Possible values for the `padding` argument in [`EventTokenizer.__call__`]. Useful for tab-completion in an
     IDE.
     """
 
@@ -76,8 +79,6 @@ class TruncationStrategy(ExplicitEnum):
     an IDE.
     """
 
-    ONLY_FIRST = "only_first"
-    ONLY_SECOND = "only_second"
     LONGEST_FIRST = "longest_first"
     DO_NOT_TRUNCATE = "do_not_truncate"
 

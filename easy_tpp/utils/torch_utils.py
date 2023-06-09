@@ -4,6 +4,8 @@ import random
 import numpy as np
 import torch
 
+from easy_tpp.utils.import_utils import is_torch_mps_available
+
 
 def set_seed(seed=1029):
     """Setup random seed.
@@ -25,8 +27,11 @@ def set_device(gpu=-1):
     Args:
         gpu (int, optional): num of GPU to use. Defaults to -1 (not use GPU, i.e., use CPU).
     """
-    if gpu >= 0 and torch.cuda.is_available():
-        device = torch.device("cuda:" + str(gpu))
+    if gpu >= 0:
+        if torch.cuda.is_available():
+            device = torch.device("cuda:" + str(gpu))
+        elif is_torch_mps_available():
+            device = torch.device("mps")
     else:
         device = torch.device("cpu")
     return device
@@ -45,7 +50,7 @@ def set_optimizer(optimizer, params, lr):
         we raise error.
 
     Returns:
-        torch.otim: torch optimizer.
+        torch.optim: torch optimizer.
     """
     if isinstance(optimizer, str):
         if optimizer.lower() == "adam":

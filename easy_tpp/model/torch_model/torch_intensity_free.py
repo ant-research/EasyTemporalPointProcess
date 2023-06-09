@@ -120,7 +120,7 @@ class IntensityFree(TorchBaseModel):
         """
         super(IntensityFree, self).__init__(model_config)
 
-        self.num_mix_components = model_config.specs['num_mix_components']
+        self.num_mix_components = model_config.model_specs['num_mix_components']
         self.num_features = 1 + self.hidden_size
 
         self.layer_rnn = nn.GRU(input_size=self.num_features,
@@ -167,8 +167,10 @@ class IntensityFree(TorchBaseModel):
         """
         time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _, type_mask = batch
 
-        mean_log_inter_time = torch.masked_select(time_delta_seqs[:, 1:], batch_non_pad_mask[:, 1:]).clamp(1e-5).log().mean()
-        std_log_inter_time = torch.masked_select(time_delta_seqs[:, 1:], batch_non_pad_mask[:, 1:]).clamp(1e-5).log().std()
+        mean_log_inter_time = \
+            torch.masked_select(time_delta_seqs[:, 1:], batch_non_pad_mask[:, 1:]).clamp(1e-5).log().mean()
+        std_log_inter_time = \
+            torch.masked_select(time_delta_seqs[:, 1:], batch_non_pad_mask[:, 1:]).clamp(1e-5).log().std()
 
         # [batch_size, seq_len, hidden_size]
         context = self.forward(time_delta_seqs[:, 1:], type_seqs[:, :-1])

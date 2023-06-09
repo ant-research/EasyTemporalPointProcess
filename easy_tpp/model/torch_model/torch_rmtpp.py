@@ -40,7 +40,8 @@ class RMTPP(TorchBaseModel):
         # [batch_size, seq_len, num_event_types]
         # put a max number to avoid explode during HPO
         intensity = torch.exp(
-            states_to_decay_ + self.factor_intensity_current_influence * duration_t + self.factor_intensity_base).clamp(max=1e5)
+            states_to_decay_ + self.factor_intensity_current_influence * duration_t +
+            self.factor_intensity_base).clamp(max=1e5)
         return intensity
 
     def forward(self, time_seqs, time_delta_seqs, type_seqs, **kwargs):

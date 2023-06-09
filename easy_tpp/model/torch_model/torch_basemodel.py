@@ -4,7 +4,6 @@ import torch
 from torch import nn
 
 from easy_tpp.model.torch_model.torch_thinning import EventSampler
-from easy_tpp.utils import set_device
 
 
 class TorchBaseModel(nn.Module):
@@ -15,8 +14,6 @@ class TorchBaseModel(nn.Module):
             model_config (EasyTPP.ModelConfig): model spec of configs
         """
         super(TorchBaseModel, self).__init__()
-        self.device = set_device(model_config.gpu)
-        model_config.update({'device': self.device})
         self.loss_integral_num_sample_per_step = model_config.loss_integral_num_sample_per_step
         self.hidden_size = model_config.hidden_size
         self.num_event_types = model_config.num_event_types  # not include [PAD], [BOS], [EOS]
@@ -36,11 +33,7 @@ class TorchBaseModel(nn.Module):
                                               over_sample_rate=self.gen_config.over_sample_rate,
                                               patience_counter=self.gen_config.patience_counter,
                                               num_samples_boundary=self.gen_config.num_samples_boundary,
-                                              dtime_max=self.gen_config.dtime_max,
-                                              device=self.device)
-
-    def model_to_device(self):
-        self.to(device=self.device)
+                                              dtime_max=self.gen_config.dtime_max)
 
     @staticmethod
     def generate_model_from_config(model_config):
@@ -139,8 +132,7 @@ class TorchBaseModel(nn.Module):
         # [1, 1, n_samples]
         dtimes_ratio_sampled = torch.linspace(start=0.0,
                                               end=1.0,
-                                              steps=self.loss_integral_num_sample_per_step,
-                                              device=self.device)[None, None, :]
+                                              steps=self.loss_integral_num_sample_per_step)[None, None, :]
 
         # [batch_size, max_len, n_samples]
         sampled_dtimes = time_delta_seq[:, :, None] * dtimes_ratio_sampled
@@ -257,4 +249,4 @@ class TorchBaseModel(nn.Module):
             event_seq = torch.cat([event_seq, types_pred_], dim=-1)
 
         return time_delta_seq[:, -num_step - 1:], event_seq[:, -num_step - 1:], \
-               time_delta_seq_label[:, -num_step - 1:], event_seq_label[:, -num_step - 1:]
+            time_delta_seq_label[:, -num_step - 1:], event_seq_label[:, -num_step - 1:]

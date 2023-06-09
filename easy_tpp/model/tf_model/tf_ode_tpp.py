@@ -138,10 +138,13 @@ def get_neural_ode_layer(
 
 
 class ODETPP(TfBaseModel):
+    """
+    TODO: this version runs ok under tf 1.13, but is very slow under tf 2.0
+    """
     def __init__(self, model_config):
         super(ODETPP, self).__init__(model_config)
-        self.ode_num_sample_per_step = model_config.specs['ode_num_sample_per_step']
-        self.time_factor = model_config.specs['time_factor']
+        self.ode_num_sample_per_step = model_config.model_specs['ode_num_sample_per_step']
+        self.time_factor = model_config.model_specs['time_factor']
         self.seq_len = model_config.max_len
 
     def build_graph(self):

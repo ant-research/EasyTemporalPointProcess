@@ -84,6 +84,41 @@ def is_tf_available():
     return _tf_available
 
 
+def is_tf_gpu_available():
+    if is_tf_available():
+        import tensorflow as tf
+        if tf.__version__ >= '2.0':
+            return bool(tf.config.list_physical_devices("GPU"))
+        else:
+            from tensorflow.python.client import device_lib
+            local_device_protos = device_lib.list_local_devices()
+            for device in local_device_protos:
+                if device.device_type == 'GPU':
+                    return True
+    else:
+        return False
+
+
+def is_torch_mps_available():
+    if is_torch_available():
+        try:
+            import torch
+            torch.device('mps')
+            return True
+        except RuntimeError:
+            return False
+    else:
+        return False
+
+
+def is_torch_gpu_available():
+    is_cuda_available = is_torch_cuda_available()
+
+    is_mps_available = is_torch_mps_available()
+
+    return is_cuda_available | is_mps_available
+
+
 def is_tensorflow_probability_available():
     return _tensorflow_probability_available
 
@@ -149,7 +184,7 @@ Please note that you may need to restart your runtime after installation.
 # docstyle-ignore
 TENSORFLOW_PROBABILITY_IMPORT_ERROR = """
 {0} requires the tensorflow_probability library but it was not found in your environment. You can install it with pip as
-explained here: https://github.com/tensorflow/probability. 
+explained here: https://github.com/tensorflow/probability.
 Please note that you may need to restart your runtime after installation.
 """
 

@@ -18,7 +18,7 @@ class CumulHazardFunctionNetwork(keras.Model):
     def __init__(self, model_config):
         super(CumulHazardFunctionNetwork, self).__init__()
         self.hidden_size = model_config.hidden_size
-        self.num_mlp_layers = model_config.specs['num_mlp_layers']
+        self.num_mlp_layers = model_config.data_specs['num_mlp_layers']
         self.num_event_types = model_config.num_event_types
 
         # transform inter-event time embedding

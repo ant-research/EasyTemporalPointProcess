@@ -96,12 +96,12 @@ class TimePositionalEncoding(nn.Module):
     """Temporal encoding in THP, ICML 2020
     """
 
-    def __init__(self, d_model, max_len=5000, device='cpu'):
+    def __init__(self, d_model, max_len=5000):
         super().__init__()
 
-        pe = torch.zeros(max_len, d_model, device=device).float()
-        position = torch.arange(0, max_len, device=device).float().unsqueeze(1)
-        div_term = (torch.arange(0, d_model, 2, device=device).float() * -(math.log(10000.0) / d_model)).exp()
+        pe = torch.zeros(max_len, d_model).float()
+        position = torch.arange(0, max_len).float().unsqueeze(1)
+        div_term = (torch.arange(0, d_model, 2).float() * -(math.log(10000.0) / d_model)).exp()
 
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
@@ -130,12 +130,12 @@ class TimeShiftedPositionalEncoding(nn.Module):
     """Time shifted positional encoding in SAHP, ICML 2020
     """
 
-    def __init__(self, d_model, max_len=5000, device='cpu'):
+    def __init__(self, d_model, max_len=5000):
         super().__init__()
         # [max_len, 1]
-        position = torch.arange(0, max_len, device=device).float().unsqueeze(1)
+        position = torch.arange(0, max_len).float().unsqueeze(1)
         # [model_dim //2 ]
-        div_term = (torch.arange(0, d_model, 2, device=device).float() * -(math.log(10000.0) / d_model)).exp()
+        div_term = (torch.arange(0, d_model, 2).float() * -(math.log(10000.0) / d_model)).exp()
 
         self.layer_time_delta = nn.Linear(1, d_model // 2, bias=False)
 
@@ -230,7 +230,7 @@ class DNN(nn.Module):
     """
 
     def __init__(self, inputs_dim, hidden_size, activation='relu', l2_reg=0, dropout_rate=0, use_bn=False,
-                 init_std=0.0001, device='cpu'):
+                 init_std=0.0001):
         super(DNN, self).__init__()
         self.dropout_rate = dropout_rate
         self.dropout = nn.Dropout(dropout_rate)
@@ -253,8 +253,6 @@ class DNN(nn.Module):
         for name, tensor in self.linears.named_parameters():
             if 'weight' in name:
                 nn.init.normal_(tensor, mean=0, std=init_std)
-
-        self.to(device)
 
     def forward(self, inputs):
         deep_input = inputs

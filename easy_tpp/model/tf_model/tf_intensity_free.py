@@ -75,7 +75,7 @@ class IntensityFree(TfBaseModel):
         """
         super(IntensityFree, self).__init__(model_config)
 
-        self.num_mix_components = model_config.specs['num_mix_components']
+        self.num_mix_components = model_config.data_specs['num_mix_components']
         self.num_features = 1 + self.hidden_size
 
     def build_graph(self):

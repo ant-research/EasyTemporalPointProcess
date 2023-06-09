@@ -1,4 +1,4 @@
-from easy_tpp.config_factory.base_config import Config
+from easy_tpp.config_factory.config import Config
 from easy_tpp.config_factory.runner_config import RunnerConfig
 from easy_tpp.utils import parse_uri_to_protocol_and_path, py_assert
 

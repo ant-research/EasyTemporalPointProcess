@@ -157,8 +157,8 @@ class ODETPP(TorchBaseModel):
         self.event_model = DNN(inputs_dim=self.hidden_size,
                                hidden_size=[self.hidden_size])
 
-        self.ode_num_sample_per_step = model_config.specs['ode_num_sample_per_step']
-        self.time_factor = model_config.specs['time_factor']
+        self.ode_num_sample_per_step = model_config.model_specs['ode_num_sample_per_step']
+        self.time_factor = model_config.model_specs['time_factor']
 
         self.solver = rk4_step_method
 

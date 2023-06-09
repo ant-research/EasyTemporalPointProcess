@@ -17,11 +17,11 @@ class AttNHP(TfBaseModel):
     def __init__(self, model_config):
         super(AttNHP, self).__init__(model_config)
         self.d_model = model_config.hidden_size
-        self.d_time = model_config.specs['time_emb_size']
-        self.use_norm = model_config.specs['use_ln']
+        self.d_time = model_config.data_specs['time_emb_size']
+        self.use_norm = model_config.data_specs['use_ln']
 
-        self.n_layers = model_config.specs['num_layers']
-        self.n_head = model_config.specs['num_heads']
+        self.n_layers = model_config.data_specs['num_layers']
+        self.n_head = model_config.data_specs['num_heads']
         self.dropout = model_config.dropout_rate
 
         # position vector, used for temporal encoding

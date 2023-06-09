@@ -88,8 +88,8 @@ class SAHP(TfBaseModel):
 
         # [batch_size, hidden_dim]
         # i did not use the exp operation here because it can easily explode!
-        states = tf.matmul(encode_state, mu) + (
-                tf.matmul(encode_state, eta) - tf.matmul(encode_state, mu)) * tf.matmul(encode_state, gamma) * duration_t
+        states = tf.matmul(encode_state, mu) + (tf.matmul(encode_state, eta) - tf.matmul(encode_state, mu)) * tf.matmul(
+            encode_state, gamma) * duration_t
 
         return states
 

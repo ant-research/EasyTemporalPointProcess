@@ -1,4 +1,4 @@
-from easy_tpp.config_factory.base_config import Config
+from easy_tpp.config_factory.config import Config
 
 
 class DataSpecConfig(Config):
@@ -11,15 +11,16 @@ class DataSpecConfig(Config):
         self.truncation_side = kwargs.get('truncation_side')
         self.padding_strategy = kwargs.get('padding_strategy')
         self.max_len = kwargs.get('max_len')
+        self.truncation_strategy = kwargs.get('truncation_strategy')
         self.num_event_types_pad = self.num_event_types + 1
         self.model_input_names = kwargs.get('model_input_names')
 
-        if self.padding_side not in ["right", "left"]:
+        if self.padding_side is not None and self.padding_side not in ["right", "left"]:
             raise ValueError(
                 f"Padding side should be selected between 'right' and 'left', current value: {self.padding_side}"
             )
 
-        if self.truncation_side not in ["right", "left"]:
+        if self.truncation_side is not None and self.truncation_side not in ["right", "left"]:
             raise ValueError(
                 f"Truncation side should be selected between 'right' and 'left', current value: {self.truncation_side}"
             )
@@ -31,17 +32,17 @@ class DataSpecConfig(Config):
             dict: config of the data specs in dict format.
         """
         return {
-            'num_event_types_pad': self.num_event_types_pad,
             'num_event_types': self.num_event_types,
             'pad_token_id': self.pad_token_id,
             'padding_side': self.padding_side,
             'truncation_side': self.truncation_side,
             'padding_strategy': self.padding_strategy,
+            'truncation_strategy': self.truncation_strategy,
             'max_len': self.max_len
         }
 
     @staticmethod
-    def parse_from_yaml_config(yaml_config, **kwargs):
+    def parse_from_yaml_config(yaml_config):
         """Parse from the yaml to generate the config object.
 
         Args:
@@ -50,10 +51,7 @@ class DataSpecConfig(Config):
         Returns:
             DataSpecConfig: Config class for data specs.
         """
-        if yaml_config is None:
-            return DataSpecConfig()
-        else:
-            return DataSpecConfig(**yaml_config)
+        return DataSpecConfig(**yaml_config)
 
     def copy(self):
         """Copy the config.
@@ -67,6 +65,7 @@ class DataSpecConfig(Config):
                               padding_side=self.padding_side,
                               truncation_side=self.truncation_side,
                               padding_strategy=self.padding_strategy,
+                              truncation_strategy=self.truncation_strategy,
                               max_len=self.max_len)
 
 
@@ -83,7 +82,7 @@ class DataConfig(Config):
         self.train_dir = train_dir
         self.valid_dir = valid_dir
         self.test_dir = test_dir
-        self.specs = specs or DataSpecConfig()
+        self.data_specs = specs or DataSpecConfig()
         self.data_format = train_dir.split('.')[-1]
 
     def get_yaml_config(self):
@@ -97,11 +96,11 @@ class DataConfig(Config):
             'valid_dir': self.valid_dir,
             'test_dir': self.test_dir,
             'data_format': self.data_format,
-            'specs': self.specs.get_yaml_config(),
+            'data_specs': self.data_specs.get_yaml_config(),
         }
 
     @staticmethod
-    def parse_from_yaml_config(yaml_config, **kwargs):
+    def parse_from_yaml_config(yaml_config):
         """Parse from the yaml to generate the config object.
 
         Args:
@@ -126,7 +125,7 @@ class DataConfig(Config):
         return DataConfig(train_dir=self.train_dir,
                           valid_dir=self.valid_dir,
                           test_dir=self.test_dir,
-                          specs=self.specs)
+                          specs=self.data_specs)
 
     def get_data_dir(self, split):
         """Get the dir of the source raw data.

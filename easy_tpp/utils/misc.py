@@ -85,10 +85,6 @@ def load_yaml_config(config_dir):
     return config
 
 
-def is_torch(backend):
-    return backend.lower() in ['pytorch', 'torch']
-
-
 def get_stage(stage):
     stage = stage.lower()
     if stage in ['train', 'training']:
@@ -247,7 +243,7 @@ def dict_deep_update(target, source, is_add_new_key=True):
                 result[key] = value
             continue
         # both target and source have the same key
-        base_type_list = [int, float, str, tuple, bool, list]
+        base_type_list = [int, float, str, tuple, bool]
         if type(result[key]) in base_type_list or type(source[key]) in base_type_list:
             result[key] = value
         else:

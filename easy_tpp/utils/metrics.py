@@ -37,12 +37,10 @@ class MetricsHelper:
             if name in registry_center:
                 if overwrite:
                     registry_center[name] = (func, direction)
-                    logger.info(f'The metric {name} is already registered, but overwrite it.')
                 else:
                     logger.warn(f'The metric {name} is already registered, and cannot be overwritten!')
             else:
                 registry_center[name] = (func, direction)
-                logger.info(f'Metric register: {name} - {direction}')
             return func
 
         return _add_metric_to_registry

@@ -10,8 +10,7 @@ class EventSampler(nn.Module):
     The implementation uses code from https://github.com/yangalan123/anhp-andtt/blob/master/anhp/esm/thinning.py.
     """
 
-    def __init__(self, num_sample, num_exp, over_sample_rate, num_samples_boundary, dtime_max, patience_counter,
-                 device):
+    def __init__(self, num_sample, num_exp, over_sample_rate, num_samples_boundary, dtime_max, patience_counter):
         """Initialize the event sampler.
 
         Args:
@@ -21,7 +20,6 @@ class EventSampler(nn.Module):
             num_samples_boundary (int): number of sampled event times to compute the boundary of the intensity.
             dtime_max (float): max value of delta times in sampling
             patience_counter (int): the maximum iteration used in adaptive thinning.
-            device (torch.device): an object representing the device on which a torch.Tensor is or will be allocated.
         """
         super(EventSampler, self).__init__()
         self.num_sample = num_sample
@@ -30,7 +28,6 @@ class EventSampler(nn.Module):
         self.num_samples_boundary = num_samples_boundary
         self.dtime_max = dtime_max
         self.patience_counter = patience_counter
-        self.device = device
 
     def compute_intensity_upper_bound(self, time_seq, time_delta_seq, event_seq, intensity_fn,
                                       compute_last_step_only):
@@ -231,4 +228,5 @@ class EventSampler(nn.Module):
 
         res[who_not_accept & who_reach_further] = exp_numbers[..., -1][who_not_accept & who_reach_further]
 
-        return res, weights
+        # add a upper bound here in case it explodes, e.g., in ODE models
+        return res.clamp(max=1e5), weights

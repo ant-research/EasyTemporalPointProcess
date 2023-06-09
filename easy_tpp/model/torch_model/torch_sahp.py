@@ -77,7 +77,7 @@ class SAHP(TorchBaseModel):
 
         # [batch_size, hidden_dim]
         states = torch.matmul(encode_state, mu) + (
-                torch.matmul(encode_state, eta) - torch.matmul(encode_state, mu)) * torch.exp(
+                    torch.matmul(encode_state, eta) - torch.matmul(encode_state, mu)) * torch.exp(
             -torch.matmul(encode_state, gamma) * duration_t)
         return states
 

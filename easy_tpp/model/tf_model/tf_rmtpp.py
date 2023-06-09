@@ -41,7 +41,8 @@ class RMTPP(TfBaseModel):
                                                          initializer=tf.keras.initializers.glorot_uniform())
             self.factor_intensity_current_influence = tf.get_variable(name='intensity_current_influence',
                                                                       shape=[1, 1, self.num_event_types],
-                                                                      initializer=tf.keras.initializers.glorot_uniform())
+                                                                      initializer=tf.keras.initializers.glorot_uniform()
+                                                                      )
 
             # Compute the loss
             self.loss, self.num_event = self.loglike_loss()

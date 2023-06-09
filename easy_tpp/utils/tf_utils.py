@@ -3,7 +3,8 @@ import random
 
 import numpy as np
 import tensorflow as tf
-from tensorflow.python.client import device_lib
+
+from easy_tpp.utils.import_utils import is_tf_gpu_available
 
 if tf.__version__ >= '2.0':
     tf = tf.compat.v1
@@ -22,26 +23,13 @@ def set_seed(seed=1029):
     tf.random.set_random_seed(seed)
 
 
-def is_gpu_available():
-    """Check if GPU is available.
-
-    Returns:
-        bool: True if available False if not.
-    """
-    local_device_protos = device_lib.list_local_devices()
-    for device in local_device_protos:
-        if device.device_type == 'GPU':
-            return True
-    return False
-
-
 def set_device(gpu=-1):
     """Setup the device.
 
     Args:
-        gpu (int, optional): _description_. Defaults to -1.
+        gpu (int, optional): Defaults to -1.
     """
-    if gpu >= 0 and is_gpu_available():
+    if gpu >= 0 and is_tf_gpu_available():
         os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu)
     else:
         os.environ['CUDA_VISIBLE_DEVICES'] = ''

@@ -114,8 +114,8 @@ class NHP(TorchBaseModel):
             model_config (EasyTPP.ModelConfig): config of model specs.
         """
         super(NHP, self).__init__(model_config)
-        self.beta = model_config.specs.get('beta', 1.0)
-        self.bias = model_config.specs.get('bias', False)
+        self.beta = model_config.model_specs.get('beta', 1.0)
+        self.bias = model_config.model_specs.get('bias', False)
         self.rnn_cell = ContTimeLSTMCell(self.hidden_size)
 
         self.layer_intensity = nn.Sequential(
