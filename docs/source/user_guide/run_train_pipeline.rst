@@ -80,35 +80,41 @@ To be specific, one needs to define the following entries in the config file:
 .. code-block:: yaml
 
       model_config:
-        hidden_size: 32
-        time_emb_size: 16
-        num_layers: 2
-        num_heads: 2
-        mc_num_sample_per_step: 20
-        sharing_param_layer: False
-        loss_integral_num_sample_per_step: 20
-        dropout: 0.0
-        use_ln: False
-        seed: 2019
-        gpu: 0
-        trainer:   # trainer arguments
-          batch_size: 256
-          max_epoch: 10
-          shuffle: False
-          optimizer: adam
-          learning_rate: 1.e-3
-          valid_freq: 1
-          use_tfb: False
-          metrics: ['acc', 'rmse']
-        thinning_params:   # thinning algorithm for event sampling
-          num_seq: 10
-          num_sample: 1
-          num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
-          look_ahead_time: 10
-          patience_counter: 5 # the maximum iteration used in adaptive thinning
-          over_sample_rate: 5
-          num_samples_boundary: 5
-          dtime_max: 5
+            hidden_size: 32
+            time_emb_size: 16
+            num_layers: 2
+            num_heads: 2
+            mc_num_sample_per_step: 20
+            sharing_param_layer: False
+            loss_integral_num_sample_per_step: 20
+            dropout: 0.0
+            use_ln: False
+            thinning_params:   # thinning algorithm for event sampling
+                  num_seq: 10
+                  num_sample: 1
+                  num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+                  look_ahead_time: 10
+                  patience_counter: 5 # the maximum iteration used in adaptive thinning
+                  over_sample_rate: 5
+                  num_samples_boundary: 5
+                  dtime_max: 5
+
+
+*trainer_config* contains the training related specifications.
+
+.. code-block:: yaml
+
+        trainer_config:   # trainer arguments
+            seed: 2019
+            gpu: 0
+            batch_size: 256
+            max_epoch: 10
+            shuffle: False
+            optimizer: adam
+            learning_rate: 1.e-3
+            valid_freq: 1
+            use_tfb: False
+            metrics: ['acc', 'rmse']
 
 
 
