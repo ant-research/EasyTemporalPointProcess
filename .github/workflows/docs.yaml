@@ -29,7 +29,9 @@ jobs:
         sudo apt-get install pandoc
     - name: Build Sphinx docs
       run: |
-        sudo docs/build_docs.sh
+        cd docs
+        chmod +x build_docs.sh
+        cd ..
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'release' }}
