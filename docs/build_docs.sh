@@ -35,7 +35,7 @@ git stash
 # trap exit_handler EXIT
 
 # Clean up build directory and install Sphinx requirements
-pip3 install -r "${DIRNAME}/requirements.txt"
+pip3 install -r "${DIRNAME}/requirements-doc.txt"
 sphinx-build -M clean "${DIRNAME}" "${DIRNAME}/_build"
 
 # Build API docs for current head
@@ -89,7 +89,7 @@ while read -r filename; do
 <!DOCTYPE html>
 <html>
    <head>
-      <title>CodeTF Documentation</title>
+      <title>EasyTPP Documentation</title>
       <meta http-equiv = "refresh" content="0; url='$url'" />
    </head>
    <body>
