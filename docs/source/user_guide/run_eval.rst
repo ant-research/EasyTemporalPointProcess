@@ -97,4 +97,5 @@ The evaluation result will be print in the console and saved in the logs whose d
 out config file, i.e.:
 
 .. code-block:: bash
+
     'output_config_dir': './checkpoints/NHP_test_conttime_20221002-13:19:23/NHP_test_output.yaml'

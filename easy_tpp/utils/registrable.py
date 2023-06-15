@@ -4,22 +4,11 @@ from .log_utils import default_logger as logger
 
 
 class Registrable:
-    """Any class that inherits from `Registrable` gains access to a named registry for its
-    subclasses. To register them, just decorate them with the classmethod
-    `@BaseClass.register(name)`.
-    After which you can call `BaseClass.list_available()` to get the keys for the
-    registered subclasses, and `BaseClass.by_name(name)` to get the corresponding subclass.
+    """Any class that inherits from ``Registrable`` gains access to a named registry for its subclasses. To register them, just decorate them with the classmethod ``@BaseClass.register(name)``.
 
-    Note that the registry stores the subclasses themselves; not class instances.
-    In most cases you would then call `from_params(params)` on the returned subclass.
-    You can specify a default by setting `BaseClass.default_implementation`.
-    If it is set, it will be the first element of `list_available()`.
-    Note that if you use this class to implement a new `Registrable` abstract class,
-    you must ensure that all subclasses of the abstract class are loaded when the module is
-    loaded, because the subclasses register themselves in their respective files. You can
-    achieve this by having the abstract class and all subclasses in the __init__.py of the
-    module in which they reside (as this causes any import of either the abstract class or
-    a subclass to load all other subclasses and the abstract class).
+    After which you can call ``BaseClass.list_available()`` to get the keys for the registered subclasses, and ``BaseClass.by_name(name)`` to get the corresponding subclass.
+
+    Note that the registry stores the subclasses themselves; not class instances. In most cases you would then call ``from_params(params)`` on the returned subclass.
     """
 
     _registry = defaultdict(dict)
@@ -30,18 +19,17 @@ class Registrable:
         """Register a class under a particular name.
 
         Args:
-            name : `str`
-                The name to register the class under.
-            constructor : `str`, optional (default=None)
+            name (str): The name to register the class under.
+            constructor (str): optional (default=None)
                 The name of the method to use on the class to construct the object.  If this is given,
-                we will use this method (which must be a `@classmethod`) instead of the default
+                we will use this method (which must be a ``@classmethod``) instead of the default
                 constructor.
-            overwrite : `bool`, optional (default=False)
-                If True, overwrites any existing models registered under `name`. Else,
-                throws an error if a model is already registered under `name`.
+            overwrite (bool) : optional (default=False)
+                If True, overwrites any existing models registered under ``name``. Else,
+                throws an error if a model is already registered under ``name``.
 
         # Examples
-        To use this class, you would typically have a base class that inherits from `Registrable`:
+        To use this class, you would typically have a base class that inherits from ``Registrable``:
         ```python
         class Transform(Registrable):
             ...
@@ -54,13 +42,12 @@ class Registrable:
                 ...
         ```
         Registering a class like this will let you instantiate a class from a config file, where you
-        give `"type": "shift-transform"`, and keys corresponding to the parameters of the `__init__`
+        give ``"type": "shift-transform"``, and keys corresponding to the parameters of the ``__init__``
         method (note that for this to work, those parameters must have type annotations).
         If you want to have the instantiation from a config file call a method other than the
         constructor, either because you have several different construction paths that could be
-        taken for the same object (as we do in `Transform`) or because you have logic you want to
-        happen before you get to the constructor, you can register a
-        specific `@classmethod` as the constructor to use, like this:
+        taken for the same object (as we do in ``Transform``) or because you have logic you want to
+        happen before you get to the constructor, you can register a specific ``@classmethod`` as the constructor to use, like this:
         ```python
         @Transform.register("shift-transform-from-instances", constructor="from_instances")
         @Transform.register("shift-transform-from-files", constructor="from_files")
@@ -104,7 +91,7 @@ class Registrable:
         """
         Returns a callable function that constructs an argument of the registered class.  Because
         you can register particular functions as constructors for specific names, this isn't
-        necessarily the `__init__` method of some class.
+        necessarily the ``__init__`` method of some class.
         """
         logger.debug(f"instantiating registered subclass {name} of {cls}")
         subclass, constructor = cls.resolve_class_name(name)
@@ -116,11 +103,11 @@ class Registrable:
     @classmethod
     def resolve_class_name(cls, name):
         """
-        Returns the subclass that corresponds to the given `name`, along with the name of the
-        method that was registered as a constructor for that `name`, if any.
-        This method also allows `name` to be a fully-specified module name, instead of a name that
-        was already added to the `Registry`.  In that case, you cannot use a separate function as
-        a constructor (as you need to call `cls.register()` in order to tell us what separate
+        Returns the subclass that corresponds to the given ``name``, along with the name of the
+        method that was registered as a constructor for that ``name``, if any.
+        This method also allows ``name`` to be a fully-specified module name, instead of a name that
+        was already added to the ``Registry``.  In that case, you cannot use a separate function as
+        a constructor (as you need to call ``cls.register()`` in order to tell us what separate
         function to use).
         """
         if name in Registrable._registry[cls]:
