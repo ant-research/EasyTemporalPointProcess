@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.model.torch_model.torch_thinning &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EasyTPP Model Runner Modules" href="../ref/runner.html" />
+    <link rel="prev" title="easy_tpp.model.torch_model.torch_attnhp" href="easy_tpp.model.torch_model.torch_attnhp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ref/models.html"> Model</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ref/models.html#module-easy_tpp.model.tf_model">model.tf_model module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ref/models.html#module-easy_tpp.model.torch_model">model.torch_model module</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="easy_tpp.model.torch_model.torch_baselayer.html">easy_tpp.model.torch_model.torch_baselayer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="easy_tpp.model.torch_model.torch_basemodel.html">easy_tpp.model.torch_model.torch_basemodel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="easy_tpp.model.torch_model.torch_nhp.html">easy_tpp.model.torch_model.torch_nhp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="easy_tpp.model.torch_model.torch_attnhp.html">easy_tpp.model.torch_model.torch_attnhp</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">easy_tpp.model.torch_model.torch_thinning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler"><code class="docutils literal notranslate"><span class="pre">EventSampler</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../ref/models.html">EasyTPP Models</a></li>
+      <li class="breadcrumb-item active">easy_tpp.model.torch_model.torch_thinning</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/easy_tpp.model.torch_model.torch_thinning.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-easy_tpp.model.torch_model.torch_thinning">
+<span id="easy-tpp-model-torch-model-torch-thinning"></span><h1>easy_tpp.model.torch_model.torch_thinning<a class="headerlink" href="#module-easy_tpp.model.torch_model.torch_thinning" title="Permalink to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler" title="easy_tpp.model.torch_model.torch_thinning.EventSampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EventSampler</span></code></a>(num_sample, num_exp, ...)</p></td>
+<td><p>Event Sequence Sampler based on thinning algorithm, which corresponds to Algorithm 2 of The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process, <a class="reference external" href="https://arxiv.org/abs/1612.09328">https://arxiv.org/abs/1612.09328</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_thinning.EventSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.torch_model.torch_thinning.</span></span><span class="sig-name descname"><span class="pre">EventSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_exp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">over_sample_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples_boundary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtime_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience_counter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler" title="Permalink to this definition"></a></dt>
+<dd><p>Event Sequence Sampler based on thinning algorithm, which corresponds to Algorithm 2 of
+The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process,
+<a class="reference external" href="https://arxiv.org/abs/1612.09328">https://arxiv.org/abs/1612.09328</a>.</p>
+<p>The implementation uses code from <a class="reference external" href="https://github.com/yangalan123/anhp-andtt/blob/master/anhp/esm/thinning.py">https://github.com/yangalan123/anhp-andtt/blob/master/anhp/esm/thinning.py</a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_thinning.EventSampler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_exp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">over_sample_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples_boundary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtime_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience_counter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the event sampler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_sample</strong> (<em>int</em>) – number of sampled next event times via thinning algo for computing predictions.</p></li>
+<li><p><strong>num_exp</strong> (<em>int</em>) – number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm</p></li>
+<li><p><strong>over_sample_rate</strong> (<em>float</em>) – multiplier for the intensity up bound.</p></li>
+<li><p><strong>num_samples_boundary</strong> (<em>int</em>) – number of sampled event times to compute the boundary of the intensity.</p></li>
+<li><p><strong>dtime_max</strong> (<em>float</em>) – max value of delta times in sampling</p></li>
+<li><p><strong>patience_counter</strong> (<em>int</em>) – the maximum iteration used in adaptive thinning.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_thinning.EventSampler.compute_intensity_upper_bound">
+<span class="sig-name descname"><span class="pre">compute_intensity_upper_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_last_step_only</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler.compute_intensity_upper_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler.compute_intensity_upper_bound" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the upper bound of intensity at each event timestamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], timestamp seqs.</p></li>
+<li><p><strong>time_delta_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
+<li><p><strong>event_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
+<li><p><strong>intensity_fn</strong> (<em>fn</em>) – a function that computes the intensity.</p></li>
+<li><p><strong>compute_last_step_only</strong> (<em>bool</em>) – wheter to compute the last time step pnly.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>[batch_size, seq_len]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_exp_distribution">
+<span class="sig-name descname"><span class="pre">sample_exp_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_rate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler.sample_exp_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_exp_distribution" title="Permalink to this definition"></a></dt>
+<dd><p>Sample an exponential distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sample_rate</strong> (<em>tensor</em>) – [batch_size, seq_len], intensity rate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>[batch_size, seq_len, num_exp], exp numbers at each event timestamp.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_uniform_distribution">
+<span class="sig-name descname"><span class="pre">sample_uniform_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intensity_upper_bound</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler.sample_uniform_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_uniform_distribution" title="Permalink to this definition"></a></dt>
+<dd><p>Sample an uniform distribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>intensity_upper_bound</strong> (<em>tensor</em>) – upper bound intensity computed in the previous step.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>[batch_size, seq_len, num_sample, num_exp]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_accept">
+<span class="sig-name descname"><span class="pre">sample_accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unif_numbers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_intensities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler.sample_accept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_accept" title="Permalink to this definition"></a></dt>
+<dd><p>Do the sample-accept process.</p>
+<p>For each parallel draw, find its min criterion： if that &lt; 1.0, the 1st (i.e. smallest) sampled time
+with cri &lt; 1.0 is accepted; if none is accepted, use boundary / maxsampletime for that draw</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>unif_numbers</strong> (<em>tensor</em>) – [batch_size, max_len, num_sample, num_exp], sampled uniform random number.</p></li>
+<li><p><strong>sample_rate</strong> (<em>tensor</em>) – [batch_size, max_len], sample rate (intensity).</p></li>
+<li><p><strong>total_intensities</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample, num_exp]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>two tensors,
+criterion, [batch_size, max_len, num_sample, num_exp]
+who_has_accepted_times, [batch_size, max_len, num_sample]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_thinning.EventSampler.draw_next_time_one_step">
+<span class="sig-name descname"><span class="pre">draw_next_time_one_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtime_boundary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_last_step_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler.draw_next_time_one_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler.draw_next_time_one_step" title="Permalink to this definition"></a></dt>
+<dd><p>Compute next event time based on Thinning algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], timestamp seqs.</p></li>
+<li><p><strong>time_delta_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
+<li><p><strong>event_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
+<li><p><strong>dtime_boundary</strong> (<em>tensor</em>) – [batch_size, seq_len], dtime upper bound.</p></li>
+<li><p><strong>intensity_fn</strong> (<em>fn</em>) – a function to compute the intensity.</p></li>
+<li><p><strong>compute_last_step_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to compute last event timestep only. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>next event time prediction and weight.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="easy_tpp.model.torch_model.torch_attnhp.html" class="btn btn-neutral float-left" title="easy_tpp.model.torch_model.torch_attnhp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../ref/runner.html" class="btn btn-neutral float-right" title="EasyTPP Model Runner Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

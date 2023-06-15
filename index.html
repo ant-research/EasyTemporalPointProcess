@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyTPP Documentation &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="get_started/introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="easytpp-documentation">
+<h1><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> Documentation<a class="headerlink" href="#easytpp-documentation" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> is an easy-to-use development and application toolkit for <a class="reference external" href="https://mathworld.wolfram.com/TemporalPointProcess.html">Neural Temporal Point Process</a> (<em>Neural TPP</em>), with key features in configurability, compatibility and reproducibility. We hope this project could benefit both researchers and practitioners with the goal of easily customized development and open benchmarking.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get_started/introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="get_started/introduction.html#framework">Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started/introduction.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started/introduction.html#prepare-data">Prepare Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started/introduction.html#model-training-and-prediction">Model Training and Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="get_started/install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="get_started/install.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started/install.html#install">Install</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="get_started/quick_start.html">Qucick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="get_started/quick_start.html#download-dataset">Download Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started/quick_start.html#setup-the-configuration-file">Setup the configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started/quick_start.html#train-the-model">Train the Model</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/dataset.html">Dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/dataset.html#required-format">Required format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/dataset.html#data-processing">Data processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/run_train_pipeline.html">Model Training</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/run_train_pipeline.html#step-1-setup-the-config-file-containing-data-and-model-configs">Step 1: Setup the config file containing data and model configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/run_train_pipeline.html#step-2-run-the-training-script">Step 2: Run the training script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/run_train_pipeline.html#checkout-the-output">Checkout the output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/run_eval.html">Model Prediction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/run_eval.html#step-1-setup-the-data-and-model-config-files">Step 1: Setup the data and model config files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/run_eval.html#step-2-run-the-evaluation-script">Step 2: Run the evaluation script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/run_eval.html#checkout-the-output">Checkout the output</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev_guide/model_custom.html">Model Customization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dev_guide/model_custom.html#create-a-new-tpp-model-class">Create a new TPP Model Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev_guide/model_custom.html#rewrite-relevant-methods">Rewrite Relevant Methods</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="advanced/thinning_algo.html">Thinning Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced/thinning_algo.html#the-implementation-of-the-algorithm">The implementation of the algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/thinning_algo.html#one-step-prediction">One-step prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/thinning_algo.html#multi-step-prediction">Multi-step prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced/tensorboard.html">Tensorboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced/tensorboard.html#step-1-activate-the-usage-of-tensorboard-in-config-file">Step 1: Activate the usage of tensorboard in Config file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/tensorboard.html#step-2-launching-the-tensorboard">Step 2: Launching the tensorboard</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced/performance_valid.html">Performance Benchmarks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced/performance_valid.html#simulated-dataset">Simulated dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced/implementation.html">Implementation Details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#basic-structure">Basic structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#neural-hawkes-process-nhp">Neural Hawkes Process (NHP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#attentive-neural-hawkes-process-attnhp">Attentive Neural Hawkes Process (AttNHP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#transformer-hawkes-process-thp">Transformer Hawkes Process (THP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#self-attentive-hawkes-process-sahp">Self-Attentive Hawkes Process (SAHP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#recurrent-marked-temporal-point-processes-rmtpp">Recurrent Marked Temporal Point Processes (RMTPP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#intensity-free-learning-of-temporal-point-process-intensityfree">Intensity Free Learning of Temporal Point Process (IntensityFree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#fully-neural-network-based-model-for-general-temporal-point-processes-fullynn">Fully Neural Network based Model for General Temporal Point Processes (FullyNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#ode-based-temporal-point-process-odetpp">ODE-based Temporal Point Process (ODETPP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/implementation.html#attentive-neural-hawkes-network-anhn">Attentive Neural Hawkes Network (ANHN)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ref/config.html"> Config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#config_factory.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#config_factory.DataConfig"><code class="docutils literal notranslate"><span class="pre">DataConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#config_factory.DataSpecConfig"><code class="docutils literal notranslate"><span class="pre">DataSpecConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#config_factory.ModelConfig"><code class="docutils literal notranslate"><span class="pre">ModelConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#config_factory.BaseConfig"><code class="docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#config_factory.RunnerConfig"><code class="docutils literal notranslate"><span class="pre">RunnerConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#config_factory.HPOConfig"><code class="docutils literal notranslate"><span class="pre">HPOConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#config_factory.HPORunnerConfig"><code class="docutils literal notranslate"><span class="pre">HPORunnerConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ref/preprocess.html"> Preprocess</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#easy_tpp.preprocess.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#easy_tpp.preprocess.TPPDataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.preprocess.data_collator.html">easy_tpp.preprocess.data_collator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.preprocess.data_loader.html">easy_tpp.preprocess.data_loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.preprocess.dataset.html">easy_tpp.preprocess.dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.preprocess.event_tokenizer.html">easy_tpp.preprocess.event_tokenizer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ref/models.html"> Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/models.html#module-easy_tpp.model.tf_model">model.tf_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/models.html#module-easy_tpp.model.torch_model">model.torch_model module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ref/runner.html"> Runner</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/runner.html#runner.Runner"><code class="docutils literal notranslate"><span class="pre">Runner</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/runner.html#runner.TPPRunner"><code class="docutils literal notranslate"><span class="pre">TPPRunner</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/wrapper.html"> Tf and Torch Wrapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/wrapper.html#tf_wrapper.TfModelWrapper"><code class="docutils literal notranslate"><span class="pre">TfModelWrapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/wrapper.html#torch_wrapper.TorchModelWrapper"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ref/utils.html"> Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.py_assert"><code class="docutils literal notranslate"><span class="pre">py_assert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.make_config_string"><code class="docutils literal notranslate"><span class="pre">make_config_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.create_folder"><code class="docutils literal notranslate"><span class="pre">create_folder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.save_yaml_config"><code class="docutils literal notranslate"><span class="pre">save_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.load_yaml_config"><code class="docutils literal notranslate"><span class="pre">load_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.RunnerPhase"><code class="docutils literal notranslate"><span class="pre">RunnerPhase</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.LogConst"><code class="docutils literal notranslate"><span class="pre">LogConst</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.has_key"><code class="docutils literal notranslate"><span class="pre">has_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.array_pad_cols"><code class="docutils literal notranslate"><span class="pre">array_pad_cols()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.MetricsTracker"><code class="docutils literal notranslate"><span class="pre">MetricsTracker</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.set_device"><code class="docutils literal notranslate"><span class="pre">set_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.set_optimizer"><code class="docutils literal notranslate"><span class="pre">set_optimizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.count_model_params"><code class="docutils literal notranslate"><span class="pre">count_model_params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.Registrable"><code class="docutils literal notranslate"><span class="pre">Registrable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.concat_element"><code class="docutils literal notranslate"><span class="pre">concat_element()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.parse_uri_to_protocol_and_path"><code class="docutils literal notranslate"><span class="pre">parse_uri_to_protocol_and_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.is_master_process"><code class="docutils literal notranslate"><span class="pre">is_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.is_local_master_process"><code class="docutils literal notranslate"><span class="pre">is_local_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.dict_deep_update"><code class="docutils literal notranslate"><span class="pre">dict_deep_update()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.rk4_step_method"><code class="docutils literal notranslate"><span class="pre">rk4_step_method()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.PaddingStrategy"><code class="docutils literal notranslate"><span class="pre">PaddingStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.ExplicitEnum"><code class="docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.TruncationStrategy"><code class="docutils literal notranslate"><span class="pre">TruncationStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.is_torch_device"><code class="docutils literal notranslate"><span class="pre">is_torch_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.is_numpy_array"><code class="docutils literal notranslate"><span class="pre">is_numpy_array()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.const.html">easy_tpp.utils.const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.generic.html">easy_tpp.utils.generic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.import_utils.html">easy_tpp.utils.import_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.log_utils.html">easy_tpp.utils.log_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.metrics.html">easy_tpp.utils.metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.misc.html">easy_tpp.utils.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.ode_utils.html">easy_tpp.utils.ode_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.registrable.html">easy_tpp.utils.registrable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.multiprocess_utils.html">easy_tpp.utils.multiprocess_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.tf_utils.html">easy_tpp.utils.tf_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.torch_utils.html">easy_tpp.utils.torch_utils</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get_started/introduction.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

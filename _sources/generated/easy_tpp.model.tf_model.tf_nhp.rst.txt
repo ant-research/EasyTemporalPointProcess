@@ -1,0 +1,30 @@
+﻿easy\_tpp.model.tf\_model.tf\_nhp
+=================================
+
+.. automodule:: easy_tpp.model.tf_model.tf_nhp
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ContTimeLSTMCell
+      NHP
+   
+   
+
+   
+   
+   
+
+
+

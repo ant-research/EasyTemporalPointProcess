@@ -1,0 +1,29 @@
+﻿easy\_tpp.model.tf\_model.tf\_attnhp
+====================================
+
+.. automodule:: easy_tpp.model.tf_model.tf_attnhp
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AttNHP
+   
+   
+
+   
+   
+   
+
+
+

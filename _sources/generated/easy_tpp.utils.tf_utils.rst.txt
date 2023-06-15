@@ -1,0 +1,36 @@
+﻿easy\_tpp.utils.tf\_utils
+=========================
+
+.. automodule:: easy_tpp.utils.tf_utils
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      count_model_params
+      create_tensor
+      get_shape_list
+      set_device
+      set_optimizer
+      set_seed
+      swap_axes
+      tensordot
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

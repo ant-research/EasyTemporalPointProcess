@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.utils.multiprocess_utils &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.utils.multiprocess_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.utils.multiprocess_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="is_master_process"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.multiprocess_utils.is_master_process">[docs]</a><span class="k">def</span> <span class="nf">is_master_process</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Check if the process is the master process in all machines.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rank</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;RANK&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;RANK&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="is_local_master_process"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.multiprocess_utils.is_local_master_process">[docs]</a><span class="k">def</span> <span class="nf">is_local_master_process</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Check if the process is the master process in the local machine.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rank</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;RANK&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;RANK&#39;</span><span class="p">))</span>
+    <span class="n">local_world_size</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;LOCAL_WORLD_SIZE&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;LOCAL_WORLD_SIZE&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">local_world_size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">rank</span> <span class="o">%</span> <span class="n">local_world_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="get_now_timestamp_id"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.multiprocess_utils.html#easy_tpp.utils.multiprocess_utils.get_now_timestamp_id">[docs]</a><span class="k">def</span> <span class="nf">get_now_timestamp_id</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Get the current timestamp string.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A string like yyMMdd_hhmmss</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">datetime</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%y%m</span><span class="si">%d</span><span class="s1">-%H%M%S&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_unique_id"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.multiprocess_utils.html#easy_tpp.utils.multiprocess_utils.get_unique_id">[docs]</a><span class="k">def</span> <span class="nf">get_unique_id</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Generate a unique id string based on process id (pid), thread id and timestamp.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Unique id: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">import</span> <span class="nn">threading</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+    <span class="n">tid</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">currentThread</span><span class="p">()</span><span class="o">.</span><span class="n">ident</span>
+    <span class="n">ts_id</span> <span class="o">=</span> <span class="n">get_now_timestamp_id</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">ts_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="parse_uri_to_protocol_and_path"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.multiprocess_utils.parse_uri_to_protocol_and_path">[docs]</a><span class="k">def</span> <span class="nf">parse_uri_to_protocol_and_path</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Parse a uri into two parts, protocol and path. Set &#39;file&#39; as default protocol when lack protocol.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uri: str</span>
+<span class="sd">            The uri to identify a resource, whose format is like &#39;protocol://uri&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Protocol: str. The method to access the resource.</span>
+<span class="sd">        URI: str. The location of the resource.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">uri</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;://&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">protocol</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">protocol</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wrong url format: </span><span class="si">{</span><span class="n">uri</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">path</span></div>
+
+
+<div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.multiprocess_utils.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count the elapsing time between start and end.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Timer.__init__"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.multiprocess_utils.Timer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">):</span>
+        <span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">unit</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span> <span class="o">=</span> <span class="mi">60</span>
+        <span class="k">elif</span> <span class="n">unit</span> <span class="o">==</span> <span class="s1">&#39;h&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span> <span class="o">=</span> <span class="mi">1440</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Unknown unit:&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+        <span class="c1"># default start time is set to the time the object initialized</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span>
+        <span class="c1"># reset the start time using the end time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">end_time</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%.3f%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span></div>
+
+
+<span class="c1"># -------------------------- Singleton Object --------------------------</span>
+<span class="n">default_timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

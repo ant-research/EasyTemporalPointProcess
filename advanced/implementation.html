@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model Implementation Details &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EasyTPP Config Modules" href="../ref/config.html" />
+    <link rel="prev" title="Performance validation of EasyTPP models" href="performance_valid.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Implementation Details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-structure">Basic structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#computing-the-loglikelihood-of-non-pad-event-sequence">Computing the loglikelihood of non-pad event sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#computing-the-integral-inside-the-loglikelihood">Computing the integral inside the loglikelihood</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#neural-hawkes-process-nhp">Neural Hawkes Process (NHP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attentive-neural-hawkes-process-attnhp">Attentive Neural Hawkes Process (AttNHP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transformer-hawkes-process-thp">Transformer Hawkes Process (THP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#self-attentive-hawkes-process-sahp">Self-Attentive Hawkes Process (SAHP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recurrent-marked-temporal-point-processes-rmtpp">Recurrent Marked Temporal Point Processes (RMTPP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intensity-free-learning-of-temporal-point-process-intensityfree">Intensity Free Learning of Temporal Point Process (IntensityFree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fully-neural-network-based-model-for-general-temporal-point-processes-fullynn">Fully Neural Network based Model for General Temporal Point Processes (FullyNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ode-based-temporal-point-process-odetpp">ODE-based Temporal Point Process (ODETPP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attentive-neural-hawkes-network-anhn">Attentive Neural Hawkes Network (ANHN)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Model Implementation Details</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/advanced/implementation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="model-implementation-details">
+<h1>Model Implementation Details<a class="headerlink" href="#model-implementation-details" title="Permalink to this heading"></a></h1>
+<section id="basic-structure">
+<h2>Basic structure<a class="headerlink" href="#basic-structure" title="Permalink to this heading"></a></h2>
+<p>In the model folder, <cite>torch_basemodel</cite> (<strong>/model/torch_model/torch_basemodel.py</strong>) / <cite>tf_basemodel</cite> (<strong>/model/tf_model/tf_basemodel.py</strong>) implements functionalities of computing loglikelihood and sampling procedures that are common
+to all the TPP models. In the inherited class, models with specific structures are defined, explained in below sections.</p>
+<section id="computing-the-loglikelihood-of-non-pad-event-sequence">
+<h3>Computing the loglikelihood of non-pad event sequence<a class="headerlink" href="#computing-the-loglikelihood-of-non-pad-event-sequence" title="Permalink to this heading"></a></h3>
+<p>The loglikelihood computation, following the definition in Equation 8 of <a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process</a>, is shared by all the TPP models.</p>
+<dl class="simple">
+<dt>it takes <cite>time_delta_seqs</cite>, <cite>lambda_at_event</cite>, <cite>lambdas_loss_samples</cite>, <cite>seq_mask</cite>,</dt><dd><p><cite>lambda_type_mask</cite> as the input and output the loglikelihood items, please see  <cite>torch_basemodel</cite> (<strong>/model/torch_model/torch_basemodel.py</strong>) / <cite>tf_basemodel</cite> (<strong>/model/tf_model/tf_basemodel.py</strong>)</p>
+</dd>
+</dl>
+<p>for details.</p>
+<p>It is noted that:</p>
+<p>1. Sequential prediction: because we performance sequential prediction, i.e., predict next one given previous, we do not consider the last one as it has no labels. To implement the <cite>forward</cite> function, we take input of <cite>time_seqs[:, :-1]</cite>
+and <cite>type_seqs[:, :-1]</cite>. For <cite>time_delta_seqs</cite> it is different; please see the next point.</p>
+<p>2. Continuous-time evolution: recall the definition in [dataset](./dataset.rst), assume we have a sequence of 4 events and 1 pad event
+at the end, i.e.,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>index:<span class="w">          </span><span class="m">0</span>,<span class="w">          </span><span class="m">1</span>,<span class="w">         </span><span class="m">2</span>,<span class="w">         </span><span class="m">3</span>，<span class="w">     </span><span class="m">4</span>
+dtimes:<span class="w">         </span><span class="m">0</span>，<span class="w">     </span>t_1-t_0,<span class="w">    </span>t_2-t_1,<span class="w">   </span>t_3-t_2,<span class="w">  </span>pad
+types:<span class="w">          </span>e_0,<span class="w">      </span>e_1,<span class="w">        </span>e_2,<span class="w">       </span>e_3，<span class="w">   </span>pad
+non_pad_mask:<span class="w">  </span>True,<span class="w">      </span>True,<span class="w">      </span>True,<span class="w">      </span>True,<span class="w">   </span>False
+</pre></div>
+</div>
+<p>For the i-th event, i-th dtime denotes the time evolution (e.g., decay in NHP) to the current event and
+(i+1)-th dtime denotes the time evolution to the next event. To compute the non-event loglikelihood,
+we should consider the time evolution after the event happens. Therefore we should use <cite>type_delta_seqs[:, 1:]</cite> with masks specified in the below step.</p>
+<p>3. Masking: suppose we have predictions of 0,1,2,3-th event and their labels are 1,2,3,4-th events
+where $4$-th event needed to be masked. So we should set the sequence mask as <cite>True, True, True, False</cite>, i.e., <cite>seq_mask=batch_non_pad_mask[:, 1:]</cite>.
+The same logic applies to the attention mask and event type mask.</p>
+<p>Therefore the following code is a typical example of calling the loglikelihood computation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">event_ll</span><span class="p">,</span> <span class="n">non_event_ll</span><span class="p">,</span> <span class="n">num_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_loglikelihood</span><span class="p">(</span><span class="n">lambda_at_event</span><span class="o">=</span><span class="n">lambda_at_event</span><span class="p">,</span> <span class="c1"># seq_len = max_len - 1</span>
+                                                                <span class="n">lambdas_loss_samples</span><span class="o">=</span><span class="n">lambda_t_sample</span><span class="p">,</span> <span class="c1"># seq_len = max_len - 1</span>
+                                                                <span class="n">time_delta_seq</span><span class="o">=</span><span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
+                                                                <span class="n">seq_mask</span><span class="o">=</span><span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
+                                                                <span class="n">lambda_type_mask</span><span class="o">=</span><span class="n">type_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+</section>
+<section id="computing-the-integral-inside-the-loglikelihood">
+<h3>Computing the integral inside the loglikelihood<a class="headerlink" href="#computing-the-integral-inside-the-loglikelihood" title="Permalink to this heading"></a></h3>
+<p>The loglikelihood of the parameters is the sum of the log-intensities of the events that happened, at the times they happened,
+minus an integral of the total intensities over the observation interval over [0,T]:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{t_i}\log \lambda_{k_i}(t_i) - \int_0^T \lambda(t) dt\]</div>
+<p>The first term refers to event loglikelihood and the second term (including the negative sign) refers to the non-event loglikelihood.</p>
+</section>
+</section>
+<section id="neural-hawkes-process-nhp">
+<h2>Neural Hawkes Process (NHP)<a class="headerlink" href="#neural-hawkes-process-nhp" title="Permalink to this heading"></a></h2>
+<p>We implement NHP based on author’s official pytorch code <a class="reference external" href="https://github.com/hongyuanmei/nce-mpp/blob/main/ncempp/models/nhp.py">Github:nce-mpp</a>.</p>
+<ol class="arabic simple">
+<li><p>A continuous-time LSTM is introduced, with the code mainly come from <a class="reference external" href="https://github.com/hongyuanmei/nce-mpp/blob/main/ncempp/models/nhp.py">Github:nce-mpp</a>.</p></li>
+<li><p>A <cite>forward</cite> function in NHP class that recursively update the states: we compute the event embedding, pass to the LSTM cell and then decay afterwards. Noted that for i-th event, we should use (i+1)-th dt for the decay. So we do not consider the last event as it has no decay time.</p></li>
+</ol>
+</section>
+<section id="attentive-neural-hawkes-process-attnhp">
+<h2>Attentive Neural Hawkes Process (AttNHP)<a class="headerlink" href="#attentive-neural-hawkes-process-attnhp" title="Permalink to this heading"></a></h2>
+<p>We implement AttNHP based on the authors’ official pytorch code <a class="reference external" href="https://github.com/yangalan123/anhp-andtt">Github:anhp-andtt</a>
+and similar to NHP, we factorize it into based model and inherited model.</p>
+<p>The forward functions is implemented faithfully to that of the author’s repo.</p>
+</section>
+<section id="transformer-hawkes-process-thp">
+<h2>Transformer Hawkes Process (THP)<a class="headerlink" href="#transformer-hawkes-process-thp" title="Permalink to this heading"></a></h2>
+<p>We implement THP based on a fixed version of pytorch code <a class="reference external" href="https://github.com/yangalan123/anhp-andtt/tree/master/thp">Github:anhp-andtt/thp</a>
+and we factorize it into based model and inherited model.</p>
+</section>
+<section id="self-attentive-hawkes-process-sahp">
+<h2>Self-Attentive Hawkes Process (SAHP)<a class="headerlink" href="#self-attentive-hawkes-process-sahp" title="Permalink to this heading"></a></h2>
+<p>We implement SAHP based on a fixed version of pytorch code <a class="reference external" href="https://github.com/yangalan123/anhp-andtt/tree/master/sahp">Github:anhp-andtt/sahp</a>
+and we factorize it into based model and inherited model.</p>
+<p><cite>SAHP</cite> basically shares very similar structure to that of <cite>THP</cite>.</p>
+</section>
+<section id="recurrent-marked-temporal-point-processes-rmtpp">
+<h2>Recurrent Marked Temporal Point Processes (RMTPP)<a class="headerlink" href="#recurrent-marked-temporal-point-processes-rmtpp" title="Permalink to this heading"></a></h2>
+<p>We implement RMTPP faithfully to the author’s paper.</p>
+</section>
+<section id="intensity-free-learning-of-temporal-point-process-intensityfree">
+<h2>Intensity Free Learning of Temporal Point Process (IntensityFree)<a class="headerlink" href="#intensity-free-learning-of-temporal-point-process-intensityfree" title="Permalink to this heading"></a></h2>
+<p>We implement the model based on the author’s torch code <a class="reference external" href="https://github.com/shchur/ifl-tpp">Github:ifl-tpp</a>.</p>
+<p>A small difference between our implementation and the author’s is we ignore the <cite>context_init</cite> (the initial state of the RNN) because in our data setup, we do not need a learnable initial RNN state. This modification generally makes little impact on the learning process.</p>
+<p>It is worth noting that the thinning algorithm can not be applied to this model because it is intensity-free. When comparing the performance of the model, we only look at its log-likelihood learning curve.</p>
+</section>
+<section id="fully-neural-network-based-model-for-general-temporal-point-processes-fullynn">
+<h2>Fully Neural Network based Model for General Temporal Point Processes (FullyNN)<a class="headerlink" href="#fully-neural-network-based-model-for-general-temporal-point-processes-fullynn" title="Permalink to this heading"></a></h2>
+<p>We implement the model based on the author’s keras code <a class="reference external" href="https://github.com/omitakahiro/NeuralNetworkPointProcess">Github:NeuralNetworkPointProcess</a>.</p>
+</section>
+<section id="ode-based-temporal-point-process-odetpp">
+<h2>ODE-based Temporal Point Process (ODETPP)<a class="headerlink" href="#ode-based-temporal-point-process-odetpp" title="Permalink to this heading"></a></h2>
+<p>We implement a TPP with Neural ODE state evolution, which is a simplified version of <a class="reference external" href="https://arxiv.org/abs/2011.04583">Neural Spatio-Temporal Point Processes</a>. The ODE implementation uses the code from the <a class="reference external" href="https://msurtsukov.github.io/Neural-ODE/">blog</a></p>
+</section>
+<section id="attentive-neural-hawkes-network-anhn">
+<h2>Attentive Neural Hawkes Network (ANHN)<a class="headerlink" href="#attentive-neural-hawkes-network-anhn" title="Permalink to this heading"></a></h2>
+<p>We implement the model based on the author’s paper: the attentive model without the graph regularizer is named ANHN.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="performance_valid.html" class="btn btn-neutral float-left" title="Performance validation of EasyTPP models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../ref/config.html" class="btn btn-neutral float-right" title="EasyTPP Config Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

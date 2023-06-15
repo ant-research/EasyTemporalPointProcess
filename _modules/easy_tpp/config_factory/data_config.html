@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.config_factory.data_config &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.config_factory.data_config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.config_factory.data_config</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">easy_tpp.config_factory.config</span> <span class="kn">import</span> <span class="n">Config</span>
+
+
+<div class="viewcode-block" id="DataSpecConfig"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataSpecConfig">[docs]</a><span class="k">class</span> <span class="nc">DataSpecConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
+<div class="viewcode-block" id="DataSpecConfig.__init__"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataSpecConfig.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the Config class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;num_event_types&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pad_token_id&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;padding_side&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;truncation_side&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;padding_strategy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_len&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">truncation_strategy</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;truncation_strategy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types_pad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model_input_names&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Padding side should be selected between &#39;right&#39; and &#39;left&#39;, current value: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Truncation side should be selected between &#39;right&#39; and &#39;left&#39;, current value: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataSpecConfig.get_yaml_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataSpecConfig.get_yaml_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_yaml_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the config in dict (yaml compatible) format.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: config of the data specs in dict format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;num_event_types&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">,</span>
+            <span class="s1">&#39;pad_token_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">,</span>
+            <span class="s1">&#39;padding_side&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span><span class="p">,</span>
+            <span class="s1">&#39;truncation_side&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span><span class="p">,</span>
+            <span class="s1">&#39;padding_strategy&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_strategy</span><span class="p">,</span>
+            <span class="s1">&#39;truncation_strategy&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">truncation_strategy</span><span class="p">,</span>
+            <span class="s1">&#39;max_len&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="DataSpecConfig.parse_from_yaml_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataSpecConfig.parse_from_yaml_config">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse from the yaml to generate the config object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            yaml_config (dict): configs from yaml file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DataSpecConfig: Config class for data specs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DataSpecConfig</span><span class="p">(</span><span class="o">**</span><span class="n">yaml_config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataSpecConfig.copy"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataSpecConfig.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy the config.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DataSpecConfig: a copy of current config.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DataSpecConfig</span><span class="p">(</span><span class="n">num_event_types_pad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_event_types_pad</span><span class="p">,</span>
+                              <span class="n">num_event_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">,</span>
+                              <span class="n">event_pad_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">,</span>
+                              <span class="n">padding_side</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span><span class="p">,</span>
+                              <span class="n">truncation_side</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span><span class="p">,</span>
+                              <span class="n">padding_strategy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_strategy</span><span class="p">,</span>
+                              <span class="n">truncation_strategy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">truncation_strategy</span><span class="p">,</span>
+                              <span class="n">max_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DataConfig"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataConfig">[docs]</a><span class="k">class</span> <span class="nc">DataConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
+<div class="viewcode-block" id="DataConfig.__init__"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataConfig.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">valid_dir</span><span class="p">,</span> <span class="n">test_dir</span><span class="p">,</span> <span class="n">specs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the DataConfig object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_dir (str): dir of tran set.</span>
+<span class="sd">            valid_dir (str): dir of valid set.</span>
+<span class="sd">            test_dir (str): dir of test set.</span>
+<span class="sd">            specs (dict, optional): specs of dataset. Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_dir</span> <span class="o">=</span> <span class="n">train_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span> <span class="o">=</span> <span class="n">valid_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_dir</span> <span class="o">=</span> <span class="n">test_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_specs</span> <span class="o">=</span> <span class="n">specs</span> <span class="ow">or</span> <span class="n">DataSpecConfig</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="n">train_dir</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DataConfig.get_yaml_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataConfig.get_yaml_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_yaml_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the config in dict (yaml compatible) format.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: config of the data in dict format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;train_dir&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_dir</span><span class="p">,</span>
+            <span class="s1">&#39;valid_dir&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">,</span>
+            <span class="s1">&#39;test_dir&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_dir</span><span class="p">,</span>
+            <span class="s1">&#39;data_format&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span>
+            <span class="s1">&#39;data_specs&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_specs</span><span class="o">.</span><span class="n">get_yaml_config</span><span class="p">(),</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="DataConfig.parse_from_yaml_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataConfig.parse_from_yaml_config">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse from the yaml to generate the config object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            yaml_config (dict): configs from yaml file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EasyTPP.DataConfig: Config class for data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DataConfig</span><span class="p">(</span>
+            <span class="n">train_dir</span><span class="o">=</span><span class="n">yaml_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;train_dir&#39;</span><span class="p">),</span>
+            <span class="n">valid_dir</span><span class="o">=</span><span class="n">yaml_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;valid_dir&#39;</span><span class="p">),</span>
+            <span class="n">test_dir</span><span class="o">=</span><span class="n">yaml_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;test_dir&#39;</span><span class="p">),</span>
+            <span class="n">specs</span><span class="o">=</span><span class="n">DataSpecConfig</span><span class="o">.</span><span class="n">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_specs&#39;</span><span class="p">))</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataConfig.copy"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataConfig.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy the config.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EasyTPP.DataConfig: a copy of current config.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DataConfig</span><span class="p">(</span><span class="n">train_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_dir</span><span class="p">,</span>
+                          <span class="n">valid_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">,</span>
+                          <span class="n">test_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_dir</span><span class="p">,</span>
+                          <span class="n">specs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_specs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataConfig.get_data_dir"><a class="viewcode-back" href="../../../ref/config.html#config_factory.DataConfig.get_data_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the dir of the source raw data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            split (str): dataset split notation, &#39;train&#39;, &#39;dev&#39; or &#39;valid&#39;, &#39;test&#39;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: dir of the source raw data file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">split</span> <span class="o">=</span> <span class="n">split</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">split</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_dir</span>
+        <span class="k">elif</span> <span class="n">split</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="s1">&#39;valid&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_dir</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

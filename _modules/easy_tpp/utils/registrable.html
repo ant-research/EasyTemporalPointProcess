@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.utils.registrable &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.utils.registrable</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.utils.registrable</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">.log_utils</span> <span class="kn">import</span> <span class="n">default_logger</span> <span class="k">as</span> <span class="n">logger</span>
+
+
+<div class="viewcode-block" id="Registrable"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable">[docs]</a><span class="k">class</span> <span class="nc">Registrable</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Any class that inherits from ``Registrable`` gains access to a named registry for its subclasses. To register them, just decorate them with the classmethod ``@BaseClass.register(name)``.</span>
+
+<span class="sd">    After which you can call ``BaseClass.list_available()`` to get the keys for the registered subclasses, and ``BaseClass.by_name(name)`` to get the corresponding subclass.</span>
+
+<span class="sd">    Note that the registry stores the subclasses themselves; not class instances. In most cases you would then call ``from_params(params)`` on the returned subclass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_registry</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">_default_impl</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Registrable.register"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable.register">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">constructor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a class under a particular name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name to register the class under.</span>
+<span class="sd">            constructor (str): optional (default=None)</span>
+<span class="sd">                The name of the method to use on the class to construct the object.  If this is given,</span>
+<span class="sd">                we will use this method (which must be a ``@classmethod``) instead of the default</span>
+<span class="sd">                constructor.</span>
+<span class="sd">            overwrite (bool) : optional (default=False)</span>
+<span class="sd">                If True, overwrites any existing models registered under ``name``. Else,</span>
+<span class="sd">                throws an error if a model is already registered under ``name``.</span>
+
+<span class="sd">        # Examples</span>
+<span class="sd">        To use this class, you would typically have a base class that inherits from ``Registrable``:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        class Transform(Registrable):</span>
+<span class="sd">            ...</span>
+<span class="sd">        ```</span>
+<span class="sd">        Then, if you want to register a subclass, you decorate it like this:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        @Transform.register(&quot;shift-transform&quot;)</span>
+<span class="sd">        class ShiftTransform(Transform):</span>
+<span class="sd">            def __init__(self, param1: int, param2: str):</span>
+<span class="sd">                ...</span>
+<span class="sd">        ```</span>
+<span class="sd">        Registering a class like this will let you instantiate a class from a config file, where you</span>
+<span class="sd">        give ``&quot;type&quot;: &quot;shift-transform&quot;``, and keys corresponding to the parameters of the ``__init__``</span>
+<span class="sd">        method (note that for this to work, those parameters must have type annotations).</span>
+<span class="sd">        If you want to have the instantiation from a config file call a method other than the</span>
+<span class="sd">        constructor, either because you have several different construction paths that could be</span>
+<span class="sd">        taken for the same object (as we do in ``Transform``) or because you have logic you want to</span>
+<span class="sd">        happen before you get to the constructor, you can register a specific ``@classmethod`` as the constructor to use, like this:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        @Transform.register(&quot;shift-transform-from-instances&quot;, constructor=&quot;from_instances&quot;)</span>
+<span class="sd">        @Transform.register(&quot;shift-transform-from-files&quot;, constructor=&quot;from_files&quot;)</span>
+<span class="sd">        class ShiftTransform(Transform):</span>
+<span class="sd">            def __init__(self, some_params):</span>
+<span class="sd">                ...</span>
+<span class="sd">            @classmethod</span>
+<span class="sd">            def from_instances(cls, some_other_params) -&gt; ShiftTransform:</span>
+<span class="sd">                ...  # construct some_params from instances</span>
+<span class="sd">                return cls(some_params)</span>
+<span class="sd">            @classmethod</span>
+<span class="sd">            def from_files(cls, still_other_params) -&gt; ShiftTransform:</span>
+<span class="sd">                ...  # construct some_params from files</span>
+<span class="sd">                return cls(some_params)</span>
+<span class="sd">        ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">registry</span> <span class="o">=</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">add_subclass_to_registry</span><span class="p">(</span><span class="n">subclass</span><span class="p">):</span>
+            <span class="c1"># Add to registry, raise an error if key has already been used.</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> has already been registered as </span><span class="si">{</span><span class="n">registry</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, but &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;overwrite=True, so overwriting with </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Cannot register </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> as </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">; &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;name already in use for </span><span class="si">{</span><span class="n">registry</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">registry</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">subclass</span>
+
+        <span class="k">return</span> <span class="n">add_subclass_to_registry</span></div>
+
+<div class="viewcode-block" id="Registrable.by_name"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable.by_name">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">by_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a callable function that constructs an argument of the registered class.  Because</span>
+<span class="sd">        you can register particular functions as constructors for specific names, this isn&#39;t</span>
+<span class="sd">        necessarily the ``__init__`` method of some class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;instantiating registered subclass </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">resolve_class_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">constructor</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">subclass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Registrable.resolve_class_name"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable.resolve_class_name">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">resolve_class_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the subclass that corresponds to the given ``name``, along with the name of the</span>
+<span class="sd">        method that was registered as a constructor for that ``name``, if any.</span>
+<span class="sd">        This method also allows ``name`` to be a fully-specified module name, instead of a name that</span>
+<span class="sd">        was already added to the ``Registry``.  In that case, you cannot use a separate function as</span>
+<span class="sd">        a constructor (as you need to call ``cls.register()`` in order to tell us what separate</span>
+<span class="sd">        function to use).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]:</span>
+            <span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span> <span class="o">=</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">base_cls</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
+                    <span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span> <span class="o">=</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="n">base_cls</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span>
+
+        <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="c1"># This might be a fully qualified class name, so we&#39;ll try importing its &quot;module&quot;</span>
+            <span class="c1"># and finding it there.</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+            <span class="n">submodule</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">class_name</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="kn">import</span> <span class="nn">importlib</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">submodule</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;tried to interpret </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> as a path to a class &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;but unable to import module </span><span class="si">{</span><span class="n">submodule</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">subclass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+                <span class="n">constructor</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">return</span> <span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;tried to interpret </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> as a path to a class &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;but unable to find class </span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">submodule</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># is not a qualified class name</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not a registered name for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;You probably need to use the --include-package flag &quot;</span>
+                <span class="s2">&quot;to load your custom code. Alternatively, you can specify your choices &quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;using fully-qualified paths, e.g. {&quot;model&quot;: &quot;my_module.models.MyModel&quot;} &quot;&quot;&quot;</span>
+                <span class="s2">&quot;in which case they will be automatically imported correctly.&quot;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Registrable.list_available"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable.list_available">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">list_available</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List default first if it exists&quot;&quot;&quot;</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_default_impl</span>
+
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">keys</span>
+        <span class="k">elif</span> <span class="n">default</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Default implementation </span><span class="si">{</span><span class="n">default</span><span class="si">}</span><span class="s2"> is not registered&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">default</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">default</span><span class="p">]</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">registry_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

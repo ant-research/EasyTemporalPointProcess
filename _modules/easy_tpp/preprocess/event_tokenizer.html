@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.preprocess.event_tokenizer &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.preprocess.event_tokenizer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.preprocess.event_tokenizer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">UserDict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Mapping</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">is_torch_available</span><span class="p">,</span> <span class="n">is_tf_available</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">TruncationStrategy</span><span class="p">,</span> <span class="n">PaddingStrategy</span><span class="p">,</span> \
+    <span class="n">TensorType</span><span class="p">,</span> <span class="n">is_torch_device</span><span class="p">,</span> <span class="n">requires_backends</span><span class="p">,</span> <span class="n">is_numpy_array</span><span class="p">,</span> <span class="n">py_assert</span>
+
+
+<div class="viewcode-block" id="BatchEncoding"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding">[docs]</a><span class="k">class</span> <span class="nc">BatchEncoding</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Holds the output of the [`~event_tokenizer.EventTokenizer.__call__`],</span>
+<span class="sd">    [`~event_tokenizer.EventTokenizer.encode_plus`] methods (tokens, attention_masks, etc).</span>
+
+<span class="sd">    This class is derived from a python dictionary and can be used as a dictionary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (`dict`):</span>
+<span class="sd">            Dictionary of lists/arrays/tensors returned by the `__call__`/`encode_plus`/`batch_encode_plus` methods</span>
+<span class="sd">            (&#39;input_ids&#39;, &#39;attention_mask&#39;, etc.).</span>
+<span class="sd">        tensor_type (`Union[None, str, TensorType]`, *optional*):</span>
+<span class="sd">            You can give a tensor_type here to convert the lists of integers in PyTorch/TensorFlow/Numpy Tensors at</span>
+<span class="sd">            initialization.</span>
+<span class="sd">        prepend_batch_axis (`bool`, *optional*, defaults to `False`):</span>
+<span class="sd">            Whether or not to add a batch axis when converting to tensors (see `tensor_type` above).</span>
+<span class="sd">        n_sequences (`Optional[int]`, *optional*):</span>
+<span class="sd">            You can give a tensor_type here to convert the lists of integers in PyTorch/TensorFlow/Numpy Tensors at</span>
+<span class="sd">            initialization.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BatchEncoding.__init__"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">tensor_type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">TensorType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">prepend_batch_axis</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">tensor_type</span><span class="o">=</span><span class="n">tensor_type</span><span class="p">,</span> <span class="n">prepend_batch_axis</span><span class="o">=</span><span class="n">prepend_batch_axis</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BatchEncoding.keys"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.keys">[docs]</a>    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BatchEncoding.values"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.values">[docs]</a>    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="BatchEncoding.items"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.items">[docs]</a>    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BatchEncoding.convert_to_tensors"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.convert_to_tensors">[docs]</a>    <span class="k">def</span> <span class="nf">convert_to_tensors</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">tensor_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TensorType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">prepend_batch_axis</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the inner content to tensors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tensor_type (`str` or [`~utils.TensorType`], *optional*):</span>
+<span class="sd">                The type of tensors to use. If `str`, should be one of the values of the enum [`~utils.TensorType`]. If</span>
+<span class="sd">                `None`, no modification is done.</span>
+<span class="sd">            prepend_batch_axis (`int`, *optional*, defaults to `False`):</span>
+<span class="sd">                Whether or not to add the batch dimension during the conversion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tensor_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="c1"># Convert to TensorType</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tensor_type</span><span class="p">,</span> <span class="n">TensorType</span><span class="p">):</span>
+            <span class="n">tensor_type</span> <span class="o">=</span> <span class="n">TensorType</span><span class="p">(</span><span class="n">tensor_type</span><span class="p">)</span>
+
+        <span class="c1"># Get a function reference for the correct framework</span>
+        <span class="k">if</span> <span class="n">tensor_type</span> <span class="o">==</span> <span class="n">TensorType</span><span class="o">.</span><span class="n">TENSORFLOW</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_tf_available</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unable to convert output to TensorFlow tensors format, TensorFlow is not installed.&quot;</span>
+                <span class="p">)</span>
+            <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+            <span class="n">as_tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span>
+            <span class="n">is_tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">is_tensor</span>
+        <span class="k">elif</span> <span class="n">tensor_type</span> <span class="o">==</span> <span class="n">TensorType</span><span class="o">.</span><span class="n">PYTORCH</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_torch_available</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Unable to convert output to PyTorch tensors format, PyTorch is not installed.&quot;</span><span class="p">)</span>
+            <span class="kn">import</span> <span class="nn">torch</span>
+
+            <span class="n">as_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span>
+            <span class="n">is_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_tensor</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">as_tensor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span>
+            <span class="n">is_tensor</span> <span class="o">=</span> <span class="n">is_numpy_array</span>
+
+        <span class="c1"># Do the tensor conversion in batch</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">prepend_batch_axis</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_tensor</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                    <span class="n">tensor</span> <span class="o">=</span> <span class="n">as_tensor</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tensor</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;overflowing_tokens&quot;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;Unable to create tensor returning overflowing tokens of different lengths. &quot;</span>
+                        <span class="s2">&quot;Please see if a fast version of this tokenizer is available to have this feature available.&quot;</span>
+                    <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unable to create tensor, you should probably activate truncation and/or padding with&quot;</span>
+                    <span class="s2">&quot; &#39;padding=True&#39; &#39;truncation=True&#39; to have batched tensors with the same length. Perhaps your&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot; features (`</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">` in this case) have excessive nesting (inputs type `list` where type `int` is&quot;</span>
+                    <span class="s2">&quot; expected).&quot;</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="BatchEncoding.to"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.to">[docs]</a>    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;torch.device&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;BatchEncoding&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send all values to device by calling `v.to(device)` (PyTorch only).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device (`str` or `torch.device`): The device to put the tensors on.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [`BatchEncoding`]: The same instance after modification.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">requires_backends</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;torch&quot;</span><span class="p">])</span>
+
+        <span class="c1"># This check catches things like APEX blindly calling &quot;to&quot; on all inputs to a module</span>
+        <span class="c1"># Otherwise it passes the casts down and casts the LongTensor containing the token idxs</span>
+        <span class="c1"># into a HalfTensor</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_torch_device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to cast a BatchEncoding to type </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="si">}</span><span class="s2">. This is not supported.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+
+<div class="viewcode-block" id="EventTokenizer"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer">[docs]</a><span class="k">class</span> <span class="nc">EventTokenizer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for tokenizer event sequences, vendored from huggingface/transformer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">padding_side</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span>
+    <span class="n">truncation_side</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span>
+    <span class="n">model_input_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;time_seqs&quot;</span><span class="p">,</span> <span class="s2">&quot;time_delta_seqs&quot;</span><span class="p">,</span> <span class="s2">&quot;type_seqs&quot;</span><span class="p">,</span> <span class="s2">&quot;seq_non_pad_mask&quot;</span><span class="p">,</span> <span class="s2">&quot;attention_mask&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;type_mask&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="EventTokenizer.__init__"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">num_event_types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">pad_token_id</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_max_length</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">max_len</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">padding_strategy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">truncation_strategy</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">truncation_strategy</span>
+
+        <span class="c1"># Padding and truncation side are right by default and overridden in subclasses. If specified in the kwargs, it</span>
+        <span class="c1"># is changed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;padding_side&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;truncation_side&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;model_input_names&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_padding_truncation_strategies</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="n">padding_strategy</span><span class="p">,</span> <span class="n">truncation_strategy</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="c1"># If you only set max_length, it activates truncation for max_length</span>
+        <span class="k">if</span> <span class="n">max_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">padding</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">truncation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;Truncation was not explicitly activated but `max_length` is provided a specific value, please&quot;</span>
+                    <span class="s2">&quot; use `truncation=True` to explicitly truncate examples to max length. Defaulting to&quot;</span>
+                    <span class="s2">&quot; &#39;longest_first&#39; truncation strategy&quot;</span>
+                <span class="p">)</span>
+            <span class="n">truncation</span> <span class="o">=</span> <span class="s2">&quot;longest_first&quot;</span>
+
+        <span class="c1"># Get padding strategy</span>
+        <span class="k">if</span> <span class="n">padding</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">max_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">LONGEST</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+        <span class="k">elif</span> <span class="n">padding</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">padding</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">max_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span>
+                            <span class="n">truncation</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">truncation</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">or</span> <span class="n">truncation</span> <span class="o">==</span> <span class="s2">&quot;do_not_truncate&quot;</span>
+                    <span class="p">):</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                            <span class="s2">&quot;`max_length` is ignored when `padding`=`True` and there is no truncation strategy. &quot;</span>
+                            <span class="s2">&quot;To pad to max length, use `padding=&#39;max_length&#39;`.&quot;</span>
+                        <span class="p">)</span>
+                <span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">LONGEST</span>  <span class="c1"># Default to pad to the longest sequence in the batch</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="n">PaddingStrategy</span><span class="p">):</span>
+                <span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">PaddingStrategy</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="n">PaddingStrategy</span><span class="p">):</span>
+                <span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">padding</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">DO_NOT_PAD</span>
+
+        <span class="c1"># Get truncation strategy</span>
+        <span class="k">if</span> <span class="n">truncation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">truncation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">truncation</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">truncation_strategy</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">TruncationStrategy</span><span class="o">.</span><span class="n">LONGEST_FIRST</span>
+                <span class="p">)</span>  <span class="c1"># Default to truncate the longest sequences in pairs of inputs</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">truncation</span><span class="p">,</span> <span class="n">TruncationStrategy</span><span class="p">):</span>
+                <span class="n">truncation_strategy</span> <span class="o">=</span> <span class="n">TruncationStrategy</span><span class="p">(</span><span class="n">truncation</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">truncation</span><span class="p">,</span> <span class="n">TruncationStrategy</span><span class="p">):</span>
+                <span class="n">truncation_strategy</span> <span class="o">=</span> <span class="n">truncation</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">truncation_strategy</span> <span class="o">=</span> <span class="n">TruncationStrategy</span><span class="o">.</span><span class="n">DO_NOT_TRUNCATE</span>
+
+        <span class="c1"># Set max length if needed</span>
+        <span class="k">if</span> <span class="n">max_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">padding_strategy</span> <span class="o">==</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">MAX_LENGTH</span><span class="p">:</span>
+                <span class="n">max_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_max_length</span>
+            <span class="k">if</span> <span class="n">truncation_strategy</span> <span class="o">!=</span> <span class="n">TruncationStrategy</span><span class="o">.</span><span class="n">DO_NOT_TRUNCATE</span><span class="p">:</span>
+                <span class="n">max_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_max_length</span>
+
+        <span class="c1"># Test if we have a padding token</span>
+        <span class="k">if</span> <span class="n">padding_strategy</span> <span class="o">!=</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">DO_NOT_PAD</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Asking to pad but the tokenizer does not have a padding token. &quot;</span>
+                <span class="s2">&quot;Please select a token to use as `pad_token` `(tokenizer.pad_token = tokenizer.eos_token e.g.)` &quot;</span>
+                <span class="s2">&quot;or add a new pad token via `tokenizer.add_special_tokens({&#39;pad_token&#39;: &#39;[PAD]&#39;})`.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">padding_strategy</span><span class="p">,</span> <span class="n">truncation_strategy</span><span class="p">,</span> <span class="n">max_length</span><span class="p">,</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">_truncate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                  <span class="n">encoded_inputs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+                                        <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">]],</span>
+                  <span class="n">truncation_strategy</span><span class="p">:</span> <span class="n">TruncationStrategy</span><span class="p">,</span>
+                  <span class="n">truncation_side</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                  <span class="n">max_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">truncation_strategy</span> <span class="o">!=</span> <span class="n">TruncationStrategy</span><span class="o">.</span><span class="n">DO_NOT_TRUNCATE</span><span class="p">:</span>
+            <span class="n">py_assert</span><span class="p">(</span><span class="n">max_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s1">&#39;must pass max_length when truncation is activated!&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">encoded_inputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">seq_</span> <span class="o">=</span> <span class="p">[</span><span class="n">seq</span><span class="p">[:</span><span class="n">max_length</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">v</span><span class="p">]</span> <span class="k">if</span> <span class="n">truncation_side</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span> \
+                    <span class="k">else</span> <span class="p">[</span><span class="n">seq</span><span class="p">[</span><span class="o">-</span><span class="n">max_length</span><span class="p">:]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">v</span><span class="p">]</span>
+                <span class="n">encoded_inputs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">seq_</span>
+
+        <span class="k">return</span> <span class="n">encoded_inputs</span>
+
+<div class="viewcode-block" id="EventTokenizer.pad"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.pad">[docs]</a>    <span class="k">def</span> <span class="nf">pad</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">encoded_inputs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+                <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+                <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span>
+            <span class="p">],</span>
+            <span class="n">padding</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">PaddingStrategy</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">truncation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">TruncationStrategy</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">max_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">return_attention_mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">return_tensors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TensorType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BatchEncoding</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pad a single encoded input or a batch of encoded inputs up to predefined length or to the max sequence length</span>
+<span class="sd">        in the batch.</span>
+
+<span class="sd">        Padding side (left/right) padding token ids are defined at the tokenizer level (with `self.padding_side`,</span>
+<span class="sd">        `self.pad_token_id` and `self.pad_token_type_id`).</span>
+
+<span class="sd">        Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the</span>
+<span class="sd">        text followed by a call to the `pad` method to get a padded encoding.</span>
+
+<span class="sd">        &lt;Tip&gt;</span>
+
+<span class="sd">        If the `encoded_inputs` passed are dictionary of numpy arrays, PyTorch tensors or TensorFlow tensors, the</span>
+<span class="sd">        result will use the same type unless you provide a different tensor type with `return_tensors`. In the case of</span>
+<span class="sd">        PyTorch tensors, you will lose the specific device of your tensors however.</span>
+
+<span class="sd">        &lt;/Tip&gt;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            encoded_inputs ([`BatchEncoding`], list of [`BatchEncoding`]:</span>
+<span class="sd">                Tokenized inputs. Can represent one input ([`BatchEncoding`] or `Dict[str, List[int]]`) or a batch of</span>
+<span class="sd">                tokenized inputs (list of [`BatchEncoding`], *Dict[str, List[List[int]]]* or *List[Dict[str,</span>
+<span class="sd">                List[int]]]*) so you can use this method during preprocessing as well as in a PyTorch Dataloader</span>
+<span class="sd">                collate function.</span>
+
+<span class="sd">                Instead of `List[int]` you can have tensors (numpy arrays, PyTorch tensors or TensorFlow tensors), see</span>
+<span class="sd">                the note above for the return type.</span>
+<span class="sd">            padding (`bool`, `str` or [`~utils.PaddingStrategy`], *optional*, defaults to `True`):</span>
+<span class="sd">                 Select a strategy to pad the returned sequences (according to the model&#39;s padding side and padding</span>
+<span class="sd">                 index) among:</span>
+
+<span class="sd">                - `True` or `&#39;longest&#39;`: Pad to the longest sequence in the batch (or no padding if only a single</span>
+<span class="sd">                  sequence if provided).</span>
+<span class="sd">                - `&#39;max_length&#39;`: Pad to a maximum length specified with the argument `max_length` or to the maximum</span>
+<span class="sd">                  acceptable input length for the model if that argument is not provided.</span>
+<span class="sd">                - `False` or `&#39;do_not_pad&#39;` (default): No padding (i.e., can output a batch with sequences of different</span>
+<span class="sd">                  lengths).</span>
+<span class="sd">            max_length (`int`, *optional*):</span>
+<span class="sd">                Maximum length of the returned list and optionally padding length (see above).</span>
+<span class="sd">            return_attention_mask (`bool`, *optional*):</span>
+<span class="sd">                Whether to return the attention mask. If left to the default, will return the attention mask according</span>
+<span class="sd">                to the specific tokenizer&#39;s default, defined by the `return_outputs` attribute.</span>
+
+<span class="sd">            return_tensors (`str` or [`~utils.TensorType`], *optional*):</span>
+<span class="sd">                If set, will return tensors instead of list of python integers. Acceptable values are:</span>
+
+<span class="sd">                - `&#39;tf&#39;`: Return TensorFlow `tf.constant` objects.</span>
+<span class="sd">                - `&#39;pt&#39;`: Return PyTorch `torch.Tensor` objects.</span>
+<span class="sd">                - `&#39;np&#39;`: Return Numpy `np.ndarray` objects.</span>
+<span class="sd">            verbose (`bool`, *optional*, defaults to `True`):</span>
+<span class="sd">                Whether or not to print more information and warnings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># If we have a list of dicts, let&#39;s convert it in a dict of lists</span>
+        <span class="c1"># We do this to allow using this method as a collate_fn function in PyTorch Dataloader</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoded_inputs</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoded_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="n">encoded_inputs</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">[</span><span class="n">example</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">encoded_inputs</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">encoded_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+
+        <span class="c1"># The model&#39;s main input name, usually `time_seqs`, has be passed for padding</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">encoded_inputs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;You should supply an encoding or a list of encodings to this method &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;that includes </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, but you provided </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">encoded_inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">required_input</span> <span class="o">=</span> <span class="n">encoded_inputs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="n">padding_strategy</span><span class="p">,</span> <span class="n">truncation_strategy</span><span class="p">,</span> <span class="n">max_length</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_padding_truncation_strategies</span><span class="p">(</span>
+            <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="n">max_length</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="n">truncation</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+        <span class="p">)</span>
+
+        <span class="n">encoded_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_truncate</span><span class="p">(</span><span class="n">encoded_inputs</span><span class="p">,</span>
+                                        <span class="n">truncation_strategy</span><span class="o">=</span><span class="n">truncation_strategy</span><span class="p">,</span>
+                                        <span class="n">max_length</span><span class="o">=</span><span class="n">max_length</span><span class="p">,</span>
+                                        <span class="n">truncation_side</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">truncation_side</span><span class="p">)</span>
+
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">required_input</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="n">batch_size</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">encoded_inputs</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="p">),</span> <span class="s2">&quot;Some items in the output dictionary have a different batch size than others.&quot;</span>
+
+        <span class="k">if</span> <span class="n">padding_strategy</span> <span class="o">==</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">LONGEST</span><span class="p">:</span>
+            <span class="n">max_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span> <span class="k">for</span> <span class="n">inputs</span> <span class="ow">in</span> <span class="n">required_input</span><span class="p">)</span>
+            <span class="n">padding_strategy</span> <span class="o">=</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+
+        <span class="n">batch_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad</span><span class="p">(</span>
+            <span class="n">encoded_inputs</span><span class="p">,</span>
+            <span class="n">max_length</span><span class="o">=</span><span class="n">max_length</span><span class="p">,</span>
+            <span class="n">padding_strategy</span><span class="o">=</span><span class="n">padding_strategy</span><span class="p">,</span>
+            <span class="n">return_attention_mask</span><span class="o">=</span><span class="n">return_attention_mask</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">BatchEncoding</span><span class="p">(</span><span class="n">batch_output</span><span class="p">,</span> <span class="n">tensor_type</span><span class="o">=</span><span class="n">return_tensors</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_pad</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">encoded_inputs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">BatchEncoding</span><span class="p">],</span>
+            <span class="n">max_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">padding_strategy</span><span class="p">:</span> <span class="n">PaddingStrategy</span> <span class="o">=</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">DO_NOT_PAD</span><span class="p">,</span>
+            <span class="n">return_attention_mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pad encoded inputs (on left/right and up to predefined length or max length in the batch)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            encoded_inputs:</span>
+<span class="sd">                Dictionary of tokenized inputs (`List[int]`) or batch of tokenized inputs (`List[List[int]]`).</span>
+<span class="sd">            max_length: maximum length of the returned list and optionally padding length (see below).</span>
+<span class="sd">                Will truncate by taking into account the special tokens.</span>
+<span class="sd">            padding_strategy: PaddingStrategy to use for padding.</span>
+
+<span class="sd">                - PaddingStrategy.LONGEST Pad to the longest sequence in the batch</span>
+<span class="sd">                - PaddingStrategy.MAX_LENGTH: Pad to the max length (default)</span>
+<span class="sd">                - PaddingStrategy.DO_NOT_PAD: Do not pad</span>
+<span class="sd">                The tokenizer padding sides are defined in self.padding_side:</span>
+
+<span class="sd">                    - &#39;left&#39;: pads on the left of the sequences</span>
+<span class="sd">                    - &#39;right&#39;: pads on the right of the sequences</span>
+<span class="sd">            pad_to_multiple_of: (optional) Integer if set will pad the sequence to a multiple of the provided value.</span>
+<span class="sd">                This is especially useful to enable the use of Tensor Core on NVIDIA hardware with compute capability</span>
+<span class="sd">                `&gt;= 7.5` (Volta).</span>
+<span class="sd">            return_attention_mask:</span>
+<span class="sd">                (optional) Set to False to avoid returning attention mask (default: set to model specifics)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Load from model defaults</span>
+        <span class="k">if</span> <span class="n">return_attention_mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">return_attention_mask</span> <span class="o">=</span> <span class="s2">&quot;attention_mask&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span>
+
+        <span class="n">required_input</span> <span class="o">=</span> <span class="n">encoded_inputs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="k">if</span> <span class="n">padding_strategy</span> <span class="o">==</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">LONGEST</span><span class="p">:</span>
+            <span class="n">max_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">required_input</span><span class="p">)</span>
+
+        <span class="c1"># check whether we need to pad it</span>
+        <span class="n">is_all_seq_equal_max_length</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_length</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">required_input</span><span class="p">]</span>
+        <span class="n">is_all_seq_equal_max_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">is_all_seq_equal_max_length</span><span class="p">)</span>
+        <span class="n">needs_to_be_padded</span> <span class="o">=</span> <span class="n">padding_strategy</span> <span class="o">!=</span> <span class="n">PaddingStrategy</span><span class="o">.</span><span class="n">DO_NOT_PAD</span> <span class="ow">and</span> <span class="o">~</span><span class="n">is_all_seq_equal_max_length</span>
+
+        <span class="n">batch_output</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">needs_to_be_padded</span><span class="p">:</span>
+            <span class="c1"># time seqs</span>
+            <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_pad_sequence</span><span class="p">(</span><span class="n">encoded_inputs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                                                                             <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">,</span>
+                                                                             <span class="n">padding_side</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span><span class="p">,</span>
+                                                                             <span class="n">max_len</span><span class="o">=</span><span class="n">max_length</span><span class="p">)</span>
+            <span class="c1"># time_delta seqs</span>
+            <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_pad_sequence</span><span class="p">(</span><span class="n">encoded_inputs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                                                                             <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">,</span>
+                                                                             <span class="n">padding_side</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span><span class="p">,</span>
+                                                                             <span class="n">max_len</span><span class="o">=</span><span class="n">max_length</span><span class="p">)</span>
+            <span class="c1"># type_seqs</span>
+            <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_pad_sequence</span><span class="p">(</span><span class="n">encoded_inputs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
+                                                                             <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">,</span>
+                                                                             <span class="n">padding_side</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_side</span><span class="p">,</span>
+                                                                             <span class="n">max_len</span><span class="o">=</span><span class="n">max_length</span><span class="p">,</span>
+                                                                             <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">batch_output</span> <span class="o">=</span> <span class="n">encoded_inputs</span>
+
+        <span class="c1"># non_pad_mask</span>
+        <span class="c1"># we must use type seqs to check the mask, because the pad_token_id maybe one of valid values in</span>
+        <span class="c1"># time seqs</span>
+        <span class="n">seq_pad_mask</span> <span class="o">=</span> <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span>
+        <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span> <span class="o">=</span> <span class="o">~</span> <span class="n">seq_pad_mask</span>
+
+        <span class="k">if</span> <span class="n">return_attention_mask</span><span class="p">:</span>
+            <span class="c1"># attention_mask</span>
+            <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">4</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_attn_mask_for_pad_sequence</span><span class="p">(</span>
+                <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">4</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># type_mask</span>
+        <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">5</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_type_mask_for_pad_sequence</span><span class="p">(</span>
+            <span class="n">batch_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model_input_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+
+        <span class="k">return</span> <span class="n">batch_output</span>
+
+<div class="viewcode-block" id="EventTokenizer.make_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_pad_sequence">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">make_pad_sequence</span><span class="p">(</span><span class="n">seqs</span><span class="p">,</span>
+                          <span class="n">pad_token_id</span><span class="p">,</span>
+                          <span class="n">padding_side</span><span class="p">,</span>
+                          <span class="n">max_len</span><span class="p">,</span>
+                          <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+                          <span class="n">group_by_event_types</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pad the sequence batch-wise.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            seqs (list): list of sequences with variational length</span>
+<span class="sd">            pad_token_id (int, float): optional, a value that used to pad the sequences. If None, then the pad index</span>
+<span class="sd">            is set to be the event_num_with_pad</span>
+<span class="sd">            max_len (int): optional, the maximum length of the sequence after padding. If None, then the</span>
+<span class="sd">            length is set to be the max length of all input sequences.</span>
+<span class="sd">            pad_at_end (bool): optional, whether to pad the sequnce at the end. If False,</span>
+<span class="sd">            the sequence is pad at the beginning</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            a numpy array of padded sequence</span>
+
+
+<span class="sd">        Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        seqs = [[0, 1], [3, 4, 5]]</span>
+<span class="sd">        pad_sequence(seqs, 100)</span>
+<span class="sd">        &gt;&gt;&gt; [[0, 1, 100], [3, 4, 5]]</span>
+
+<span class="sd">        pad_sequence(seqs, 100, max_len=5)</span>
+<span class="sd">        &gt;&gt;&gt; [[0, 1, 100, 100, 100], [3, 4, 5, 100, 100]]</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">group_by_event_types</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">padding_side</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+                <span class="n">pad_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">seq</span> <span class="o">+</span> <span class="p">[</span><span class="n">pad_token_id</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">seqs</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pad_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">pad_token_id</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span> <span class="o">+</span> <span class="n">seq</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">seqs</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pad_seq</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">seqs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">padding_side</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+                    <span class="n">pad_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s</span> <span class="o">+</span> <span class="p">[</span><span class="n">pad_token_id</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pad_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">pad_token_id</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">seqs</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">))</span>
+
+            <span class="n">pad_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pad_seq</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pad_seq</span></div>
+
+<div class="viewcode-block" id="EventTokenizer.make_attn_mask_for_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_attn_mask_for_pad_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">make_attn_mask_for_pad_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pad_seqs</span><span class="p">,</span> <span class="n">pad_token_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Make the attention masks for the sequence.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pad_seqs (tensor): list of sequences that have been padded with fixed length</span>
+<span class="sd">            pad_token_id (int): optional, a value that used to pad the sequences. If None, then the pad index</span>
+<span class="sd">            is set to be the event_num_with_pad</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.array: a bool matrix of the same size of input, denoting the masks of the</span>
+<span class="sd">            sequence (True: non mask, False: mask)</span>
+
+
+<span class="sd">        Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        seqs = [[ 1,  6,  0,  7, 12, 12],</span>
+<span class="sd">        [ 1,  0,  5,  1, 10,  9]]</span>
+<span class="sd">        make_attn_mask_for_pad_sequence(seqs, pad_index=12)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">            batch_non_pad_mask</span>
+<span class="sd">            ([[ True,  True,  True,  True, False, False],</span>
+<span class="sd">            [ True,  True,  True,  True,  True,  True]])</span>
+<span class="sd">            attention_mask</span>
+<span class="sd">            [[[ True  True  True  True  True  True]</span>
+<span class="sd">              [False  True  True  True  True  True]</span>
+<span class="sd">              [False False  True  True  True  True]</span>
+<span class="sd">              [False False False  True  True  True]</span>
+<span class="sd">              [False False False False  True  True]</span>
+<span class="sd">              [False False False False  True  True]]</span>
+
+<span class="sd">             [[ True  True  True  True  True  True]</span>
+<span class="sd">              [False  True  True  True  True  True]</span>
+<span class="sd">              [False False  True  True  True  True]</span>
+<span class="sd">              [False False False  True  True  True]</span>
+<span class="sd">              [False False False False  True  True]</span>
+<span class="sd">              [False False False False False  True]]]</span>
+<span class="sd">        ```</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">seq_num</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="n">pad_seqs</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># [batch_size, seq_len]</span>
+        <span class="n">seq_pad_mask</span> <span class="o">=</span> <span class="n">pad_seqs</span> <span class="o">==</span> <span class="n">pad_token_id</span>
+
+        <span class="c1"># [batch_size, seq_len, seq_len]</span>
+        <span class="n">attention_key_pad_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">seq_pad_mask</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">subsequent_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="p">(</span><span class="n">seq_num</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">subsequent_mask</span> <span class="o">|</span> <span class="n">attention_key_pad_mask</span>
+
+        <span class="k">return</span> <span class="n">attention_mask</span></div>
+
+<div class="viewcode-block" id="EventTokenizer.make_type_mask_for_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_type_mask_for_pad_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">make_type_mask_for_pad_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pad_seqs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Make the type mask.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pad_seqs (tensor): a list of sequence events with equal length (i.e., padded sequence)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.array: a 3-dim matrix, where the last dim (one-hot vector) indicates the type of event</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">type_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="o">*</span><span class="n">pad_seqs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">):</span>
+            <span class="n">type_mask</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pad_seqs</span> <span class="o">==</span> <span class="n">i</span>
+
+        <span class="k">return</span> <span class="n">type_mask</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

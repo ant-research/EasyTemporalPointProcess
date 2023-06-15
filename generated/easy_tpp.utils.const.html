@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.utils.const &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="easy_tpp.utils.generic" href="easy_tpp.utils.generic.html" />
+    <link rel="prev" title="EasyTPP Utilities Modules" href="../ref/utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ref/utils.html"> Utilities</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.py_assert"><code class="docutils literal notranslate"><span class="pre">py_assert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.make_config_string"><code class="docutils literal notranslate"><span class="pre">make_config_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.create_folder"><code class="docutils literal notranslate"><span class="pre">create_folder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.save_yaml_config"><code class="docutils literal notranslate"><span class="pre">save_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.load_yaml_config"><code class="docutils literal notranslate"><span class="pre">load_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.RunnerPhase"><code class="docutils literal notranslate"><span class="pre">RunnerPhase</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.LogConst"><code class="docutils literal notranslate"><span class="pre">LogConst</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.has_key"><code class="docutils literal notranslate"><span class="pre">has_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.array_pad_cols"><code class="docutils literal notranslate"><span class="pre">array_pad_cols()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.MetricsTracker"><code class="docutils literal notranslate"><span class="pre">MetricsTracker</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.set_device"><code class="docutils literal notranslate"><span class="pre">set_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.set_optimizer"><code class="docutils literal notranslate"><span class="pre">set_optimizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.count_model_params"><code class="docutils literal notranslate"><span class="pre">count_model_params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.Registrable"><code class="docutils literal notranslate"><span class="pre">Registrable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.concat_element"><code class="docutils literal notranslate"><span class="pre">concat_element()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.parse_uri_to_protocol_and_path"><code class="docutils literal notranslate"><span class="pre">parse_uri_to_protocol_and_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.is_master_process"><code class="docutils literal notranslate"><span class="pre">is_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.is_local_master_process"><code class="docutils literal notranslate"><span class="pre">is_local_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.dict_deep_update"><code class="docutils literal notranslate"><span class="pre">dict_deep_update()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.rk4_step_method"><code class="docutils literal notranslate"><span class="pre">rk4_step_method()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.PaddingStrategy"><code class="docutils literal notranslate"><span class="pre">PaddingStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.ExplicitEnum"><code class="docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.TruncationStrategy"><code class="docutils literal notranslate"><span class="pre">TruncationStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.is_torch_device"><code class="docutils literal notranslate"><span class="pre">is_torch_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.is_numpy_array"><code class="docutils literal notranslate"><span class="pre">is_numpy_array()</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">easy_tpp.utils.const</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.ExplicitEnum"><code class="docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.PaddingStrategy"><code class="docutils literal notranslate"><span class="pre">PaddingStrategy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.TensorType"><code class="docutils literal notranslate"><span class="pre">TensorType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.RunnerPhase"><code class="docutils literal notranslate"><span class="pre">RunnerPhase</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.LossFunction"><code class="docutils literal notranslate"><span class="pre">LossFunction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.LogConst"><code class="docutils literal notranslate"><span class="pre">LogConst</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.PredOutputIndex"><code class="docutils literal notranslate"><span class="pre">PredOutputIndex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.TruncationStrategy"><code class="docutils literal notranslate"><span class="pre">TruncationStrategy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.const.Backend"><code class="docutils literal notranslate"><span class="pre">Backend</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.generic.html">easy_tpp.utils.generic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.import_utils.html">easy_tpp.utils.import_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.log_utils.html">easy_tpp.utils.log_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.metrics.html">easy_tpp.utils.metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.misc.html">easy_tpp.utils.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.ode_utils.html">easy_tpp.utils.ode_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.registrable.html">easy_tpp.utils.registrable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.multiprocess_utils.html">easy_tpp.utils.multiprocess_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.tf_utils.html">easy_tpp.utils.tf_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.torch_utils.html">easy_tpp.utils.torch_utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../ref/utils.html">EasyTPP Utilities Modules</a></li>
+      <li class="breadcrumb-item active">easy_tpp.utils.const</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/easy_tpp.utils.const.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-easy_tpp.utils.const">
+<span id="easy-tpp-utils-const"></span><h1>easy_tpp.utils.const<a class="headerlink" href="#module-easy_tpp.utils.const" title="Permalink to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.const.Backend" title="easy_tpp.utils.const.Backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Backend</span></code></a>(value)</p></td>
+<td><p>Possible values for the <cite>truncation</cite> argument in [<cite>EventTokenizer.__call__</cite>].</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DefaultRunnerConfig</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.const.ExplicitEnum" title="easy_tpp.utils.const.ExplicitEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a>(value)</p></td>
+<td><p>Enum with more explicit error message for missing values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.utils.const.LogConst" title="easy_tpp.utils.const.LogConst"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogConst</span></code></a>()</p></td>
+<td><p>Format for log handler.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.const.LossFunction" title="easy_tpp.utils.const.LossFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LossFunction</span></code></a>(value)</p></td>
+<td><p>Loss function for neural TPP model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.utils.const.PaddingStrategy" title="easy_tpp.utils.const.PaddingStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PaddingStrategy</span></code></a>(value)</p></td>
+<td><p>Possible values for the <cite>padding</cite> argument in [<cite>EventTokenizer.__call__</cite>].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.const.PredOutputIndex" title="easy_tpp.utils.const.PredOutputIndex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredOutputIndex</span></code></a>()</p></td>
+<td><p>Positional index for the output tuple in ModelRunner.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.utils.const.RunnerPhase" title="easy_tpp.utils.const.RunnerPhase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RunnerPhase</span></code></a>(value)</p></td>
+<td><p>Model runner phase enum.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.const.TensorType" title="easy_tpp.utils.const.TensorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TensorType</span></code></a>(value)</p></td>
+<td><p>Possible values for the <cite>return_tensors</cite> argument in [<cite>EventTokenizerBase.__call__</cite>].</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.utils.const.TruncationStrategy" title="easy_tpp.utils.const.TruncationStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TruncationStrategy</span></code></a>(value)</p></td>
+<td><p>Possible values for the <cite>truncation</cite> argument in [<cite>EventTokenizer.__call__</cite>].</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.ExplicitEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">ExplicitEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#ExplicitEnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.ExplicitEnum" title="Permalink to this definition"></a></dt>
+<dd><p>Enum with more explicit error message for missing values.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.PaddingStrategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">PaddingStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#PaddingStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.PaddingStrategy" title="Permalink to this definition"></a></dt>
+<dd><p>Possible values for the <cite>padding</cite> argument in [<cite>EventTokenizer.__call__</cite>]. Useful for tab-completion in an
+IDE.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.TensorType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">TensorType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#TensorType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.TensorType" title="Permalink to this definition"></a></dt>
+<dd><p>Possible values for the <cite>return_tensors</cite> argument in [<cite>EventTokenizerBase.__call__</cite>]. Useful for
+tab-completion in an IDE.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.RunnerPhase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">RunnerPhase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#RunnerPhase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.RunnerPhase" title="Permalink to this definition"></a></dt>
+<dd><p>Model runner phase enum.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.LossFunction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">LossFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#LossFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.LossFunction" title="Permalink to this definition"></a></dt>
+<dd><p>Loss function for neural TPP model.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.LogConst">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">LogConst</span></span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#LogConst"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.LogConst" title="Permalink to this definition"></a></dt>
+<dd><p>Format for log handler.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.PredOutputIndex">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">PredOutputIndex</span></span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#PredOutputIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.PredOutputIndex" title="Permalink to this definition"></a></dt>
+<dd><p>Positional index for the output tuple in ModelRunner.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.TruncationStrategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">TruncationStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#TruncationStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.TruncationStrategy" title="Permalink to this definition"></a></dt>
+<dd><p>Possible values for the <cite>truncation</cite> argument in [<cite>EventTokenizer.__call__</cite>]. Useful for tab-completion in
+an IDE.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.const.Backend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.const.</span></span><span class="sig-name descname"><span class="pre">Backend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#Backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.const.Backend" title="Permalink to this definition"></a></dt>
+<dd><p>Possible values for the <cite>truncation</cite> argument in [<cite>EventTokenizer.__call__</cite>]. Useful for tab-completion in
+an IDE.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../ref/utils.html" class="btn btn-neutral float-left" title="EasyTPP Utilities Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="easy_tpp.utils.generic.html" class="btn btn-neutral float-right" title="easy_tpp.utils.generic" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

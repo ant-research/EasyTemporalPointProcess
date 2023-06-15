@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.config_factory.config &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.config_factory.config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.config_factory.config</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">save_yaml_config</span><span class="p">,</span> <span class="n">load_yaml_config</span><span class="p">,</span> <span class="n">Registrable</span><span class="p">,</span> <span class="n">logger</span>
+
+
+<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="n">Registrable</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Config.save_to_yaml_file"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.save_to_yaml_file">[docs]</a>    <span class="k">def</span> <span class="nf">save_to_yaml_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save the config into the yaml file &#39;fn&#39;.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fn (str): Target filename.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">yaml_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_yaml_config</span><span class="p">()</span>
+        <span class="n">save_yaml_config</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">yaml_config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Config.build_from_yaml_file"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.build_from_yaml_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">build_from_yaml_file</span><span class="p">(</span><span class="n">yaml_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load yaml config file from disk.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            yaml_fn (str): Path of the yaml config file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EasyTPP.Config: Config object corresponding to cls.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">load_yaml_config</span><span class="p">(</span><span class="n">yaml_fn</span><span class="p">)</span>
+        <span class="n">pipeline_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pipeline_config_id&#39;</span><span class="p">)</span>
+        <span class="n">runner_cls</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="n">pipeline_config</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load pipeline config class </span><span class="si">{</span><span class="n">runner_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">runner_cls</span><span class="o">.</span><span class="n">parse_from_yaml_config</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Config.get_yaml_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.get_yaml_config">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_yaml_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the yaml format config from self.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Config.parse_from_yaml_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.parse_from_yaml_config">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse from the yaml to generate the config object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            yaml_config (dict): configs from yaml file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EasyTPP.Config: Config class for data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Config.copy"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.copy">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a same and freely modifiable copy of self.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Str representation of the config.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: str representation of the dict format of the config.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_yaml_config</span><span class="p">())</span>
+
+<div class="viewcode-block" id="Config.update"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (dict): config dict.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EasyTPP.Config: Config class for data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Update config class </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_from_yaml_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Config.pop"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default_var</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;pop out the key-value item from the config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): key name.</span>
+<span class="sd">            default_var (Any): default value to pop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: value to pop.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">default_var</span></div>
+
+<div class="viewcode-block" id="Config.get"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default_var</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the key-value item from the config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): key name.</span>
+<span class="sd">            default_var (Any): default value to pop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: value to get.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">key</span><span class="p">]</span> <span class="ow">or</span> <span class="n">default_var</span></div>
+
+<div class="viewcode-block" id="Config.set"><a class="viewcode-back" href="../../../ref/config.html#config_factory.Config.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">var_to_set</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the key-value item from the config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): key name.</span>
+<span class="sd">            var_to_set (Any): default value to pop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: value to get.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">var_to_set</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

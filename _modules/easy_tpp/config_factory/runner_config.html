@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.config_factory.runner_config &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.config_factory.runner_config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.config_factory.runner_config</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">easy_tpp.config_factory.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.config_factory.data_config</span> <span class="kn">import</span> <span class="n">DataConfig</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.config_factory.model_config</span> <span class="kn">import</span> <span class="n">TrainerConfig</span><span class="p">,</span> <span class="n">ModelConfig</span><span class="p">,</span> <span class="n">BaseConfig</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">create_folder</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">get_unique_id</span><span class="p">,</span> <span class="n">get_stage</span><span class="p">,</span> <span class="n">RunnerPhase</span><span class="p">,</span> \
+    <span class="n">MetricsHelper</span><span class="p">,</span> <span class="n">DefaultRunnerConfig</span><span class="p">,</span> <span class="n">py_assert</span><span class="p">,</span> <span class="n">is_torch_available</span><span class="p">,</span> <span class="n">is_tf_available</span><span class="p">,</span> <span class="n">is_tf_gpu_available</span><span class="p">,</span> \
+    <span class="n">is_torch_gpu_available</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.utils.const</span> <span class="kn">import</span> <span class="n">Backend</span>
+
+
+<div class="viewcode-block" id="RunnerConfig"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig">[docs]</a><span class="nd">@Config</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;runner_config&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">RunnerConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
+<div class="viewcode-block" id="RunnerConfig.__init__"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_config</span><span class="p">,</span> <span class="n">model_config</span><span class="p">,</span> <span class="n">data_config</span><span class="p">,</span> <span class="n">trainer_config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the Config class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            base_config (EasyTPP.BaseConfig): BaseConfig object.</span>
+<span class="sd">            model_config (EasyTPP.ModelConfig): ModelConfig object.</span>
+<span class="sd">            data_config (EasyTPP.DataConfig): DataConfig object.</span>
+<span class="sd">            trainer_config (EasyTPP.TrainerConfig): TrainerConfig object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_config</span> <span class="o">=</span> <span class="n">data_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span> <span class="o">=</span> <span class="n">model_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span> <span class="o">=</span> <span class="n">base_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainer_config</span> <span class="o">=</span> <span class="n">trainer_config</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensure_valid_config</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_config</span><span class="p">()</span>
+
+        <span class="c1"># save the complete config</span>
+        <span class="n">save_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">specs</span><span class="p">[</span><span class="s1">&#39;output_config_dir&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_to_yaml_file</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Save the config to </span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RunnerConfig.get_yaml_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig.get_yaml_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_yaml_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the config in dict (yaml compatible) format.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: config of the runner config in dict format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;data_config&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="o">.</span><span class="n">get_yaml_config</span><span class="p">(),</span>
+                <span class="s1">&#39;base_config&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">get_yaml_config</span><span class="p">(),</span>
+                <span class="s1">&#39;model_config&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get_yaml_config</span><span class="p">(),</span>
+                <span class="s1">&#39;trainer_config&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer_config</span><span class="o">.</span><span class="n">get_yaml_config</span><span class="p">()}</span></div>
+
+<div class="viewcode-block" id="RunnerConfig.parse_from_yaml_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig.parse_from_yaml_config">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse from the yaml to generate the config object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            yaml_config (dict): configs from yaml file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            RunnerConfig: Config class for trainer specs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">direct_parse</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;direct_parse&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">direct_parse</span><span class="p">:</span>
+            <span class="n">exp_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;experiment_id&#39;</span><span class="p">)</span>
+            <span class="n">yaml_exp_config</span> <span class="o">=</span> <span class="n">yaml_config</span><span class="p">[</span><span class="n">exp_id</span><span class="p">]</span>
+            <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">yaml_exp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;base_config&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dataset_id&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dataset_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">DefaultRunnerConfig</span><span class="o">.</span><span class="n">DEFAULT_DATASET_ID</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">yaml_data_config</span> <span class="o">=</span> <span class="n">yaml_config</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">dataset_id</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;dataset_id=</span><span class="si">{}</span><span class="s1"> is not found in config.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">))</span>
+
+            <span class="n">data_config</span> <span class="o">=</span> <span class="n">DataConfig</span><span class="o">.</span><span class="n">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_data_config</span><span class="p">)</span>
+            <span class="c1"># add exp id to base config</span>
+            <span class="n">yaml_exp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;base_config&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="n">exp_id</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">yaml_exp_config</span> <span class="o">=</span> <span class="n">yaml_config</span>
+            <span class="n">data_config</span> <span class="o">=</span> <span class="n">DataConfig</span><span class="o">.</span><span class="n">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_exp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_config&#39;</span><span class="p">))</span>
+
+        <span class="n">base_config</span> <span class="o">=</span> <span class="n">BaseConfig</span><span class="o">.</span><span class="n">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_exp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;base_config&#39;</span><span class="p">))</span>
+        <span class="n">model_config</span> <span class="o">=</span> <span class="n">ModelConfig</span><span class="o">.</span><span class="n">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_exp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model_config&#39;</span><span class="p">))</span>
+        <span class="n">trainer_config</span> <span class="o">=</span> <span class="n">TrainerConfig</span><span class="o">.</span><span class="n">parse_from_yaml_config</span><span class="p">(</span><span class="n">yaml_exp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;trainer_config&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">RunnerConfig</span><span class="p">(</span>
+            <span class="n">data_config</span><span class="o">=</span><span class="n">data_config</span><span class="p">,</span>
+            <span class="n">base_config</span><span class="o">=</span><span class="n">base_config</span><span class="p">,</span>
+            <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span><span class="p">,</span>
+            <span class="n">trainer_config</span><span class="o">=</span><span class="n">trainer_config</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="RunnerConfig.ensure_valid_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig.ensure_valid_config">[docs]</a>    <span class="k">def</span> <span class="nf">ensure_valid_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do some sanity check about the config, to avoid conflicts in settings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># during testing we dont do shuffle by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainer_config</span><span class="o">.</span><span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># during testing we dont apply tfb by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainer_config</span><span class="o">.</span><span class="n">use_tfb</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="RunnerConfig.update_config"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig.update_config">[docs]</a>    <span class="k">def</span> <span class="nf">update_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updated config dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model_folder_name</span> <span class="o">=</span> <span class="n">get_unique_id</span><span class="p">()</span>
+
+        <span class="n">log_folder</span> <span class="o">=</span> <span class="n">create_folder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">model_folder_name</span><span class="p">)</span>
+        <span class="n">model_folder</span> <span class="o">=</span> <span class="n">create_folder</span><span class="p">(</span><span class="n">log_folder</span><span class="p">,</span> <span class="s1">&#39;models&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">specs</span><span class="p">[</span><span class="s1">&#39;log_folder&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">specs</span><span class="p">[</span><span class="s1">&#39;saved_model_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_folder</span><span class="p">,</span> <span class="s1">&#39;saved_model&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">specs</span><span class="p">[</span><span class="s1">&#39;saved_log_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_folder</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">specs</span><span class="p">[</span><span class="s1">&#39;output_config_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_folder</span><span class="p">,</span>
+                                                                   <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">exp_id</span><span class="si">}</span><span class="s1">_output.yaml&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer_config</span><span class="o">.</span><span class="n">use_tfb</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">specs</span><span class="p">[</span><span class="s1">&#39;tfb_train_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_folder</span><span class="p">(</span><span class="n">log_folder</span><span class="p">,</span> <span class="s1">&#39;tfb_train&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">specs</span><span class="p">[</span><span class="s1">&#39;tfb_valid_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_folder</span><span class="p">(</span><span class="n">log_folder</span><span class="p">,</span> <span class="s1">&#39;tfb_valid&#39;</span><span class="p">)</span>
+
+        <span class="n">current_stage</span> <span class="o">=</span> <span class="n">get_stage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">stage</span><span class="p">)</span>
+        <span class="n">is_training</span> <span class="o">=</span> <span class="n">current_stage</span> <span class="o">==</span> <span class="n">RunnerPhase</span><span class="o">.</span><span class="n">TRAIN</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">is_training</span> <span class="o">=</span> <span class="n">is_training</span>
+
+        <span class="c1"># update the dataset config =&gt; model config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">num_event_types_pad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="o">.</span><span class="n">data_specs</span><span class="o">.</span><span class="n">num_event_types_pad</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">num_event_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="o">.</span><span class="n">data_specs</span><span class="o">.</span><span class="n">num_event_types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">pad_token_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="o">.</span><span class="n">data_specs</span><span class="o">.</span><span class="n">pad_token_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">max_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="o">.</span><span class="n">data_specs</span><span class="o">.</span><span class="n">max_len</span>
+
+        <span class="c1"># update base config =&gt; model config</span>
+        <span class="n">model_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">model_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">model_id</span> <span class="o">=</span> <span class="n">model_id</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;ODETPP&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="n">Backend</span><span class="o">.</span><span class="n">TF</span><span class="p">:</span>
+            <span class="n">py_assert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="o">.</span><span class="n">data_specs</span><span class="o">.</span><span class="n">padding_strategy</span> <span class="o">==</span> <span class="s1">&#39;max_length&#39;</span><span class="p">,</span>
+                      <span class="ne">ValueError</span><span class="p">,</span>
+                      <span class="s1">&#39;For ODETPP in TensorFlow, we must pad all sequence to &#39;</span>
+                      <span class="s1">&#39;the same length (max len of the sequences)!&#39;</span><span class="p">)</span>
+
+        <span class="n">run</span> <span class="o">=</span> <span class="n">current_stage</span>
+        <span class="n">use_torch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="n">Backend</span><span class="o">.</span><span class="n">Torch</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;GPU&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer_config</span><span class="o">.</span><span class="n">gpu</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;CPU&#39;</span>
+
+        <span class="n">py_assert</span><span class="p">(</span><span class="n">is_torch_available</span><span class="p">()</span> <span class="k">if</span> <span class="n">use_torch</span> <span class="k">else</span> <span class="n">is_tf_available</span><span class="p">(),</span> <span class="ne">ValueError</span><span class="p">,</span>
+                  <span class="sa">f</span><span class="s1">&#39;Backend </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s1"> is not supported in the current environment yet !&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">use_torch</span> <span class="ow">and</span> <span class="n">device</span> <span class="o">==</span> <span class="s1">&#39;GPU&#39;</span><span class="p">:</span>
+            <span class="n">py_assert</span><span class="p">(</span><span class="n">is_torch_gpu_available</span><span class="p">(),</span>
+                      <span class="ne">ValueError</span><span class="p">,</span>
+                      <span class="sa">f</span><span class="s1">&#39;Torch cuda is not supported in the current environment yet!&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">use_torch</span> <span class="ow">and</span> <span class="n">device</span> <span class="o">==</span> <span class="s1">&#39;GPU&#39;</span><span class="p">:</span>
+            <span class="n">py_assert</span><span class="p">(</span><span class="n">is_tf_gpu_available</span><span class="p">(),</span>
+                      <span class="ne">ValueError</span><span class="p">,</span>
+                      <span class="sa">f</span><span class="s1">&#39;Tensorflow GPU is not supported in the current environment yet!&#39;</span><span class="p">)</span>
+
+        <span class="n">critical_msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{run}</span><span class="s1"> model </span><span class="si">{model_name}</span><span class="s1"> using </span><span class="si">{device}</span><span class="s1"> &#39;</span> \
+                       <span class="s1">&#39;with </span><span class="si">{tf_torch}</span><span class="s1"> backend&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span>
+                                                        <span class="n">model_name</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
+                                                        <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+                                                        <span class="n">tf_torch</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">backend</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">critical_msg</span><span class="p">)</span>
+
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="RunnerConfig.get_metric_functions"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig.get_metric_functions">[docs]</a>    <span class="k">def</span> <span class="nf">get_metric_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">get_metrics_callback_from_names</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer_config</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RunnerConfig.get_metric_direction"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig.get_metric_direction">[docs]</a>    <span class="k">def</span> <span class="nf">get_metric_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="o">=</span><span class="s1">&#39;rmse&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">get_metric_direction</span><span class="p">(</span><span class="n">metric_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RunnerConfig.copy"><a class="viewcode-back" href="../../../ref/config.html#config_factory.RunnerConfig.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy the config.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            RunnerConfig: a copy of current config.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">RunnerConfig</span><span class="p">(</span>
+            <span class="n">base_config</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_config</span><span class="p">),</span>
+            <span class="n">model_config</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="p">),</span>
+            <span class="n">data_config</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="p">),</span>
+            <span class="n">trainer_config</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer_config</span><span class="p">)</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

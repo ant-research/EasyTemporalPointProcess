@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Launching the Tensorboard &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Performance validation of EasyTPP models" href="performance_valid.html" />
+    <link rel="prev" title="Thinning Algorithm for Sampling Event Sequence" href="thinning_algo.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tensorboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-activate-the-usage-of-tensorboard-in-config-file">Step 1: Activate the usage of tensorboard in Config file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-launching-the-tensorboard">Step 2: Launching the tensorboard</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Launching the Tensorboard</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/advanced/tensorboard.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="launching-the-tensorboard">
+<h1>Launching the Tensorboard<a class="headerlink" href="#launching-the-tensorboard" title="Permalink to this heading"></a></h1>
+<p>Here we present how to launch the tensorboard within the  <code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> framework.</p>
+<section id="step-1-activate-the-usage-of-tensorboard-in-config-file">
+<h2>Step 1: Activate the usage of tensorboard in Config file<a class="headerlink" href="#step-1-activate-the-usage-of-tensorboard-in-config-file" title="Permalink to this heading"></a></h2>
+<p>As shown in <a class="reference external" href="../get_started/run_train_pipeline.html">Training Pipeline</a>, we need to firstly initialize the ‘model_config.yaml’ file to setup the running config before training or evaluating the model.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">config</span></code> (<cite>modeling</cite> attribute of the config), one needs to set <code class="docutils literal notranslate"><span class="pre">use_tfb</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> in <cite>trainer</cite>. Then before the running process, summary writers tracking the performance on training and valid sets are both initialized.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">NHP_train</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">base_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">train</span>
+<span class="w">    </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch</span>
+<span class="w">    </span><span class="nt">dataset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">taxi</span>
+<span class="w">    </span><span class="nt">runner_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">std_tpp</span>
+<span class="w">    </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NHP</span><span class="w"> </span><span class="c1"># model name</span>
+<span class="w">    </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;./checkpoints/&#39;</span>
+<span class="w">  </span><span class="nt">trainer_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
+<span class="w">    </span><span class="nt">max_epoch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
+<span class="w">    </span><span class="nt">shuffle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">optimizer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">adam</span>
+<span class="w">    </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.e-3</span>
+<span class="w">    </span><span class="nt">valid_freq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">use_tfb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w">  </span><span class="c1"># Activate the tensorboard</span>
+<span class="w">    </span><span class="nt">metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&#39;acc&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;rmse&#39;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2019</span>
+<span class="w">    </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span>
+<span class="w">  </span><span class="nt">model_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">hidden_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
+<span class="w">    </span><span class="nt">loss_integral_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="c1">#    pretrained_model_dir: ./checkpoints/75518_4377527680_230530-132355/models/saved_model</span>
+<span class="w">    </span><span class="nt">thinning</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">num_seq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">      </span><span class="nt">num_sample</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">num_exp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w"> </span><span class="c1"># number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm</span>
+<span class="w">      </span><span class="nt">look_ahead_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">      </span><span class="nt">patience_counter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"> </span><span class="c1"># the maximum iteration used in adaptive thinning</span>
+<span class="w">      </span><span class="nt">over_sample_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">num_samples_boundary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">dtime_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">num_step_gen</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-launching-the-tensorboard">
+<h2>Step 2: Launching the tensorboard<a class="headerlink" href="#step-2-launching-the-tensorboard" title="Permalink to this heading"></a></h2>
+<p>We simply go to the output file of the training runner (its directory is specified in <cite>base_dir</cite> of <code class="docutils literal notranslate"><span class="pre">base_config</span></code>), find out the tensorboard file address and launch it.</p>
+<p>A complete example of using tensorboard can be seen at <em>examples/run_tensorboard.py</em>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># one can find this dir in the config out file</span>
+    <span class="n">log_dir</span> <span class="o">=</span> <span class="s1">&#39;./checkpoints/NHP_train_taxi_20220527-20:18:30/tfb_train&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;tensorboard --logdir=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">log_dir</span><span class="p">))</span>
+    <span class="k">return</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="thinning_algo.html" class="btn btn-neutral float-left" title="Thinning Algorithm for Sampling Event Sequence" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="performance_valid.html" class="btn btn-neutral float-right" title="Performance validation of EasyTPP models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿easy\_tpp.model.torch\_model.torch\_thinning
+============================================
+
+.. automodule:: easy_tpp.model.torch_model.torch_thinning
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      EventSampler
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,29 @@
+﻿easy\_tpp.model.torch\_model.torch\_basemodel
+=============================================
+
+.. automodule:: easy_tpp.model.torch_model.torch_basemodel
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      TorchBaseModel
+   
+   
+
+   
+   
+   
+
+
+

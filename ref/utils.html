@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyTPP Utilities Modules &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="easy_tpp.utils.const" href="../generated/easy_tpp.utils.const.html" />
+    <link rel="prev" title="EasyTPP Tf and Torch Wrapper Modules" href="wrapper.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.py_assert"><code class="docutils literal notranslate"><span class="pre">py_assert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.make_config_string"><code class="docutils literal notranslate"><span class="pre">make_config_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.create_folder"><code class="docutils literal notranslate"><span class="pre">create_folder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.save_yaml_config"><code class="docutils literal notranslate"><span class="pre">save_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.load_yaml_config"><code class="docutils literal notranslate"><span class="pre">load_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.RunnerPhase"><code class="docutils literal notranslate"><span class="pre">RunnerPhase</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.LogConst"><code class="docutils literal notranslate"><span class="pre">LogConst</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.has_key"><code class="docutils literal notranslate"><span class="pre">has_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.array_pad_cols"><code class="docutils literal notranslate"><span class="pre">array_pad_cols()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.MetricsTracker"><code class="docutils literal notranslate"><span class="pre">MetricsTracker</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.MetricsTracker.__init__"><code class="docutils literal notranslate"><span class="pre">MetricsTracker.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.MetricsTracker.update_best"><code class="docutils literal notranslate"><span class="pre">MetricsTracker.update_best()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.set_device"><code class="docutils literal notranslate"><span class="pre">set_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.set_optimizer"><code class="docutils literal notranslate"><span class="pre">set_optimizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.count_model_params"><code class="docutils literal notranslate"><span class="pre">count_model_params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.Registrable"><code class="docutils literal notranslate"><span class="pre">Registrable</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.Registrable.register"><code class="docutils literal notranslate"><span class="pre">Registrable.register()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.Registrable.by_name"><code class="docutils literal notranslate"><span class="pre">Registrable.by_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.Registrable.resolve_class_name"><code class="docutils literal notranslate"><span class="pre">Registrable.resolve_class_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.Registrable.list_available"><code class="docutils literal notranslate"><span class="pre">Registrable.list_available()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.Timer.__init__"><code class="docutils literal notranslate"><span class="pre">Timer.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.concat_element"><code class="docutils literal notranslate"><span class="pre">concat_element()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.parse_uri_to_protocol_and_path"><code class="docutils literal notranslate"><span class="pre">parse_uri_to_protocol_and_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.is_master_process"><code class="docutils literal notranslate"><span class="pre">is_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.is_local_master_process"><code class="docutils literal notranslate"><span class="pre">is_local_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.dict_deep_update"><code class="docutils literal notranslate"><span class="pre">dict_deep_update()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.rk4_step_method"><code class="docutils literal notranslate"><span class="pre">rk4_step_method()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.PaddingStrategy"><code class="docutils literal notranslate"><span class="pre">PaddingStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.ExplicitEnum"><code class="docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.TruncationStrategy"><code class="docutils literal notranslate"><span class="pre">TruncationStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.is_torch_device"><code class="docutils literal notranslate"><span class="pre">is_torch_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.utils.is_numpy_array"><code class="docutils literal notranslate"><span class="pre">is_numpy_array()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.const.html">easy_tpp.utils.const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.generic.html">easy_tpp.utils.generic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.import_utils.html">easy_tpp.utils.import_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.log_utils.html">easy_tpp.utils.log_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.metrics.html">easy_tpp.utils.metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.misc.html">easy_tpp.utils.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.ode_utils.html">easy_tpp.utils.ode_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.registrable.html">easy_tpp.utils.registrable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.multiprocess_utils.html">easy_tpp.utils.multiprocess_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.tf_utils.html">easy_tpp.utils.tf_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.utils.torch_utils.html">easy_tpp.utils.torch_utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">EasyTPP Utilities Modules</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ref/utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-easy_tpp.utils">
+<span id="easytpp-utilities-modules"></span><span id="api-util"></span><h1>EasyTPP Utilities Modules<a class="headerlink" href="#module-easy_tpp.utils" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.py_assert">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">py_assert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#py_assert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.py_assert" title="Permalink to this definition"></a></dt>
+<dd><p>An assert function that ensures the condition holds, otherwise throws a message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>condition</strong> (<em>bool</em>) – a formula to ensure validity.</p></li>
+<li><p><strong>exception_type</strong> (<em>_StandardError</em>) – Error type, such as ValueError.</p></li>
+<li><p><strong>msg</strong> (<em>str</em>) – a message to throw out.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>exception_type</strong> – throw an error when the condition does not hold.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.make_config_string">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">make_config_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_num_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#make_config_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.make_config_string" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a name for config files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>dict</em>) – configuration dict.</p></li>
+<li><p><strong>max_num_key</strong> (<em>int</em><em>, </em><em>optional</em>) – max number of keys to concat in the output. Defaults to 4.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a concatenated string from config dict.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.create_folder">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">create_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#create_folder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.create_folder" title="Permalink to this definition"></a></dt>
+<dd><p>Create path if the folder doesn’t exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the created folder’s path.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.save_yaml_config">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">save_yaml_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#save_yaml_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.save_yaml_config" title="Permalink to this definition"></a></dt>
+<dd><p>A function that saves a dict of config to yaml format file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_dir</strong> (<em>str</em>) – the path to save config file.</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – the target config object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.load_yaml_config">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">load_yaml_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#load_yaml_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.load_yaml_config" title="Permalink to this definition"></a></dt>
+<dd><p>Load yaml config file from disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dir</strong> – str or Path
+The path of the config file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="config.html#config_factory.Config" title="config_factory.Config">Config</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.RunnerPhase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">RunnerPhase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#RunnerPhase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.RunnerPhase" title="Permalink to this definition"></a></dt>
+<dd><p>Model runner phase enum.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.LogConst">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">LogConst</span></span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#LogConst"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.LogConst" title="Permalink to this definition"></a></dt>
+<dd><p>Format for log handler.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.load_pickle">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">load_pickle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#load_pickle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.load_pickle" title="Permalink to this definition"></a></dt>
+<dd><p>Load from pickle file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_dir</strong> (<em>BinaryIO</em>) – dir of the pickle file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the loaded data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>any type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.has_key">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">has_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#has_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.has_key" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the keys exist in the target dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_dict</strong> (<em>dict</em>) – a dict.</p></li>
+<li><p><strong>target_keys</strong> (<em>str</em><em>, </em><em>list</em>) – list of keys.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if all the key exist in the dict; False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.array_pad_cols">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">array_pad_cols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_num_cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#array_pad_cols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.array_pad_cols" title="Permalink to this definition"></a></dt>
+<dd><p>Pad the array by columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>np.array</em>) – target array to be padded.</p></li>
+<li><p><strong>max_num_cols</strong> (<em>int</em>) – target num cols for padded array.</p></li>
+<li><p><strong>pad_index</strong> (<em>int</em>) – pad index to fill out the padded elements</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the padded array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.MetricsTracker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">MetricsTracker</span></span><a class="reference internal" href="../_modules/easy_tpp/utils/metrics.html#MetricsTracker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.MetricsTracker" title="Permalink to this definition"></a></dt>
+<dd><p>Track and record the metrics.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.utils.MetricsTracker.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/metrics.html#MetricsTracker.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.MetricsTracker.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.utils.MetricsTracker.update_best">
+<span class="sig-name descname"><span class="pre">update_best</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/metrics.html#MetricsTracker.update_best"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.MetricsTracker.update_best" title="Permalink to this definition"></a></dt>
+<dd><p>Update the recorder for the best metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – metrics key.</p></li>
+<li><p><strong>value</strong> (<em>float</em>) – metrics value.</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>) – num of epoch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – for keys other than ‘loglike’.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>whether the recorder has been updated.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.set_device">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">set_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/torch_utils.html#set_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.set_device" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gpu</strong> (<em>int</em><em>, </em><em>optional</em>) – num of GPU to use. Defaults to -1 (not use GPU, i.e., use CPU).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.set_optimizer">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">set_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/torch_utils.html#set_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.set_optimizer" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the optimizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>optimizer</strong> (<em>str</em>) – name of the optimizer.</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) – dict of params for the optimizer.</p></li>
+<li><p><strong>lr</strong> (<em>float</em>) – learning rate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>NotImplementedError</strong> – if the optimizer’s name is wrong or the optimizer is not supported,</p></li>
+<li><p><strong>we raise error.</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch optimizer.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.optim</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.set_seed">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">set_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1029</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/torch_utils.html#set_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.set_seed" title="Permalink to this definition"></a></dt>
+<dd><p>Setup random seed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – random seed. Defaults to 1029.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.save_pickle">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">save_pickle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_to_save</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#save_pickle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.save_pickle" title="Permalink to this definition"></a></dt>
+<dd><p>Save the object to a pickle file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_dir</strong> (<em>str</em>) – dir of the pickle file.</p></li>
+<li><p><strong>object_to_save</strong> (<em>any</em>) – the target data to be saved.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.count_model_params">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">count_model_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/torch_utils.html#count_model_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.count_model_params" title="Permalink to this definition"></a></dt>
+<dd><p>Count the number of params of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> (<em>torch.nn.Moduel</em>) – a torch model.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>total num of the parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.Registrable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">Registrable</span></span><a class="reference internal" href="../_modules/easy_tpp/utils/registrable.html#Registrable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.Registrable" title="Permalink to this definition"></a></dt>
+<dd><p>Any class that inherits from <code class="docutils literal notranslate"><span class="pre">Registrable</span></code> gains access to a named registry for its subclasses. To register them, just decorate them with the classmethod <code class="docutils literal notranslate"><span class="pre">&#64;BaseClass.register(name)</span></code>.</p>
+<p>After which you can call <code class="docutils literal notranslate"><span class="pre">BaseClass.list_available()</span></code> to get the keys for the registered subclasses, and <code class="docutils literal notranslate"><span class="pre">BaseClass.by_name(name)</span></code> to get the corresponding subclass.</p>
+<p>Note that the registry stores the subclasses themselves; not class instances. In most cases you would then call <code class="docutils literal notranslate"><span class="pre">from_params(params)</span></code> on the returned subclass.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.utils.Registrable.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/registrable.html#Registrable.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.Registrable.register" title="Permalink to this definition"></a></dt>
+<dd><p>Register a class under a particular name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name to register the class under.</p></li>
+<li><p><strong>constructor</strong> (<em>str</em>) – optional (default=None)
+The name of the method to use on the class to construct the object.  If this is given,
+we will use this method (which must be a <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code>) instead of the default
+constructor.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – optional (default=False)
+If True, overwrites any existing models registered under <code class="docutils literal notranslate"><span class="pre">name</span></code>. Else,
+throws an error if a model is already registered under <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p># Examples
+To use this class, you would typically have a base class that inherits from <code class="docutils literal notranslate"><span class="pre">Registrable</span></code>:
+<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
+class Transform(Registrable):</p>
+<blockquote>
+<div><p>…</p>
+</div></blockquote>
+<p><a href="#id5"><span class="problematic" id="id6">``</span></a>`
+Then, if you want to register a subclass, you decorate it like this:
+<a href="#id7"><span class="problematic" id="id8">``</span></a><a href="#id9"><span class="problematic" id="id10">`</span></a>python
+&#64;Transform.register(“shift-transform”)
+class ShiftTransform(Transform):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>def __init__(self, param1: int, param2: str):</dt><dd><p>…</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Registering</span> <span class="pre">a</span> <span class="pre">class</span> <span class="pre">like</span> <span class="pre">this</span> <span class="pre">will</span> <span class="pre">let</span> <span class="pre">you</span> <span class="pre">instantiate</span> <span class="pre">a</span> <span class="pre">class</span> <span class="pre">from</span> <span class="pre">a</span> <span class="pre">config</span> <span class="pre">file,</span> <span class="pre">where</span> <span class="pre">you</span>
+<span class="pre">give</span> <span class="pre">``&quot;type&quot;:</span> <span class="pre">&quot;shift-transform&quot;</span></code>, and keys corresponding to the parameters of the <code class="docutils literal notranslate"><span class="pre">__init__</span></code>
+method (note that for this to work, those parameters must have type annotations).
+If you want to have the instantiation from a config file call a method other than the
+constructor, either because you have several different construction paths that could be
+taken for the same object (as we do in <code class="docutils literal notranslate"><span class="pre">Transform</span></code>) or because you have logic you want to
+happen before you get to the constructor, you can register a specific <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code> as the constructor to use, like this:
+<a href="#id11"><span class="problematic" id="id12">``</span></a><a href="#id13"><span class="problematic" id="id14">`</span></a>python
+&#64;Transform.register(“shift-transform-from-instances”, constructor=”from_instances”)
+&#64;Transform.register(“shift-transform-from-files”, constructor=”from_files”)
+class ShiftTransform(Transform):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>def __init__(self, some_params):</dt><dd><p>…</p>
+</dd>
+</dl>
+<p>&#64;classmethod
+def from_instances(cls, some_other_params) -&gt; ShiftTransform:</p>
+<blockquote>
+<div><p>…  # construct some_params from instances
+return cls(some_params)</p>
+</div></blockquote>
+<p>&#64;classmethod
+def from_files(cls, still_other_params) -&gt; ShiftTransform:</p>
+<blockquote>
+<div><p>…  # construct some_params from files
+return cls(some_params)</p>
+</div></blockquote>
+</div></blockquote>
+<p><a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id17"><span class="problematic" id="id18">`</span></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.utils.Registrable.by_name">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/registrable.html#Registrable.by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.Registrable.by_name" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a callable function that constructs an argument of the registered class.  Because
+you can register particular functions as constructors for specific names, this isn’t
+necessarily the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method of some class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.utils.Registrable.resolve_class_name">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolve_class_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/registrable.html#Registrable.resolve_class_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.Registrable.resolve_class_name" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the subclass that corresponds to the given <code class="docutils literal notranslate"><span class="pre">name</span></code>, along with the name of the
+method that was registered as a constructor for that <code class="docutils literal notranslate"><span class="pre">name</span></code>, if any.
+This method also allows <code class="docutils literal notranslate"><span class="pre">name</span></code> to be a fully-specified module name, instead of a name that
+was already added to the <code class="docutils literal notranslate"><span class="pre">Registry</span></code>.  In that case, you cannot use a separate function as
+a constructor (as you need to call <code class="docutils literal notranslate"><span class="pre">cls.register()</span></code> in order to tell us what separate
+function to use).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.utils.Registrable.list_available">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/registrable.html#Registrable.list_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.Registrable.list_available" title="Permalink to this definition"></a></dt>
+<dd><p>List default first if it exists</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.Timer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/multiprocess_utils.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.Timer" title="Permalink to this definition"></a></dt>
+<dd><p>Count the elapsing time between start and end.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.utils.Timer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/multiprocess_utils.html#Timer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.Timer.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.concat_element">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">concat_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#concat_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.concat_element" title="Permalink to this definition"></a></dt>
+<dd><p>Concat element from each batch output</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.parse_uri_to_protocol_and_path">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">parse_uri_to_protocol_and_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/multiprocess_utils.html#parse_uri_to_protocol_and_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.parse_uri_to_protocol_and_path" title="Permalink to this definition"></a></dt>
+<dd><p>Parse a uri into two parts, protocol and path. Set ‘file’ as default protocol when lack protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>uri</strong> – str
+The uri to identify a resource, whose format is like ‘protocol://uri’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>str. The method to access the resource.
+URI: str. The location of the resource.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Protocol</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.is_master_process">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">is_master_process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/multiprocess_utils.html#is_master_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.is_master_process" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the process is the master process in all machines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.is_local_master_process">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">is_local_master_process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/multiprocess_utils.html#is_local_master_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.is_local_master_process" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the process is the master process in the local machine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.dict_deep_update">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">dict_deep_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_add_new_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#dict_deep_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.dict_deep_update" title="Permalink to this definition"></a></dt>
+<dd><p>Update ‘target’ dict by ‘source’ dict deeply, and return a new dict copied from target and source deeply.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> – dict</p></li>
+<li><p><strong>source</strong> – dict</p></li>
+<li><p><strong>is_add_new_key</strong> – bool, default True.
+Identify if add a key that in source but not in target into target.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict. It contains the both target and source values, but keeps the values from source when the key
+is duplicated.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>New target</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.rk4_step_method">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">rk4_step_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/ode_utils.html#rk4_step_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.rk4_step_method" title="Permalink to this definition"></a></dt>
+<dd><p>Fourth order Runge-Kutta method for solving ODEs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diff_func</strong> – function(dt, state)
+Differential equation.</p></li>
+<li><p><strong>dt</strong> – Tensor with shape […, 1]
+Equal to t1 - t0.</p></li>
+<li><p><strong>z0</strong> – Tensor with shape […, dim]
+State at t0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tensor with shape […, dim], which is updated state.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.PaddingStrategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">PaddingStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#PaddingStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.PaddingStrategy" title="Permalink to this definition"></a></dt>
+<dd><p>Possible values for the <cite>padding</cite> argument in [<cite>EventTokenizer.__call__</cite>]. Useful for tab-completion in an
+IDE.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.ExplicitEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">ExplicitEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#ExplicitEnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.ExplicitEnum" title="Permalink to this definition"></a></dt>
+<dd><p>Enum with more explicit error message for missing values.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.utils.TruncationStrategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">TruncationStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#TruncationStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.TruncationStrategy" title="Permalink to this definition"></a></dt>
+<dd><p>Possible values for the <cite>truncation</cite> argument in [<cite>EventTokenizer.__call__</cite>]. Useful for tab-completion in
+an IDE.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.is_torch_device">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">is_torch_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_torch_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.is_torch_device" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a torch device or not. Safe to call even if torch is not installed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.is_numpy_array">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.</span></span><span class="sig-name descname"><span class="pre">is_numpy_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_numpy_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.is_numpy_array" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a numpy array or not.</p>
+</dd></dl>
+
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.const.html#module-easy_tpp.utils.const" title="easy_tpp.utils.const"><code class="xref py py-obj docutils literal notranslate"><span class="pre">const</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.generic.html#module-easy_tpp.utils.generic" title="easy_tpp.utils.generic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generic</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.import_utils.html#module-easy_tpp.utils.import_utils" title="easy_tpp.utils.import_utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_utils</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.log_utils.html#module-easy_tpp.utils.log_utils" title="easy_tpp.utils.log_utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_utils</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.metrics.html#module-easy_tpp.utils.metrics" title="easy_tpp.utils.metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">metrics</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.misc.html#module-easy_tpp.utils.misc" title="easy_tpp.utils.misc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">misc</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.ode_utils.html#module-easy_tpp.utils.ode_utils" title="easy_tpp.utils.ode_utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ode_utils</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.registrable.html#module-easy_tpp.utils.registrable" title="easy_tpp.utils.registrable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">registrable</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.multiprocess_utils.html#module-easy_tpp.utils.multiprocess_utils" title="easy_tpp.utils.multiprocess_utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiprocess_utils</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.tf_utils.html#module-easy_tpp.utils.tf_utils" title="easy_tpp.utils.tf_utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tf_utils</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.utils.torch_utils.html#module-easy_tpp.utils.torch_utils" title="easy_tpp.utils.torch_utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_utils</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="wrapper.html" class="btn btn-neutral float-left" title="EasyTPP Tf and Torch Wrapper Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../generated/easy_tpp.utils.const.html" class="btn btn-neutral float-right" title="easy_tpp.utils.const" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿easy\_tpp.utils.torch\_utils
+============================
+
+.. automodule:: easy_tpp.utils.torch_utils
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      count_model_params
+      set_device
+      set_optimizer
+      set_seed
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

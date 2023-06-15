@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.utils.tf_utils &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.utils.tf_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.utils.tf_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">easy_tpp.utils.import_utils</span> <span class="kn">import</span> <span class="n">is_tf_gpu_available</span>
+
+<span class="k">if</span> <span class="n">tf</span><span class="o">.</span><span class="n">__version__</span> <span class="o">&gt;=</span> <span class="s1">&#39;2.0&#39;</span><span class="p">:</span>
+    <span class="n">tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">disable_v2_behavior</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.tf_utils.html#easy_tpp.utils.tf_utils.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1029</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup random seed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seed (int, optional): random seed. Defaults to 1029.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYTHONHASHSEED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_device"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.tf_utils.html#easy_tpp.utils.tf_utils.set_device">[docs]</a><span class="k">def</span> <span class="nf">set_device</span><span class="p">(</span><span class="n">gpu</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup the device.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        gpu (int, optional): Defaults to -1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">gpu</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">is_tf_gpu_available</span><span class="p">():</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">gpu</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="set_optimizer"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.tf_utils.html#easy_tpp.utils.tf_utils.set_optimizer">[docs]</a><span class="k">def</span> <span class="nf">set_optimizer</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup the optimizer.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        optimizer (str): name of the optimizer.</span>
+<span class="sd">        lr (float): learning rate.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        NotImplementedError: if the optimizer&#39;s name is wrong or the optimizer is not supported,</span>
+<span class="sd">        we raise error.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tf.train.optimzer: tf optimizer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;Optimizer&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">)(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;optimizer=</span><span class="si">{}</span><span class="s2"> is not supported.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">optimizer</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">optimizer</span></div>
+
+
+<div class="viewcode-block" id="get_shape_list"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.tf_utils.html#easy_tpp.utils.tf_utils.get_shape_list">[docs]</a><span class="k">def</span> <span class="nf">get_shape_list</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deal with dynamic shape in tensorflow cleanly.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (tensor): input tensor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: shape list of the tensor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">static</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>
+    <span class="n">dynamic</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">dynamic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">s</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">static</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="tensordot"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.tf_utils.html#easy_tpp.utils.tf_utils.tensordot">[docs]</a><span class="k">def</span> <span class="nf">tensordot</span><span class="p">(</span><span class="n">tensor_a</span><span class="p">,</span> <span class="n">tensor_b</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Tensor dot function. The last dimension of tensor_a and the first dimension of tensor_b must be the same.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tensor_a (tensor): input tensor.</span>
+<span class="sd">        tensor_b (tensor): input tensor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tensor: the result of tensor_a tensor dot tensor_b.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">last_idx_a</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tensor_a</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">())</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">tensor_a</span><span class="p">,</span> <span class="n">tensor_b</span><span class="p">,</span> <span class="p">[[</span><span class="n">last_idx_a</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="swap_axes"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.tf_utils.html#easy_tpp.utils.tf_utils.swap_axes">[docs]</a><span class="k">def</span> <span class="nf">swap_axes</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">axis1</span><span class="p">,</span> <span class="n">axis2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interchange two axes of an tensor.</span>
+<span class="sd">    :param tensor:</span>
+<span class="sd">    :param axis1: First axis.</span>
+<span class="sd">    :param axis2: Second axis.</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tensor_perm</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">as_list</span><span class="p">())))</span>
+    <span class="n">tensor_perm</span><span class="p">[</span><span class="n">axis1</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis2</span>
+    <span class="n">tensor_perm</span><span class="p">[</span><span class="n">axis2</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis1</span>
+
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="n">tensor_perm</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_tensor"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.tf_utils.html#easy_tpp.utils.tf_utils.create_tensor">[docs]</a><span class="k">def</span> <span class="nf">create_tensor</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a tensor with all elements set to be the value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        shape (list): the shape of the target tensor to be created.</span>
+<span class="sd">        value (float): value to fill the tensor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tensor: created tensor with target value filled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tensor_shape</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">tensor_shape</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="count_model_params"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.tf_utils.html#easy_tpp.utils.tf_utils.count_model_params">[docs]</a><span class="k">def</span> <span class="nf">count_model_params</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count the number of params of the model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): a torch model.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: total num of the parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">())</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">()])</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

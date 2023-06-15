@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.utils.generic &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="easy_tpp.utils.import_utils" href="easy_tpp.utils.import_utils.html" />
+    <link rel="prev" title="easy_tpp.utils.const" href="easy_tpp.utils.const.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ref/utils.html"> Utilities</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.py_assert"><code class="docutils literal notranslate"><span class="pre">py_assert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.make_config_string"><code class="docutils literal notranslate"><span class="pre">make_config_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.create_folder"><code class="docutils literal notranslate"><span class="pre">create_folder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.save_yaml_config"><code class="docutils literal notranslate"><span class="pre">save_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.load_yaml_config"><code class="docutils literal notranslate"><span class="pre">load_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.RunnerPhase"><code class="docutils literal notranslate"><span class="pre">RunnerPhase</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.LogConst"><code class="docutils literal notranslate"><span class="pre">LogConst</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.has_key"><code class="docutils literal notranslate"><span class="pre">has_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.array_pad_cols"><code class="docutils literal notranslate"><span class="pre">array_pad_cols()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.MetricsTracker"><code class="docutils literal notranslate"><span class="pre">MetricsTracker</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.set_device"><code class="docutils literal notranslate"><span class="pre">set_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.set_optimizer"><code class="docutils literal notranslate"><span class="pre">set_optimizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.count_model_params"><code class="docutils literal notranslate"><span class="pre">count_model_params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.Registrable"><code class="docutils literal notranslate"><span class="pre">Registrable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.concat_element"><code class="docutils literal notranslate"><span class="pre">concat_element()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.parse_uri_to_protocol_and_path"><code class="docutils literal notranslate"><span class="pre">parse_uri_to_protocol_and_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.is_master_process"><code class="docutils literal notranslate"><span class="pre">is_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.is_local_master_process"><code class="docutils literal notranslate"><span class="pre">is_local_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.dict_deep_update"><code class="docutils literal notranslate"><span class="pre">dict_deep_update()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.rk4_step_method"><code class="docutils literal notranslate"><span class="pre">rk4_step_method()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.PaddingStrategy"><code class="docutils literal notranslate"><span class="pre">PaddingStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.ExplicitEnum"><code class="docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.TruncationStrategy"><code class="docutils literal notranslate"><span class="pre">TruncationStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.is_torch_device"><code class="docutils literal notranslate"><span class="pre">is_torch_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/utils.html#easy_tpp.utils.is_numpy_array"><code class="docutils literal notranslate"><span class="pre">is_numpy_array()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.const.html">easy_tpp.utils.const</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">easy_tpp.utils.generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.generic.is_tensor"><code class="docutils literal notranslate"><span class="pre">is_tensor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.generic.is_numpy_array"><code class="docutils literal notranslate"><span class="pre">is_numpy_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.generic.is_torch_tensor"><code class="docutils literal notranslate"><span class="pre">is_torch_tensor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.generic.is_torch_device"><code class="docutils literal notranslate"><span class="pre">is_torch_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.generic.is_torch_dtype"><code class="docutils literal notranslate"><span class="pre">is_torch_dtype()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.generic.is_tf_tensor"><code class="docutils literal notranslate"><span class="pre">is_tf_tensor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.utils.generic.is_tf_symbolic_tensor"><code class="docutils literal notranslate"><span class="pre">is_tf_symbolic_tensor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.import_utils.html">easy_tpp.utils.import_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.log_utils.html">easy_tpp.utils.log_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.metrics.html">easy_tpp.utils.metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.misc.html">easy_tpp.utils.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.ode_utils.html">easy_tpp.utils.ode_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.registrable.html">easy_tpp.utils.registrable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.multiprocess_utils.html">easy_tpp.utils.multiprocess_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.tf_utils.html">easy_tpp.utils.tf_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.utils.torch_utils.html">easy_tpp.utils.torch_utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../ref/utils.html">EasyTPP Utilities Modules</a></li>
+      <li class="breadcrumb-item active">easy_tpp.utils.generic</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/easy_tpp.utils.generic.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-easy_tpp.utils.generic">
+<span id="easy-tpp-utils-generic"></span><h1>easy_tpp.utils.generic<a class="headerlink" href="#module-easy_tpp.utils.generic" title="Permalink to this heading"></a></h1>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.generic.is_numpy_array" title="easy_tpp.utils.generic.is_numpy_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_numpy_array</span></code></a>(x)</p></td>
+<td><p>Tests if <cite>x</cite> is a numpy array or not.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.utils.generic.is_tensor" title="easy_tpp.utils.generic.is_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_tensor</span></code></a>(x)</p></td>
+<td><p>Tests if <cite>x</cite> is a <cite>torch.Tensor</cite>, <cite>tf.Tensor</cite>, <cite>jaxlib.xla_extension.DeviceArray</cite> or <cite>np.ndarray</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.generic.is_tf_symbolic_tensor" title="easy_tpp.utils.generic.is_tf_symbolic_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_tf_symbolic_tensor</span></code></a>(x)</p></td>
+<td><p>Tests if <cite>x</cite> is a tensorflow symbolic tensor or not (ie.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.utils.generic.is_tf_tensor" title="easy_tpp.utils.generic.is_tf_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_tf_tensor</span></code></a>(x)</p></td>
+<td><p>Tests if <cite>x</cite> is a tensorflow tensor or not.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.generic.is_torch_device" title="easy_tpp.utils.generic.is_torch_device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_torch_device</span></code></a>(x)</p></td>
+<td><p>Tests if <cite>x</cite> is a torch device or not.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.utils.generic.is_torch_dtype" title="easy_tpp.utils.generic.is_torch_dtype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_torch_dtype</span></code></a>(x)</p></td>
+<td><p>Tests if <cite>x</cite> is a torch dtype or not.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.utils.generic.is_torch_tensor" title="easy_tpp.utils.generic.is_torch_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_torch_tensor</span></code></a>(x)</p></td>
+<td><p>Tests if <cite>x</cite> is a torch tensor or not.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.generic.is_tensor">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.generic.</span></span><span class="sig-name descname"><span class="pre">is_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.generic.is_tensor" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a <cite>torch.Tensor</cite>, <cite>tf.Tensor</cite>, <cite>jaxlib.xla_extension.DeviceArray</cite> or <cite>np.ndarray</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.generic.is_numpy_array">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.generic.</span></span><span class="sig-name descname"><span class="pre">is_numpy_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_numpy_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.generic.is_numpy_array" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a numpy array or not.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.generic.is_torch_tensor">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.generic.</span></span><span class="sig-name descname"><span class="pre">is_torch_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_torch_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.generic.is_torch_tensor" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a torch tensor or not. Safe to call even if torch is not installed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.generic.is_torch_device">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.generic.</span></span><span class="sig-name descname"><span class="pre">is_torch_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_torch_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.generic.is_torch_device" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a torch device or not. Safe to call even if torch is not installed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.generic.is_torch_dtype">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.generic.</span></span><span class="sig-name descname"><span class="pre">is_torch_dtype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_torch_dtype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.generic.is_torch_dtype" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a torch dtype or not. Safe to call even if torch is not installed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.generic.is_tf_tensor">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.generic.</span></span><span class="sig-name descname"><span class="pre">is_tf_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_tf_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.generic.is_tf_tensor" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a tensorflow tensor or not. Safe to call even if tensorflow is not installed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.utils.generic.is_tf_symbolic_tensor">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.utils.generic.</span></span><span class="sig-name descname"><span class="pre">is_tf_symbolic_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_tf_symbolic_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.utils.generic.is_tf_symbolic_tensor" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if <cite>x</cite> is a tensorflow symbolic tensor or not (ie. not eager). Safe to call even if tensorflow is not
+installed.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="easy_tpp.utils.const.html" class="btn btn-neutral float-left" title="easy_tpp.utils.const" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="easy_tpp.utils.import_utils.html" class="btn btn-neutral float-right" title="easy_tpp.utils.import_utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

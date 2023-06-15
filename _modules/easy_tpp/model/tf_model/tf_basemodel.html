@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.model.tf_model.tf_basemodel &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.model.tf_model.tf_basemodel</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.model.tf_model.tf_basemodel</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Base model with common functionality  &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">easy_tpp.model.tf_model.tf_thinning</span> <span class="kn">import</span> <span class="n">EventSampler</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.utils.tf_utils</span> <span class="kn">import</span> <span class="n">get_shape_list</span>
+
+<span class="k">if</span> <span class="n">tf</span><span class="o">.</span><span class="n">__version__</span> <span class="o">&gt;=</span> <span class="s1">&#39;2.0&#39;</span><span class="p">:</span>
+    <span class="n">tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">disable_v2_behavior</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="TfBaseModel"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_basemodel.html#easy_tpp.model.tf_model.tf_basemodel.TfBaseModel">[docs]</a><span class="k">class</span> <span class="nc">TfBaseModel</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TfBaseModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_config (EasyTPP.ModelConfig): config of model specs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span> <span class="o">=</span> <span class="n">model_config</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_integral_num_sample_per_step</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">loss_integral_num_sample_per_step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">hidden_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">num_event_types</span>  <span class="c1"># not include [PAD]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types_pad</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">num_event_types_pad</span>  <span class="c1"># include [PAD]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_pad_index</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">pad_token_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout_rate</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">dropout_rate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-7</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_type_emb</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_event_types_pad</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">thinning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span> <span class="o">=</span> <span class="n">EventSampler</span><span class="p">(</span><span class="n">num_sample</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">num_sample</span><span class="p">,</span>
+                                              <span class="n">num_exp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">num_exp</span><span class="p">,</span>
+                                              <span class="n">over_sample_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">over_sample_rate</span><span class="p">,</span>
+                                              <span class="n">patience_counter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">patience_counter</span><span class="p">,</span>
+                                              <span class="n">num_samples_boundary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">num_samples_boundary</span><span class="p">,</span>
+                                              <span class="n">dtime_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">dtime_max</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TfBaseModel.build_input_graph"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_basemodel.html#easy_tpp.model.tf_model.tf_basemodel.TfBaseModel.build_input_graph">[docs]</a>    <span class="k">def</span> <span class="nf">build_input_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build up the network</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;BaseModel&#39;</span><span class="p">):</span>
+            <span class="c1"># Input placeholder</span>
+            <span class="c1"># shape - (batch_size, max_len)</span>
+            <span class="c1"># max_len - sequence length including time zero padding</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_delta_seqs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+
+            <span class="c1"># shape - (batch_size, max_len)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_seqs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+
+            <span class="c1"># shape - (batch_size, max_len)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">type_seqs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+
+            <span class="c1"># shape - (batch_size, max_len)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">batch_non_pad_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+
+            <span class="c1"># shape - (batch_size, max_len, max_len)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attention_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+
+            <span class="c1"># Event type one-hot code</span>
+            <span class="c1"># shape - (batch_size, max_len, num_event_types)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">type_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+
+            <span class="c1"># shape - (batch_size 1)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                                   <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_training</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="TfBaseModel.generate_model_from_config"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_basemodel.html#easy_tpp.model.tf_model.tf_basemodel.TfBaseModel.generate_model_from_config">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">generate_model_from_config</span><span class="p">(</span><span class="n">model_config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the model in derived class based on model config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_config (EasyTPP.Config): config of model specs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model_id</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">model_id</span>
+
+        <span class="k">for</span> <span class="n">subclass</span> <span class="ow">in</span> <span class="n">TfBaseModel</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">subclass</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">model_id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">subclass</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;No model named &#39;</span> <span class="o">+</span> <span class="n">model_id</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">event_seqs</span><span class="p">,</span> <span class="n">sampled_dtimes</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="TfBaseModel.make_dtime_loss_samples"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_basemodel.html#easy_tpp.model.tf_model.tf_basemodel.TfBaseModel.make_dtime_loss_samples">[docs]</a>    <span class="k">def</span> <span class="nf">make_dtime_loss_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the time point samples for every interval.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time_delta_seq (tensor): [batch_size, seq_len].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tensor: [batch_size, seq_len, n_samples]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># shape  (1, 1, n_samples)</span>
+        <span class="n">dtimes_ratio_sampled</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                                           <span class="n">stop</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                                           <span class="n">num</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_integral_num_sample_per_step</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+
+        <span class="c1"># shape (batch_size, max_len, n_samples)</span>
+        <span class="n">sampled_dtimes</span> <span class="o">=</span> <span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">dtimes_ratio_sampled</span>
+
+        <span class="k">return</span> <span class="n">sampled_dtimes</span></div>
+
+<div class="viewcode-block" id="TfBaseModel.compute_loglikelihood"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_basemodel.html#easy_tpp.model.tf_model.tf_basemodel.TfBaseModel.compute_loglikelihood">[docs]</a>    <span class="k">def</span> <span class="nf">compute_loglikelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">lambda_at_event</span><span class="p">,</span> <span class="n">lambdas_loss_samples</span><span class="p">,</span> <span class="n">seq_mask</span><span class="p">,</span>
+                              <span class="n">lambda_type_mask</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the loglikelihood of the event sequence based on Equation (8) of NHP paper.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time_delta_seq (tensor): [batch_size, seq_len], time_delta_seq from model input.</span>
+<span class="sd">            lambda_at_event (tensor): [batch_size, seq_len, num_event_types], unmasked intensity at</span>
+<span class="sd">            (right after) the event.</span>
+<span class="sd">            lambdas_loss_samples (tensor): [batch_size, seq_len, num_sample, num_event_types],</span>
+<span class="sd">            intensity at sampling times.</span>
+<span class="sd">            seq_mask (tensor): [batch_size, seq_len], sequence mask vector to mask the padded events.</span>
+<span class="sd">            lambda_type_mask (tensor): [batch_size, seq_len, num_event_types], type mask matrix to mask</span>
+<span class="sd">            the padded event types.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: event loglike, non event loglike, intensity at event with padding events masked</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Sum of lambda over every type</span>
+        <span class="c1"># [batch_size, seq_len]</span>
+        <span class="n">event_lambdas</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">lambda_at_event</span> <span class="o">*</span> <span class="n">lambda_type_mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># mask the pad event</span>
+        <span class="n">event_lambdas</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">boolean_mask</span><span class="p">(</span><span class="n">event_lambdas</span><span class="p">,</span> <span class="n">seq_mask</span><span class="p">)</span>
+
+        <span class="c1"># Sum of lambda over every event point</span>
+        <span class="c1"># [num_unmasked_events]</span>
+        <span class="n">event_ll</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">event_lambdas</span><span class="p">))</span>
+
+        <span class="c1"># Compute the big lambda integral in Equation (8) of NHP paper</span>
+        <span class="c1"># 1 - take num_mc_sample rand points in each event interval</span>
+        <span class="c1"># 2 - compute its lambda value for every sample point</span>
+        <span class="c1"># 3 - take average of these sample points</span>
+        <span class="c1"># 4 - times the interval length</span>
+
+        <span class="c1"># [batch_size, max_len, n_loss_sample]</span>
+        <span class="n">lambdas_total_samples</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">lambdas_loss_samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># interval_integral - [batch_size, num_times]</span>
+        <span class="c1"># interval_integral = length_interval * average of sampled lambda(t)</span>
+        <span class="n">non_event_ll</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">lambdas_total_samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_delta_seq</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">seq_mask</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="n">non_event_ll</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">non_event_ll</span><span class="p">)</span>
+
+        <span class="n">num_events</span> <span class="o">=</span> <span class="n">get_shape_list</span><span class="p">(</span><span class="n">event_lambdas</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">event_ll</span><span class="p">,</span> <span class="n">non_event_ll</span><span class="p">,</span> <span class="n">num_events</span></div>
+
+<div class="viewcode-block" id="TfBaseModel.predict_one_step_at_every_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_basemodel.html#easy_tpp.model.tf_model.tf_basemodel.TfBaseModel.predict_one_step_at_every_event">[docs]</a>    <span class="k">def</span> <span class="nf">predict_one_step_at_every_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;One-step prediction for every event in the sequence.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time_seqs (tensor): [batch_size, seq_len].</span>
+<span class="sd">            time_delta_seqs (tensor): [batch_size, seq_len].</span>
+<span class="sd">            type_seqs (tensor): [batch_size, seq_len].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: tensors of dtime and type prediction, [batch_size, seq_len].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># remove the last event, as the prediction based on the last event has no label</span>
+        <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span> <span class="o">=</span> <span class="n">time_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">type_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># (batch_size, seq_len)</span>
+        <span class="n">dtime_boundary</span> <span class="o">=</span> <span class="n">time_delta_seqs</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">dtime_max</span>
+
+        <span class="c1"># [batch_size, seq_len, num_sample]</span>
+        <span class="n">accepted_dtimes</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">draw_next_time_one_step</span><span class="p">(</span><span class="n">time_seqs</span><span class="p">,</span>
+                                                                              <span class="n">time_delta_seqs</span><span class="p">,</span>
+                                                                              <span class="n">type_seqs</span><span class="p">,</span>
+                                                                              <span class="n">dtime_boundary</span><span class="p">,</span>
+                                                                              <span class="bp">self</span><span class="o">.</span><span class="n">compute_intensities_at_sample_times</span><span class="p">,</span>
+                                                                              <span class="n">compute_last_step_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len]</span>
+        <span class="n">dtimes_pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">accepted_dtimes</span> <span class="o">*</span> <span class="n">weights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len, 1, event_num]</span>
+        <span class="n">intensities_at_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_intensities_at_sample_times</span><span class="p">(</span><span class="n">time_seqs</span><span class="p">,</span>
+                                                                        <span class="n">time_delta_seqs</span><span class="p">,</span>
+                                                                        <span class="n">type_seqs</span><span class="p">,</span>
+                                                                        <span class="n">dtimes_pred</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">])</span>
+
+        <span class="c1"># [batch_size, seq_len, event_num]</span>
+        <span class="n">intensities_at_times</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">intensities_at_times</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len]</span>
+        <span class="n">types_pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">intensities_at_times</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dtimes_pred</span><span class="p">,</span> <span class="n">types_pred</span></div>
+
+<div class="viewcode-block" id="TfBaseModel.predict_multi_step_since_last_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_basemodel.html#easy_tpp.model.tf_model.tf_basemodel.TfBaseModel.predict_multi_step_since_last_event">[docs]</a>    <span class="k">def</span> <span class="nf">predict_multi_step_since_last_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">num_step</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Multi-step prediction for every event in the sequence.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time_seqs (tensor): [batch_size, seq_len].</span>
+<span class="sd">            time_delta_seqs (tensor): [batch_size, seq_len].</span>
+<span class="sd">            type_seqs (tensor): [batch_size, seq_len].</span>
+<span class="sd">            num_step (int): num of steps for prediction.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: tensors of dtime and type prediction, [batch_size, seq_len].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">time_seqs_</span> <span class="o">=</span> <span class="n">time_seqs</span>
+        <span class="n">time_delta_seqs_</span> <span class="o">=</span> <span class="n">time_delta_seqs</span>
+        <span class="n">type_seqs_</span> <span class="o">=</span> <span class="n">type_seqs</span>
+
+        <span class="k">def</span> <span class="nf">while_condition</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">time_seqs_</span><span class="p">,</span> <span class="n">time_delta_seqs_</span><span class="p">,</span> <span class="n">type_seqs_</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">num_step</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">body</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">time_seqs_</span><span class="p">,</span> <span class="n">time_delta_seqs_</span><span class="p">,</span> <span class="n">type_seqs_</span><span class="p">):</span>
+            <span class="c1"># [batch_size, seq_len]</span>
+            <span class="n">dtime_boundary</span> <span class="o">=</span> <span class="n">time_delta_seqs_</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">dtime_max</span>
+
+            <span class="c1"># [batch_size, seq_len, num_sample]</span>
+            <span class="n">accepted_dtimes</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">draw_next_time_one_step</span><span class="p">(</span><span class="n">time_seqs_</span><span class="p">,</span>
+                                                           <span class="n">time_delta_seqs_</span><span class="p">,</span>
+                                                           <span class="n">type_seqs_</span><span class="p">,</span>
+                                                           <span class="n">dtime_boundary</span><span class="p">,</span>
+                                                           <span class="bp">self</span><span class="o">.</span><span class="n">compute_intensities_at_sample_times</span><span class="p">,</span>
+                                                           <span class="n">compute_last_step_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># [batch_size, seq_len]</span>
+            <span class="n">dtimes_pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">accepted_dtimes</span> <span class="o">*</span> <span class="n">weights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># [batch_size, seq_len, 1, event_num]</span>
+            <span class="n">intensities_at_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_intensities_at_sample_times</span><span class="p">(</span><span class="n">time_seqs_</span><span class="p">,</span>
+                                                                            <span class="n">time_delta_seqs_</span><span class="p">,</span>
+                                                                            <span class="n">type_seqs_</span><span class="p">,</span>
+                                                                            <span class="n">dtimes_pred</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">])</span>
+
+            <span class="c1"># [batch_size, seq_len, event_num]</span>
+            <span class="n">intensities_at_times</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">intensities_at_times</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1"># [batch_size, seq_len]</span>
+            <span class="n">types_pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">intensities_at_times</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># [batch_size, 1]</span>
+            <span class="n">types_pred_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">types_pred</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">dtimes_pred_</span> <span class="o">=</span> <span class="n">dtimes_pred</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">time_pred_</span> <span class="o">=</span> <span class="n">time_seqs_</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">dtimes_pred_</span>
+
+            <span class="c1"># concat to the prefix sequence</span>
+            <span class="n">time_seqs_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">time_seqs_</span><span class="p">,</span> <span class="n">time_pred_</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">time_delta_seqs_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">time_delta_seqs_</span><span class="p">,</span> <span class="n">dtimes_pred_</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">type_seqs_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">type_seqs_</span><span class="p">,</span> <span class="n">types_pred_</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">time_seqs_</span><span class="p">,</span> <span class="n">time_delta_seqs_</span><span class="p">,</span> <span class="n">type_seqs_</span><span class="p">]</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">time_delta_seqs_</span><span class="p">,</span> <span class="n">type_seqs_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">while_loop</span><span class="p">(</span><span class="n">while_condition</span><span class="p">,</span>
+                                                           <span class="n">body</span><span class="p">,</span>
+                                                           <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">time_seqs_</span><span class="p">,</span> <span class="n">time_delta_seqs_</span><span class="p">,</span> <span class="n">type_seqs_</span><span class="p">])</span>
+        <span class="c1"># to be consistent with the torch version</span>
+        <span class="k">return</span> <span class="n">time_delta_seqs_</span><span class="p">[:,</span> <span class="o">-</span><span class="n">num_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">type_seqs_</span><span class="p">[:,</span> <span class="o">-</span><span class="n">num_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:]</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

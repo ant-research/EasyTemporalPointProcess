@@ -1,0 +1,29 @@
+﻿easy\_tpp.model.tf\_model.tf\_basemodel
+=======================================
+
+.. automodule:: easy_tpp.model.tf_model.tf_basemodel
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      TfBaseModel
+   
+   
+
+   
+   
+   
+
+
+

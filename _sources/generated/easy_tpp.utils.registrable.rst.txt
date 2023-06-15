@@ -1,0 +1,29 @@
+﻿easy\_tpp.utils.registrable
+===========================
+
+.. automodule:: easy_tpp.utils.registrable
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Registrable
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training a Model &amp; Configuration Explanation &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Evaluate a Model" href="run_eval.html" />
+    <link rel="prev" title="Expected Dataset Format and Data Processing" href="dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model Training</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-setup-the-config-file-containing-data-and-model-configs">Step 1: Setup the config file containing data and model configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-run-the-training-script">Step 2: Run the training script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checkout-the-output">Checkout the output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Training a Model &amp; Configuration Explanation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user_guide/run_train_pipeline.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="training-a-model-configuration-explanation">
+<h1>Training a Model &amp; Configuration Explanation<a class="headerlink" href="#training-a-model-configuration-explanation" title="Permalink to this heading"></a></h1>
+<p>This tutorial shows how one can use <code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> to train the implemented models.</p>
+<p>In principle, firstly we need to initialize a config yaml file, containing all the input configuration to guide the training and eval process. The overall structure of a config file is shown as below:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">pipeline_config_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">..</span><span class="w">  </span><span class="c1"># name of the config for guiding the pipeline</span>
+
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">[</span><span class="nv">Dataset ID</span><span class="p p-Indicator">]:</span><span class="w">  </span><span class="c1"># name of the dataset, e.g, taxi</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">....</span>
+
+<span class="p p-Indicator">[</span><span class="nv">EXPERIMENT ID</span><span class="p p-Indicator">]:</span><span class="w">   </span><span class="c1"># name of the experiment to run</span>
+<span class="w">    </span><span class="nt">base_config</span><span class="p">:</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">....</span>
+<span class="w">    </span><span class="nt">model_config</span><span class="p">:</span>
+<span class="w">       </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+<p>After the config file is setup, we can run the script, by specifying the <cite>config directory</cite> and <cite>experiment id</cite>, to start the pipeline. We currently provide a preset script at <cite>examples/train_nhp.py</cite>.</p>
+<section id="step-1-setup-the-config-file-containing-data-and-model-configs">
+<h2>Step 1: Setup the config file containing data and model configs<a class="headerlink" href="#step-1-setup-the-config-file-containing-data-and-model-configs" title="Permalink to this heading"></a></h2>
+<p>To be specific, one needs to define the following entries in the config file:</p>
+<ul class="simple">
+<li><p><strong>pipeline_config_id</strong>: registered name of EasyTPP.Config objects, such as <cite>runner_config</cite> or <cite>hpo_runner_config</cite>. By reading this, the corresponding configuration class will be loaded for constructing the pipeline.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">pipeline_config_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runner_config</span>
+</pre></div>
+</div>
+<ul>
+<li><p><strong>data</strong>:  dataset specifics. One can put multiple dataset specifics in the config file, but only one will be used in one experiment.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>[DATASET ID]</em>: name of the dataset, e.g., taxi.</p></li>
+<li><p><em>train_dir, valid_dir, test_dir</em>: directory of the datafile. For the moment we only accept pkl file (please see <a class="reference external" href="./dataset.html">Dataset</a> for details)</p></li>
+<li><p><em>data_spec</em>: define the event type information.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">taxi</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">data_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pkl</span>
+<span class="w">    </span><span class="nt">train_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../data/taxi/train.pkl</span>
+<span class="w">    </span><span class="nt">valid_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../data/taxi/dev.pkl</span>
+<span class="w">    </span><span class="nt">test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../data/taxi/test.pkl</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">data_spec：</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">num_event_types</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7</span><span class="w">  </span><span class="c1"># num of types excluding pad events.</span>
+<span class="w">        </span><span class="nt">pad_token_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span><span class="w">    </span><span class="c1"># event type index for pad events</span>
+<span class="w">        </span><span class="nt">padding_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">right</span><span class="w">   </span><span class="c1"># pad at the right end of the sequence</span>
+<span class="w">        </span><span class="nt">truncation_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">right</span><span class="w">   </span><span class="c1"># truncate at the right end of the sequence</span>
+<span class="w">        </span><span class="nt">max_len</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">            </span><span class="c1"># max sequence length used as model input</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>[EXPERIMENT ID]</strong>: name of the experiment to run in the pipeline. It contains two blocks of configs:</p></li>
+</ul>
+<p><em>base_config</em> contains the pipeline framework related specifications.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">base_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">train</span><span class="w">       </span><span class="c1"># train, eval and generate</span>
+<span class="w">    </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w">   </span><span class="c1"># tensorflow and torch</span>
+<span class="w">    </span><span class="nt">dataset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conttime</span><span class="w">   </span><span class="c1"># name of the dataset</span>
+<span class="w">    </span><span class="nt">runner_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">std_tpp</span><span class="w">     </span><span class="c1"># registered name of the pipeline runner</span>
+<span class="w">    </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RMTPP</span><span class="w"> </span><span class="c1"># model name  # registered name of the implemented model</span>
+<span class="w">    </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;./checkpoints/&#39;</span><span class="w">   </span><span class="c1"># base dir to save the logs and models.</span>
+</pre></div>
+</div>
+<p><em>model_config</em> contains the model related specifications.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">model_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">hidden_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="w">      </span><span class="nt">time_emb_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">      </span><span class="nt">num_layers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">num_heads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">mc_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">      </span><span class="nt">sharing_param_layer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">      </span><span class="nt">loss_integral_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">      </span><span class="nt">dropout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">      </span><span class="nt">use_ln</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">      </span><span class="nt">thinning_params</span><span class="p">:</span><span class="w">   </span><span class="c1"># thinning algorithm for event sampling</span>
+<span class="w">            </span><span class="nt">num_seq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">            </span><span class="nt">num_sample</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">            </span><span class="nt">num_exp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w"> </span><span class="c1"># number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm</span>
+<span class="w">            </span><span class="nt">look_ahead_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">            </span><span class="nt">patience_counter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"> </span><span class="c1"># the maximum iteration used in adaptive thinning</span>
+<span class="w">            </span><span class="nt">over_sample_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">            </span><span class="nt">num_samples_boundary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">            </span><span class="nt">dtime_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+</pre></div>
+</div>
+<p><em>trainer_config</em> contains the training related specifications.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">trainer_config</span><span class="p">:</span><span class="w">   </span><span class="c1"># trainer arguments</span>
+<span class="w">    </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2019</span>
+<span class="w">    </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
+<span class="w">    </span><span class="nt">max_epoch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">shuffle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">optimizer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">adam</span>
+<span class="w">    </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.e-3</span>
+<span class="w">    </span><span class="nt">valid_freq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">use_tfb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;acc&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;rmse&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>A complete example of these files can be seen at <em>examples/example_config</em>.</p>
+</section>
+<section id="step-2-run-the-training-script">
+<h2>Step 2: Run the training script<a class="headerlink" href="#step-2-run-the-training-script" title="Permalink to this heading"></a></h2>
+<p>To run the training process, we simply need to call two functions:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Config</span></code>: it reads the directory of the configs specified in Step 1 and do some processing to form a complete configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Runner</span></code>: it reads the configuration and setups the whole pipeline for training, evaluation and generation.</p></li>
+</ol>
+<p>The following code is an example, which is a copy from <em>examples/train_nhp.py</em>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.config_factory</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.runner</span> <span class="kn">import</span> <span class="n">Runner</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--config_dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;configs/experiment_config.yaml&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Dir of configuration yaml to train and evaluate the model.&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--experiment_id&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;RMTPP_train&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Experiment id in the config file.&#39;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">build_from_yaml_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_dir</span><span class="p">,</span> <span class="n">experiment_id</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">)</span>
+
+    <span class="n">model_runner</span> <span class="o">=</span> <span class="n">Runner</span><span class="o">.</span><span class="n">build_from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="n">model_runner</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="checkout-the-output">
+<h2>Checkout the output<a class="headerlink" href="#checkout-the-output" title="Permalink to this heading"></a></h2>
+<p>During training, the log, the best model based on valid set performance, the complete configuration file are all saved. The directory of the saved files is specified in ‘base’ of <code class="docutils literal notranslate"><span class="pre">model_config.yaml</span></code>, i.e.,</p>
+<p>In the <cite>./checkpoints/</cite> folder, one find the correct subfolder by concatenating the ‘experiment_id’ and running timestamps. Inside that subfolder, there is a complete configuration file, e.g., <code class="docutils literal notranslate"><span class="pre">NHP_train_output.yaml</span></code> that records all the information used in the pipeline. The</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data_config</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">train_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../data/conttime/train.pkl</span>
+<span class="w">  </span><span class="nt">valid_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../data/conttime/dev.pkl</span>
+<span class="w">  </span><span class="nt">test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../data/conttime/test.pkl</span>
+<span class="w">  </span><span class="nt">specs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">num_event_types_pad</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
+<span class="w">    </span><span class="nt">num_event_types</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">event_pad_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">data_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pkl</span>
+<span class="nt">base_config</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">train</span>
+<span class="w">  </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+<span class="w">  </span><span class="nt">dataset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conttime</span>
+<span class="w">  </span><span class="nt">runner_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">std_tpp</span>
+<span class="w">  </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RMTPP</span>
+<span class="w">  </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/</span>
+<span class="w">  </span><span class="nt">exp_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RMTPP_train</span>
+<span class="w">  </span><span class="nt">log_folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/98888_4299965824_221205-153425</span>
+<span class="w">  </span><span class="nt">saved_model_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/98888_4299965824_221205-153425/models/saved_model</span>
+<span class="w">  </span><span class="nt">saved_log_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/98888_4299965824_221205-153425/log</span>
+<span class="w">  </span><span class="nt">output_config_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/98888_4299965824_221205-153425/RMTPP_train_output.yaml</span>
+<span class="nt">model_config</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">hidden_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="w">  </span><span class="nt">time_emb_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">  </span><span class="nt">num_layers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">num_heads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">mc_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">  </span><span class="nt">sharing_param_layer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">loss_integral_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">  </span><span class="nt">dropout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">use_ln</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2019</span>
+<span class="w">  </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="nt">thinning_params</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">num_seq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">num_sample</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">num_exp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<span class="w">    </span><span class="nt">look_ahead_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">patience_counter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">over_sample_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">num_samples_boundary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">dtime_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">num_step_gen</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">trainer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
+<span class="w">    </span><span class="nt">max_epoch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">shuffle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">optimizer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">adam</span>
+<span class="w">    </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.001</span>
+<span class="w">    </span><span class="nt">valid_freq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">use_tfb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">metrics</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acc</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rmse</span>
+<span class="w">    </span><span class="nt">seq_pad_end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">is_training</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">num_event_types_pad</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
+<span class="w">  </span><span class="nt">num_event_types</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">event_pad_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RMTPP</span>
+</pre></div>
+</div>
+<p>If we set <code class="docutils literal notranslate"><span class="pre">use_tfb</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>, it means we can launch the tensorboard to track the training process, one
+can see <a class="reference external" href="../advanced/tensorboard.html">Running Tensorboard</a> for details.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dataset.html" class="btn btn-neutral float-left" title="Expected Dataset Format and Data Processing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="run_eval.html" class="btn btn-neutral float-right" title="Evaluate a Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

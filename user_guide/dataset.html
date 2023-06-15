@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expected Dataset Format and Data Processing &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Training a Model &amp; Configuration Explanation" href="run_train_pipeline.html" />
+    <link rel="prev" title="Quick Start" href="../get_started/quick_start.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#required-format">Required format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-processing">Data processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sequence-padding">Sequence padding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sequence-masking">Sequence masking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#an-example">An example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Expected Dataset Format and Data Processing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user_guide/dataset.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="expected-dataset-format-and-data-processing">
+<h1>Expected Dataset Format and Data Processing<a class="headerlink" href="#expected-dataset-format-and-data-processing" title="Permalink to this heading"></a></h1>
+<section id="required-format">
+<h2>Required format<a class="headerlink" href="#required-format" title="Permalink to this heading"></a></h2>
+<p>In EasyTPP we use the data in Gatech format, i.e., each dataset is a dict containing the following keys as</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dim_process:<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="c1"># num of event types (no padding)</span>
+<span class="s1">&#39;train&#39;</span>:<span class="w"> </span><span class="o">[[{</span><span class="s1">&#39;idx_event&#39;</span>:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="s1">&#39;time_since_last_event&#39;</span>:<span class="w"> </span><span class="m">1</span>.0267814,<span class="w"> </span><span class="s1">&#39;time_since_last_same_event&#39;</span>:<span class="w"> </span><span class="m">1</span>.0267814,<span class="w"> </span><span class="s1">&#39;type_event&#39;</span>:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="s1">&#39;time_since_start&#39;</span>:<span class="w"> </span><span class="m">1</span>.0267814<span class="o">}</span>,<span class="w"> </span><span class="o">{</span><span class="s1">&#39;idx_event&#39;</span>:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="s1">&#39;time_since_last_event&#39;</span>:<span class="w"> </span><span class="m">0</span>.4029268,<span class="w"> </span><span class="s1">&#39;time_since_last_same_event&#39;</span>:<span class="w"> </span><span class="m">1</span>.4297082,<span class="w"> </span><span class="s1">&#39;type_event&#39;</span>:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span><span class="s1">&#39;time_since_start&#39;</span>:<span class="w"> </span><span class="m">1</span>.4297082<span class="o">}</span>,...,<span class="o">]</span>,<span class="o">[{}</span>...<span class="o">{}]]</span>
+</pre></div>
+</div>
+<p>where <cite>dim_process</cite> refers to the number of event types (without padding) and
+<cite>train</cite> (or <cite>dev</cite> / <cite>test</cite>) contains a list of list which corresponds to an event sequence each.</p>
+<p>Each pickle file generates a set of event sequences, each containing three sub sequences:</p>
+<ol class="arabic simple">
+<li><p><cite>time_seqs</cite>: absolute timestamps of the events, correspond to <cite>time_since_last_event</cite>.</p></li>
+<li><p><cite>time_delta_seqs</cite>: relative timestamps of the events, correspond to <cite>time_since_last_same_event</cite>.</p></li>
+<li><p><cite>type_seqs</cite>: types of the events, correspond to <cite>type_event</cite>. Be noted that the event type index <cite>starts from 0</cite>.</p></li>
+</ol>
+<p>Some widely-used open source datasets in Gatech format can be found at <a class="reference external" href="https://drive.google.com/drive/folders/0BwqmV0EcoUc8UklIR1BKV25YR1U?resourcekey=0-OrlU87jyc1m-dVMmY5aC4w">Google Drive</a>, which are provided by researchers. We use them for validating and benchmarking EasyTPP models.</p>
+</section>
+<section id="data-processing">
+<h2>Data processing<a class="headerlink" href="#data-processing" title="Permalink to this heading"></a></h2>
+<p>The data processing follows the similar pipeline as in official code of <a class="reference external" href="https://github.com/yangalan123/anhp-andtt">AttNHP</a>. We name it the process of <cite>event tokenize</cite>.</p>
+<section id="sequence-padding">
+<h3>Sequence padding<a class="headerlink" href="#sequence-padding" title="Permalink to this heading"></a></h3>
+<p>time_seqs, time_delta_seqs and type_seqs are firstly padded to <cite>the max length of the whole dataset</cite> and then fed into the model in batch.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>input:<span class="w"> </span>raw<span class="w"> </span>event<span class="w"> </span>sequence<span class="w"> </span><span class="o">(</span>e_0,<span class="w"> </span>e_1,<span class="w"> </span>e_2,<span class="w"> </span>e_3<span class="o">)</span><span class="w"> </span>and<span class="w"> </span><span class="nv">max_len</span><span class="o">=</span><span class="m">6</span><span class="w"> </span><span class="c1"># the max length among all data seqs</span>
+
+output:
+
+<span class="w">        </span>index:<span class="w">    </span><span class="m">0</span>,<span class="w">          </span><span class="m">1</span>,<span class="w">         </span><span class="m">2</span>,<span class="w">         </span><span class="m">3</span>，<span class="w">      </span><span class="m">4</span><span class="w">         </span><span class="m">5</span>
+<span class="w">        </span>dtimes:<span class="w">   </span><span class="m">0</span>，<span class="w">     </span>t_1-t_0,<span class="w">    </span>t_2-t_1,<span class="w">   </span>t_3-t_2，<span class="w"> </span>time_pad,<span class="w"> </span>time_pad
+<span class="w">        </span>types:<span class="w">    </span>e_0,<span class="w">      </span>e_1,<span class="w">        </span>e_2,<span class="w">       </span>e_3，<span class="w">  </span>type_pad,<span class="w"> </span>type_pad
+</pre></div>
+</div>
+<p>By default, we set the value of time_pad and type_pad to be the <em>num_event_types</em> (because we assume the event type index starts from 0, therefore the integer value of num_event_types is unused).</p>
+</section>
+<section id="sequence-masking">
+<h3>Sequence masking<a class="headerlink" href="#sequence-masking" title="Permalink to this heading"></a></h3>
+<p>After padding, we perform the masking for the event sequences and generate three more seqs: batch_non_pad_mask, attention_mask, type_mask：</p>
+<ol class="arabic simple">
+<li><p><cite>batch_non_pad_mask</cite>: it indicates the position of masks in the sequence.</p></li>
+<li><p><cite>attention_mask</cite>: it indicates the masks used in the attention calculation (one event can only attend to its past events).</p></li>
+<li><p><cite>type_mask</cite>: it uses one-hot vector to represent the event type. The padded event is a zero vector.</p></li>
+</ol>
+<p>Finally, each batch contains six elements: time_seqs, time_delta_seqs, event_seq, batch_non_pad_mask, attention_mask, type_mask. The implementation of padding mechanism can be found at [event_toknizer.py](../../easy_tpp/preprocess/event_tokenizer.py).</p>
+</section>
+<section id="an-example">
+<h3>An example<a class="headerlink" href="#an-example" title="Permalink to this heading"></a></h3>
+<p>We take a real event sequence for example. Assume we have an input sequence $[ 1,  9,  5,  0]$ with num_event_types=11 and max_len=6.</p>
+<p>Then the padded time_seqs, time_delta_seqs and type_seqs become</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># time_seqs</span>
+<span class="o">[</span><span class="w"> </span><span class="m">0</span>.0000,<span class="w">  </span><span class="m">0</span>.8252,<span class="w">  </span><span class="m">1</span>.3806,<span class="w">  </span><span class="m">1</span>.8349,<span class="w"> </span><span class="m">11</span>.0000,<span class="w"> </span><span class="m">11</span>.0000<span class="o">]</span>
+
+<span class="c1"># time_delta_seqs</span>
+<span class="o">[</span><span class="w"> </span><span class="m">0</span>.0000,<span class="w">  </span><span class="m">0</span>.8252,<span class="w">  </span><span class="m">0</span>.5554,<span class="w">  </span><span class="m">0</span>.4542,<span class="w"> </span><span class="m">11</span>.0000,<span class="w"> </span><span class="m">11</span>.0000<span class="o">]</span>
+
+<span class="c1"># type_seqs</span>
+<span class="o">[</span><span class="w"> </span><span class="m">1</span>,<span class="w">  </span><span class="m">9</span>,<span class="w">  </span><span class="m">5</span>,<span class="w">  </span><span class="m">0</span>,<span class="w"> </span><span class="m">11</span>,<span class="w"> </span><span class="m">11</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>The mask sequences are</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># batch_non_pad_mask</span>
+<span class="o">[</span><span class="w"> </span>True,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w"> </span>False,<span class="w"> </span>False<span class="o">]</span>
+
+<span class="c1"># attention_mask</span>
+<span class="o">[[</span>True,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w"> </span>False,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w">  </span>True,<span class="w">  </span>True,<span class="w">  </span>True<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w">  </span>True,<span class="w">  </span>True<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w">  </span>True,<span class="w">  </span>True<span class="o">]]</span>
+
+<span class="c1"># type_mask</span>
+<span class="o">[[</span>False,<span class="w">  </span>True,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>True,<span class="w"> </span>False<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w">  </span>True,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False<span class="o">]</span>,
+<span class="o">[</span>True,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False<span class="o">]</span>,
+<span class="o">[</span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False<span class="o">]]</span>,
+</pre></div>
+</div>
+<p>The runnable examples of constructing and iterating the dataset object can be found at <a class="reference external" href="../../examples/dataset/event_tokenizer.py">event_tokenizer</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../get_started/quick_start.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="run_train_pipeline.html" class="btn btn-neutral float-right" title="Training a Model &amp; Configuration Explanation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

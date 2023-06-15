@@ -1,0 +1,39 @@
+﻿easy\_tpp.utils.multiprocess\_utils
+===================================
+
+.. automodule:: easy_tpp.utils.multiprocess_utils
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_now_timestamp_id
+      get_unique_id
+      is_local_master_process
+      is_master_process
+      parse_uri_to_protocol_and_path
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Timer
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,35 @@
+﻿easy\_tpp.utils.log\_utils
+==========================
+
+.. automodule:: easy_tpp.utils.log_utils
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_logger
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CustomFormatter
+   
+   
+
+   
+   
+   
+
+
+

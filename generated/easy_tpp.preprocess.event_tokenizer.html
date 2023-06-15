@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.preprocess.event_tokenizer &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EasyTPP Models" href="../ref/models.html" />
+    <link rel="prev" title="easy_tpp.preprocess.dataset" href="easy_tpp.preprocess.dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ref/preprocess.html#easy_tpp.preprocess.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ref/preprocess.html#easy_tpp.preprocess.TPPDataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.preprocess.data_collator.html">easy_tpp.preprocess.data_collator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.preprocess.data_loader.html">easy_tpp.preprocess.data_loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="easy_tpp.preprocess.dataset.html">easy_tpp.preprocess.dataset</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">easy_tpp.preprocess.event_tokenizer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding"><code class="docutils literal notranslate"><span class="pre">BatchEncoding</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.__init__"><code class="docutils literal notranslate"><span class="pre">BatchEncoding.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.keys"><code class="docutils literal notranslate"><span class="pre">BatchEncoding.keys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.values"><code class="docutils literal notranslate"><span class="pre">BatchEncoding.values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.items"><code class="docutils literal notranslate"><span class="pre">BatchEncoding.items()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.convert_to_tensors"><code class="docutils literal notranslate"><span class="pre">BatchEncoding.convert_to_tensors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.to"><code class="docutils literal notranslate"><span class="pre">BatchEncoding.to()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.__init__"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.pad"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.pad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_pad_sequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_attn_mask_for_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_attn_mask_for_pad_sequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_type_mask_for_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_type_mask_for_pad_sequence()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../ref/preprocess.html">EasyTPP Preprocess Modules</a></li>
+      <li class="breadcrumb-item active">easy_tpp.preprocess.event_tokenizer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/easy_tpp.preprocess.event_tokenizer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-easy_tpp.preprocess.event_tokenizer">
+<span id="easy-tpp-preprocess-event-tokenizer"></span><h1>easy_tpp.preprocess.event_tokenizer<a class="headerlink" href="#module-easy_tpp.preprocess.event_tokenizer" title="Permalink to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding" title="easy_tpp.preprocess.event_tokenizer.BatchEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchEncoding</span></code></a>([data, tensor_type, ...])</p></td>
+<td><p>Holds the output of the [<cite>~event_tokenizer.EventTokenizer.__call__</cite>], [<cite>~event_tokenizer.EventTokenizer.encode_plus</cite>] methods (tokens, attention_masks, etc).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer" title="easy_tpp.preprocess.event_tokenizer.EventTokenizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a>(config)</p></td>
+<td><p>Base class for tokenizer event sequences, vendored from huggingface/transformer</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.BatchEncoding">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.preprocess.event_tokenizer.</span></span><span class="sig-name descname"><span class="pre">BatchEncoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensor_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="easy_tpp.utils.const.html#easy_tpp.utils.const.TensorType" title="easy_tpp.utils.const.TensorType"><span class="pre">TensorType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepend_batch_axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#BatchEncoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding" title="Permalink to this definition"></a></dt>
+<dd><p>Holds the output of the [<cite>~event_tokenizer.EventTokenizer.__call__</cite>],
+[<cite>~event_tokenizer.EventTokenizer.encode_plus</cite>] methods (tokens, attention_masks, etc).</p>
+<p>This class is derived from a python dictionary and can be used as a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<cite>dict</cite>) – Dictionary of lists/arrays/tensors returned by the <cite>__call__</cite>/<cite>encode_plus</cite>/<cite>batch_encode_plus</cite> methods
+(‘input_ids’, ‘attention_mask’, etc.).</p></li>
+<li><p><strong>tensor_type</strong> (<cite>Union[None, str, TensorType]</cite>, <em>optional</em>) – You can give a tensor_type here to convert the lists of integers in PyTorch/TensorFlow/Numpy Tensors at
+initialization.</p></li>
+<li><p><strong>prepend_batch_axis</strong> (<cite>bool</cite>, <em>optional</em>, defaults to <cite>False</cite>) – Whether or not to add a batch axis when converting to tensors (see <cite>tensor_type</cite> above).</p></li>
+<li><p><strong>n_sequences</strong> (<cite>Optional[int]</cite>, <em>optional</em>) – You can give a tensor_type here to convert the lists of integers in PyTorch/TensorFlow/Numpy Tensors at
+initialization.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.BatchEncoding.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensor_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="easy_tpp.utils.const.html#easy_tpp.utils.const.TensorType" title="easy_tpp.utils.const.TensorType"><span class="pre">TensorType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepend_batch_axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#BatchEncoding.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.BatchEncoding.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#BatchEncoding.keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.BatchEncoding.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#BatchEncoding.values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.values" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.BatchEncoding.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#BatchEncoding.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.items" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.BatchEncoding.convert_to_tensors">
+<span class="sig-name descname"><span class="pre">convert_to_tensors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="easy_tpp.utils.const.html#easy_tpp.utils.const.TensorType" title="easy_tpp.utils.const.TensorType"><span class="pre">TensorType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepend_batch_axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#BatchEncoding.convert_to_tensors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.convert_to_tensors" title="Permalink to this definition"></a></dt>
+<dd><p>Convert the inner content to tensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tensor_type</strong> (<cite>str</cite> or [<cite>~utils.TensorType</cite>], <em>optional</em>) – The type of tensors to use. If <cite>str</cite>, should be one of the values of the enum [<cite>~utils.TensorType</cite>]. If
+<cite>None</cite>, no modification is done.</p></li>
+<li><p><strong>prepend_batch_axis</strong> (<cite>int</cite>, <em>optional</em>, defaults to <cite>False</cite>) – Whether or not to add the batch dimension during the conversion.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.BatchEncoding.to">
+<span class="sig-name descname"><span class="pre">to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.device</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding" title="easy_tpp.preprocess.event_tokenizer.BatchEncoding"><span class="pre">BatchEncoding</span></a></span></span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#BatchEncoding.to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding.to" title="Permalink to this definition"></a></dt>
+<dd><p>Send all values to device by calling <cite>v.to(device)</cite> (PyTorch only).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device</strong> (<cite>str</cite> or <cite>torch.device</cite>) – The device to put the tensors on.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The same instance after modification.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<cite>BatchEncoding</cite>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.EventTokenizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.preprocess.event_tokenizer.</span></span><span class="sig-name descname"><span class="pre">EventTokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer" title="Permalink to this definition"></a></dt>
+<dd><p>Base class for tokenizer event sequences, vendored from huggingface/transformer</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.EventTokenizer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.EventTokenizer.pad">
+<span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoded_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="easy_tpp.utils.const.html#easy_tpp.utils.const.PaddingStrategy" title="easy_tpp.utils.const.PaddingStrategy"><span class="pre">PaddingStrategy</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="easy_tpp.utils.const.html#easy_tpp.utils.const.TruncationStrategy" title="easy_tpp.utils.const.TruncationStrategy"><span class="pre">TruncationStrategy</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_attention_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_tensors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="easy_tpp.utils.const.html#easy_tpp.utils.const.TensorType" title="easy_tpp.utils.const.TensorType"><span class="pre">TensorType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#easy_tpp.preprocess.event_tokenizer.BatchEncoding" title="easy_tpp.preprocess.event_tokenizer.BatchEncoding"><span class="pre">BatchEncoding</span></a></span></span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.pad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.pad" title="Permalink to this definition"></a></dt>
+<dd><p>Pad a single encoded input or a batch of encoded inputs up to predefined length or to the max sequence length
+in the batch.</p>
+<p>Padding side (left/right) padding token ids are defined at the tokenizer level (with <cite>self.padding_side</cite>,
+<cite>self.pad_token_id</cite> and <cite>self.pad_token_type_id</cite>).</p>
+<p>Please note that with a fast tokenizer, using the <cite>__call__</cite> method is faster than using a method to encode the
+text followed by a call to the <cite>pad</cite> method to get a padded encoding.</p>
+<p>&lt;Tip&gt;</p>
+<p>If the <cite>encoded_inputs</cite> passed are dictionary of numpy arrays, PyTorch tensors or TensorFlow tensors, the
+result will use the same type unless you provide a different tensor type with <cite>return_tensors</cite>. In the case of
+PyTorch tensors, you will lose the specific device of your tensors however.</p>
+<p>&lt;/Tip&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>[</strong><strong>BatchEncoding</strong><strong>]</strong> (<em>encoded_inputs</em>) – <p>Tokenized inputs. Can represent one input ([<cite>BatchEncoding</cite>] or <cite>Dict[str, List[int]]</cite>) or a batch of
+tokenized inputs (list of [<cite>BatchEncoding</cite>], <em>Dict[str, List[List[int]]]</em> or <em>List[Dict[str,
+List[int]]]</em>) so you can use this method during preprocessing as well as in a PyTorch Dataloader
+collate function.</p>
+<p>Instead of <cite>List[int]</cite> you can have tensors (numpy arrays, PyTorch tensors or TensorFlow tensors), see
+the note above for the return type.</p>
+</p></li>
+<li><p><strong>[</strong><strong>BatchEncoding</strong><strong>]</strong> (<em>list of</em>) – <p>Tokenized inputs. Can represent one input ([<cite>BatchEncoding</cite>] or <cite>Dict[str, List[int]]</cite>) or a batch of
+tokenized inputs (list of [<cite>BatchEncoding</cite>], <em>Dict[str, List[List[int]]]</em> or <em>List[Dict[str,
+List[int]]]</em>) so you can use this method during preprocessing as well as in a PyTorch Dataloader
+collate function.</p>
+<p>Instead of <cite>List[int]</cite> you can have tensors (numpy arrays, PyTorch tensors or TensorFlow tensors), see
+the note above for the return type.</p>
+</p></li>
+<li><p><strong>padding</strong> (<cite>bool</cite>, <cite>str</cite> or [<cite>~utils.PaddingStrategy</cite>], <em>optional</em>, defaults to <cite>True</cite>) – <dl class="simple">
+<dt>Select a strategy to pad the returned sequences (according to the model’s padding side and padding</dt><dd><p>index) among:</p>
+</dd>
+</dl>
+<ul>
+<li><p><cite>True</cite> or <cite>‘longest’</cite>: Pad to the longest sequence in the batch (or no padding if only a single
+sequence if provided).</p></li>
+<li><p><cite>’max_length’</cite>: Pad to a maximum length specified with the argument <cite>max_length</cite> or to the maximum
+acceptable input length for the model if that argument is not provided.</p></li>
+<li><p><cite>False</cite> or <cite>‘do_not_pad’</cite> (default): No padding (i.e., can output a batch with sequences of different
+lengths).</p></li>
+</ul>
+</p></li>
+<li><p><strong>max_length</strong> (<cite>int</cite>, <em>optional</em>) – Maximum length of the returned list and optionally padding length (see above).</p></li>
+<li><p><strong>return_attention_mask</strong> (<cite>bool</cite>, <em>optional</em>) – Whether to return the attention mask. If left to the default, will return the attention mask according
+to the specific tokenizer’s default, defined by the <cite>return_outputs</cite> attribute.</p></li>
+<li><p><strong>return_tensors</strong> (<cite>str</cite> or [<cite>~utils.TensorType</cite>], <em>optional</em>) – <p>If set, will return tensors instead of list of python integers. Acceptable values are:</p>
+<ul>
+<li><p><cite>’tf’</cite>: Return TensorFlow <cite>tf.constant</cite> objects.</p></li>
+<li><p><cite>’pt’</cite>: Return PyTorch <cite>torch.Tensor</cite> objects.</p></li>
+<li><p><cite>’np’</cite>: Return Numpy <cite>np.ndarray</cite> objects.</p></li>
+</ul>
+</p></li>
+<li><p><strong>verbose</strong> (<cite>bool</cite>, <em>optional</em>, defaults to <cite>True</cite>) – Whether or not to print more information and warnings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_pad_sequence">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_token_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_len</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float32'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by_event_types=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_pad_sequence" title="Permalink to this definition"></a></dt>
+<dd><p>Pad the sequence batch-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seqs</strong> (<em>list</em>) – list of sequences with variational length</p></li>
+<li><p><strong>pad_token_id</strong> (<em>int</em><em>, </em><em>float</em>) – optional, a value that used to pad the sequences. If None, then the pad index</p></li>
+<li><p><strong>event_num_with_pad</strong> (<em>is set to be the</em>) – </p></li>
+<li><p><strong>max_len</strong> (<em>int</em>) – optional, the maximum length of the sequence after padding. If None, then the</p></li>
+<li><p><strong>sequences.</strong> (<em>length is set to be the max length</em><em> of </em><em>all input</em>) – </p></li>
+<li><p><strong>pad_at_end</strong> (<em>bool</em>) – optional, whether to pad the sequnce at the end. If False,</p></li>
+<li><p><strong>beginning</strong> (<em>the sequence is pad at the</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a numpy array of padded sequence</p>
+</dd>
+</dl>
+<p>Example:
+<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
+seqs = [[0, 1], [3, 4, 5]]
+pad_sequence(seqs, 100)
+&gt;&gt;&gt; [[0, 1, 100], [3, 4, 5]]</p>
+<p>pad_sequence(seqs, 100, max_len=5)
+&gt;&gt;&gt; [[0, 1, 100, 100, 100], [3, 4, 5, 100, 100]]
+<a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_attn_mask_for_pad_sequence">
+<span class="sig-name descname"><span class="pre">make_attn_mask_for_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pad_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_token_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_attn_mask_for_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_attn_mask_for_pad_sequence" title="Permalink to this definition"></a></dt>
+<dd><p>Make the attention masks for the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pad_seqs</strong> (<em>tensor</em>) – list of sequences that have been padded with fixed length</p></li>
+<li><p><strong>pad_token_id</strong> (<em>int</em>) – optional, a value that used to pad the sequences. If None, then the pad index</p></li>
+<li><p><strong>event_num_with_pad</strong> (<em>is set to be the</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a bool matrix of the same size of input, denoting the masks of the
+sequence (True: non mask, False: mask)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+<p>Example:
+<a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a>python
+seqs = [[ 1,  6,  0,  7, 12, 12],
+[ 1,  0,  5,  1, 10,  9]]
+make_attn_mask_for_pad_sequence(seqs, pad_index=12)
+&gt;&gt;&gt;</p>
+<blockquote>
+<div><p>batch_non_pad_mask
+([[ True,  True,  True,  True, False, False],
+[ True,  True,  True,  True,  True,  True]])
+attention_mask
+[[[ True  True  True  True  True  True]</p>
+<blockquote>
+<div><blockquote>
+<div><p>[False  True  True  True  True  True]
+[False False  True  True  True  True]
+[False False False  True  True  True]
+[False False False False  True  True]
+[False False False False  True  True]]</p>
+</div></blockquote>
+<dl class="simple">
+<dt>[[ True  True  True  True  True  True]</dt><dd><p>[False  True  True  True  True  True]
+[False False  True  True  True  True]
+[False False False  True  True  True]
+[False False False False  True  True]
+[False False False False False  True]]]</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p><a href="#id13"><span class="problematic" id="id14">``</span></a><a href="#id15"><span class="problematic" id="id16">`</span></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_type_mask_for_pad_sequence">
+<span class="sig-name descname"><span class="pre">make_type_mask_for_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pad_seqs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_type_mask_for_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_type_mask_for_pad_sequence" title="Permalink to this definition"></a></dt>
+<dd><p>Make the type mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pad_seqs</strong> (<em>tensor</em>) – a list of sequence events with equal length (i.e., padded sequence)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a 3-dim matrix, where the last dim (one-hot vector) indicates the type of event</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="easy_tpp.preprocess.dataset.html" class="btn btn-neutral float-left" title="easy_tpp.preprocess.dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../ref/models.html" class="btn btn-neutral float-right" title="EasyTPP Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

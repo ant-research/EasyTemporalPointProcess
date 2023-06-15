@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.model.tf_model.tf_baselayer &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.model.tf_model.tf_baselayer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.model.tf_model.tf_baselayer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+
+<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">py_assert</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.utils.tf_utils</span> <span class="kn">import</span> <span class="n">get_shape_list</span>
+
+<span class="k">if</span> <span class="n">tf</span><span class="o">.</span><span class="n">__version__</span> <span class="o">&gt;=</span> <span class="s1">&#39;2.0&#39;</span><span class="p">:</span>
+    <span class="n">tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">disable_v2_behavior</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="gelu"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.gelu">[docs]</a><span class="k">def</span> <span class="nf">gelu</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gaussian Error Linear Unit.</span>
+<span class="sd">    This is a smoother version of the RELU.</span>
+<span class="sd">    Original paper: https://arxiv.org/abs/1606.08415</span>
+<span class="sd">    Args:</span>
+<span class="sd">        x: float Tensor to perform activation.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        `x` with the GELU activation applied.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cdf</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">tanh</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.044715</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))))</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">cdf</span></div>
+
+
+<span class="k">def</span> <span class="nf">swish</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">null_activation</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">def</span> <span class="nf">activation_layer</span><span class="p">(</span><span class="n">activation</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">activation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">null_activation</span>
+    <span class="k">if</span> <span class="n">activation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;gelu&#39;</span><span class="p">:</span>
+        <span class="n">act_layer</span> <span class="o">=</span> <span class="n">gelu</span>
+    <span class="k">elif</span> <span class="n">activation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;swish&#39;</span><span class="p">:</span>
+        <span class="n">act_layer</span> <span class="o">=</span> <span class="n">swish</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">activation</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">act_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="n">activation</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">activation</span><span class="p">,</span> <span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+        <span class="n">act_layer</span> <span class="o">=</span> <span class="n">activation</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid activation,found </span><span class="si">%s</span><span class="s2">.You should use a str or a Activation Layer Class.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">activation</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">act_layer</span>
+
+
+<div class="viewcode-block" id="append_tensor_alias"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.append_tensor_alias">[docs]</a><span class="k">def</span> <span class="nf">append_tensor_alias</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">alias</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append an alias to the list of aliases of the tensor.</span>
+<span class="sd">    Args:</span>
+<span class="sd">      tensor: A `Tensor`.</span>
+<span class="sd">      alias: String, to add to the list of aliases of the tensor.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      The tensor with a new alias appended to its list of aliases.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Remove ending &#39;/&#39; if present.</span>
+    <span class="k">if</span> <span class="n">alias</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span>
+        <span class="n">alias</span> <span class="o">=</span> <span class="n">alias</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="s1">&#39;aliases&#39;</span><span class="p">):</span>
+        <span class="n">tensor</span><span class="o">.</span><span class="n">aliases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tensor</span><span class="o">.</span><span class="n">aliases</span> <span class="o">=</span> <span class="p">[</span><span class="n">alias</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tensor</span></div>
+
+
+<div class="viewcode-block" id="LayerNormalization"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.LayerNormalization">[docs]</a><span class="k">class</span> <span class="nc">LayerNormalization</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    ref: https://github.com/shenweichen/DeepCTR/blob/master/deepctr/layers/normalization.py</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LayerNormalization</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LayerNormalization.build"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.LayerNormalization.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:],</span>
+                                     <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">Ones</span><span class="p">(),</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:],</span>
+                                    <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">Zeros</span><span class="p">(),</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LayerNormalization</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LayerNormalization.call"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.LayerNormalization.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="n">mean</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">variance</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">inputs</span> <span class="o">-</span> <span class="n">mean</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">std</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">inputs</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span>
+        <span class="k">return</span> <span class="n">outputs</span></div></div>
+
+
+<div class="viewcode-block" id="MultiHeadAttention"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.MultiHeadAttention">[docs]</a><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MultiHeadAttention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+        <span class="n">py_assert</span><span class="p">(</span><span class="n">hidden_size</span> <span class="o">%</span> <span class="n">num_heads</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s1">&#39;In Attention, hidden size &#39;</span>
+                                                            <span class="s1">&#39;must be a multiplier of num_heads&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hidden_size</span> <span class="o">/</span> <span class="n">num_heads</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout_rate</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MultiHeadAttention.build"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.MultiHeadAttention.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build up weight tensors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_shape (tensor): shape of the input.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_head_weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">),</span>
+            <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;query/kernel&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">k_head_weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">),</span>
+            <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;key/kernel&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">v_head_weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">),</span>
+            <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;value/kernel&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_head_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,),</span>
+            <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;query/bias&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">k_head_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,),</span>
+            <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;key/bias&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">v_head_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,),</span>
+            <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;value/bias&#39;</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">MultiHeadAttention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_abs_attn_core</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q_head</span><span class="p">,</span> <span class="n">k_head</span><span class="p">,</span> <span class="n">v_head</span><span class="p">,</span> <span class="n">attn_mask</span><span class="p">,</span> <span class="n">training</span><span class="p">,</span>
+                       <span class="n">scale</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the attention weight score.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            q_head (tensor): [batch_size, q_seq_len, num_head, head_size].</span>
+<span class="sd">            k_head (tensor): [batch_size, kv_seq_len, num_head, head_size].</span>
+<span class="sd">            v_head (tensor): [batch_size, kv_seq_len, num_head, head_size].</span>
+<span class="sd">            attn_mask (tensor): [batch_size, q_seq_len, kv_seq_len].</span>
+<span class="sd">            training (bool): whether in training mode.</span>
+<span class="sd">            scale (float): equals to 1 / (head_size ** 0.5), which scales down the attention score.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: attention context vector, [batch_size, q_seq_len, num_head, head_size];</span>
+<span class="sd">             and attention weight [batch_size, num_head, q_seq_len, kv_seq_len].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># [batch_size, num_head, q_seq_len, kv_seq_len]</span>
+        <span class="n">attn_score</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;bind,bjnd-&gt;bnij&#39;</span><span class="p">,</span> <span class="n">q_head</span><span class="p">,</span> <span class="n">k_head</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, num_head, q_seq_len, kv_seq_len]</span>
+        <span class="n">attn_score</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">attn_score</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, 1, q_seq_len, kv_seq_len]</span>
+        <span class="n">attn_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">attn_mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># elements 1 =&gt; need to mask, 0 =&gt; no mask</span>
+        <span class="c1"># adder = (1.0 - tf.cast(attn_mask, tf.float32)) * -10000.0</span>
+        <span class="n">adder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">attn_mask</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mf">10000.0</span>
+        <span class="n">attn_score</span> <span class="o">+=</span> <span class="n">adder</span>
+
+        <span class="c1"># [batch_size, num_head, q_seq_len, kv_seq_len]</span>
+        <span class="n">attn_prob</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">attn_score</span><span class="p">)</span>
+        <span class="n">attn_prob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">attn_prob</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">training</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, q_seq_len, num_head, head_size]</span>
+        <span class="n">attn_vec</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;bnij,bjnd-&gt;bind&#39;</span><span class="p">,</span> <span class="n">attn_prob</span><span class="p">,</span> <span class="n">v_head</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attn_vec</span><span class="p">,</span> <span class="n">attn_prob</span>
+
+<div class="viewcode-block" id="MultiHeadAttention.call"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.MultiHeadAttention.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attention_input</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">kv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_weight</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">q_input</span> <span class="o">=</span> <span class="n">attention_input</span>
+        <span class="k">if</span> <span class="n">kv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">k_input</span> <span class="o">=</span> <span class="n">attention_input</span>
+            <span class="n">v_input</span> <span class="o">=</span> <span class="n">attention_input</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">k_input</span> <span class="o">=</span> <span class="n">v_input</span> <span class="o">=</span> <span class="n">kv</span>
+
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">q_seq_length</span><span class="p">,</span> <span class="n">kv_seq_length</span> <span class="o">=</span> <span class="n">get_shape_list</span><span class="p">(</span><span class="n">attention_mask</span><span class="p">)</span>
+
+        <span class="n">q_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;bih,hx-&gt;bix&#39;</span><span class="p">,</span> <span class="n">q_input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_head_weight</span><span class="p">)</span>
+        <span class="n">q_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">q_head_h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_head_bias</span><span class="p">)</span>
+
+        <span class="n">k_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;bih,hx-&gt;bix&#39;</span><span class="p">,</span> <span class="n">k_input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_head_weight</span><span class="p">)</span>
+        <span class="n">k_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">k_head_h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_head_bias</span><span class="p">)</span>
+
+        <span class="n">v_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;bih,hx-&gt;bix&#39;</span><span class="p">,</span> <span class="n">v_input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_head_weight</span><span class="p">)</span>
+        <span class="n">v_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">v_head_h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_head_bias</span><span class="p">)</span>
+
+        <span class="n">q_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">q_head_h</span><span class="p">,</span> <span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">q_seq_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_size</span><span class="p">])</span>
+        <span class="n">k_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">k_head_h</span><span class="p">,</span> <span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">kv_seq_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_size</span><span class="p">])</span>
+        <span class="n">v_head_h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v_head_h</span><span class="p">,</span> <span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">kv_seq_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_size</span><span class="p">])</span>
+
+        <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">attn_vec</span><span class="p">,</span> <span class="n">attn_prob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_abs_attn_core</span><span class="p">(</span><span class="n">q_head_h</span><span class="p">,</span> <span class="n">k_head_h</span><span class="p">,</span> <span class="n">v_head_h</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">training</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+        <span class="n">attn_vec</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">attn_vec</span><span class="p">,</span> <span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">q_seq_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">output_weight</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">attn_vec</span><span class="p">,</span> <span class="n">attn_prob</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">attn_vec</span></div></div>
+
+
+<div class="viewcode-block" id="DenseDropoutLayernorm"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.DenseDropoutLayernorm">[docs]</a><span class="k">class</span> <span class="nc">DenseDropoutLayernorm</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DenseDropoutLayernorm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LayerNorm</span> <span class="o">=</span> <span class="n">LayerNormalization</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout_rate</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DenseDropoutLayernorm.call"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.DenseDropoutLayernorm.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">hidden_states</span><span class="p">,</span> <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">inputs</span>
+        <span class="n">hidden_states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">)</span>
+        <span class="n">hidden_states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">training</span><span class="p">)</span>
+        <span class="n">hidden_states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">hidden_states</span> <span class="o">+</span> <span class="n">input_tensor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hidden_states</span></div></div>
+
+
+<div class="viewcode-block" id="EncoderLayer"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.EncoderLayer">[docs]</a><span class="k">class</span> <span class="nc">EncoderLayer</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EncoderLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_layer</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">self_attention</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_output</span> <span class="o">=</span> <span class="n">DenseDropoutLayernorm</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EncoderLayer.call"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.EncoderLayer.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">input_tensor</span><span class="p">,</span> <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">inputs</span>
+        <span class="n">input_tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_layer</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+        <span class="n">self_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">self_attention</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">training</span><span class="p">)</span>
+        <span class="n">attention_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_output</span><span class="p">([</span><span class="n">self_outputs</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">],</span> <span class="n">training</span><span class="o">=</span><span class="n">training</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attention_output</span></div></div>
+
+
+<div class="viewcode-block" id="TimePositionalEncoding"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.TimePositionalEncoding">[docs]</a><span class="k">class</span> <span class="nc">TimePositionalEncoding</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+<div class="viewcode-block" id="TimePositionalEncoding.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.TimePositionalEncoding.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">5000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Standard positional encoder,</span>
+<span class="sd">        source code is from https://www.tensorflow.org/text/tutorials/transformer#the_encoder_layer</span>
+<span class="sd">        Args:</span>
+<span class="sd">            hidden_size (int):</span>
+<span class="sd">            max_len:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TimePositionalEncoding</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="n">depth</span> <span class="o">=</span> <span class="n">hidden_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="c1"># [max_len, 1]</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">max_len</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="c1"># [1, depth]</span>
+        <span class="n">depths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">depth</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">/</span> <span class="n">depth</span>
+        <span class="c1"># [1, depth]</span>
+        <span class="n">angle_rates</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">10000</span> <span class="o">**</span> <span class="n">depths</span><span class="p">)</span>
+        <span class="c1"># [max_len, depth]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">angle_rads</span> <span class="o">=</span> <span class="n">positions</span> <span class="o">*</span> <span class="n">angle_rates</span>
+
+        <span class="n">pos_encoding</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle_rads</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle_rads</span><span class="p">)],</span>
+            <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># [1, max_len, model_dim]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pe</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pos_encoding</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TimePositionalEncoding.call"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.TimePositionalEncoding.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute time positional encoding defined in Equation (2) in THP model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inputs: (tensor), [batch_size, seq_len]</span>
+<span class="sd">            **kwargs:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            positional encoding</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="n">get_shape_list</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">[:,</span> <span class="p">:</span><span class="n">seq_len</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="TimeShiftedPositionalEncoding"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.TimeShiftedPositionalEncoding">[docs]</a><span class="k">class</span> <span class="nc">TimeShiftedPositionalEncoding</span><span class="p">(</span><span class="n">TimePositionalEncoding</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeShiftedPositionalEncoding.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.TimeShiftedPositionalEncoding.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">5000</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TimeShiftedPositionalEncoding</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">max_len</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_time_delta</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">hidden_size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="c1"># [1, depth]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depths</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">depth</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">/</span> <span class="n">depth</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeShiftedPositionalEncoding.call"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.TimeShiftedPositionalEncoding.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute time shifted positional encoding defined in Equation (8) in SAHP model</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inputs: (time_seqs, time_delta_seqs), [batch_size, seq_len]</span>
+<span class="sd">            **kwargs:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            positional encoding</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span> <span class="o">=</span> <span class="n">inputs</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="n">get_shape_list</span><span class="p">(</span><span class="n">time_seqs</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len, model_dim //2]</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_time_delta</span><span class="p">(</span><span class="n">time_delta_seqs</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+
+        <span class="c1"># [seq_len, 1]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">seq_len</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="c1"># [1, model_dim // 2]</span>
+        <span class="n">angle_rates</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">10000</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">depths</span><span class="p">)</span>
+        <span class="n">arc</span> <span class="o">=</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="n">angle_rates</span><span class="p">))[</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+
+        <span class="n">pe_sin</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">arc</span> <span class="o">+</span> <span class="n">phi</span><span class="p">)</span>
+        <span class="n">pe_cos</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">arc</span> <span class="o">+</span> <span class="n">phi</span><span class="p">)</span>
+        <span class="n">pe</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pe_sin</span><span class="p">,</span> <span class="n">pe_cos</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pe</span></div></div>
+
+
+<div class="viewcode-block" id="DNN"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.DNN">[docs]</a><span class="k">class</span> <span class="nc">DNN</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Multi Layer Percetron</span>
+<span class="sd">      Input shape</span>
+<span class="sd">        - nD tensor with shape: ``(batch_size, ..., input_dim)``.</span>
+<span class="sd">        The most common situation would be a 2D input with shape ``(batch_size, input_dim)``.</span>
+<span class="sd">      Output shape</span>
+<span class="sd">        - nD tensor with shape: ``(batch_size, ..., hidden_size[-1])``.</span>
+<span class="sd">        For instance, for a 2D input with shape ``(batch_size, input_dim)``,</span>
+<span class="sd">        the output would have shape ``(batch_size, hidden_size[-1])``.</span>
+<span class="sd">      Arguments</span>
+<span class="sd">        - **hidden_units**:list of positive integer, the layer number and units in each layer.</span>
+<span class="sd">        - **activation**: Activation function to use.</span>
+<span class="sd">        - **l2_reg**: float between 0 and 1. L2 regularizer strength applied to the kernel weights matrix.</span>
+<span class="sd">        - **dropout_rate**: float in [0,1). Fraction of the units to dropout.</span>
+<span class="sd">        - **use_bn**: bool. Whether use BatchNormalization before activation or not.</span>
+<span class="sd">        - **output_activation**: Activation function to use in the last layer.If ``None``,</span>
+<span class="sd">        it will be same as ``activation``.</span>
+<span class="sd">        - **seed**: A Python integer to use as random seed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">l2_reg</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">use_bn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">output_activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">hidden_size</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">activation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l2_reg</span> <span class="o">=</span> <span class="n">l2_reg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout_rate</span> <span class="o">=</span> <span class="n">dropout_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_bn</span> <span class="o">=</span> <span class="n">use_bn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_activation</span> <span class="o">=</span> <span class="n">output_activation</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">))]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bn</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bn_layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">))]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout_layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout_rate</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+                               <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">))]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation_layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">activation_layer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">))]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_activation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">activation_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">activation_layer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_activation</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">DNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DNN.call"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.tf_model.tf_baselayer.html#easy_tpp.model.tf_model.tf_baselayer.DNN.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">deep_input</span> <span class="o">=</span> <span class="n">inputs</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)):</span>
+            <span class="n">fc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_layers</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">deep_input</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bn</span><span class="p">:</span>
+                <span class="n">fc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn_layers</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">fc</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">training</span><span class="p">)</span>
+
+            <span class="n">fc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_layers</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">fc</span><span class="p">)</span>
+
+            <span class="n">fc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout_layers</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">fc</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">training</span><span class="p">)</span>
+            <span class="n">deep_input</span> <span class="o">=</span> <span class="n">fc</span>
+
+        <span class="k">return</span> <span class="n">deep_input</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

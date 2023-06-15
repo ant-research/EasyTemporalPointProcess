@@ -1,0 +1,35 @@
+﻿easy\_tpp.utils.generic
+=======================
+
+.. automodule:: easy_tpp.utils.generic
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      is_numpy_array
+      is_tensor
+      is_tf_symbolic_tensor
+      is_tf_tensor
+      is_torch_device
+      is_torch_dtype
+      is_torch_tensor
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

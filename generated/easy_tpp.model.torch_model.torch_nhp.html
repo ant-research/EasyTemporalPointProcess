@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.model.torch_model.torch_nhp &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="easy_tpp.model.torch_model.torch_attnhp" href="easy_tpp.model.torch_model.torch_attnhp.html" />
+    <link rel="prev" title="easy_tpp.model.torch_model.torch_basemodel" href="easy_tpp.model.torch_model.torch_basemodel.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ref/models.html"> Model</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ref/models.html#module-easy_tpp.model.tf_model">model.tf_model module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ref/models.html#module-easy_tpp.model.torch_model">model.torch_model module</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="easy_tpp.model.torch_model.torch_baselayer.html">easy_tpp.model.torch_model.torch_baselayer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="easy_tpp.model.torch_model.torch_basemodel.html">easy_tpp.model.torch_model.torch_basemodel</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">easy_tpp.model.torch_model.torch_nhp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell"><code class="docutils literal notranslate"><span class="pre">ContTimeLSTMCell</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.model.torch_model.torch_nhp.NHP"><code class="docutils literal notranslate"><span class="pre">NHP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="easy_tpp.model.torch_model.torch_attnhp.html">easy_tpp.model.torch_model.torch_attnhp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="easy_tpp.model.torch_model.torch_thinning.html">easy_tpp.model.torch_model.torch_thinning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../ref/models.html">EasyTPP Models</a></li>
+      <li class="breadcrumb-item active">easy_tpp.model.torch_model.torch_nhp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/easy_tpp.model.torch_model.torch_nhp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-easy_tpp.model.torch_model.torch_nhp">
+<span id="easy-tpp-model-torch-model-torch-nhp"></span><h1>easy_tpp.model.torch_model.torch_nhp<a class="headerlink" href="#module-easy_tpp.model.torch_model.torch_nhp" title="Permalink to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell" title="easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ContTimeLSTMCell</span></code></a>(hidden_dim[, beta])</p></td>
+<td><p>LSTM Cell in Neural Hawkes Process, NeurIPS'17.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_nhp.NHP" title="easy_tpp.model.torch_model.torch_nhp.NHP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NHP</span></code></a>(model_config)</p></td>
+<td><p>Torch implementation of The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process, NeurIPS 2017, <a class="reference external" href="https://arxiv.org/abs/1612.09328">https://arxiv.org/abs/1612.09328</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.torch_model.torch_nhp.</span></span><span class="sig-name descname"><span class="pre">ContTimeLSTMCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#ContTimeLSTMCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell" title="Permalink to this definition"></a></dt>
+<dd><p>LSTM Cell in Neural Hawkes Process, NeurIPS’17.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#ContTimeLSTMCell.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the continuous LSTM cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hidden_dim</strong> (<em>int</em>) – dim of hidden state.</p></li>
+<li><p><strong>beta</strong> (<em>float</em><em>, </em><em>optional</em>) – beta in nn.Softplus. Defaults to 1.0.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.init_dense_layer">
+<span class="sig-name descname"><span class="pre">init_dense_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#ContTimeLSTMCell.init_dense_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.init_dense_layer" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize linear layers given Equations (5a-6c) in the paper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hidden_dim</strong> (<em>int</em>) – dim of hidden state.</p></li>
+<li><p><strong>bias</strong> (<em>bool</em>) – whether to use bias term in nn.Linear.</p></li>
+<li><p><strong>beta</strong> (<em>float</em>) – beta in nn.Softplus.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_i_minus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_i_minus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_bar_i_minus_1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#ContTimeLSTMCell.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Update the continuous-time LSTM cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_i</strong> (<em>tensor</em>) – event embedding vector at t_i.</p></li>
+<li><p><strong>hidden_i_minus</strong> (<em>tensor</em>) – hidden state at t_i-</p></li>
+<li><p><strong>cell_i_minus</strong> (<em>tensor</em>) – cell state at t_i-</p></li>
+<li><p><strong>cell_bar_i_minus_1</strong> (<em>tensor</em>) – cell bar state at t_{i-1}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>cell state, cell bar state, decay and output at t_i</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.decay">
+<span class="sig-name descname"><span class="pre">decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_bar_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gate_decay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gate_output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtime</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#ContTimeLSTMCell.decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.decay" title="Permalink to this definition"></a></dt>
+<dd><p>Cell and hidden state decay according to Equation (7).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_i</strong> (<em>tensor</em>) – cell state at t_i.</p></li>
+<li><p><strong>cell_bar_i</strong> (<em>tensor</em>) – cell bar state at t_i.</p></li>
+<li><p><strong>gate_decay</strong> (<em>tensor</em>) – gate decay state at t_i.</p></li>
+<li><p><strong>gate_output</strong> (<em>tensor</em>) – gate output state at t_i.</p></li>
+<li><p><strong>dtime</strong> (<em>tensor</em>) – delta time to decay.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of cell and hidden state tensors after the decay.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.NHP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.torch_model.torch_nhp.</span></span><span class="sig-name descname"><span class="pre">NHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#NHP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.NHP" title="Permalink to this definition"></a></dt>
+<dd><p>Torch implementation of The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process,
+NeurIPS 2017, <a class="reference external" href="https://arxiv.org/abs/1612.09328">https://arxiv.org/abs/1612.09328</a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.NHP.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#NHP.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.NHP.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the NHP model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_config</strong> (<em>EasyTPP.ModelConfig</em>) – config of model specs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.NHP.init_state">
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#NHP.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.NHP.init_state" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize hidden and cell states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>batch_size</strong> (<em>int</em>) – size of batch data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of hidden states, cell states and cell bar states.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.NHP.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#NHP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.NHP.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Call the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>batch</strong> (<em>tuple</em><em>, </em><em>list</em>) – batch input.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>hidden states, [batch_size, seq_len, hidden_dim], states right before the event happens;</dt><dd><p>stacked decay states,  [batch_size, max_seq_length, 4, hidden_dim], states right after
+the event happens.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.NHP.loglike_loss">
+<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#NHP.loglike_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.NHP.loglike_loss" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the loglike loss.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>batch</strong> (<em>list</em>) – batch input.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>loglike loss, num events.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.NHP.compute_states_at_sample_times">
+<span class="sig-name descname"><span class="pre">compute_states_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decay_states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#NHP.compute_states_at_sample_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.NHP.compute_states_at_sample_times" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the states at sampling times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decay_states</strong> (<em>tensor</em>) – states right after the events.</p></li>
+<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – delta times in sampling.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>hiddens states at sampling times.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_nhp.NHP.compute_intensities_at_sample_times">
+<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_nhp.html#NHP.compute_intensities_at_sample_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_nhp.NHP.compute_intensities_at_sample_times" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the intensity at sampled times, not only event times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], times seqs.</p></li>
+<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
+<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
+<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample], sampled inter-event timestamps.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>[batch_size, num_times, num_mc_sample, num_event_types],</dt><dd><p>intensity at each timestamp for each event type.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="easy_tpp.model.torch_model.torch_basemodel.html" class="btn btn-neutral float-left" title="easy_tpp.model.torch_model.torch_basemodel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="easy_tpp.model.torch_model.torch_attnhp.html" class="btn btn-neutral float-right" title="easy_tpp.model.torch_model.torch_attnhp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

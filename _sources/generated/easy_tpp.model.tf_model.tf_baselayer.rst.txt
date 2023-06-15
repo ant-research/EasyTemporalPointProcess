@@ -1,0 +1,45 @@
+﻿easy\_tpp.model.tf\_model.tf\_baselayer
+=======================================
+
+.. automodule:: easy_tpp.model.tf_model.tf_baselayer
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      activation_layer
+      append_tensor_alias
+      gelu
+      null_activation
+      swish
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      DNN
+      DenseDropoutLayernorm
+      EncoderLayer
+      LayerNormalization
+      MultiHeadAttention
+      TimePositionalEncoding
+      TimeShiftedPositionalEncoding
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.utils.ode_utils &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.utils.ode_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.utils.ode_utils</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="ode_update_op"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.ode_utils.html#easy_tpp.utils.ode_utils.ode_update_op">[docs]</a><span></span><span class="k">def</span> <span class="nf">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    General update operation for solving ODEs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        z0: Tensor or a list for Tensor whose shape is [..., dim]</span>
+<span class="sd">            State at t0.</span>
+<span class="sd">        dz: Tensor or a list for Tensor whose shape is [..., dim]</span>
+<span class="sd">            Differentiation of state.</span>
+<span class="sd">        dt: Tensor with shape [..., 1]</span>
+<span class="sd">            Equal to t1 - t0.</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">item_z</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">item_dz</span> <span class="k">for</span> <span class="n">item_z</span><span class="p">,</span> <span class="n">item_dz</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">dz</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">z0</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dz</span></div>
+
+
+<div class="viewcode-block" id="euler_step_method"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.ode_utils.html#easy_tpp.utils.ode_utils.euler_step_method">[docs]</a><span class="k">def</span> <span class="nf">euler_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Euler method for solving ODEs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        diff_func: function(state)</span>
+<span class="sd">            Differential equation.</span>
+<span class="sd">        dt: Tensor with shape [..., 1]</span>
+<span class="sd">            Equal to t1 - t0.</span>
+<span class="sd">        z0: Tensor or a list for Tensor whose shape is [..., dim]</span>
+<span class="sd">            State at t0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor or a list for Tensor whose shape is [..., dim], which is updated state.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">diff_func</span><span class="p">(</span><span class="n">z0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="rk2_step_method"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.ode_utils.html#easy_tpp.utils.ode_utils.rk2_step_method">[docs]</a><span class="k">def</span> <span class="nf">rk2_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Second order Runge-Kutta method for solving ODEs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        diff_func: function(dt, state)</span>
+<span class="sd">            Differential equation.</span>
+<span class="sd">        dt: Tensor with shape [..., 1]</span>
+<span class="sd">            Equal to t1 - t0.</span>
+<span class="sd">        z0: Tensor or a list for Tensor whose shape is [..., dim]</span>
+<span class="sd">            State at t0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor or a list for Tensor whose shape is [..., dim]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># shape -&gt; [..., dim]</span>
+    <span class="n">k1</span> <span class="o">=</span> <span class="n">diff_func</span><span class="p">(</span><span class="n">z0</span><span class="p">)</span>
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">diff_func</span><span class="p">(</span><span class="n">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">dt</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">item_z</span> <span class="o">+</span> <span class="p">(</span><span class="n">item_k1</span> <span class="o">+</span> <span class="n">item_k2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="k">for</span> <span class="n">item_z</span><span class="p">,</span> <span class="n">item_k1</span><span class="p">,</span> <span class="n">item_k2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">z0</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span></div>
+
+
+<div class="viewcode-block" id="rk4_step_method"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.ode_utils.rk4_step_method">[docs]</a><span class="k">def</span> <span class="nf">rk4_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fourth order Runge-Kutta method for solving ODEs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        diff_func: function(dt, state)</span>
+<span class="sd">            Differential equation.</span>
+<span class="sd">        dt: Tensor with shape [..., 1]</span>
+<span class="sd">            Equal to t1 - t0.</span>
+<span class="sd">        z0: Tensor with shape [..., dim]</span>
+<span class="sd">            State at t0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor with shape [..., dim], which is updated state.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># shape -&gt; [..., dim]</span>
+    <span class="n">k1</span> <span class="o">=</span> <span class="n">diff_func</span><span class="p">(</span><span class="n">z0</span><span class="p">)</span>
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">diff_func</span><span class="p">(</span><span class="n">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">dt</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">))</span>
+    <span class="n">k3</span> <span class="o">=</span> <span class="n">diff_func</span><span class="p">(</span><span class="n">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">dt</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">))</span>
+    <span class="n">k4</span> <span class="o">=</span> <span class="n">diff_func</span><span class="p">(</span><span class="n">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">k3</span><span class="p">,</span> <span class="n">dt</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">item_z</span> <span class="o">+</span> <span class="p">(</span><span class="n">item_k1</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">item_k2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">item_k3</span> <span class="o">+</span> <span class="n">item_k4</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">/</span> <span class="mf">6.0</span>
+                <span class="k">for</span> <span class="n">item_z</span><span class="p">,</span> <span class="n">item_k1</span><span class="p">,</span> <span class="n">item_k2</span><span class="p">,</span> <span class="n">item_k3</span><span class="p">,</span> <span class="n">item_k4</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span><span class="p">,</span> <span class="n">k4</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">z0</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span> <span class="o">/</span> <span class="mf">6.0</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

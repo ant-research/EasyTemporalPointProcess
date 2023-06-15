@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.utils.misc &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.utils.misc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.utils.misc</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">easy_tpp.utils.const</span> <span class="kn">import</span> <span class="n">RunnerPhase</span>
+
+
+<div class="viewcode-block" id="py_assert"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.py_assert">[docs]</a><span class="k">def</span> <span class="nf">py_assert</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An assert function that ensures the condition holds, otherwise throws a message.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        condition (bool): a formula to ensure validity.</span>
+<span class="sd">        exception_type (_StandardError): Error type, such as ValueError.</span>
+<span class="sd">        msg (str): a message to throw out.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        exception_type: throw an error when the condition does not hold.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exception_type</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="make_config_string"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.make_config_string">[docs]</a><span class="k">def</span> <span class="nf">make_config_string</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">max_num_key</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a name for config files.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (dict): configuration dict.</span>
+<span class="sd">        max_num_key (int, optional): max number of keys to concat in the output. Defaults to 4.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: a concatenated string from config dict.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">str_config</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">num_key</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">num_key</span> <span class="o">&lt;</span> <span class="n">max_num_key</span><span class="p">:</span>  <span class="c1"># for the moment we only record model name</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span>
+                <span class="n">str_config</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span>
+                <span class="n">num_key</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">str_config</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="save_yaml_config"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.save_yaml_config">[docs]</a><span class="k">def</span> <span class="nf">save_yaml_config</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A function that saves a dict of config to yaml format file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        save_dir (str): the path to save config file.</span>
+<span class="sd">        config (dict): the target config object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prt_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+
+    <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+    <span class="c1"># add yaml representer for different type</span>
+    <span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span>
+        <span class="n">OrderedDict</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_mapping</span><span class="p">(</span><span class="s1">&#39;tag:yaml.org,2002:map&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">prt_dir</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">prt_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">prt_dir</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="load_yaml_config"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.load_yaml_config">[docs]</a><span class="k">def</span> <span class="nf">load_yaml_config</span><span class="p">(</span><span class="n">config_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Load yaml config file from disk.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config_dir: str or Path</span>
+<span class="sd">            The path of the config file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Config: dict.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_dir</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+        <span class="c1"># load configs</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">config</span></div>
+
+
+<span class="k">def</span> <span class="nf">get_stage</span><span class="p">(</span><span class="n">stage</span><span class="p">):</span>
+    <span class="n">stage</span> <span class="o">=</span> <span class="n">stage</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;training&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">RunnerPhase</span><span class="o">.</span><span class="n">TRAIN</span>
+    <span class="k">elif</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;valid&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="s1">&#39;eval&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">RunnerPhase</span><span class="o">.</span><span class="n">VALIDATE</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">RunnerPhase</span><span class="o">.</span><span class="n">PREDICT</span>
+
+
+<div class="viewcode-block" id="create_folder"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.create_folder">[docs]</a><span class="k">def</span> <span class="nf">create_folder</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create path if the folder doesn&#39;t exist.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: the created folder&#39;s path.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span></div>
+
+
+<div class="viewcode-block" id="load_pickle"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.load_pickle">[docs]</a><span class="k">def</span> <span class="nf">load_pickle</span><span class="p">(</span><span class="n">file_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load from pickle file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_dir (BinaryIO): dir of the pickle file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        any type: the loaded data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_dir</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="save_pickle"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.save_pickle">[docs]</a><span class="k">def</span> <span class="nf">save_pickle</span><span class="p">(</span><span class="n">file_dir</span><span class="p">,</span> <span class="n">object_to_save</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the object to a pickle file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_dir (str): dir of the pickle file.</span>
+<span class="sd">        object_to_save (any): the target data to be saved.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_dir</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_out</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">object_to_save</span><span class="p">,</span> <span class="n">f_out</span><span class="p">)</span>
+
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="has_key"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.has_key">[docs]</a><span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="n">target_dict</span><span class="p">,</span> <span class="n">target_keys</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the keys exist in the target dict.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target_dict (dict): a dict.</span>
+<span class="sd">        target_keys (str, list): list of keys.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if all the key exist in the dict; False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target_keys</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">target_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">target_keys</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">target_keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">target_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="array_pad_cols"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.array_pad_cols">[docs]</a><span class="k">def</span> <span class="nf">array_pad_cols</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">max_num_cols</span><span class="p">,</span> <span class="n">pad_index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pad the array by columns.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        arr (np.array): target array to be padded.</span>
+<span class="sd">        max_num_cols (int): target num cols for padded array.</span>
+<span class="sd">        pad_index (int): pad index to fill out the padded elements</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.array: the padded array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">max_num_cols</span><span class="p">))</span> <span class="o">*</span> <span class="n">pad_index</span>
+
+    <span class="n">res</span><span class="p">[:,</span> <span class="p">:</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">arr</span>
+
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="concat_element"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.concat_element">[docs]</a><span class="k">def</span> <span class="nf">concat_element</span><span class="p">(</span><span class="n">arrs</span><span class="p">,</span> <span class="n">pad_index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Concat element from each batch output  &quot;&quot;&quot;</span>
+
+    <span class="n">n_lens</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrs</span><span class="p">)</span>
+    <span class="n">n_elements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># found out the max seq len (num cols) in output arrays</span>
+    <span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arrs</span><span class="p">])</span>
+
+    <span class="n">concated_outputs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_elements</span><span class="p">):</span>
+        <span class="n">a_output</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_lens</span><span class="p">):</span>
+            <span class="n">arrs_</span> <span class="o">=</span> <span class="n">array_pad_cols</span><span class="p">(</span><span class="n">arrs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">max_num_cols</span><span class="o">=</span><span class="n">max_len</span><span class="p">,</span> <span class="n">pad_index</span><span class="o">=</span><span class="n">pad_index</span><span class="p">)</span>
+            <span class="n">a_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arrs_</span><span class="p">)</span>
+
+        <span class="n">concated_outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">a_output</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="c1"># n_elements * [ [n_lens, dim_of_element] ]</span>
+    <span class="k">return</span> <span class="n">concated_outputs</span></div>
+
+
+<span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">classkey</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_dict</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">classkey</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;_ast&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">to_dict</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">_ast</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">to_dict</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">classkey</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">key</span><span class="p">,</span> <span class="n">to_dict</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">classkey</span><span class="p">))</span>
+                     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span>
+                     <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]])</span>
+        <span class="k">if</span> <span class="n">classkey</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__class__&quot;</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">classkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<div class="viewcode-block" id="dict_deep_update"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.dict_deep_update">[docs]</a><span class="k">def</span> <span class="nf">dict_deep_update</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">is_add_new_key</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Update &#39;target&#39; dict by &#39;source&#39; dict deeply, and return a new dict copied from target and source deeply.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target: dict</span>
+<span class="sd">        source: dict</span>
+<span class="sd">        is_add_new_key: bool, default True.</span>
+<span class="sd">            Identify if add a key that in source but not in target into target.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        New target: dict. It contains the both target and source values, but keeps the values from source when the key</span>
+<span class="sd">        is duplicated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># deep copy for avoiding to modify the original dict</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_add_new_key</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">continue</span>
+        <span class="c1"># both target and source have the same key</span>
+        <span class="n">base_type_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="ow">in</span> <span class="n">base_type_list</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="ow">in</span> <span class="n">base_type_list</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_deep_update</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">source</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">is_add_new_key</span><span class="o">=</span><span class="n">is_add_new_key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
