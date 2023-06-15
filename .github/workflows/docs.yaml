@@ -29,6 +29,7 @@ jobs:
         sudo apt-get install pandoc
     - name: Build Sphinx docs
       run: |
+        pip install -r requirements-doc.txt
         cd docs
         make html
     # Great extra actions to compose with:
