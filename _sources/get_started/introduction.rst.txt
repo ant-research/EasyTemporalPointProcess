@@ -42,11 +42,11 @@ Please see `Installation <./install.html>`_ for details of requirement and insta
 Prepare Data
 ============
 
-By default, we use the data in Gatech format, i.e., each dataset is a dict containing the keys such as `time_since_last_event`, `time_since_start` and `type_event`. `Preprocess` module
+By default, we use the data in Gatech format, i.e., each dataset is a dict containing the keys such as `time_since_last_event`, `time_since_start` and `type_event`. `Preprocess <../ref/preprocess.html>`_ module
 will preprocess the data and feed it into the model.
 
 
-An example of building a pseudo dataset / dataloader can be found at `../examples/dataset/data_loader.py`. Please refer to `Datatset <../user_guide/dataset.html>`_ for more explanations of the `TPP` dataset iterator.
+An example of building a pseudo dataloader can be found at `examples <https://github.com/ant-research/EasyTemporalPointProcess/tree/main/examples/data_loader.py>`_. Please refer to `Datatset <../user_guide/dataset.html>`_ for more explanations of the `TPP` dataset iterator.
 
 
 Model Training and Prediction
