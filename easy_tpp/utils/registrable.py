@@ -17,12 +17,11 @@ class Registrable:
     @classmethod
     def register(cls, name, constructor=None, overwrite=False):
         """Register a class under a particular name.
-
         Args:
             name (str): The name to register the class under.
             constructor (str): optional (default=None)
                 The name of the method to use on the class to construct the object.  If this is given,
-                we will use this method (which must be a ``@classmethod``) instead of the default
+                we will use this method (which must be a ``classmethod``) instead of the default
                 constructor.
             overwrite (bool) : optional (default=False)
                 If True, overwrites any existing models registered under ``name``. Else,
@@ -47,22 +46,7 @@ class Registrable:
         If you want to have the instantiation from a config file call a method other than the
         constructor, either because you have several different construction paths that could be
         taken for the same object (as we do in ``Transform``) or because you have logic you want to
-        happen before you get to the constructor, you can register a specific ``@classmethod`` as the constructor to use, like this:
-        ```python
-        @Transform.register("shift-transform-from-instances", constructor="from_instances")
-        @Transform.register("shift-transform-from-files", constructor="from_files")
-        class ShiftTransform(Transform):
-            def __init__(self, some_params):
-                ...
-            @classmethod
-            def from_instances(cls, some_other_params) -> ShiftTransform:
-                ...  # construct some_params from instances
-                return cls(some_params)
-            @classmethod
-            def from_files(cls, still_other_params) -> ShiftTransform:
-                ...  # construct some_params from files
-                return cls(some_params)
-        ```
+        happen before you get to the constructor, you can register a specific ``@classmethod`` as the constructor to use.
         """
         registry = Registrable._registry[cls]
 
