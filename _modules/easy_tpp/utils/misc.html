@@ -108,7 +108,7 @@
 <span class="kn">from</span> <span class="nn">easy_tpp.utils.const</span> <span class="kn">import</span> <span class="n">RunnerPhase</span>
 
 
-<div class="viewcode-block" id="py_assert"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.py_assert">[docs]</a><span class="k">def</span> <span class="nf">py_assert</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<div class="viewcode-block" id="py_assert"><a class="viewcode-back" href="../../../ref/utils.html#utils.py_assert">[docs]</a><span class="k">def</span> <span class="nf">py_assert</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An assert function that ensures the condition holds, otherwise throws a message.</span>
 
 <span class="sd">    Args:</span>
@@ -123,7 +123,7 @@
         <span class="k">raise</span> <span class="n">exception_type</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="make_config_string"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.make_config_string">[docs]</a><span class="k">def</span> <span class="nf">make_config_string</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">max_num_key</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<div class="viewcode-block" id="make_config_string"><a class="viewcode-back" href="../../../ref/utils.html#utils.make_config_string">[docs]</a><span class="k">def</span> <span class="nf">make_config_string</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">max_num_key</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a name for config files.</span>
 
 <span class="sd">    Args:</span>
@@ -143,7 +143,7 @@
     <span class="k">return</span> <span class="n">str_config</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="save_yaml_config"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.save_yaml_config">[docs]</a><span class="k">def</span> <span class="nf">save_yaml_config</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<div class="viewcode-block" id="save_yaml_config"><a class="viewcode-back" href="../../../ref/utils.html#utils.save_yaml_config">[docs]</a><span class="k">def</span> <span class="nf">save_yaml_config</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A function that saves a dict of config to yaml format file.</span>
 
 <span class="sd">    Args:</span>
@@ -168,7 +168,7 @@
     <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="load_yaml_config"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.load_yaml_config">[docs]</a><span class="k">def</span> <span class="nf">load_yaml_config</span><span class="p">(</span><span class="n">config_dir</span><span class="p">):</span>
+<div class="viewcode-block" id="load_yaml_config"><a class="viewcode-back" href="../../../ref/utils.html#utils.load_yaml_config">[docs]</a><span class="k">def</span> <span class="nf">load_yaml_config</span><span class="p">(</span><span class="n">config_dir</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Load yaml config file from disk.</span>
 
 <span class="sd">    Args:</span>
@@ -185,17 +185,17 @@
     <span class="k">return</span> <span class="n">config</span></div>
 
 
-<span class="k">def</span> <span class="nf">get_stage</span><span class="p">(</span><span class="n">stage</span><span class="p">):</span>
+<div class="viewcode-block" id="get_stage"><a class="viewcode-back" href="../../../ref/utils.html#utils.get_stage">[docs]</a><span class="k">def</span> <span class="nf">get_stage</span><span class="p">(</span><span class="n">stage</span><span class="p">):</span>
     <span class="n">stage</span> <span class="o">=</span> <span class="n">stage</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;training&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">RunnerPhase</span><span class="o">.</span><span class="n">TRAIN</span>
     <span class="k">elif</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;valid&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="s1">&#39;eval&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">RunnerPhase</span><span class="o">.</span><span class="n">VALIDATE</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">RunnerPhase</span><span class="o">.</span><span class="n">PREDICT</span>
+        <span class="k">return</span> <span class="n">RunnerPhase</span><span class="o">.</span><span class="n">PREDICT</span></div>
 
 
-<div class="viewcode-block" id="create_folder"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.create_folder">[docs]</a><span class="k">def</span> <span class="nf">create_folder</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="create_folder"><a class="viewcode-back" href="../../../ref/utils.html#utils.create_folder">[docs]</a><span class="k">def</span> <span class="nf">create_folder</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create path if the folder doesn&#39;t exist.</span>
 
 <span class="sd">    Returns:</span>
@@ -207,7 +207,7 @@
     <span class="k">return</span> <span class="n">path</span></div>
 
 
-<div class="viewcode-block" id="load_pickle"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.load_pickle">[docs]</a><span class="k">def</span> <span class="nf">load_pickle</span><span class="p">(</span><span class="n">file_dir</span><span class="p">):</span>
+<div class="viewcode-block" id="load_pickle"><a class="viewcode-back" href="../../../ref/utils.html#utils.load_pickle">[docs]</a><span class="k">def</span> <span class="nf">load_pickle</span><span class="p">(</span><span class="n">file_dir</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load from pickle file.</span>
 
 <span class="sd">    Args:</span>
@@ -225,7 +225,7 @@
     <span class="k">return</span> <span class="n">data</span></div>
 
 
-<div class="viewcode-block" id="save_pickle"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.save_pickle">[docs]</a><span class="k">def</span> <span class="nf">save_pickle</span><span class="p">(</span><span class="n">file_dir</span><span class="p">,</span> <span class="n">object_to_save</span><span class="p">):</span>
+<div class="viewcode-block" id="save_pickle"><a class="viewcode-back" href="../../../ref/utils.html#utils.save_pickle">[docs]</a><span class="k">def</span> <span class="nf">save_pickle</span><span class="p">(</span><span class="n">file_dir</span><span class="p">,</span> <span class="n">object_to_save</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the object to a pickle file.</span>
 
 <span class="sd">    Args:</span>
@@ -239,7 +239,7 @@
     <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="has_key"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.has_key">[docs]</a><span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="n">target_dict</span><span class="p">,</span> <span class="n">target_keys</span><span class="p">):</span>
+<div class="viewcode-block" id="has_key"><a class="viewcode-back" href="../../../ref/utils.html#utils.has_key">[docs]</a><span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="n">target_dict</span><span class="p">,</span> <span class="n">target_keys</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the keys exist in the target dict.</span>
 
 <span class="sd">    Args:</span>
@@ -257,7 +257,7 @@
     <span class="k">return</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="array_pad_cols"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.array_pad_cols">[docs]</a><span class="k">def</span> <span class="nf">array_pad_cols</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">max_num_cols</span><span class="p">,</span> <span class="n">pad_index</span><span class="p">):</span>
+<div class="viewcode-block" id="array_pad_cols"><a class="viewcode-back" href="../../../ref/utils.html#utils.array_pad_cols">[docs]</a><span class="k">def</span> <span class="nf">array_pad_cols</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">max_num_cols</span><span class="p">,</span> <span class="n">pad_index</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Pad the array by columns.</span>
 
 <span class="sd">    Args:</span>
@@ -275,7 +275,7 @@
     <span class="k">return</span> <span class="n">res</span></div>
 
 
-<div class="viewcode-block" id="concat_element"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.concat_element">[docs]</a><span class="k">def</span> <span class="nf">concat_element</span><span class="p">(</span><span class="n">arrs</span><span class="p">,</span> <span class="n">pad_index</span><span class="p">):</span>
+<div class="viewcode-block" id="concat_element"><a class="viewcode-back" href="../../../ref/utils.html#utils.concat_element">[docs]</a><span class="k">def</span> <span class="nf">concat_element</span><span class="p">(</span><span class="n">arrs</span><span class="p">,</span> <span class="n">pad_index</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Concat element from each batch output  &quot;&quot;&quot;</span>
 
     <span class="n">n_lens</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrs</span><span class="p">)</span>
@@ -297,7 +297,7 @@
     <span class="k">return</span> <span class="n">concated_outputs</span></div>
 
 
-<span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">classkey</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="to_dict"><a class="viewcode-back" href="../../../ref/utils.html#utils.to_dict">[docs]</a><span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">classkey</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -315,10 +315,10 @@
             <span class="n">data</span><span class="p">[</span><span class="n">classkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="k">return</span> <span class="n">data</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
 
 
-<div class="viewcode-block" id="dict_deep_update"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.misc.dict_deep_update">[docs]</a><span class="k">def</span> <span class="nf">dict_deep_update</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">is_add_new_key</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="dict_deep_update"><a class="viewcode-back" href="../../../ref/utils.html#utils.dict_deep_update">[docs]</a><span class="k">def</span> <span class="nf">dict_deep_update</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">is_add_new_key</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Update &#39;target&#39; dict by &#39;source&#39; dict deeply, and return a new dict copied from target and source deeply.</span>
 
 <span class="sd">    Args:</span>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easy_tpp.model.torch_model.torch_ode_tpp &mdash; EasyTPP 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            EasyTPP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../get_started/quick_start.html">Qucick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/run_train_pipeline.html">Model Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide/run_eval.html">Model Prediction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">DEVELOPER GUIDE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guide/model_custom.html">Model Customization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED TOPICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/thinning_algo.html">Thinning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/tensorboard.html">Tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/performance_valid.html">Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced/implementation.html">Implementation Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/preprocess.html"> Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/models.html"> Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/runner.html"> Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/hpo.html"> Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/utils.html"> Utilities</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">EasyTPP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">easy_tpp.model.torch_model.torch_ode_tpp</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easy_tpp.model.torch_model.torch_ode_tpp</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+
+<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_baselayer</span> <span class="kn">import</span> <span class="n">DNN</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">rk4_step_method</span>
+
+
+<span class="k">def</span> <span class="nf">flatten_parameters</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="n">p_shapes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">flat_parameters</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+        <span class="n">p_shapes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="n">flat_parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">flat_parameters</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="NeuralODEAdjoint"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint">[docs]</a><span class="k">class</span> <span class="nc">NeuralODEAdjoint</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>
+<div class="viewcode-block" id="NeuralODEAdjoint.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.forward">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">z_init</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">,</span> <span class="n">ode_fn</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">num_sample_times</span><span class="p">,</span> <span class="o">*</span><span class="n">model_parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ctx:</span>
+<span class="sd">            input: (tensor): [batch_size]</span>
+<span class="sd">            model:</span>
+<span class="sd">            solver:</span>
+<span class="sd">            delta_t (tensor): [batch_size, num_sample_times]</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">ctx</span><span class="o">.</span><span class="n">ode_fn</span> <span class="o">=</span> <span class="n">ode_fn</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">solver</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">delta_t</span> <span class="o">=</span> <span class="n">delta_t</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">model_parameters</span> <span class="o">=</span> <span class="n">model_parameters</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">num_sample_times</span> <span class="o">=</span> <span class="n">num_sample_times</span>
+
+        <span class="n">total_state</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">dt_ratio</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">num_sample_times</span>
+        <span class="n">delta_t</span> <span class="o">=</span> <span class="n">delta_t</span> <span class="o">*</span> <span class="n">dt_ratio</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">z_init</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_sample_times</span><span class="p">):</span>
+                <span class="c1"># [batch_size, hidden_size]</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(</span><span class="n">diff_func</span><span class="o">=</span><span class="n">ode_fn</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">z0</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+                <span class="n">total_state</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, num_samples, hidden_size]</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">save_for_backward</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">state</span></div>
+
+<div class="viewcode-block" id="NeuralODEAdjoint.backward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.backward">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">grad_z</span><span class="p">):</span>
+        <span class="n">output_state</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">saved_tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># return a tuple</span>
+        <span class="n">ode_fn</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ode_fn</span>
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">solver</span>
+        <span class="n">delta_t</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">delta_t</span>
+        <span class="n">model_parameters</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">model_parameters</span>
+        <span class="n">num_sample_times</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">num_sample_times</span>
+
+        <span class="c1"># Dynamics of augmented system to be calculated backwards in time</span>
+        <span class="k">def</span> <span class="nf">aug_dynamics</span><span class="p">(</span><span class="n">aug_states</span><span class="p">):</span>
+            <span class="n">tmp_z</span> <span class="o">=</span> <span class="n">aug_states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">tmp_neg_a</span> <span class="o">=</span> <span class="o">-</span><span class="n">aug_states</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">set_grad_enabled</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                <span class="n">tmp_z</span> <span class="o">=</span> <span class="n">tmp_z</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">func_eval</span> <span class="o">=</span> <span class="n">ode_fn</span><span class="p">(</span><span class="n">tmp_z</span><span class="p">)</span>
+                <span class="n">tmp_ds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">func_eval</span><span class="p">,),</span> <span class="p">(</span><span class="n">tmp_z</span><span class="p">,</span> <span class="o">*</span><span class="n">model_parameters</span><span class="p">),</span>
+                    <span class="n">grad_outputs</span><span class="o">=</span><span class="n">tmp_neg_a</span><span class="p">,</span>
+                    <span class="n">allow_unused</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">retain_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">neg_adfdz</span> <span class="o">=</span> <span class="n">tmp_ds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">neg_adfdtheta</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">tmp_ds</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+
+            <span class="k">return</span> <span class="p">[</span><span class="n">func_eval</span><span class="p">,</span> <span class="n">neg_adfdz</span><span class="p">,</span> <span class="o">*</span><span class="n">neg_adfdtheta</span><span class="p">]</span>
+
+        <span class="n">dt_ratio</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">num_sample_times</span>
+        <span class="n">delta_t</span> <span class="o">=</span> <span class="n">delta_t</span> <span class="o">*</span> <span class="n">dt_ratio</span>
+
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="c1"># Construct back-state for ode solver</span>
+            <span class="c1"># reshape variable \theta for batch solving</span>
+            <span class="n">init_var_grad</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">var</span><span class="p">))</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">model_parameters</span><span class="p">]</span>
+
+            <span class="c1"># [z(t_1), a(t_1), \theta]</span>
+            <span class="n">z1</span> <span class="o">=</span> <span class="n">output_state</span>
+            <span class="n">a1</span> <span class="o">=</span> <span class="n">grad_z</span>
+            <span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="n">z1</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="o">*</span><span class="n">init_var_grad</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_sample_times</span><span class="p">):</span>
+                <span class="n">states</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(</span><span class="n">aug_dynamics</span><span class="p">,</span> <span class="o">-</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">states</span><span class="p">)</span>
+
+            <span class="n">grad_z0</span> <span class="o">=</span> <span class="n">states</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">grad_theta</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">var_grad</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">var</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">var_grad</span> <span class="ow">in</span>
+                          <span class="nb">zip</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">,</span> <span class="n">states</span><span class="p">[</span><span class="mi">2</span><span class="p">:])]</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">grad_z0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">grad_theta</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="NeuralODE"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE">[docs]</a><span class="k">class</span> <span class="nc">NeuralODE</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="NeuralODE.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">num_sample_times</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">solver</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_sample_times</span> <span class="o">=</span> <span class="n">num_sample_times</span></div>
+
+<div class="viewcode-block" id="NeuralODE.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_state</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_state: [batch_size, hidden_size]</span>
+<span class="sd">            return_state:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output_state</span> <span class="o">=</span> <span class="n">NeuralODEAdjoint</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">input_state</span><span class="p">,</span>
+                                              <span class="n">delta_time</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">num_sample_times</span><span class="p">,</span>
+                                              <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, num_sample_times, hidden_size]</span>
+        <span class="k">return</span> <span class="n">output_state</span></div></div>
+
+
+<div class="viewcode-block" id="ODETPP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP">[docs]</a><span class="k">class</span> <span class="nc">ODETPP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Torch implementation of a TPP with Neural ODE state evolution, which is a simplified version of TPP in</span>
+<span class="sd">    https://arxiv.org/abs/2011.04583, ICLR 2021</span>
+
+<span class="sd">    code reference: https://msurtsukov.github.io/Neural-ODE/;</span>
+<span class="sd">    https://github.com/liruilong940607/NeuralODE/blob/master/NeuralODE.py</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ODETPP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_config (EasyTPP.ModelConfig): config of model specs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ODETPP</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Softplus</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_model</span> <span class="o">=</span> <span class="n">DNN</span><span class="p">(</span><span class="n">inputs_dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span>
+                               <span class="n">hidden_size</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ode_num_sample_per_step</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">model_specs</span><span class="p">[</span><span class="s1">&#39;ode_num_sample_per_step&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_factor</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">model_specs</span><span class="p">[</span><span class="s1">&#39;time_factor&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">rk4_step_method</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_neural_ode</span> <span class="o">=</span> <span class="n">NeuralODE</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event_model</span><span class="p">,</span>
+                                          <span class="n">solver</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span>
+                                          <span class="n">num_sample_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ode_num_sample_per_step</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ODETPP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Call the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time_delta_seqs (tensor): [batch_size, seq_len], inter-event time seqs.</span>
+<span class="sd">            type_seqs (tensor): [batch_size, seq_len], event type seqs.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tensor: hidden states at event times.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># [batch_size, seq_len=max_len-1, hidden_size]</span>
+        <span class="n">type_seq_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_type_emb</span><span class="p">(</span><span class="n">type_seqs</span><span class="p">)</span>
+        <span class="n">time_delta_seqs_</span> <span class="o">=</span> <span class="n">time_delta_seqs</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
+        <span class="n">total_state_at_event_minus</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">total_state_at_event_plus</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">last_state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">type_seq_emb</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">for</span> <span class="n">type_emb</span><span class="p">,</span> <span class="n">dt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">type_seq_emb</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">),</span>
+                                <span class="n">torch</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">time_delta_seqs_</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)):</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_factor</span>
+            <span class="n">last_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_neural_ode</span><span class="p">(</span><span class="n">last_state</span> <span class="o">+</span> <span class="n">type_emb</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+            <span class="n">total_state_at_event_minus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">last_state</span><span class="p">)</span>
+            <span class="n">total_state_at_event_plus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">last_state</span> <span class="o">+</span> <span class="n">type_emb</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len, hidden_size]</span>
+        <span class="n">state_ti</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">total_state_at_event_minus</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len, hidden_size]</span>
+        <span class="n">state_to_evolve</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">total_state_at_event_plus</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">state_ti</span><span class="p">,</span> <span class="n">state_to_evolve</span></div>
+
+<div class="viewcode-block" id="ODETPP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.loglike_loss">[docs]</a>    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the loglike loss.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch (list): batch input.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: loglike loss, num events.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">type_mask</span> <span class="o">=</span> <span class="n">batch</span>
+
+        <span class="n">state_ti</span><span class="p">,</span> <span class="n">state_ti_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">type_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># Num of samples in each batch and num of event time point in the sequence</span>
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">state_ti</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+
+        <span class="c1"># Lambda(t) right before each event time point</span>
+        <span class="c1"># lambda_at_event - [batch_size, num_times=max_len-1, num_event_types]</span>
+        <span class="c1"># Here we drop the last event because it has no delta_time label (can not decay)</span>
+        <span class="n">lambda_at_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span><span class="p">(</span><span class="n">state_ti</span><span class="p">)</span>
+
+        <span class="c1"># interval_t_sample - [batch_size, num_times=max_len-1, num_mc_sample]</span>
+        <span class="c1"># for every batch and every event point =&gt; do a sampling (num_mc_sampling)</span>
+        <span class="c1"># the first dtime is zero, so we use time_delta_seq[:, 1:]</span>
+        <span class="n">interval_t_sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_dtime_loss_samples</span><span class="p">(</span><span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
+
+        <span class="c1"># [batch_size, num_times = max_len - 1, num_mc_sample, hidden_size]</span>
+        <span class="n">sample_state_ti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_states_at_sample_times</span><span class="p">(</span><span class="n">state_ti_plus</span><span class="p">,</span> <span class="n">interval_t_sample</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, num_times = max_len - 1, num_mc_sample, event_num]</span>
+        <span class="n">lambda_t_sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span><span class="p">(</span><span class="n">sample_state_ti</span><span class="p">)</span>
+
+        <span class="n">event_ll</span><span class="p">,</span> <span class="n">non_event_ll</span><span class="p">,</span> <span class="n">num_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_loglikelihood</span><span class="p">(</span><span class="n">lambda_at_event</span><span class="o">=</span><span class="n">lambda_at_event</span><span class="p">,</span>
+                                                                        <span class="n">lambdas_loss_samples</span><span class="o">=</span><span class="n">lambda_t_sample</span><span class="p">,</span>
+                                                                        <span class="n">time_delta_seq</span><span class="o">=</span><span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
+                                                                        <span class="n">seq_mask</span><span class="o">=</span><span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
+                                                                        <span class="n">lambda_type_mask</span><span class="o">=</span><span class="n">type_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">event_ll</span> <span class="o">-</span> <span class="n">non_event_ll</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div>
+
+<div class="viewcode-block" id="ODETPP.compute_states_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.compute_states_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_states_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_ti_plus</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the states at sampling times.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_ti_plus (tensor): [batch_size, seq_len, hidden_size], states right after the events.</span>
+<span class="sd">            sample_dtimes (tensor): [batch_size, seq_len, num_samples], delta times in sampling.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tensor: hiddens states at sampling times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Use broadcasting to compute the decays at all time steps</span>
+        <span class="c1"># at all sample points</span>
+        <span class="c1"># h_ts shape (batch_size, seq_len, num_samples, hidden_dim)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">(</span><span class="n">diff_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event_model</span><span class="p">,</span>
+                            <span class="n">dt</span><span class="o">=</span><span class="n">sample_dtimes</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>  <span class="c1"># [batch_size, seq_len, num_samples, 1]</span>
+                            <span class="n">z0</span><span class="o">=</span><span class="n">state_ti_plus</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>  <span class="c1"># [batch_size, seq_len, 1, hidden_size]</span>
+
+        <span class="k">return</span> <span class="n">state</span></div>
+
+<div class="viewcode-block" id="ODETPP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the intensity at sampled times, not only event times.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time_seqs (tensor): [batch_size, seq_len], times seqs.</span>
+<span class="sd">            time_delta_seqs (tensor): [batch_size, seq_len], time delta seqs.</span>
+<span class="sd">            type_seqs (tensor): [batch_size, seq_len], event type seqs.</span>
+<span class="sd">            sample_dtimes (tensor): [batch_size, seq_len, num_sample], sampled inter-event timestamps.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tensor: [batch_size, num_times, num_mc_sample, num_event_types],</span>
+<span class="sd">                    intensity at each timestamp for each event type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">compute_last_step_only</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;compute_last_step_only&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># forward to the last but one event</span>
+        <span class="n">state_ti</span><span class="p">,</span> <span class="n">state_ti_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Num of samples in each batch and num of event time point in the sequence</span>
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">state_ti</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+
+        <span class="c1"># [batch_size, num_sample_times, num_mc_sample, hidden_size]</span>
+        <span class="n">sample_state_ti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_states_at_sample_times</span><span class="p">(</span><span class="n">state_ti_plus</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">compute_last_step_only</span><span class="p">:</span>
+            <span class="c1"># [batch_size, 1, num_mc_sample, num_event_types]</span>
+            <span class="n">sampled_intensities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span><span class="p">(</span><span class="n">sample_state_ti</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:,</span> <span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># [batch_size, num_sample_times, num_mc_sample, num_event_types]</span>
+            <span class="n">sampled_intensities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span><span class="p">(</span><span class="n">sample_state_ti</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">sampled_intensities</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

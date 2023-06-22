@@ -1,0 +1,29 @@
+﻿easy\_tpp.model.torch\_model.torch\_thp
+=======================================
+
+.. automodule:: easy_tpp.model.torch_model.torch_thp
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      THP
+   
+   
+
+   
+   
+   
+
+
+

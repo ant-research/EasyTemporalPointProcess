@@ -153,7 +153,7 @@ output:
 <li><p><cite>attention_mask</cite>: it indicates the masks used in the attention calculation (one event can only attend to its past events).</p></li>
 <li><p><cite>type_mask</cite>: it uses one-hot vector to represent the event type. The padded event is a zero vector.</p></li>
 </ol>
-<p>Finally, each batch contains six elements: time_seqs, time_delta_seqs, event_seq, batch_non_pad_mask, attention_mask, type_mask. The implementation of padding mechanism can be found at [event_toknizer.py](../../easy_tpp/preprocess/event_tokenizer.py).</p>
+<p>Finally, each batch contains six elements: time_seqs, time_delta_seqs, event_seq, batch_non_pad_mask, attention_mask, type_mask. The implementation of padding mechanism can be found at <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/easy_tpp/preprocess/event_tokenizer.py">event_tokenizer</a>.</p>
 </section>
 <section id="an-example">
 <h3>An example<a class="headerlink" href="#an-example" title="Permalink to this heading"></a></h3>
@@ -190,7 +190,7 @@ output:
 <span class="o">[</span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False,<span class="w"> </span>False<span class="o">]]</span>,
 </pre></div>
 </div>
-<p>The runnable examples of constructing and iterating the dataset object can be found at <a class="reference external" href="../../examples/dataset/event_tokenizer.py">event_tokenizer</a></p>
+<p>The runnable examples of constructing and iterating the dataset object can be found at <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/event_tokenizer.py">examples/event_tokenizer.py</a></p>
 </section>
 </section>
 </section>

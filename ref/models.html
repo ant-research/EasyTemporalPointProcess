@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="easy_tpp.model.tf_model.tf_baselayer" href="../generated/easy_tpp.model.tf_model.tf_baselayer.html" />
-    <link rel="prev" title="easy_tpp.preprocess.event_tokenizer" href="../generated/easy_tpp.preprocess.event_tokenizer.html" /> 
+    <link rel="next" title="easy_tpp.model.torch_model.torch_baselayer" href="../generated/easy_tpp.model.torch_model.torch_baselayer.html" />
+    <link rel="prev" title="EasyTPP Preprocess Modules" href="preprocess.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -70,18 +70,17 @@
 <li class="toctree-l1"><a class="reference internal" href="config.html"> Config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocess.html"> Preprocess</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-easy_tpp.model.tf_model">model.tf_model module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_baselayer.html">easy_tpp.model.tf_model.tf_baselayer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_basemodel.html">easy_tpp.model.tf_model.tf_basemodel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_nhp.html">easy_tpp.model.tf_model.tf_nhp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_attnhp.html">easy_tpp.model.tf_model.tf_attnhp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_thinning.html">easy_tpp.model.tf_model.tf_thinning</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-easy_tpp.model.tf_model">model.tf_model module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-easy_tpp.model.torch_model">model.torch_model module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_baselayer.html">easy_tpp.model.torch_model.torch_baselayer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_basemodel.html">easy_tpp.model.torch_model.torch_basemodel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_nhp.html">easy_tpp.model.torch_model.torch_nhp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_fullynn.html">easy_tpp.model.torch_model.torch_fullynn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_intensity_free.html">easy_tpp.model.torch_model.torch_intensity_free</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_ode_tpp.html">easy_tpp.model.torch_model.torch_ode_tpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_rmtpp.html">easy_tpp.model.torch_model.torch_rmtpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_sahp.html">easy_tpp.model.torch_model.torch_sahp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_thp.html">easy_tpp.model.torch_model.torch_thp</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_attnhp.html">easy_tpp.model.torch_model.torch_attnhp</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_thinning.html">easy_tpp.model.torch_model.torch_thinning</a></li>
 </ul>
@@ -124,21 +123,6 @@
 <span id="model-tf-model-module"></span><span id="api-tf-model"></span><h2>model.tf_model module<a class="headerlink" href="#module-easy_tpp.model.tf_model" title="Permalink to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_baselayer.html#module-easy_tpp.model.tf_model.tf_baselayer" title="easy_tpp.model.tf_model.tf_baselayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tf_baselayer</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_basemodel.html#module-easy_tpp.model.tf_model.tf_basemodel" title="easy_tpp.model.tf_model.tf_basemodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tf_basemodel</span></code></a></p></td>
-<td><p>Base model with common functionality</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_nhp.html#module-easy_tpp.model.tf_model.tf_nhp" title="easy_tpp.model.tf_model.tf_nhp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tf_nhp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_attnhp.html#module-easy_tpp.model.tf_model.tf_attnhp" title="easy_tpp.model.tf_model.tf_attnhp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tf_attnhp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.tf_model.tf_thinning.html#module-easy_tpp.model.tf_model.tf_thinning" title="easy_tpp.model.tf_model.tf_thinning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tf_thinning</span></code></a></p></td>
-<td><p></p></td>
-</tr>
 </tbody>
 </table>
 </section>
@@ -153,6 +137,24 @@
 <td><p>Base model with common functionality</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_nhp.html#module-easy_tpp.model.torch_model.torch_nhp" title="easy_tpp.model.torch_model.torch_nhp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_nhp</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_fullynn.html#module-easy_tpp.model.torch_model.torch_fullynn" title="easy_tpp.model.torch_model.torch_fullynn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_fullynn</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_intensity_free.html#module-easy_tpp.model.torch_model.torch_intensity_free" title="easy_tpp.model.torch_model.torch_intensity_free"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_intensity_free</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#module-easy_tpp.model.torch_model.torch_ode_tpp" title="easy_tpp.model.torch_model.torch_ode_tpp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_ode_tpp</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_rmtpp.html#module-easy_tpp.model.torch_model.torch_rmtpp" title="easy_tpp.model.torch_model.torch_rmtpp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_rmtpp</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_sahp.html#module-easy_tpp.model.torch_model.torch_sahp" title="easy_tpp.model.torch_model.torch_sahp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_sahp</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_thp.html#module-easy_tpp.model.torch_model.torch_thp" title="easy_tpp.model.torch_model.torch_thp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_thp</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_attnhp.html#module-easy_tpp.model.torch_model.torch_attnhp" title="easy_tpp.model.torch_model.torch_attnhp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_attnhp</span></code></a></p></td>
@@ -170,8 +172,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../generated/easy_tpp.preprocess.event_tokenizer.html" class="btn btn-neutral float-left" title="easy_tpp.preprocess.event_tokenizer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../generated/easy_tpp.model.tf_model.tf_baselayer.html" class="btn btn-neutral float-right" title="easy_tpp.model.tf_model.tf_baselayer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="preprocess.html" class="btn btn-neutral float-left" title="EasyTPP Preprocess Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../generated/easy_tpp.model.torch_model.torch_baselayer.html" class="btn btn-neutral float-right" title="easy_tpp.model.torch_model.torch_baselayer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

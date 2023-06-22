@@ -9,7 +9,7 @@ We use the [Taxi]_ dataset as an example to show how to use ``EasyTPP`` to train
 Download Dataset
 ===================
 
-The Taxi dataset we used is pre-processed by `HYPRO <https://github.com/iLampard/hypro_tpp>`_ . You can download this dataset `here <https://drive.google.com/drive/folders/1vNX2gFuGfhoh-vngoebaQlj2-ZIZMiBo>`_.
+The Taxi dataset we used is preprocessed by `HYPRO <https://github.com/iLampard/hypro_tpp>`_ . You can download this dataset `here <https://drive.google.com/drive/folders/1vNX2gFuGfhoh-vngoebaQlj2-ZIZMiBo>`_.
 
 
 Create the dir to save the pkl files.
@@ -18,13 +18,13 @@ Create the dir to save the pkl files.
 Setup the configuration file
 ==============================
 
-We provide a preset config file and one can copy it from `examples/configs/experiment_config.yaml`. The details of the configuration can be found in `Training Pipeline <../user_guide/run_train_pipeline.html>`_.
+We provide a preset config file in `Example Config <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/configs/experiment_config.yaml>`_. The details of the configuration can be found in `Training Pipeline <../user_guide/run_train_pipeline.html>`_.
 
 
 Train the Model
 =========================
 
-At this stage we need to write a script to run the training pipeline. There is a preset script `train_nhp.py` at `examples/` and one can simply copy it.
+At this stage we need to write a script to run the training pipeline. There is a preset script `train_nhp.py <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/train_nhp.py>`_ and one can simply copy it.
 
 After the setup of data, config and running script, the directory structure is as follows:
 

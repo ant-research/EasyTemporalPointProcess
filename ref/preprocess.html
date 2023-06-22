@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="easy_tpp.preprocess.data_collator" href="../generated/easy_tpp.preprocess.data_collator.html" />
+    <link rel="next" title="EasyTPP Models" href="models.html" />
     <link rel="prev" title="EasyTPP Config Modules" href="config.html" /> 
 </head>
 
@@ -69,23 +69,32 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="config.html"> Config</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Preprocess</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.preprocess.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.EventTokenizer.__init__"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.EventTokenizer.pad"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.pad()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.EventTokenizer.make_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_pad_sequence()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.EventTokenizer.make_attn_mask_for_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_attn_mask_for_pad_sequence()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.EventTokenizer.make_type_mask_for_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_type_mask_for_pad_sequence()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preprocess.TPPDataLoader"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataLoader.__init__"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataLoader.build_input_from_pkl"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader.build_input_from_pkl()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataLoader.get_loader"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader.get_loader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataLoader.train_loader"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader.train_loader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataLoader.valid_loader"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader.valid_loader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataLoader.test_loader"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader.test_loader()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.preprocess.TPPDataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.TPPDataset.__init__"><code class="docutils literal notranslate"><span class="pre">TPPDataset.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.preprocess.TPPDataset.to_tf_dataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset.to_tf_dataset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preprocess.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.EventTokenizer.__init__"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.EventTokenizer.padding_side"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.padding_side</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.EventTokenizer.truncation_side"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.truncation_side</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.EventTokenizer.model_input_names"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.model_input_names</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.EventTokenizer.pad"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.pad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.EventTokenizer.make_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_pad_sequence()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.EventTokenizer.make_attn_mask_for_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_attn_mask_for_pad_sequence()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.EventTokenizer.make_type_mask_for_pad_sequence"><code class="docutils literal notranslate"><span class="pre">EventTokenizer.make_type_mask_for_pad_sequence()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.preprocess.data_collator.html">easy_tpp.preprocess.data_collator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.preprocess.data_loader.html">easy_tpp.preprocess.data_loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.preprocess.dataset.html">easy_tpp.preprocess.dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/easy_tpp.preprocess.event_tokenizer.html">easy_tpp.preprocess.event_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preprocess.TPPDataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataset.__init__"><code class="docutils literal notranslate"><span class="pre">TPPDataset.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataset.to_tf_dataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset.to_tf_dataset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#preprocess.get_data_loader"><code class="docutils literal notranslate"><span class="pre">get_data_loader()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="models.html"> Model</a></li>
@@ -119,20 +128,126 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-easy_tpp.preprocess">
-<span id="easytpp-preprocess-modules"></span><span id="api-preprocess"></span><h1>EasyTPP Preprocess Modules<a class="headerlink" href="#module-easy_tpp.preprocess" title="Permalink to this heading"></a></h1>
+  <section id="module-preprocess">
+<span id="easytpp-preprocess-modules"></span><span id="api-preprocess"></span><h1>EasyTPP Preprocess Modules<a class="headerlink" href="#module-preprocess" title="Permalink to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.EventTokenizer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.preprocess.</span></span><span class="sig-name descname"><span class="pre">EventTokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.EventTokenizer" title="Permalink to this definition"></a></dt>
-<dd><p>Base class for tokenizer event sequences, vendored from huggingface/transformer</p>
+<dt class="sig sig-object py" id="preprocess.TPPDataLoader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocess.</span></span><span class="sig-name descname"><span class="pre">TPPDataLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/data_loader.html#TPPDataLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataLoader" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.EventTokenizer.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.EventTokenizer.__init__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="preprocess.TPPDataLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/data_loader.html#TPPDataLoader.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataLoader.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the dataloader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_config</strong> (<em>EasyTPP.DataConfig</em>) – data config.</p></li>
+<li><p><strong>backend</strong> (<em>str</em>) – backend engine, e.g., tensorflow or torch.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocess.TPPDataLoader.build_input_from_pkl">
+<span class="sig-name descname"><span class="pre">build_input_from_pkl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/data_loader.html#TPPDataLoader.build_input_from_pkl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataLoader.build_input_from_pkl" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.EventTokenizer.pad">
-<span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoded_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../generated/easy_tpp.utils.const.html#easy_tpp.utils.const.PaddingStrategy" title="easy_tpp.utils.const.PaddingStrategy"><span class="pre">PaddingStrategy</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../generated/easy_tpp.utils.const.html#easy_tpp.utils.const.TruncationStrategy" title="easy_tpp.utils.const.TruncationStrategy"><span class="pre">TruncationStrategy</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_attention_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_tensors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../generated/easy_tpp.utils.const.html#easy_tpp.utils.const.TensorType" title="easy_tpp.utils.const.TensorType"><span class="pre">TensorType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding" title="easy_tpp.preprocess.event_tokenizer.BatchEncoding"><span class="pre">BatchEncoding</span></a></span></span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.pad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.EventTokenizer.pad" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="preprocess.TPPDataLoader.get_loader">
+<span class="sig-name descname"><span class="pre">get_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/data_loader.html#TPPDataLoader.get_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataLoader.get_loader" title="Permalink to this definition"></a></dt>
+<dd><p>Get the corresponding data loader.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>split</strong> (<em>str</em><em>, </em><em>optional</em>) – denote the train, valid and test set. Defaults to ‘train’.</p></li>
+<li><p><strong>num_event_types</strong> (<em>int</em><em>, </em><em>optional</em>) – num of event types in the data. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – the input of ‘num_event_types’ is inconsistent with the data.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the data loader for tpp data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>EasyTPP.DataLoader</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocess.TPPDataLoader.train_loader">
+<span class="sig-name descname"><span class="pre">train_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/data_loader.html#TPPDataLoader.train_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataLoader.train_loader" title="Permalink to this definition"></a></dt>
+<dd><p>Return the train loader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>data loader for train set.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>EasyTPP.DataLoader</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocess.TPPDataLoader.valid_loader">
+<span class="sig-name descname"><span class="pre">valid_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/data_loader.html#TPPDataLoader.valid_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataLoader.valid_loader" title="Permalink to this definition"></a></dt>
+<dd><p>Return the valid loader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>data loader for valid set.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>EasyTPP.DataLoader</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocess.TPPDataLoader.test_loader">
+<span class="sig-name descname"><span class="pre">test_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/data_loader.html#TPPDataLoader.test_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataLoader.test_loader" title="Permalink to this definition"></a></dt>
+<dd><p>Return the test loader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>data loader for test set.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>EasyTPP.DataLoader</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocess.EventTokenizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocess.</span></span><span class="sig-name descname"><span class="pre">EventTokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.EventTokenizer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for tokenizer event sequences, vendored from huggingface/transformer</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocess.EventTokenizer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.EventTokenizer.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="preprocess.EventTokenizer.padding_side">
+<span class="sig-name descname"><span class="pre">padding_side</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'right'</span></em><a class="headerlink" href="#preprocess.EventTokenizer.padding_side" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="preprocess.EventTokenizer.truncation_side">
+<span class="sig-name descname"><span class="pre">truncation_side</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'right'</span></em><a class="headerlink" href="#preprocess.EventTokenizer.truncation_side" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="preprocess.EventTokenizer.model_input_names">
+<span class="sig-name descname"><span class="pre">model_input_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['time_seqs',</span> <span class="pre">'time_delta_seqs',</span> <span class="pre">'type_seqs',</span> <span class="pre">'seq_non_pad_mask',</span> <span class="pre">'attention_mask',</span> <span class="pre">'type_mask']</span></em><a class="headerlink" href="#preprocess.EventTokenizer.model_input_names" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocess.EventTokenizer.pad">
+<span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoded_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="utils.html#utils.PaddingStrategy" title="easy_tpp.utils.const.PaddingStrategy"><span class="pre">PaddingStrategy</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="utils.html#utils.TruncationStrategy" title="easy_tpp.utils.const.TruncationStrategy"><span class="pre">TruncationStrategy</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_attention_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_tensors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">TensorType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BatchEncoding</span></span></span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.pad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.EventTokenizer.pad" title="Permalink to this definition"></a></dt>
 <dd><p>Pad a single encoded input or a batch of encoded inputs up to predefined length or to the max sequence length
 in the batch.</p>
 <p>Padding side (left/right) padding token ids are defined at the tokenizer level (with <cite>self.padding_side</cite>,
@@ -191,8 +306,8 @@ to the specific tokenizer’s default, defined by the <cite>return_outputs</cite
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.EventTokenizer.make_pad_sequence">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_token_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_len</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float32'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by_event_types=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.EventTokenizer.make_pad_sequence" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="preprocess.EventTokenizer.make_pad_sequence">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_token_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_len</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float32'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by_event_types=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.EventTokenizer.make_pad_sequence" title="Permalink to this definition"></a></dt>
 <dd><p>Pad the sequence batch-wise.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -221,8 +336,8 @@ pad_sequence(seqs, 100)
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.EventTokenizer.make_attn_mask_for_pad_sequence">
-<span class="sig-name descname"><span class="pre">make_attn_mask_for_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pad_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_token_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_attn_mask_for_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.EventTokenizer.make_attn_mask_for_pad_sequence" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="preprocess.EventTokenizer.make_attn_mask_for_pad_sequence">
+<span class="sig-name descname"><span class="pre">make_attn_mask_for_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pad_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_token_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_attn_mask_for_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.EventTokenizer.make_attn_mask_for_pad_sequence" title="Permalink to this definition"></a></dt>
 <dd><p>Make the attention masks for the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -274,8 +389,8 @@ attention_mask
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.EventTokenizer.make_type_mask_for_pad_sequence">
-<span class="sig-name descname"><span class="pre">make_type_mask_for_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pad_seqs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_type_mask_for_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.EventTokenizer.make_type_mask_for_pad_sequence" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="preprocess.EventTokenizer.make_type_mask_for_pad_sequence">
+<span class="sig-name descname"><span class="pre">make_type_mask_for_pad_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pad_seqs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/event_tokenizer.html#EventTokenizer.make_type_mask_for_pad_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.EventTokenizer.make_type_mask_for_pad_sequence" title="Permalink to this definition"></a></dt>
 <dd><p>Make the type mask.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -293,20 +408,21 @@ attention_mask
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.TPPDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.preprocess.</span></span><span class="sig-name descname"><span class="pre">TPPDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/dataset.html#TPPDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.TPPDataset" title="Permalink to this definition"></a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.TPPDataset.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/dataset.html#TPPDataset.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.TPPDataset.__init__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="preprocess.TPPDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocess.</span></span><span class="sig-name descname"><span class="pre">TPPDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/dataset.html#TPPDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataset" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocess.TPPDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/dataset.html#TPPDataset.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataset.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.preprocess.TPPDataset.to_tf_dataset">
-<span class="sig-name descname"><span class="pre">to_tf_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_collator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../generated/easy_tpp.preprocess.data_collator.html#easy_tpp.preprocess.data_collator.TPPDataCollator" title="easy_tpp.preprocess.data_collator.TPPDataCollator"><span class="pre">TPPDataCollator</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/dataset.html#TPPDataset.to_tf_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.preprocess.TPPDataset.to_tf_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="preprocess.TPPDataset.to_tf_dataset">
+<span class="sig-name descname"><span class="pre">to_tf_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_collator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TPPDataCollator</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/dataset.html#TPPDataset.to_tf_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataset.to_tf_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Generate a dataset to use in Tensorflow</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data_collator</strong> (<a class="reference internal" href="../generated/easy_tpp.preprocess.data_collator.html#easy_tpp.preprocess.data_collator.TPPDataCollator" title="easy_tpp.preprocess.data_collator.TPPDataCollator"><em>TPPDataCollator</em></a>) – collator to tokenize the event data.</p>
+<dd class="field-odd"><p><strong>data_collator</strong> (<em>TPPDataCollator</em>) – collator to tokenize the event data.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ImportError</strong> – Tensorflow is not installed.</p>
@@ -322,22 +438,11 @@ attention_mask
 
 </dd></dl>
 
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.preprocess.data_collator.html#module-easy_tpp.preprocess.data_collator" title="easy_tpp.preprocess.data_collator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_collator</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.preprocess.data_loader.html#module-easy_tpp.preprocess.data_loader" title="easy_tpp.preprocess.data_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_loader</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.preprocess.dataset.html#module-easy_tpp.preprocess.dataset" title="easy_tpp.preprocess.dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.preprocess.event_tokenizer.html#module-easy_tpp.preprocess.event_tokenizer" title="easy_tpp.preprocess.event_tokenizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">event_tokenizer</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="preprocess.get_data_loader">
+<span class="sig-prename descclassname"><span class="pre">preprocess.</span></span><span class="sig-name descname"><span class="pre">get_data_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#preprocess.TPPDataset" title="easy_tpp.preprocess.dataset.TPPDataset"><span class="pre">TPPDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#preprocess.EventTokenizer" title="easy_tpp.preprocess.event_tokenizer.EventTokenizer"><span class="pre">EventTokenizer</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/dataset.html#get_data_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.get_data_loader" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </section>
 
 
@@ -345,7 +450,7 @@ attention_mask
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="config.html" class="btn btn-neutral float-left" title="EasyTPP Config Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../generated/easy_tpp.preprocess.data_collator.html" class="btn btn-neutral float-right" title="easy_tpp.preprocess.data_collator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="models.html" class="btn btn-neutral float-right" title="EasyTPP Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

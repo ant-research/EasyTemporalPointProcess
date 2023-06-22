@@ -207,12 +207,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ref/preprocess.html"> Preprocess</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#easy_tpp.preprocess.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#easy_tpp.preprocess.TPPDataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.preprocess.data_collator.html">easy_tpp.preprocess.data_collator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.preprocess.data_loader.html">easy_tpp.preprocess.data_loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.preprocess.dataset.html">easy_tpp.preprocess.dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.preprocess.event_tokenizer.html">easy_tpp.preprocess.event_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#preprocess.TPPDataLoader"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#preprocess.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#preprocess.TPPDataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#preprocess.get_data_loader"><code class="docutils literal notranslate"><span class="pre">get_data_loader()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ref/models.html"> Model</a><ul>
@@ -226,52 +224,49 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ref/hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ref/wrapper.html"> Tf and Torch Wrapper</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ref/wrapper.html#tf_wrapper.TfModelWrapper"><code class="docutils literal notranslate"><span class="pre">TfModelWrapper</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/wrapper.html#torch_wrapper.TorchModelWrapper"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="ref/wrapper.html"> Tf and Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/utils.html"> Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.py_assert"><code class="docutils literal notranslate"><span class="pre">py_assert()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.make_config_string"><code class="docutils literal notranslate"><span class="pre">make_config_string()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.create_folder"><code class="docutils literal notranslate"><span class="pre">create_folder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.save_yaml_config"><code class="docutils literal notranslate"><span class="pre">save_yaml_config()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.load_yaml_config"><code class="docutils literal notranslate"><span class="pre">load_yaml_config()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.RunnerPhase"><code class="docutils literal notranslate"><span class="pre">RunnerPhase</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.LogConst"><code class="docutils literal notranslate"><span class="pre">LogConst</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.has_key"><code class="docutils literal notranslate"><span class="pre">has_key()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.array_pad_cols"><code class="docutils literal notranslate"><span class="pre">array_pad_cols()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.MetricsTracker"><code class="docutils literal notranslate"><span class="pre">MetricsTracker</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.set_device"><code class="docutils literal notranslate"><span class="pre">set_device()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.set_optimizer"><code class="docutils literal notranslate"><span class="pre">set_optimizer()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.count_model_params"><code class="docutils literal notranslate"><span class="pre">count_model_params()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.Registrable"><code class="docutils literal notranslate"><span class="pre">Registrable</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.concat_element"><code class="docutils literal notranslate"><span class="pre">concat_element()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.parse_uri_to_protocol_and_path"><code class="docutils literal notranslate"><span class="pre">parse_uri_to_protocol_and_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.is_master_process"><code class="docutils literal notranslate"><span class="pre">is_master_process()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.is_local_master_process"><code class="docutils literal notranslate"><span class="pre">is_local_master_process()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.dict_deep_update"><code class="docutils literal notranslate"><span class="pre">dict_deep_update()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.rk4_step_method"><code class="docutils literal notranslate"><span class="pre">rk4_step_method()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.PaddingStrategy"><code class="docutils literal notranslate"><span class="pre">PaddingStrategy</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.ExplicitEnum"><code class="docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.TruncationStrategy"><code class="docutils literal notranslate"><span class="pre">TruncationStrategy</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.is_torch_device"><code class="docutils literal notranslate"><span class="pre">is_torch_device()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#easy_tpp.utils.is_numpy_array"><code class="docutils literal notranslate"><span class="pre">is_numpy_array()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.const.html">easy_tpp.utils.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.generic.html">easy_tpp.utils.generic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.import_utils.html">easy_tpp.utils.import_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.log_utils.html">easy_tpp.utils.log_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.metrics.html">easy_tpp.utils.metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.misc.html">easy_tpp.utils.misc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.ode_utils.html">easy_tpp.utils.ode_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.registrable.html">easy_tpp.utils.registrable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.multiprocess_utils.html">easy_tpp.utils.multiprocess_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.tf_utils.html">easy_tpp.utils.tf_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/easy_tpp.utils.torch_utils.html">easy_tpp.utils.torch_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.py_assert"><code class="docutils literal notranslate"><span class="pre">py_assert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.make_config_string"><code class="docutils literal notranslate"><span class="pre">make_config_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.create_folder"><code class="docutils literal notranslate"><span class="pre">create_folder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.save_yaml_config"><code class="docutils literal notranslate"><span class="pre">save_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.load_yaml_config"><code class="docutils literal notranslate"><span class="pre">load_yaml_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.RunnerPhase"><code class="docutils literal notranslate"><span class="pre">RunnerPhase</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.LogConst"><code class="docutils literal notranslate"><span class="pre">LogConst</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.has_key"><code class="docutils literal notranslate"><span class="pre">has_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.array_pad_cols"><code class="docutils literal notranslate"><span class="pre">array_pad_cols()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.MetricsHelper"><code class="docutils literal notranslate"><span class="pre">MetricsHelper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.MetricsTracker"><code class="docutils literal notranslate"><span class="pre">MetricsTracker</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.set_device"><code class="docutils literal notranslate"><span class="pre">set_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.set_optimizer"><code class="docutils literal notranslate"><span class="pre">set_optimizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.count_model_params"><code class="docutils literal notranslate"><span class="pre">count_model_params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.Registrable"><code class="docutils literal notranslate"><span class="pre">Registrable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.concat_element"><code class="docutils literal notranslate"><span class="pre">concat_element()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.get_stage"><code class="docutils literal notranslate"><span class="pre">get_stage()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.parse_uri_to_protocol_and_path"><code class="docutils literal notranslate"><span class="pre">parse_uri_to_protocol_and_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_master_process"><code class="docutils literal notranslate"><span class="pre">is_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_local_master_process"><code class="docutils literal notranslate"><span class="pre">is_local_master_process()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.dict_deep_update"><code class="docutils literal notranslate"><span class="pre">dict_deep_update()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.DefaultRunnerConfig"><code class="docutils literal notranslate"><span class="pre">DefaultRunnerConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.rk4_step_method"><code class="docutils literal notranslate"><span class="pre">rk4_step_method()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_tf_available"><code class="docutils literal notranslate"><span class="pre">is_tf_available()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_tensorflow_probability_available"><code class="docutils literal notranslate"><span class="pre">is_tensorflow_probability_available()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_torchvision_available"><code class="docutils literal notranslate"><span class="pre">is_torchvision_available()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_torch_cuda_available"><code class="docutils literal notranslate"><span class="pre">is_torch_cuda_available()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_tf_gpu_available"><code class="docutils literal notranslate"><span class="pre">is_tf_gpu_available()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_torch_gpu_available"><code class="docutils literal notranslate"><span class="pre">is_torch_gpu_available()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_torch_available"><code class="docutils literal notranslate"><span class="pre">is_torch_available()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.requires_backends"><code class="docutils literal notranslate"><span class="pre">requires_backends()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.PaddingStrategy"><code class="docutils literal notranslate"><span class="pre">PaddingStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.ExplicitEnum"><code class="docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.TruncationStrategy"><code class="docutils literal notranslate"><span class="pre">TruncationStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_torch_device"><code class="docutils literal notranslate"><span class="pre">is_torch_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html#utils.is_numpy_array"><code class="docutils literal notranslate"><span class="pre">is_numpy_array()</span></code></a></li>
 </ul>
 </li>
 </ul>

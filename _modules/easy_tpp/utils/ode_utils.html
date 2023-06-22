@@ -98,7 +98,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.utils.ode_utils</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="ode_update_op"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.ode_utils.html#easy_tpp.utils.ode_utils.ode_update_op">[docs]</a><span></span><span class="k">def</span> <span class="nf">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span></span><span class="k">def</span> <span class="nf">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    General update operation for solving ODEs.</span>
 
@@ -116,10 +116,10 @@
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">item_z</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">item_dz</span> <span class="k">for</span> <span class="n">item_z</span><span class="p">,</span> <span class="n">item_dz</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">dz</span><span class="p">)]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">z0</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dz</span></div>
+        <span class="k">return</span> <span class="n">z0</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dz</span>
 
 
-<div class="viewcode-block" id="euler_step_method"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.ode_utils.html#easy_tpp.utils.ode_utils.euler_step_method">[docs]</a><span class="k">def</span> <span class="nf">euler_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">euler_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Euler method for solving ODEs.</span>
 
@@ -135,10 +135,10 @@
 <span class="sd">        Tensor or a list for Tensor whose shape is [..., dim], which is updated state.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dz</span> <span class="o">=</span> <span class="n">diff_func</span><span class="p">(</span><span class="n">z0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">ode_update_op</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="rk2_step_method"><a class="viewcode-back" href="../../../generated/easy_tpp.utils.ode_utils.html#easy_tpp.utils.ode_utils.rk2_step_method">[docs]</a><span class="k">def</span> <span class="nf">rk2_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">rk2_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Second order Runge-Kutta method for solving ODEs.</span>
 
@@ -160,10 +160,10 @@
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">item_z</span> <span class="o">+</span> <span class="p">(</span><span class="n">item_k1</span> <span class="o">+</span> <span class="n">item_k2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="k">for</span> <span class="n">item_z</span><span class="p">,</span> <span class="n">item_k1</span><span class="p">,</span> <span class="n">item_k2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">)]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">z0</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span></div>
+        <span class="k">return</span> <span class="n">z0</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
 
 
-<div class="viewcode-block" id="rk4_step_method"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.ode_utils.rk4_step_method">[docs]</a><span class="k">def</span> <span class="nf">rk4_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
+<div class="viewcode-block" id="rk4_step_method"><a class="viewcode-back" href="../../../ref/utils.html#utils.rk4_step_method">[docs]</a><span class="k">def</span> <span class="nf">rk4_step_method</span><span class="p">(</span><span class="n">diff_func</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">z0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fourth order Runge-Kutta method for solving ODEs.</span>
 

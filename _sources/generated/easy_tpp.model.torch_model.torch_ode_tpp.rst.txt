@@ -1,0 +1,37 @@
+﻿easy\_tpp.model.torch\_model.torch\_ode\_tpp
+============================================
+
+.. automodule:: easy_tpp.model.torch_model.torch_ode_tpp
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      flatten_parameters
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      NeuralODE
+      NeuralODEAdjoint
+      ODETPP
+   
+   
+
+   
+   
+   
+
+
+

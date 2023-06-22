@@ -105,31 +105,31 @@
 <span class="kn">from</span> <span class="nn">easy_tpp.utils.log_utils</span> <span class="kn">import</span> <span class="n">default_logger</span> <span class="k">as</span> <span class="n">logger</span>
 
 
-<span class="k">class</span> <span class="nc">MetricsHelper</span><span class="p">:</span>
+<div class="viewcode-block" id="MetricsHelper"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsHelper">[docs]</a><span class="k">class</span> <span class="nc">MetricsHelper</span><span class="p">:</span>
     <span class="n">MAXIMIZE</span> <span class="o">=</span> <span class="s1">&#39;maximize&#39;</span>
     <span class="n">MINIMIZE</span> <span class="o">=</span> <span class="s1">&#39;minimize&#39;</span>
     <span class="n">_registry_center</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MetricsHelper.get_metric_function"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsHelper.get_metric_function">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_metric_function</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">_registry_center</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">_registry_center</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Metric is not found: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MetricsHelper.get_metric_direction"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsHelper.get_metric_direction">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_metric_direction</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">_registry_center</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">_registry_center</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MetricsHelper.get_all_registered_metric"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsHelper.get_all_registered_metric">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_all_registered_metric</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">_registry_center</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">return</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">_registry_center</span><span class="o">.</span><span class="n">values</span></div>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MetricsHelper.register"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsHelper.register">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">registry_center</span> <span class="o">=</span> <span class="n">MetricsHelper</span><span class="o">.</span><span class="n">_registry_center</span>
 
@@ -143,18 +143,18 @@
                 <span class="n">registry_center</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">func</span>
 
-        <span class="k">return</span> <span class="n">_add_metric_to_registry</span>
+        <span class="k">return</span> <span class="n">_add_metric_to_registry</span></div>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MetricsHelper.metrics_dict_to_str"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsHelper.metrics_dict_to_str">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">metrics_dict_to_str</span><span class="p">(</span><span class="n">metrics_dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Convert metrics to a string to show in console  &quot;&quot;&quot;</span>
         <span class="n">eval_info</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">metrics_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">eval_info</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> is </span><span class="si">{1}</span><span class="s1">, &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">eval_info</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">eval_info</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span></div>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MetricsHelper.get_metrics_callback_from_names"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsHelper.get_metrics_callback_from_names">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_metrics_callback_from_names</span><span class="p">(</span><span class="n">metric_names</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Metrics function callbacks    &quot;&quot;&quot;</span>
         <span class="n">metric_functions</span> <span class="o">=</span> <span class="p">[]</span>
@@ -172,21 +172,21 @@
                 <span class="n">res</span><span class="p">[</span><span class="n">metric_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">metric_func</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">res</span>
 
-        <span class="k">return</span> <span class="n">metrics</span>
+        <span class="k">return</span> <span class="n">metrics</span></div></div>
 
 
-<div class="viewcode-block" id="MetricsTracker"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.metrics.MetricsTracker">[docs]</a><span class="k">class</span> <span class="nc">MetricsTracker</span><span class="p">:</span>
+<div class="viewcode-block" id="MetricsTracker"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsTracker">[docs]</a><span class="k">class</span> <span class="nc">MetricsTracker</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Track and record the metrics.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MetricsTracker.__init__"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.metrics.MetricsTracker.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MetricsTracker.__init__"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsTracker.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_best</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;loglike&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
             <span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">max</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">episode_best</span> <span class="o">=</span> <span class="s1">&#39;NeverUpdated&#39;</span></div>
 
-<div class="viewcode-block" id="MetricsTracker.update_best"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.metrics.MetricsTracker.update_best">[docs]</a>    <span class="k">def</span> <span class="nf">update_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+<div class="viewcode-block" id="MetricsTracker.update_best"><a class="viewcode-back" href="../../../ref/utils.html#utils.MetricsTracker.update_best">[docs]</a>    <span class="k">def</span> <span class="nf">update_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the recorder for the best metrics.</span>
 
 <span class="sd">        Args:</span>

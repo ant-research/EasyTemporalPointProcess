@@ -1,0 +1,30 @@
+﻿easy\_tpp.model.torch\_model.torch\_fullynn
+===========================================
+
+.. automodule:: easy_tpp.model.torch_model.torch_fullynn
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CumulHazardFunctionNetwork
+      FullyNN
+   
+   
+
+   
+   
+   
+
+
+

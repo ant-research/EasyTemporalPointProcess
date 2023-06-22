@@ -55,7 +55,7 @@ Setup from the source：
 
 .. code-block:: bash
 
-    git clone https://github.com/ant-research/EasyTPP.git
+    git clone https://github.com/ant-research/EasyTemporalPointProcess.git
     cd EasyTPP
     python setup.py install
 

@@ -17,6 +17,12 @@ model.tf_model module
     tf_baselayer
     tf_basemodel
     tf_nhp
+    tf_fullynn
+    tf_intensity_free
+    tf_ode_tpp
+    tf_rmtpp
+    tf_sahp
+    tf_thp
     tf_attnhp
     tf_thinning
 
@@ -33,6 +39,12 @@ model.torch_model module
     torch_baselayer
     torch_basemodel
     torch_nhp
+    torch_fullynn
+    torch_intensity_free
+    torch_ode_tpp
+    torch_rmtpp
+    torch_sahp
+    torch_thp
     torch_attnhp
     torch_thinning
 

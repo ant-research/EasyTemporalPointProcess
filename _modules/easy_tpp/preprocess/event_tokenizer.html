@@ -108,7 +108,7 @@
     <span class="n">TensorType</span><span class="p">,</span> <span class="n">is_torch_device</span><span class="p">,</span> <span class="n">requires_backends</span><span class="p">,</span> <span class="n">is_numpy_array</span><span class="p">,</span> <span class="n">py_assert</span>
 
 
-<div class="viewcode-block" id="BatchEncoding"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding">[docs]</a><span class="k">class</span> <span class="nc">BatchEncoding</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">BatchEncoding</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Holds the output of the [`~event_tokenizer.EventTokenizer.__call__`],</span>
 <span class="sd">    [`~event_tokenizer.EventTokenizer.encode_plus`] methods (tokens, attention_masks, etc).</span>
@@ -129,7 +129,7 @@
 <span class="sd">            initialization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="BatchEncoding.__init__"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">tensor_type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">TensorType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -137,18 +137,18 @@
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">tensor_type</span><span class="o">=</span><span class="n">tensor_type</span><span class="p">,</span> <span class="n">prepend_batch_axis</span><span class="o">=</span><span class="n">prepend_batch_axis</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">tensor_type</span><span class="o">=</span><span class="n">tensor_type</span><span class="p">,</span> <span class="n">prepend_batch_axis</span><span class="o">=</span><span class="n">prepend_batch_axis</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BatchEncoding.keys"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.keys">[docs]</a>    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 
-<div class="viewcode-block" id="BatchEncoding.values"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.values">[docs]</a>    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
-<div class="viewcode-block" id="BatchEncoding.items"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.items">[docs]</a>    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 
-<div class="viewcode-block" id="BatchEncoding.convert_to_tensors"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.convert_to_tensors">[docs]</a>    <span class="k">def</span> <span class="nf">convert_to_tensors</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">convert_to_tensors</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">tensor_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TensorType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">prepend_batch_axis</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -212,9 +212,9 @@
                     <span class="s2">&quot; expected).&quot;</span>
                 <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
-        <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="k">return</span> <span class="bp">self</span>
 
-<div class="viewcode-block" id="BatchEncoding.to"><a class="viewcode-back" href="../../../generated/easy_tpp.preprocess.event_tokenizer.html#easy_tpp.preprocess.event_tokenizer.BatchEncoding.to">[docs]</a>    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;torch.device&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;BatchEncoding&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;torch.device&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;BatchEncoding&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send all values to device by calling `v.to(device)` (PyTorch only).</span>
 
@@ -233,10 +233,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to cast a BatchEncoding to type </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="si">}</span><span class="s2">. This is not supported.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span>
 
 
-<div class="viewcode-block" id="EventTokenizer"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer">[docs]</a><span class="k">class</span> <span class="nc">EventTokenizer</span><span class="p">:</span>
+<div class="viewcode-block" id="EventTokenizer"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.EventTokenizer">[docs]</a><span class="k">class</span> <span class="nc">EventTokenizer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for tokenizer event sequences, vendored from huggingface/transformer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -245,7 +245,7 @@
     <span class="n">model_input_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;time_seqs&quot;</span><span class="p">,</span> <span class="s2">&quot;time_delta_seqs&quot;</span><span class="p">,</span> <span class="s2">&quot;type_seqs&quot;</span><span class="p">,</span> <span class="s2">&quot;seq_non_pad_mask&quot;</span><span class="p">,</span> <span class="s2">&quot;attention_mask&quot;</span><span class="p">,</span>
                                     <span class="s2">&quot;type_mask&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="EventTokenizer.__init__"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<div class="viewcode-block" id="EventTokenizer.__init__"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.EventTokenizer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">num_event_types</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">pad_token_id</span>
@@ -344,7 +344,7 @@
 
         <span class="k">return</span> <span class="n">encoded_inputs</span>
 
-<div class="viewcode-block" id="EventTokenizer.pad"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.pad">[docs]</a>    <span class="k">def</span> <span class="nf">pad</span><span class="p">(</span>
+<div class="viewcode-block" id="EventTokenizer.pad"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.EventTokenizer.pad">[docs]</a>    <span class="k">def</span> <span class="nf">pad</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">encoded_inputs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
                 <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
@@ -537,7 +537,7 @@
 
         <span class="k">return</span> <span class="n">batch_output</span>
 
-<div class="viewcode-block" id="EventTokenizer.make_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_pad_sequence">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="EventTokenizer.make_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.EventTokenizer.make_pad_sequence">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">make_pad_sequence</span><span class="p">(</span><span class="n">seqs</span><span class="p">,</span>
                           <span class="n">pad_token_id</span><span class="p">,</span>
                           <span class="n">padding_side</span><span class="p">,</span>
@@ -586,7 +586,7 @@
             <span class="n">pad_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pad_seq</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pad_seq</span></div>
 
-<div class="viewcode-block" id="EventTokenizer.make_attn_mask_for_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_attn_mask_for_pad_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">make_attn_mask_for_pad_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pad_seqs</span><span class="p">,</span> <span class="n">pad_token_id</span><span class="p">):</span>
+<div class="viewcode-block" id="EventTokenizer.make_attn_mask_for_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.EventTokenizer.make_attn_mask_for_pad_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">make_attn_mask_for_pad_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pad_seqs</span><span class="p">,</span> <span class="n">pad_token_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Make the attention masks for the sequence.</span>
 
 <span class="sd">        Args:</span>
@@ -640,7 +640,7 @@
 
         <span class="k">return</span> <span class="n">attention_mask</span></div>
 
-<div class="viewcode-block" id="EventTokenizer.make_type_mask_for_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#easy_tpp.preprocess.event_tokenizer.EventTokenizer.make_type_mask_for_pad_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">make_type_mask_for_pad_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pad_seqs</span><span class="p">):</span>
+<div class="viewcode-block" id="EventTokenizer.make_type_mask_for_pad_sequence"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.EventTokenizer.make_type_mask_for_pad_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">make_type_mask_for_pad_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pad_seqs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Make the type mask.</span>
 
 <span class="sd">        Args:</span>

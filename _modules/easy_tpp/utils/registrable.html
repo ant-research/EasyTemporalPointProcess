@@ -103,7 +103,7 @@
 <span class="kn">from</span> <span class="nn">.log_utils</span> <span class="kn">import</span> <span class="n">default_logger</span> <span class="k">as</span> <span class="n">logger</span>
 
 
-<div class="viewcode-block" id="Registrable"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable">[docs]</a><span class="k">class</span> <span class="nc">Registrable</span><span class="p">:</span>
+<div class="viewcode-block" id="Registrable"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable">[docs]</a><span class="k">class</span> <span class="nc">Registrable</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Any class that inherits from ``Registrable`` gains access to a named registry for its subclasses. To register them, just decorate them with the classmethod ``@BaseClass.register(name)``.</span>
 
 <span class="sd">    After which you can call ``BaseClass.list_available()`` to get the keys for the registered subclasses, and ``BaseClass.by_name(name)`` to get the corresponding subclass.</span>
@@ -114,15 +114,14 @@
     <span class="n">_registry</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
     <span class="n">_default_impl</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Registrable.register"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable.register">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Registrable.register"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.register">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">constructor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a class under a particular name.</span>
-
 <span class="sd">        Args:</span>
 <span class="sd">            name (str): The name to register the class under.</span>
 <span class="sd">            constructor (str): optional (default=None)</span>
 <span class="sd">                The name of the method to use on the class to construct the object.  If this is given,</span>
-<span class="sd">                we will use this method (which must be a ``@classmethod``) instead of the default</span>
+<span class="sd">                we will use this method (which must be a ``classmethod``) instead of the default</span>
 <span class="sd">                constructor.</span>
 <span class="sd">            overwrite (bool) : optional (default=False)</span>
 <span class="sd">                If True, overwrites any existing models registered under ``name``. Else,</span>
@@ -147,22 +146,7 @@
 <span class="sd">        If you want to have the instantiation from a config file call a method other than the</span>
 <span class="sd">        constructor, either because you have several different construction paths that could be</span>
 <span class="sd">        taken for the same object (as we do in ``Transform``) or because you have logic you want to</span>
-<span class="sd">        happen before you get to the constructor, you can register a specific ``@classmethod`` as the constructor to use, like this:</span>
-<span class="sd">        ```python</span>
-<span class="sd">        @Transform.register(&quot;shift-transform-from-instances&quot;, constructor=&quot;from_instances&quot;)</span>
-<span class="sd">        @Transform.register(&quot;shift-transform-from-files&quot;, constructor=&quot;from_files&quot;)</span>
-<span class="sd">        class ShiftTransform(Transform):</span>
-<span class="sd">            def __init__(self, some_params):</span>
-<span class="sd">                ...</span>
-<span class="sd">            @classmethod</span>
-<span class="sd">            def from_instances(cls, some_other_params) -&gt; ShiftTransform:</span>
-<span class="sd">                ...  # construct some_params from instances</span>
-<span class="sd">                return cls(some_params)</span>
-<span class="sd">            @classmethod</span>
-<span class="sd">            def from_files(cls, still_other_params) -&gt; ShiftTransform:</span>
-<span class="sd">                ...  # construct some_params from files</span>
-<span class="sd">                return cls(some_params)</span>
-<span class="sd">        ```</span>
+<span class="sd">        happen before you get to the constructor, you can register a specific ``@classmethod`` as the constructor to use.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">registry</span> <span class="o">=</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>
 
@@ -186,7 +170,7 @@
 
         <span class="k">return</span> <span class="n">add_subclass_to_registry</span></div>
 
-<div class="viewcode-block" id="Registrable.by_name"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable.by_name">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Registrable.by_name"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.by_name">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">by_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a callable function that constructs an argument of the registered class.  Because</span>
@@ -200,7 +184,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Registrable.resolve_class_name"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable.resolve_class_name">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Registrable.resolve_class_name"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.resolve_class_name">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">resolve_class_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the subclass that corresponds to the given ``name``, along with the name of the</span>
@@ -254,7 +238,7 @@
                 <span class="s2">&quot;in which case they will be automatically imported correctly.&quot;</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Registrable.list_available"><a class="viewcode-back" href="../../../ref/utils.html#easy_tpp.utils.registrable.Registrable.list_available">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Registrable.list_available"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.list_available">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">list_available</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List default first if it exists&quot;&quot;&quot;</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -267,9 +251,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">default</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">default</span><span class="p">]</span></div>
 
-    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Registrable.registry_dict"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.registry_dict">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">registry_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span></div></div>
 </pre></div>
 
            </div>
