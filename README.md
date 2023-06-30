@@ -67,9 +67,11 @@ We preprocessed one synthetic and five real world datasets from widely-cited wor
 
   All datasets are preprocess to the `Gatech` format dataset widely used for TPP researchers, and saved at [Google Drive](https://drive.google.com/drive/u/0/folders/1f8k82-NL6KFKuNMsUwozmbzDSFycYvz7) with a public access.
 
+## Quick Start <a href='#top'>[Back to Top]</a>
+<span id='quick-start'/>
 
 ## Documentation <a href='#top'>[Back to Top]</a>
-<span id='Documentation'/>
+<span id='doc'/>
 
 The classes and methods of `EasyTPP` have been well documented so that users can generate the documentation by:
 
