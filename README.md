@@ -5,6 +5,8 @@
 ![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-green) 
 ![GitHub last commit](https://img.shields.io/github/last-commit/ant-research/EasyTemporalPointProcess)
 ![Stars](https://img.shields.io/github/stars/ant-research/EasyTemporalPointProcess)
+[![PyPI version fury.io](https://badge.fury.io/py/easy-tpp.svg)](https://pypi.python.org/pypi/easy-tpp/)
+[![Downloads](https://pepy.tech/badge/easy-tpp)](https://pepy.tech/project/easy-tpp)
 
 ** We are actively updating the repo now. We will try to finish the first version in a few days. **
 
@@ -69,6 +71,88 @@ We preprocessed one synthetic and five real world datasets from widely-cited wor
 
 ## Quick Start <a href='#top'>[Back to Top]</a>
 <span id='quick-start'/>
+
+We provide an end-to-end example for users to run a standard TPP model with `EasyTPP`.
+
+
+### Step 1. Installation
+
+First of all, we can install the package either by using pip or from the source code on Github.
+
+To install the latest stable version:
+```bash
+pip install easy_tpp
+```
+
+To install the latest on GitHub:
+```bash
+git clone https://github.com/ant-research/EasyTemporalPointProcess.git
+cd EasyTemporalPointProcess
+python setup.py install
+```
+
+
+### Step 2. Prepare datasets 
+
+We need to put the datasets in a local directory before running a model and the datasets should follow a certain format. See [OnlineDoc - Datasets](https://ant-research.github.io/EasyTemporalPointProcess/user_guide/dataset.html) for more details.
+
+Suppose we use the [taxi dataset](https://chriswhong.com/open-data/foil_nyc_taxi/) in the example.
+
+### Step 3. Train the model
+
+
+Before start training, we need to set up the config file for the pipeline. We provide a preset config file in [Example Config](https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/configs/experiment_config.yaml). The details of the configuration can be found in [OnlineDoc - Training Pipeline](https://ant-research.github.io/EasyTemporalPointProcess/user_guide/run_train_pipeline.html).
+
+After the setup of data and config, the directory structure is as follows:
+
+```bash
+
+    data
+     |______taxi
+             |____ train.pkl
+             |____ dev.pkl
+             |____ test.pkl
+
+    configs
+     |______experiment_config.yaml
+
+```
+
+
+Then we start the training by simply running the script 
+
+```python
+
+import argparse
+from easy_tpp.config_factory import Config
+from easy_tpp.runner import Runner
+
+
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--config_dir', type=str, required=False, default='configs/experiment_config.yaml',
+                        help='Dir of configuration yaml to train and evaluate the model.')
+
+    parser.add_argument('--experiment_id', type=str, required=False, default='NHP_train',
+                        help='Experiment id in the config file.')
+
+    args = parser.parse_args()
+
+    config = Config.build_from_yaml_file(args.config_dir, experiment_id=args.experiment_id)
+
+    model_runner = Runner.build_from_config(config)
+
+    model_runner.run()
+
+
+if __name__ == '__main__':
+    main()
+
+```
+
+A more detailed example can be found at [OnlineDoc - QuickStart](https://ant-research.github.io/EasyTemporalPointProcess/get_started/quick_start.html).
+
 
 ## Documentation <a href='#top'>[Back to Top]</a>
 <span id='doc'/>

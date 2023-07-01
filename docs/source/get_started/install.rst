@@ -46,7 +46,10 @@ Install with pip
 --------------------------
 
 
-To add
+.. code-block:: bash
+
+    pip install easy_tpp
+
 
 Install with the source
 --------------------------
@@ -56,6 +59,6 @@ Setup from the source：
 .. code-block:: bash
 
     git clone https://github.com/ant-research/EasyTemporalPointProcess.git
-    cd EasyTPP
+    cd EasyTemporalPointProcess
     python setup.py install
 
