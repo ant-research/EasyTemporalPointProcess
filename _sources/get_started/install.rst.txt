@@ -48,7 +48,7 @@ Install with pip
 
 .. code-block:: bash
 
-    pip install easy_tpp
+    pip install easy-tpp
 
 
 Install with the source
