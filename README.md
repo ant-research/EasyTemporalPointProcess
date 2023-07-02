@@ -81,7 +81,7 @@ First of all, we can install the package either by using pip or from the source 
 
 To install the latest stable version:
 ```bash
-pip install easy_tpp
+pip install easy-tpp
 ```
 
 To install the latest on GitHub:
