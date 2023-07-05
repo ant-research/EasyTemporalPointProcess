@@ -29,9 +29,9 @@ class Config(Registrable):
         """
         config = load_yaml_config(yaml_fn)
         pipeline_config = config.get('pipeline_config_id')
-        runner_cls = Config.by_name(pipeline_config.lower())
-        logger.critical(f'Load pipeline config class {runner_cls.__name__}')
-        return runner_cls.parse_from_yaml_config(config, **kwargs)
+        config_cls = Config.by_name(pipeline_config.lower())
+        logger.critical(f'Load pipeline config class {config_cls.__name__}')
+        return config_cls.parse_from_yaml_config(config, **kwargs)
 
     @abstractmethod
     def get_yaml_config(self):
