@@ -15,7 +15,7 @@
 
 
 
-| <a href='#features'>Features</a>  | <a href='#model-list'>Model List</a> | <a href='#dataset'>Dataset</a>  | <a href='#quick-start'>Quick Start</a> | <a href='#doc'>Documentation</a> | <a href='#citation'>Citation</a> |<a href='#acknowledgment'>Acknowledgement</a> | <a href='#star-history'>Star History</a> | 
+| <a href='#features'>Features</a>  | <a href='#model-list'>Model List</a> | <a href='#dataset'>Dataset</a>  | <a href='#quick-start'>Quick Start</a> | <a href='#benchmark'>Benchmark</a> |<a href='#doc'>Documentation</a> | <a href='#citation'>Citation</a> |<a href='#acknowledgment'>Acknowledgement</a> | <a href='#star-history'>Star History</a> | 
 
 ## News
 <span id='news'/>
@@ -169,6 +169,19 @@ NOTE:
 
 The full documentation is available on the [website](https://ant-research.github.io/EasyTemporalPointProcess/).
  
+## Benchmark <a href='#top'>[Back to Top]</a>
+<span id='benchmark'/>
+
+In the [examples](https://github.com/ant-research/EasyTemporalPointProcess/tree/main/examples) folder, we provide a [script](https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/benchmark_script.py) to benchmark the TPPs, with Taxi dataset as the input. 
+
+To run the script, one should download the Taxi data following the above instructions. The [config](https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/configs/experiment_config.yaml) file is readily setup up. Then run
+
+
+```shell
+cd examples
+python benchmark_script.py
+```
+
 
 ## License <a href='#top'>[Back to Top]</a>
 
