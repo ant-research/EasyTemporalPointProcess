@@ -194,7 +194,14 @@ This project is licensed under the [Apache License (Version 2.0)](https://github
 
 If you find `EasyTPP` useful for your research or development, please cite the following <a href="https://arxiv.org/abs/2204.05011" target="_blank">paper</a>:
 ```
-comming soon
+@article{xue2023easytpp,
+      title={EasyTPP: Towards Open Benchmarking the Temporal Point Processes}, 
+      author={Siqiao Xue and Xiaoming Shi and Zhixuan Chu and Yan Wang and Fan Zhou and Hongyan Hao and Caigao Jiang and Chen Pan and Yi Xu and James Y. Zhang and Qingsong Wen and Jun Zhou and Hongyuan Mei},
+      year={2023},
+      eprint={2307.08097},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
 ```
 
 ## Acknowledgment <a href='#top'>[Back to Top]</a>
