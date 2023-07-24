@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run_train_pipeline.html">Model Training</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Prediction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-1-setup-the-data-and-model-config-files">Step 1: Setup the data and model config files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-setup-the-config-file">Step 1: Setup the config file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#step-2-run-the-evaluation-script">Step 2: Run the evaluation script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#checkout-the-output">Checkout the output</a></li>
 </ul>
@@ -107,49 +107,55 @@
              
   <section id="evaluate-a-model">
 <h1>Evaluate a Model<a class="headerlink" href="#evaluate-a-model" title="Permalink to this heading"></a></h1>
-<section id="step-1-setup-the-data-and-model-config-files">
-<h2>Step 1: Setup the data and model config files<a class="headerlink" href="#step-1-setup-the-data-and-model-config-files" title="Permalink to this heading"></a></h2>
-<p>Same as in the training pipeline, firstly we need to initialize two config files:  <code class="docutils literal notranslate"><span class="pre">data_config.yaml</span></code> and <code class="docutils literal notranslate"><span class="pre">model_config.yaml</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">data_config.yaml</span></code> is the same as in <a class="reference external" href="./run_train_pipeline.html">Training Pipeline</a> while we need to update the <code class="docutils literal notranslate"><span class="pre">model_config.yaml</span></code>
-to let the model run the evaluation.</p>
-<p>model_config</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">RMTPP_gen</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">base_config</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gen</span>
-<span class="w">        </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch</span>
-<span class="w">        </span><span class="nt">dataset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">retweet</span>
-<span class="w">        </span><span class="nt">runner_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">std_tpp</span>
-<span class="w">        </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;./checkpoints/&#39;</span>
-<span class="w">        </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RMTPP</span>
-<span class="w">    </span><span class="nt">model_config</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">hidden_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
-<span class="w">        </span><span class="nt">time_emb_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
-<span class="w">        </span><span class="nt">mc_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
-<span class="w">        </span><span class="nt">sharing_param_layer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="w">        </span><span class="nt">loss_integral_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
-<span class="w">        </span><span class="nt">dropout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
-<span class="w">        </span><span class="nt">use_ln</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="w">        </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2019</span>
-<span class="w">        </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">        </span><span class="nt">pretrained_model_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/2555_4348724608_230603-155841/models/saved_model</span>
-<span class="w">        </span><span class="nt">thinning</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">num_seq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="w">          </span><span class="nt">num_sample</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">          </span><span class="nt">num_exp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w"> </span><span class="c1"># number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm</span>
-<span class="w">          </span><span class="nt">look_ahead_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="w">          </span><span class="nt">patience_counter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"> </span><span class="c1"># the maximum iteration used in adaptive thinning</span>
-<span class="w">          </span><span class="nt">over_sample_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-<span class="w">          </span><span class="nt">num_samples_boundary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-<span class="w">          </span><span class="nt">dtime_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-<span class="w">          </span><span class="nt">num_step_gen</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<section id="step-1-setup-the-config-file">
+<h2>Step 1: Setup the config file<a class="headerlink" href="#step-1-setup-the-config-file" title="Permalink to this heading"></a></h2>
+<p>Same as in the training pipeline, firstly we need to initialize the task configuration in the config file.</p>
+<p>Similar to the setup in <a class="reference external" href="./run_train_pipeline.html">Training Pipeline</a>, we set the <cite>stage</cite> to <cite>eval</cite> and pass the <cite>pretrained_model_dir</cite> to <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">model_config</span></code>
+Note that the <em>pretrained_model_dir</em> can be found in the log of the training process.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">RMTPP_eval</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eval</span>
+<span class="w">  </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch</span>
+<span class="w">  </span><span class="nt">dataset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conttime</span>
+<span class="w">  </span><span class="nt">runner_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">std_tpp</span>
+<span class="w">  </span><span class="nt">base_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;./checkpoints/&#39;</span>
+<span class="w">    </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
+<span class="w">    </span><span class="nt">max_epoch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">shuffle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">valid_freq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">use_tfb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&#39;acc&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;rmse&#39;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">model_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RMTPP</span><span class="w"> </span><span class="c1"># model name</span>
+<span class="w">    </span><span class="nt">hidden_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="w">    </span><span class="nt">time_emb_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">    </span><span class="nt">num_layers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">num_heads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">mc_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">    </span><span class="nt">sharing_param_layer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">loss_integral_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">    </span><span class="nt">dropout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">    </span><span class="nt">use_ln</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2019</span>
+<span class="w">    </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">pretrained_model_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/59618_4339156352_221128-142905/models/saved_model</span>
+<span class="w">    </span><span class="nt">thinning</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">num_seq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">      </span><span class="nt">num_sample</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">num_exp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w"> </span><span class="c1"># number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm</span>
+<span class="w">      </span><span class="nt">look_ahead_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">      </span><span class="nt">patience_counter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"> </span><span class="c1"># the maximum iteration used in adaptive thinning</span>
+<span class="w">      </span><span class="nt">over_sample_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">num_samples_boundary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">dtime_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 </pre></div>
 </div>
-<p>A complete example of these files can be seen at <cite>examples/example_config</cite>.</p>
+<p>A complete example of these files can be seen at <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/configs/experiment_config.yaml">examples/example_config.yaml</a> .</p>
 </section>
 <section id="step-2-run-the-evaluation-script">
 <h2>Step 2: Run the evaluation script<a class="headerlink" href="#step-2-run-the-evaluation-script" title="Permalink to this heading"></a></h2>
 <p>Same as in the training pipeline, we need to initialize a <code class="docutils literal notranslate"><span class="pre">ModelRunner</span></code> object to do the evaluation.</p>
-<p>The following code is an example, which is a copy from <em>examples/eval_nhp.py</em>.</p>
+<p>The following code is an example, which is a copy from <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/train_nhp.py">examples/train_nhp.py</a> .</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
 
 <span class="kn">from</span> <span class="nn">easy_tpp.config_factory</span> <span class="kn">import</span> <span class="n">RunnerConfig</span>
@@ -171,7 +177,7 @@ to let the model run the evaluation.</p>
 
     <span class="n">model_runner</span> <span class="o">=</span> <span class="n">Runner</span><span class="o">.</span><span class="n">build_from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
-    <span class="n">model_runner</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+    <span class="n">model_runner</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
