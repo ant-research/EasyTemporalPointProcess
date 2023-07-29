@@ -1,5 +1,7 @@
 import random
+
 from easy_tpp.preprocess.event_tokenizer import EventTokenizer
+from easy_tpp.config_factory import DataSpecConfig
 
 def make_raw_data():
     data = [
@@ -16,12 +18,6 @@ def make_raw_data():
                             "time_since_start": start_time,
                             "type_event": random.randint(0, 10)
                             })
-    data[1][3]["time_since_start"] = data[1][2]["time_since_start"]
-    data[1][3]["time_since_last_event"] = data[1][2]["time_since_last_event"]
-    data[1][4]["time_since_start"] = data[1][2]["time_since_start"]
-    data[1][4]["time_since_last_event"] = data[1][2]["time_since_last_event"]
-    data[1][5]["time_since_start"] = data[1][2]["time_since_start"]
-    data[1][5]["time_since_last_event"] = data[1][2]["time_since_last_event"]
 
     return data
 
@@ -37,13 +33,14 @@ def main():
                   'type_seqs': type_seqs,
                   'time_delta_seqs': time_delta_seqs}
 
-    config = {'num_event_types': 11}
+    config = DataSpecConfig.parse_from_yaml_config({'num_event_types': 11,  'pad_token_id': 11})
 
     tokenizer = EventTokenizer(config)
 
     output = tokenizer.pad(input_data, return_tensors='tf')
 
     print(output)
+
 
 if __name__ == '__main__':
     main()

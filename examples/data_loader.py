@@ -1,5 +1,7 @@
 import random
 
+from easy_tpp.config_factory import DataSpecConfig
+from easy_tpp.preprocess import EventTokenizer
 from easy_tpp.preprocess.dataset import TPPDataset, get_data_loader
 
 
@@ -18,12 +20,6 @@ def make_raw_data():
                             "time_since_start": start_time,
                             "type_event": random.randint(0, 10)
                             })
-    data[1][3]["time_since_start"] = data[1][2]["time_since_start"]
-    data[1][3]["time_since_last_event"] = data[1][2]["time_since_last_event"]
-    data[1][4]["time_since_start"] = data[1][2]["time_since_start"]
-    data[1][4]["time_since_last_event"] = data[1][2]["time_since_last_event"]
-    data[1][5]["time_since_start"] = data[1][2]["time_since_start"]
-    data[1][5]["time_since_last_event"] = data[1][2]["time_since_last_event"]
 
     return data
 
@@ -39,11 +35,14 @@ def main():
                   'type_seqs': type_seqs,
                   'time_delta_seqs': time_delta_seqs}
 
-    config = {'num_event_types': 11, 'batch_size': 1}
+    config = DataSpecConfig.parse_from_yaml_config({'num_event_types': 11, 'batch_size': 1,
+                                                    'pad_token_id': 11})
 
     dataset = TPPDataset(input_data)
 
-    loader = get_data_loader(dataset, 'torch', False, **config)
+    tokenizer = EventTokenizer(config)
+
+    loader = get_data_loader(dataset, 'torch', tokenizer)
 
     for batch in loader:
         print(batch)
