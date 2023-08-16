@@ -15,12 +15,11 @@
 
 
 
-| <a href='#features'>Features</a>  | <a href='#model-list'>Model List</a> | <a href='#dataset'>Dataset</a>  | <a href='#quick-start'>Quick Start</a> | <a href='#benchmark'>Benchmark</a> |<a href='#doc'>Documentation</a> | <a href='#citation'>Citation</a> |<a href='#acknowledgment'>Acknowledgement</a> | <a href='#star-history'>Star History</a> | 
+| <a href='#features'>Features</a>  | <a href='#model-list'>Model List</a> | <a href='#dataset'>Dataset</a>  | <a href='#quick-start'>Quick Start</a> | <a href='#benchmark'>Benchmark</a> |<a href='#doc'>Documentation</a> |<a href='#todo'>Todo List</a> | <a href='#citation'>Citation</a> |<a href='#acknowledgment'>Acknowledgement</a> | <a href='#star-history'>Star History</a> | 
 
 ## News
 <span id='news'/>
 
-- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [08-12-2023] We released text-augmented event sequence datasets [GDELT](https://drive.google.com/drive/u/0/folders/1Ms-ATMMFf6v4eesfJndyuPLGtX58fCnk) and [Amazon Review](https://drive.google.com/drive/u/0/folders/1-SLYyrl7ucEG7NpSIF0eSoG9zcbZagZw) used in our paper [Language Model Can Improve Event Prediction by Few-Shot Abductive Reasoning](https://arxiv.org/abs/2305.16646).
 - ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [06-22-2023] Our paper [Language Model Can Improve Event Prediction by Few-Shot Abductive Reasoning](https://arxiv.org/abs/2305.16646) was accepted by the [Knowledge and Logical Reasoning Workshop, ICML'2023](https://klr-icml2023.github.io/cfp.html)!
 - [05-29-2023] We released ``EasyTPP`` v0.0.1!
 - [12-27-2022] Our paper [Bellman Meets Hawkes: Model-Based Reinforcement Learning via Temporal Point Processes](https://arxiv.org/abs/2201.12569) was accepted by AAAI'2023!
@@ -188,6 +187,15 @@ python benchmark_script.py
 
 This project is licensed under the [Apache License (Version 2.0)](https://github.com/alibaba/EasyNLP/blob/master/LICENSE). This toolkit also contains some code modified from other repos under other open-source licenses. See the [NOTICE](https://github.com/ant-research/EasyTPP/blob/master/NOTICE) file for more information.
 
+
+## Todo List <a href='#top'>[Back to Top]</a>
+<span id='todo'/>
+
+- [ ] New dataset:
+  - [ ] Earthquake: the source data is available in [USGS](https://www.usgs.gov/programs/earthquake-hazards/science/earthquake-data).
+  - [ ] Volcano eruption: the source data is available in [NCEI](https://www.ngdc.noaa.gov/hazard/volcano.shtml).
+- [ ] New model:
+  - [ ] Meta Temporal Point Process, ICLR 2023.
 
 ## Citation <a href='#top'>[Back to Top]</a>
 
