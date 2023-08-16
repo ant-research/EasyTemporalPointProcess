@@ -196,6 +196,7 @@ This project is licensed under the [Apache License (Version 2.0)](https://github
   - [ ] Volcano eruption: the source data is available in [NCEI](https://www.ngdc.noaa.gov/hazard/volcano.shtml).
 - [ ] New model:
   - [ ] Meta Temporal Point Process, ICLR 2023.
+  - [ ] Model-based RL via TPP, AAAI 2022. 
 
 ## Citation <a href='#top'>[Back to Top]</a>
 
