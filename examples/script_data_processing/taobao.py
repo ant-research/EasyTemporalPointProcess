@@ -39,7 +39,7 @@ def read_data_step_3(source_dir, cate_dir, target_dir):
         event_dtime[0] = 0.0
 
         for i in range(1, len(event_time)):
-            if event_dtime[i] > 3.0:
+            if event_dtime[i] > 50.0: # too large interval
                 rand_dt = np.random.random() + 0.1
                 event_time[i] = prev_time + rand_dt
                 event_dtime[i] = rand_dt
