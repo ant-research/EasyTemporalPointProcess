@@ -8,7 +8,6 @@
 [![PyPI version fury.io](https://badge.fury.io/py/easy-tpp.svg)](https://pypi.python.org/pypi/easy-tpp/)
 [![Downloads](https://pepy.tech/badge/easy-tpp)](https://pepy.tech/project/easy-tpp)
 
-** We are actively updating the repo now. We will try to finish the first version in a few days. **
 
 `EasyTPP` is an easy-to-use development and application toolkit for [Temporal Point Process](https://mathworld.wolfram.com/TemporalPointProcess.html) (TPP), with key features in configurability, compatibility and reproducibility. We hope this project could benefit both researchers and practitioners with the goal of easily customized development and open benchmarking in TPP.
 <span id='top'/>
