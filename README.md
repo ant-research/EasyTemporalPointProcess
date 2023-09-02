@@ -19,7 +19,7 @@
 ## News
 <span id='news'/>
 
-- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-02-2023] We published a non-anthropogenic dataset [earthquake](https://drive.google.com/drive/folders/1ubeIz_CCNjHyuu6-XXD0T-gdOLm12rf4), which contains timestamped earthquake events over the Conterminous U.S from 1998 to 2023!
+- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-02-2023] We published two non-anthropogenic datasets [earthquake](https://drive.google.com/drive/folders/1ubeIz_CCNjHyuu6-XXD0T-gdOLm12rf4) and [volcano eruption](https://drive.google.com/drive/folders/1KSWbNi8LUwC-dxz1T5sOnd9zwAot95Tp?usp=drive_link)! See <a href='#dataset'>Dataset</a> for details.
 - [06-22-2023] Our paper [Language Model Can Improve Event Prediction by Few-Shot Abductive Reasoning](https://arxiv.org/abs/2305.16646) was accepted by the [Knowledge and Logical Reasoning Workshop, ICML'2023](https://klr-icml2023.github.io/cfp.html)!
 - [05-29-2023] We released ``EasyTPP`` v0.0.1!
 - [12-27-2022] Our paper [Bellman Meets Hawkes: Model-Based Reinforcement Learning via Temporal Point Processes](https://arxiv.org/abs/2201.12569) was accepted by AAAI'2023!
@@ -65,7 +65,12 @@ We preprocessed one synthetic and five real world datasets from widely-cited wor
 - Taxi ([Whong, 2014](https://chriswhong.com/open-data/foil_nyc_taxi/)): timestamped taxi pick-up events.
 - StackOverflow ([Leskovec, 2014](https://snap.stanford.edu/data/)): timestamped user badge reward events in StackOverflow.
 - Taobao ([Xue et al, 2022](https://arxiv.org/abs/2210.01753)): timestamped user online shopping behavior events in Taobao platform.
-- Amazon ([Amazon Review, 2018](https://nijianmo.github.io/amazon/)): timestamped user online shopping behavior events in Amazon platform.
+- Amazon ([Xue et al, 2022](https://nijianmo.github.io/amazon/)): timestamped user online shopping behavior events in Amazon platform.
+
+Per users' request, we processed two non-anthropogenic datasets 
+- [Earthquake](https://drive.google.com/drive/folders/1ubeIz_CCNjHyuu6-XXD0T-gdOLm12rf4): timestamped earthquake events over the Conterminous U.S from 1996 to 2023, processed from [USGS](https://www.usgs.gov/programs/earthquake-hazards/science/earthquake-data).
+- [Volcano eruption](https://drive.google.com/drive/folders/1KSWbNi8LUwC-dxz1T5sOnd9zwAot95Tp?usp=drive_link): timestamped volcano eruption events over the world in recent hundreds of years, processed from [The Smithsonian Institution](https://volcano.si.edu/).
+
 
   All datasets are preprocess to the `Gatech` format dataset widely used for TPP researchers, and saved at [Google Drive](https://drive.google.com/drive/u/0/folders/1f8k82-NL6KFKuNMsUwozmbzDSFycYvz7) with a public access.
 
@@ -191,9 +196,9 @@ This project is licensed under the [Apache License (Version 2.0)](https://github
 ## Todo List <a href='#top'>[Back to Top]</a>
 <span id='todo'/>
 
-- [ ] New dataset:
-  - [ ] Earthquake: the source data is available in [USGS](https://www.usgs.gov/programs/earthquake-hazards/science/earthquake-data).
-  - [ ] Volcano eruption: the source data is available in [NCEI](https://www.ngdc.noaa.gov/hazard/volcano.shtml).
+- [x] New dataset:
+  - [x] Earthquake: the source data is available in [USGS](https://www.usgs.gov/programs/earthquake-hazards/science/earthquake-data).
+  - [x] Volcano eruption: the source data is available in [NCEI](https://www.ngdc.noaa.gov/hazard/volcano.shtml).
 - [ ] New model:
   - [ ] Meta Temporal Point Process, ICLR 2023.
   - [ ] Model-based RL via TPP, AAAI 2022. 
