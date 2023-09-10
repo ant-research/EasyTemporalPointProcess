@@ -132,7 +132,8 @@ class NHP(TorchBaseModel):
             list: list of hidden states, cell states and cell bar states.
         """
         h_t, c_t, c_bar = torch.zeros(batch_size,
-                                      3 * self.hidden_size).chunk(3, dim=1)
+                                      3 * self.hidden_size,
+                                      device=self.device).chunk(3, dim=1)
         return h_t, c_t, c_bar
 
     def forward(self, batch, **kwargs):

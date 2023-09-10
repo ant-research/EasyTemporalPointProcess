@@ -27,7 +27,8 @@ class SAHP(TorchBaseModel):
         self.use_norm = model_config.use_ln
 
         # position vector, used for temporal encoding
-        self.layer_position_emb = TimeShiftedPositionalEncoding(d_model=self.d_model)
+        self.layer_position_emb = TimeShiftedPositionalEncoding(d_model=self.d_model,
+                                                                device=self.device)
 
         self.n_layers = model_config.num_layers
         self.n_head = model_config.num_heads
@@ -51,11 +52,11 @@ class SAHP(TorchBaseModel):
             self.norm = nn.LayerNorm(self.d_model)
 
         # Equation (12): mu
-        self.mu = torch.empty([self.d_model, self.num_event_types])
+        self.mu = torch.empty([self.d_model, self.num_event_types], device=self.device)
         # Equation (13): eta
-        self.eta = torch.empty([self.d_model, self.num_event_types])
+        self.eta = torch.empty([self.d_model, self.num_event_types], device=self.device)
         # Equation (14): gamma
-        self.gamma = torch.empty([self.d_model, self.num_event_types])
+        self.gamma = torch.empty([self.d_model, self.num_event_types], device=self.device)
 
         nn.init.xavier_normal_(self.mu)
         nn.init.xavier_normal_(self.eta)
@@ -77,7 +78,7 @@ class SAHP(TorchBaseModel):
 
         # [batch_size, hidden_dim]
         states = torch.matmul(encode_state, mu) + (
-                    torch.matmul(encode_state, eta) - torch.matmul(encode_state, mu)) * torch.exp(
+                torch.matmul(encode_state, eta) - torch.matmul(encode_state, mu)) * torch.exp(
             -torch.matmul(encode_state, gamma) * duration_t)
         return states
 

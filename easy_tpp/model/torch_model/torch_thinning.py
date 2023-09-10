@@ -10,7 +10,8 @@ class EventSampler(nn.Module):
     The implementation uses code from https://github.com/yangalan123/anhp-andtt/blob/master/anhp/esm/thinning.py.
     """
 
-    def __init__(self, num_sample, num_exp, over_sample_rate, num_samples_boundary, dtime_max, patience_counter):
+    def __init__(self, num_sample, num_exp, over_sample_rate, num_samples_boundary, dtime_max, patience_counter,
+                 device):
         """Initialize the event sampler.
 
         Args:
@@ -20,6 +21,7 @@ class EventSampler(nn.Module):
             num_samples_boundary (int): number of sampled event times to compute the boundary of the intensity.
             dtime_max (float): max value of delta times in sampling
             patience_counter (int): the maximum iteration used in adaptive thinning.
+            device (torch.device): torch device index to select.
         """
         super(EventSampler, self).__init__()
         self.num_sample = num_sample
@@ -28,6 +30,7 @@ class EventSampler(nn.Module):
         self.num_samples_boundary = num_samples_boundary
         self.dtime_max = dtime_max
         self.patience_counter = patience_counter
+        self.device = device
 
     def compute_intensity_upper_bound(self, time_seq, time_delta_seq, event_seq, intensity_fn,
                                       compute_last_step_only):
@@ -48,7 +51,8 @@ class EventSampler(nn.Module):
         # [1, 1, num_samples_boundary]
         time_for_bound_sampled = torch.linspace(start=0.0,
                                                 end=1.0,
-                                                steps=self.num_samples_boundary)[None, None, :]
+                                                steps=self.num_samples_boundary,
+                                                device=self.device)[None, None, :]
 
         # [batch_size, seq_len, num_sample]
         dtime_for_bound_sampled = time_delta_seq[:, :, None] * time_for_bound_sampled
@@ -81,7 +85,8 @@ class EventSampler(nn.Module):
         # For fast approximation, we reuse the rnd for all samples
         # [batch_size, seq_len, num_exp]
         exp_numbers = torch.empty(size=[batch_size, seq_len, self.num_exp],
-                                  dtype=torch.float32)
+                                  dtype=torch.float32,
+                                  device=self.device)
 
         # [batch_size, seq_len, num_exp]
         # exp_numbers.exponential_(1.0)
@@ -109,7 +114,8 @@ class EventSampler(nn.Module):
         batch_size, seq_len = intensity_upper_bound.size()
 
         unif_numbers = torch.empty(size=[batch_size, seq_len, self.num_sample, self.num_exp],
-                                   dtype=torch.float32)
+                                   dtype=torch.float32,
+                                   device=self.device)
         unif_numbers.uniform_(0.0, 1.0)
 
         return unif_numbers

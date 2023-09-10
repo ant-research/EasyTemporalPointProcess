@@ -16,6 +16,11 @@ def flatten_parameters(model):
 
 
 class NeuralODEAdjoint(torch.autograd.Function):
+
+    def __init__(self, device):
+        super(NeuralODEAdjoint, self).__init__()
+        self.device = device
+
     @staticmethod
     def forward(ctx, z_init, delta_t, ode_fn, solver, num_sample_times, *model_parameters):
         """
@@ -105,12 +110,13 @@ class NeuralODEAdjoint(torch.autograd.Function):
 
 
 class NeuralODE(nn.Module):
-    def __init__(self, model, solver, num_sample_times):
+    def __init__(self, model, solver, num_sample_times, device):
         super().__init__()
         self.model = model
         self.solver = solver
         self.params = [w for w in model.parameters()]
         self.num_sample_times = num_sample_times
+        self.device = device
 
     def forward(self, input_state, delta_time):
         """
@@ -164,7 +170,8 @@ class ODETPP(TorchBaseModel):
 
         self.layer_neural_ode = NeuralODE(model=self.event_model,
                                           solver=self.solver,
-                                          num_sample_times=self.ode_num_sample_per_step)
+                                          num_sample_times=self.ode_num_sample_per_step,
+                                          device=self.device)
 
     def forward(self, time_delta_seqs, type_seqs, **kwargs):
         """Call the model.
@@ -183,7 +190,7 @@ class ODETPP(TorchBaseModel):
 
         total_state_at_event_minus = []
         total_state_at_event_plus = []
-        last_state = torch.zeros_like(type_seq_emb[:, 0, :])
+        last_state = torch.zeros_like(type_seq_emb[:, 0, :], device=self.device)
         for type_emb, dt in zip(torch.unbind(type_seq_emb, dim=-2),
                                 torch.unbind(time_delta_seqs_, dim=-2)):
             dt = dt / self.time_factor

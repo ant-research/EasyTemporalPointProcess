@@ -4,6 +4,7 @@ import torch
 from torch import nn
 
 from easy_tpp.model.torch_model.torch_thinning import EventSampler
+from easy_tpp.utils import set_device
 
 
 class TorchBaseModel(nn.Module):
@@ -27,13 +28,18 @@ class TorchBaseModel(nn.Module):
 
         self.gen_config = model_config.thinning
         self.event_sampler = None
+        self.device = set_device(model_config.gpu)
+
+        self.to(self.device)
+
         if self.gen_config:
             self.event_sampler = EventSampler(num_sample=self.gen_config.num_sample,
                                               num_exp=self.gen_config.num_exp,
                                               over_sample_rate=self.gen_config.over_sample_rate,
                                               patience_counter=self.gen_config.patience_counter,
                                               num_samples_boundary=self.gen_config.num_samples_boundary,
-                                              dtime_max=self.gen_config.dtime_max)
+                                              dtime_max=self.gen_config.dtime_max,
+                                              device=self.device)
 
     @staticmethod
     def generate_model_from_config(model_config):
@@ -132,7 +138,8 @@ class TorchBaseModel(nn.Module):
         # [1, 1, n_samples]
         dtimes_ratio_sampled = torch.linspace(start=0.0,
                                               end=1.0,
-                                              steps=self.loss_integral_num_sample_per_step)[None, None, :]
+                                              steps=self.loss_integral_num_sample_per_step,
+                                              device=self.device)[None, None, :]
 
         # [batch_size, max_len, n_samples]
         sampled_dtimes = time_delta_seq[:, :, None] * dtimes_ratio_sampled
@@ -249,4 +256,4 @@ class TorchBaseModel(nn.Module):
             event_seq = torch.cat([event_seq, types_pred_], dim=-1)
 
         return time_delta_seq[:, -num_step - 1:], event_seq[:, -num_step - 1:], \
-            time_delta_seq_label[:, -num_step - 1:], event_seq_label[:, -num_step - 1:]
+               time_delta_seq_label[:, -num_step - 1:], event_seq_label[:, -num_step - 1:]
