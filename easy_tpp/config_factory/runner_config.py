@@ -120,6 +120,7 @@ class RunnerConfig(Config):
         current_stage = get_stage(self.base_config.stage)
         is_training = current_stage == RunnerPhase.TRAIN
         self.model_config.is_training = is_training
+        self.model_config.gpu = self.trainer_config.gpu
 
         # update the dataset config => model config
         self.model_config.num_event_types_pad = self.data_config.data_specs.num_event_types_pad

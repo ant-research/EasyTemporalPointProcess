@@ -213,6 +213,7 @@ class ModelConfig(Config):
         self.pad_token_id = kwargs.get('event_pad_index', None)
         self.model_id = kwargs.get('model_id', None)
         self.pretrained_model_dir = kwargs.get('pretrained_model_dir', None)
+        self.gpu = kwargs.get('gpu', -1)
         self.model_specs = kwargs.get('model_specs', {})
 
     def get_yaml_config(self):
@@ -238,6 +239,7 @@ class ModelConfig(Config):
                 'event_pad_index': self.pad_token_id,
                 'model_id': self.model_id,
                 'pretrained_model_dir': self.pretrained_model_dir,
+                'gpu': self.gpu,
                 'model_specs': self.model_specs}
 
     @staticmethod
@@ -272,4 +274,5 @@ class ModelConfig(Config):
                            num_event_types=self.num_event_types,
                            event_pad_index=self.pad_token_id,
                            pretrained_model_dir=self.pretrained_model_dir,
+                           gpu=self.gpu,
                            model_specs=self.model_specs)

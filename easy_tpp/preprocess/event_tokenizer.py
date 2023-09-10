@@ -550,7 +550,7 @@ class EventTokenizer:
             np.array: a 3-dim matrix, where the last dim (one-hot vector) indicates the type of event
 
         """
-        type_mask = np.zeros([*pad_seqs.shape, self.num_event_types])
+        type_mask = np.zeros([*pad_seqs.shape, self.num_event_types], dtype=np.int32)
         for i in range(self.num_event_types):
             type_mask[:, :, i] = pad_seqs == i
 
