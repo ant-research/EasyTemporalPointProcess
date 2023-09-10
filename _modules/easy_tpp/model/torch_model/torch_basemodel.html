@@ -104,6 +104,7 @@
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
 <span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_thinning</span> <span class="kn">import</span> <span class="n">EventSampler</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">set_device</span>
 
 
 <div class="viewcode-block" id="TorchBaseModel"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel">[docs]</a><span class="k">class</span> <span class="nc">TorchBaseModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -127,13 +128,18 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">thinning</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">set_device</span><span class="p">(</span><span class="n">model_config</span><span class="o">.</span><span class="n">gpu</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span> <span class="o">=</span> <span class="n">EventSampler</span><span class="p">(</span><span class="n">num_sample</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">num_sample</span><span class="p">,</span>
                                               <span class="n">num_exp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">num_exp</span><span class="p">,</span>
                                               <span class="n">over_sample_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">over_sample_rate</span><span class="p">,</span>
                                               <span class="n">patience_counter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">patience_counter</span><span class="p">,</span>
                                               <span class="n">num_samples_boundary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">num_samples_boundary</span><span class="p">,</span>
-                                              <span class="n">dtime_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">dtime_max</span><span class="p">)</span></div>
+                                              <span class="n">dtime_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">dtime_max</span><span class="p">,</span>
+                                              <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TorchBaseModel.generate_model_from_config"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.generate_model_from_config">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">generate_model_from_config</span><span class="p">(</span><span class="n">model_config</span><span class="p">):</span>
@@ -232,7 +238,8 @@
         <span class="c1"># [1, 1, n_samples]</span>
         <span class="n">dtimes_ratio_sampled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
                                               <span class="n">end</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-                                              <span class="n">steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_integral_num_sample_per_step</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+                                              <span class="n">steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_integral_num_sample_per_step</span><span class="p">,</span>
+                                              <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
 
         <span class="c1"># [batch_size, max_len, n_samples]</span>
         <span class="n">sampled_dtimes</span> <span class="o">=</span> <span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">dtimes_ratio_sampled</span>
@@ -349,7 +356,7 @@
             <span class="n">event_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">event_seq</span><span class="p">,</span> <span class="n">types_pred_</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="o">-</span><span class="n">num_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">event_seq</span><span class="p">[:,</span> <span class="o">-</span><span class="n">num_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:],</span> \
-            <span class="n">time_delta_seq_label</span><span class="p">[:,</span> <span class="o">-</span><span class="n">num_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">event_seq_label</span><span class="p">[:,</span> <span class="o">-</span><span class="n">num_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:]</span></div></div>
+               <span class="n">time_delta_seq_label</span><span class="p">[:,</span> <span class="o">-</span><span class="n">num_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">event_seq_label</span><span class="p">[:,</span> <span class="o">-</span><span class="n">num_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:]</span></div></div>
 </pre></div>
 
            </div>

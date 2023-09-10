@@ -110,7 +110,8 @@
 <span class="sd">    The implementation uses code from https://github.com/yangalan123/anhp-andtt/blob/master/anhp/esm/thinning.py.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="EventSampler.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_sample</span><span class="p">,</span> <span class="n">num_exp</span><span class="p">,</span> <span class="n">over_sample_rate</span><span class="p">,</span> <span class="n">num_samples_boundary</span><span class="p">,</span> <span class="n">dtime_max</span><span class="p">,</span> <span class="n">patience_counter</span><span class="p">):</span>
+<div class="viewcode-block" id="EventSampler.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_sample</span><span class="p">,</span> <span class="n">num_exp</span><span class="p">,</span> <span class="n">over_sample_rate</span><span class="p">,</span> <span class="n">num_samples_boundary</span><span class="p">,</span> <span class="n">dtime_max</span><span class="p">,</span> <span class="n">patience_counter</span><span class="p">,</span>
+                 <span class="n">device</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the event sampler.</span>
 
 <span class="sd">        Args:</span>
@@ -120,6 +121,7 @@
 <span class="sd">            num_samples_boundary (int): number of sampled event times to compute the boundary of the intensity.</span>
 <span class="sd">            dtime_max (float): max value of delta times in sampling</span>
 <span class="sd">            patience_counter (int): the maximum iteration used in adaptive thinning.</span>
+<span class="sd">            device (torch.device): torch device index to select.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EventSampler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_sample</span> <span class="o">=</span> <span class="n">num_sample</span>
@@ -127,7 +129,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">over_sample_rate</span> <span class="o">=</span> <span class="n">over_sample_rate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_samples_boundary</span> <span class="o">=</span> <span class="n">num_samples_boundary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dtime_max</span> <span class="o">=</span> <span class="n">dtime_max</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">patience_counter</span> <span class="o">=</span> <span class="n">patience_counter</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">patience_counter</span> <span class="o">=</span> <span class="n">patience_counter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span></div>
 
 <div class="viewcode-block" id="EventSampler.compute_intensity_upper_bound"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.compute_intensity_upper_bound">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensity_upper_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">,</span> <span class="n">intensity_fn</span><span class="p">,</span>
                                       <span class="n">compute_last_step_only</span><span class="p">):</span>
@@ -148,7 +151,8 @@
         <span class="c1"># [1, 1, num_samples_boundary]</span>
         <span class="n">time_for_bound_sampled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
                                                 <span class="n">end</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-                                                <span class="n">steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_samples_boundary</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+                                                <span class="n">steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_samples_boundary</span><span class="p">,</span>
+                                                <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
 
         <span class="c1"># [batch_size, seq_len, num_sample]</span>
         <span class="n">dtime_for_bound_sampled</span> <span class="o">=</span> <span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">time_for_bound_sampled</span>
@@ -181,7 +185,8 @@
         <span class="c1"># For fast approximation, we reuse the rnd for all samples</span>
         <span class="c1"># [batch_size, seq_len, num_exp]</span>
         <span class="n">exp_numbers</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_exp</span><span class="p">],</span>
-                                  <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                                  <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+                                  <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
         <span class="c1"># [batch_size, seq_len, num_exp]</span>
         <span class="c1"># exp_numbers.exponential_(1.0)</span>
@@ -209,7 +214,8 @@
         <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="n">intensity_upper_bound</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 
         <span class="n">unif_numbers</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_sample</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_exp</span><span class="p">],</span>
-                                   <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                                   <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+                                   <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="n">unif_numbers</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">unif_numbers</span></div>
