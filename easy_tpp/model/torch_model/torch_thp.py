@@ -170,7 +170,7 @@ class THP(TorchBaseModel):
 
         if attention_mask is None:
             batch_size, seq_len = time_seqs.size()
-            attention_mask = torch.triu(torch.ones(seq_len, seq_len), diagonal=1).unsqueeze(0)
+            attention_mask = torch.triu(torch.ones(seq_len, seq_len, device=self.device), diagonal=1).unsqueeze(0)
             attention_mask = attention_mask.expand(batch_size, -1, -1).to(torch.bool)
 
         # [batch_size, seq_len, num_samples]
