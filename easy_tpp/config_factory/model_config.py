@@ -107,7 +107,7 @@ class ThinningConfig(Config):
         Returns:
             EasyTPP.ThinningConfig: Config class for thinning algorithms.
         """
-        return ThinningConfig(**yaml_config)
+        return ThinningConfig(**yaml_config) if yaml_config is not None else None
 
     def copy(self):
         """Copy the config.
