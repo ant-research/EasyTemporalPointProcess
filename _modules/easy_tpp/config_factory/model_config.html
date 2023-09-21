@@ -207,7 +207,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            EasyTPP.ThinningConfig: Config class for thinning algorithms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">ThinningConfig</span><span class="p">(</span><span class="o">**</span><span class="n">yaml_config</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ThinningConfig</span><span class="p">(</span><span class="o">**</span><span class="n">yaml_config</span><span class="p">)</span> <span class="k">if</span> <span class="n">yaml_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy the config.</span>
