@@ -7,7 +7,7 @@
 ![Stars](https://img.shields.io/github/stars/ant-research/EasyTemporalPointProcess)
 [![PyPI version fury.io](https://badge.fury.io/py/easy-tpp.svg)](https://pypi.python.org/pypi/easy-tpp/)
 [![Downloads](https://static.pepy.tech/personalized-badge/easy-tpp?period=total&units=international_system&left_color=black&right_color=blue&left_text=Downloads)](https://pepy.tech/project/easy-tpp)
-[![Visits Badge](https://badges.pufler.dev/visits/ant-research/EasyTemporalPointProcess/)](https://badges.pufler.dev/visits/ant-research/EasyTemporalPointProcess/)
+![Visitor Badge](https://visitor-badge.feriirawann.repl.co/?username=iLampard&repo=ant-research/EasyTemporalPointProcess&contentType=svg)
 
 
 `EasyTPP` is an easy-to-use development and application toolkit for [Temporal Point Process](https://mathworld.wolfram.com/TemporalPointProcess.html) (TPP), with key features in configurability, compatibility and reproducibility. We hope this project could benefit both researchers and practitioners with the goal of easily customized development and open benchmarking in TPP.
