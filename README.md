@@ -20,7 +20,7 @@
 ## News
 <span id='news'/>
 
-- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-30-2023] Our papers [Language Model Can Improve Event Prediction by Few-Shot Abductive Reasoning](https://neurips.cc/virtual/2023/poster/71194) and [Prompt-augmented Temporal Point Process for Streaming Event Sequence](https://neurips.cc/virtual/2023/poster/71934) are both accepted by NeurIPS'2023!
+- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-30-2023] Two of our papers [Language Model Can Improve Event Prediction by Few-Shot Abductive Reasoning](https://neurips.cc/virtual/2023/poster/71194) and [Prompt-augmented Temporal Point Process for Streaming Event Sequence](https://neurips.cc/virtual/2023/poster/71934) are both accepted by NeurIPS'2023!
 - ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-02-2023] We published two non-anthropogenic datasets [earthquake](https://drive.google.com/drive/folders/1ubeIz_CCNjHyuu6-XXD0T-gdOLm12rf4) and [volcano eruption](https://drive.google.com/drive/folders/1KSWbNi8LUwC-dxz1T5sOnd9zwAot95Tp?usp=drive_link)! See <a href='#dataset'>Dataset</a> for details.
 - [06-22-2023] Our paper [Language Model Can Improve Event Prediction by Few-Shot Abductive Reasoning](https://arxiv.org/abs/2305.16646) was accepted by the [Knowledge and Logical Reasoning Workshop, ICML'2023](https://klr-icml2023.github.io/cfp.html)!
 - [05-29-2023] We released ``EasyTPP`` v0.0.1!
