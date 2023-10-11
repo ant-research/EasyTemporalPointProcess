@@ -190,7 +190,7 @@ requiring grads, you can just pass None as a gradient for that input.</p>
 pass. It also has an attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx.needs_input_grad</span></code> as a tuple
 of booleans representing whether each input needs gradient. E.g.,
 <a class="reference internal" href="#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.backward" title="easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.backward"><code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code></a> will have <code class="docutils literal notranslate"><span class="pre">ctx.needs_input_grad[0]</span> <span class="pre">=</span> <span class="pre">True</span></code> if the
-first input to <a class="reference internal" href="#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.forward" title="easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computated w.r.t. the
+first input to <a class="reference internal" href="#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.forward" title="easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computed w.r.t. the
 output.</p>
 </dd></dl>
 
