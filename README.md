@@ -20,7 +20,8 @@
 ## News
 <span id='news'/>
 
-- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-30-2023] Two of our papers [Language Model Can Improve Event Prediction by Few-Shot Abductive Reasoning](https://arxiv.org/abs/2305.16646) and [Prompt-augmented Temporal Point Process for Streaming Event Sequence](https://arxiv.org/abs/2310.04993) are accepted by NeurIPS'2023!
+- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-30-2023] We published two textual event sequence datasets [GDELT](https://drive.google.com/drive/folders/1Ms-ATMMFf6v4eesfJndyuPLGtX58fCnk) and [Amazon-text-review](https://drive.google.com/drive/folders/1-SLYyrl7ucEG7NpSIF0eSoG9zcbZagZw) that are used in our paper [LAMP](https://arxiv.org/abs/2305.16646), where LLM can be applied for event prediction!
+- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-30-2023] Two of our papers [Language Model Can Improve Event Prediction by Few-Shot Abductive Reasoning](https://arxiv.org/abs/2305.16646) (LAMP) and [Prompt-augmented Temporal Point Process for Streaming Event Sequence](https://arxiv.org/abs/2310.04993) (PromptTPP) are accepted by NeurIPS'2023!
 - ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [09-02-2023] We published two non-anthropogenic datasets [earthquake](https://drive.google.com/drive/folders/1ubeIz_CCNjHyuu6-XXD0T-gdOLm12rf4) and [volcano eruption](https://drive.google.com/drive/folders/1KSWbNi8LUwC-dxz1T5sOnd9zwAot95Tp?usp=drive_link)! See <a href='#dataset'>Dataset</a> for details.
 - [05-29-2023] We released ``EasyTPP`` v0.0.1!
 - [12-27-2022] Our paper [Bellman Meets Hawkes: Model-Based Reinforcement Learning via Temporal Point Processes](https://arxiv.org/abs/2201.12569) was accepted by AAAI'2023!
@@ -66,7 +67,7 @@ We preprocessed one synthetic and five real world datasets from widely-cited wor
 - Taxi ([Whong, 2014](https://chriswhong.com/open-data/foil_nyc_taxi/)): timestamped taxi pick-up events.
 - StackOverflow ([Leskovec, 2014](https://snap.stanford.edu/data/)): timestamped user badge reward events in StackOverflow.
 - Taobao ([Xue et al, 2022](https://arxiv.org/abs/2210.01753)): timestamped user online shopping behavior events in Taobao platform.
-- Amazon ([Xue et al, 2022](https://nijianmo.github.io/amazon/)): timestamped user online shopping behavior events in Amazon platform.
+- Amazon ([Xue et al, 2022](https://arxiv.org/abs/2210.01753)): timestamped user online shopping behavior events in Amazon platform.
 
 Per users' request, we processed two non-anthropogenic datasets 
 - [Earthquake](https://drive.google.com/drive/folders/1ubeIz_CCNjHyuu6-XXD0T-gdOLm12rf4): timestamped earthquake events over the Conterminous U.S from 1996 to 2023, processed from [USGS](https://www.usgs.gov/programs/earthquake-hazards/science/earthquake-data).
