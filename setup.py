@@ -49,7 +49,7 @@ setup(
     version=get_version(),
     description='An easy and flexible tool for neural temporal point process',
     url = 'https://github.com/ant-research/EasyTemporalPointProcess/',
-    long_description = 'Our EasyTPP makes several unique contributions to this area: a unified interface of using existing datasets and adding new datasets; a wide range of evaluation programs that are easy to use and extend as well as facilitate reproducible research; implementations of popular neural TPPs, together with a rich library of modules by composing which one could quickly build complex models. ',
+    # long_description = 'Our EasyTPP makes several unique contributions to this area: a unified interface of using existing datasets and adding new datasets; a wide range of evaluation programs that are easy to use and extend as well as facilitate reproducible research; implementations of popular neural TPPs, together with a rich library of modules by composing which one could quickly build complex models. ',
     # long_description=open('README.md').read(),
     # long_description_content_type='text/markdown',
     author='Alipay',
