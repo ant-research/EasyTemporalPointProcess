@@ -6,7 +6,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/ant-research/EasyTemporalPointProcess)
 
 ![Stars](https://img.shields.io/github/stars/ant-research/EasyTemporalPointProcess)
-[![PyPI version fury.io](https://badge.fury.io/py/easy-tpp.svg)](https://pypi.python.org/pypi/easy-tpp/)
+[![PyPI version](https://img.shields.io/pypi/v/easy-tpp.svg?style=flat-square&color=b7534)](https://pypi.python.org/pypi/easy-tpp/)
 [![Downloads](https://static.pepy.tech/personalized-badge/easy-tpp?period=total&units=international_system&left_color=black&right_color=blue&left_text=Downloads)](https://pepy.tech/project/easy-tpp)
 ![Visitor Badge](https://visitor-badge.feriirawann.repl.co/?username=iLampard&repo=ant-research/EasyTemporalPointProcess&contentType=svg)
 
