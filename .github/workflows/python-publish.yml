@@ -29,6 +29,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+        pip install wheel
     - name: Build package
       run: python setup.py sdist bdist_wheel
     - name: Publish package
