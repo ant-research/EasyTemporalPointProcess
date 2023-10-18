@@ -16,7 +16,7 @@
 
    Introduction <get_started/introduction.rst>
    Installation <get_started/install.rst>
-   Quick Start <get_started/quick_start.rst>
+   Qucick Start <get_started/quick_start.rst>
 
 
 .. toctree::
