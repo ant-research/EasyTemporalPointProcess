@@ -8,37 +8,28 @@ Step 1: Setup the config file
 Same as in the training pipeline, firstly we need to initialize the task configuration in the config file.
 
 Similar to the setup in `Training Pipeline <./run_train_pipeline.html>`_, we set the `stage` to `eval` and pass the `pretrained_model_dir` to ``the model_config``
+
 Note that the *pretrained_model_dir* can be found in the log of the training process.
 
 .. code-block:: yaml
 
-    RMTPP_eval:
-      stage: eval
-      backend: torch
-      dataset_id: conttime
-      runner_id: std_tpp
+    NHP_eval:
       base_config:
+        stage: eval
+        backend: torch
+        dataset_id: taxi
+        runner_id: std_tpp
         base_dir: './checkpoints/'
+        model_id: NHP
+      trainer_config:
         batch_size: 256
-        max_epoch: 10
-        shuffle: False
-        valid_freq: 1
-        use_tfb: False
-        metrics: [ 'acc', 'rmse' ]
+        max_epoch: 1
       model_config:
-        model_id: RMTPP # model name
-        hidden_size: 32
-        time_emb_size: 16
-        num_layers: 2
-        num_heads: 2
-        mc_num_sample_per_step: 20
-        sharing_param_layer: False
-        loss_integral_num_sample_per_step: 20
-        dropout: 0.0
+        hidden_size: 64
         use_ln: False
         seed: 2019
         gpu: 0
-        pretrained_model_dir: ./checkpoints/59618_4339156352_221128-142905/models/saved_model
+        pretrained_model_dir: ./checkpoints/26507_4380788096_231111-101848/models/saved_model  # must provide this dir
         thinning:
           num_seq: 10
           num_sample: 1
@@ -48,6 +39,7 @@ Note that the *pretrained_model_dir* can be found in the log of the training pro
           over_sample_rate: 5
           num_samples_boundary: 5
           dtime_max: 5
+
 
 
 
