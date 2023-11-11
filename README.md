@@ -2,9 +2,7 @@
 
 ![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)
 ![](https://img.shields.io/badge/license-Apache-000000.svg)
-![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-green) 
 ![GitHub last commit](https://img.shields.io/github/last-commit/ant-research/EasyTemporalPointProcess)
-
 ![Stars](https://img.shields.io/github/stars/ant-research/EasyTemporalPointProcess)
 [![PyPI version](https://img.shields.io/pypi/v/easy-tpp.svg?style=flat-square&color=b7534)](https://pypi.python.org/pypi/easy-tpp/)
 [![Downloads](https://static.pepy.tech/personalized-badge/easy-tpp?period=total&units=international_system&left_color=black&right_color=blue&left_text=Downloads)](https://pepy.tech/project/easy-tpp)
