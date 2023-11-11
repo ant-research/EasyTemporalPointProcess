@@ -3,7 +3,7 @@ Customize a Model
 ==================
 
 
-Here we introduce how to customize a new TPP model with the support of ``EasyTPP``.
+Here we introduce how to customize a TPP model with the support of ``EasyTPP``.
 
 
 
