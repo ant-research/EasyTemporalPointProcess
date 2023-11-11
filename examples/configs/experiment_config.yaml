@@ -88,45 +88,6 @@ RMTPP_train:
       dtime_max: 5
 
 
-
-RMTPP_eval:
-  stage: eval
-  backend: torch
-  dataset_id: conttime
-  runner_id: std_tpp
-  base_config:
-    base_dir: './checkpoints/'
-    batch_size: 256
-    max_epoch: 10
-    shuffle: False
-    valid_freq: 1
-    use_tfb: False
-    metrics: [ 'acc', 'rmse' ]
-  model_config:
-    model_id: RMTPP # model name
-    hidden_size: 32
-    time_emb_size: 16
-    num_layers: 2
-    num_heads: 2
-    mc_num_sample_per_step: 20
-    sharing_param_layer: False
-    loss_integral_num_sample_per_step: 20
-    dropout: 0.0
-    use_ln: False
-    seed: 2019
-    gpu: 0
-    pretrained_model_dir: ./checkpoints/59618_4339156352_221128-142905/models/saved_model
-    thinning:
-      num_seq: 10
-      num_sample: 1
-      num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
-      look_ahead_time: 10
-      patience_counter: 5 # the maximum iteration used in adaptive thinning
-      over_sample_rate: 5
-      num_samples_boundary: 5
-      dtime_max: 5
-
-
 RMTPP_gen:
   base_config:
     stage: gen
@@ -157,11 +118,10 @@ RMTPP_gen:
       dtime_max: 5
       num_step_gen: 10
 
-
-NHP_gen:
+NHP_eval:
   base_config:
-    stage: gen
-    backend: tf
+    stage: eval
+    backend: torch
     dataset_id: taxi
     runner_id: std_tpp
     base_dir: './checkpoints/'
@@ -171,14 +131,10 @@ NHP_gen:
     max_epoch: 1
   model_config:
     hidden_size: 64
-    mc_num_sample_per_step: 20
-    sharing_param_layer: False
-    loss_integral_num_sample_per_step: 20
-    dropout: 0.0
     use_ln: False
     seed: 2019
     gpu: 0
-    pretrained_model_dir: ./checkpoints/6934_4375315840_230603-222826/models/saved_model
+    pretrained_model_dir: ./checkpoints/26507_4380788096_231111-101848/models/saved_model
     thinning:
       num_seq: 10
       num_sample: 1
@@ -188,7 +144,40 @@ NHP_gen:
       over_sample_rate: 5
       num_samples_boundary: 5
       dtime_max: 5
-      num_step_gen: 10
+
+NHP_gen:
+  base_config:
+    stage: eval
+    backend: torch
+    dataset_id: taxi
+    runner_id: std_tpp
+    model_id: NHP # model name
+    base_dir: './checkpoints/'
+    trainer_config:
+      batch_size: 256
+      max_epoch: 20
+      shuffle: False
+      optimizer: adam
+      learning_rate: 1.e-3
+      valid_freq: 1
+      use_tfb: False
+      metrics: [ 'acc', 'rmse' ]
+      seed: 2019
+      gpu: -1
+    model_config:
+      hidden_size: 64
+      loss_integral_num_sample_per_step: 20
+      pretrained_model_dir: ./checkpoints/75518_4377527680_230530-132355/models/saved_model
+      thinning:
+        num_seq: 10
+        num_sample: 1
+        num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+        look_ahead_time: 10
+        patience_counter: 5 # the maximum iteration used in adaptive thinning
+        over_sample_rate: 5
+        num_samples_boundary: 5
+        dtime_max: 5
+        num_step_gen: 1
 
 FullyNN_train:
   base_config:
@@ -356,7 +345,7 @@ NHP_train:
     base_dir: './checkpoints/'
   trainer_config:
     batch_size: 256
-    max_epoch: 20
+    max_epoch: 2
     shuffle: False
     optimizer: adam
     learning_rate: 1.e-3
@@ -400,7 +389,7 @@ SAHP_train:
     use_tfb: False
     metrics: [ 'acc', 'rmse' ]
     seed: 2019
-    gpu: -1
+    gpu: 0
   model_config:
     hidden_size: 32
     time_emb_size: 16
