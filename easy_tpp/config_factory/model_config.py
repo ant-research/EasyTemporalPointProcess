@@ -163,7 +163,8 @@ class BaseConfig(Config):
                 'dataset_id': self.dataset_id,
                 'runner_id': self.runner_id,
                 'model_id': self.model_id,
-                'base_dir': self.base_dir}
+                'base_dir': self.base_dir,
+                'specs': self.specs}
 
     @staticmethod
     def parse_from_yaml_config(yaml_config):
