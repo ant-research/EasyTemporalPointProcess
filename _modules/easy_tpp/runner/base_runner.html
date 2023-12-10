@@ -228,11 +228,11 @@
         <span class="k">if</span> <span class="n">gen_loader</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">gen_loader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_loader</span><span class="o">.</span><span class="n">test_loader</span><span class="p">()</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data </span><span class="se">\&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">runner_config</span><span class="o">.</span><span class="n">dataset_id</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1"> loaded...&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data </span><span class="se">\&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">runner_config</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">dataset_id</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1"> loaded...&#39;</span><span class="p">)</span>
 
         <span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span>
         <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="n">model_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runner_config</span><span class="o">.</span><span class="n">model_id</span>
+        <span class="n">model_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runner_config</span><span class="o">.</span><span class="n">base_config</span><span class="o">.</span><span class="n">model_id</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Start </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s1"> evaluation...&#39;</span><span class="p">)</span>
 
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_model</span><span class="p">(</span>
