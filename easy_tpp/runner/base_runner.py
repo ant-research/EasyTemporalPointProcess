@@ -126,11 +126,11 @@ class Runner(Registrable):
         if gen_loader is None:
             gen_loader = self._data_loader.test_loader()
 
-        logger.info(f'Data \'{self.runner_config.dataset_id}\' loaded...')
+        logger.info(f'Data \'{self.runner_config.base_config.dataset_id}\' loaded...')
 
         timer = self.timer
         timer.start()
-        model_name = self.runner_config.model_id
+        model_name = self.runner_config.base_config.model_id
         logger.info(f'Start {model_name} evaluation...')
 
         model = self._gen_model(
