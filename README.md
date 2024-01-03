@@ -211,7 +211,7 @@ This project is licensed under the [Apache License (Version 2.0)](https://github
 
 <span id='citation'/>
 
-If you find `EasyTPP` useful for your research or development, please cite the following <a href="https://arxiv.org/abs/2204.05011" target="_blank">paper</a>:
+If you find `EasyTPP` useful for your research or development, please cite the following <a href="https://arxiv.org/abs/2307.08097" target="_blank">paper</a>:
 ```
 @article{xue2023easytpp,
       title={EasyTPP: Towards Open Benchmarking the Temporal Point Processes}, 
