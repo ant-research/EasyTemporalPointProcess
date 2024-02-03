@@ -177,9 +177,9 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.backward">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">backward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grad_z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_ode_tpp.html#NeuralODEAdjoint.backward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.backward" title="Permalink to this definition"></a></dt>
-<dd><p>Defines a formula for differentiating the operation with backward mode
-automatic differentiation (alias to the vjp function).</p>
-<p>This function is to be overridden by all subclasses.</p>
+<dd><p>Define a formula for differentiating the operation with backward mode automatic differentiation.</p>
+<p>This function is to be overridden by all subclasses.
+(Defining this function is equivalent to defining the <code class="docutils literal notranslate"><span class="pre">vjp</span></code> function.)</p>
 <p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
 as many outputs as the <a class="reference internal" href="#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.forward" title="easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> returned (None will be passed in
 for non tensor outputs of the forward function),
@@ -204,7 +204,7 @@ output.</p>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_sample_times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_ode_tpp.html#NeuralODE.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE.__init__" title="Permalink to this definition"></a></dt>
-<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+<dd><p>Initialize internal Module state, shared by both nn.Module and ScriptModule.</p>
 </dd></dl>
 
 <dl class="py method">
