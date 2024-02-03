@@ -1,4 +1,4 @@
-# EasyTPP
+# EasyTPP [ICLR 2024]
 
 ![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)
 ![](https://img.shields.io/badge/license-Apache-000000.svg)
