@@ -45,10 +45,17 @@ class TPPDataLoader:
                   ValueError,
                   "inconsistent dim_process in different splits?")
 
-        source_data = data[split_]['event_seqs']
-        time_seqs = [[x["time_since_start"] for x in seq] for seq in source_data]
-        type_seqs = [[x["type_event"] for x in seq] for seq in source_data]
-        time_delta_seqs = [[x["time_since_last_event"] for x in seq] for seq in source_data]
+        source_data = data[split_]['event_seqs'][0]
+        time_seqs, type_seqs, time_delta_seqs = [], [], []
+        for k, v in source_data.items():
+            cur_time_seq, cur_type_seq, cur_time_delta_seq = [], [], []
+            for k_, v_ in v:
+                cur_time_seq.append(v_['time_since_start'])
+                cur_type_seq.append(v_['type_event'])
+                cur_time_delta_seq.append(v_['time_since_last_event'])
+            time_seqs.append(cur_time_seq)
+            type_seqs.append(cur_type_seq)
+            time_delta_seqs.append(cur_time_delta_seq)
 
         input_dict = dict({'time_seqs': time_seqs, 'time_delta_seqs': time_delta_seqs, 'type_seqs': type_seqs})
         return input_dict
