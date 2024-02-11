@@ -15,4 +15,6 @@ def load_data_from_hf(hf_dir=None, local_dir=None):
 
 
 if __name__ == '__main__':
+    # in case one fails to load from hf directly
+    # one can load the json data file locally
     load_data_from_hf(hf_dir=None, local_dir={'validation':'dev.json'})
