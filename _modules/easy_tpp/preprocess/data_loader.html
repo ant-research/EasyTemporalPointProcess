@@ -134,6 +134,36 @@
         <span class="n">input_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">({</span><span class="s1">&#39;time_seqs&#39;</span><span class="p">:</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="s1">&#39;time_delta_seqs&#39;</span><span class="p">:</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="s1">&#39;type_seqs&#39;</span><span class="p">:</span> <span class="n">type_seqs</span><span class="p">})</span>
         <span class="k">return</span> <span class="n">input_dict</span></div>
 
+<div class="viewcode-block" id="TPPDataLoader.build_input_from_json"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.TPPDataLoader.build_input_from_json">[docs]</a>    <span class="k">def</span> <span class="nf">build_input_from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">split</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+        <span class="n">split_</span> <span class="o">=</span> <span class="s1">&#39;validation&#39;</span> <span class="k">if</span> <span class="n">split</span> <span class="o">==</span> <span class="s1">&#39;dev&#39;</span> <span class="k">else</span> <span class="n">split</span>
+        <span class="c1"># load locally</span>
+        <span class="k">if</span> <span class="n">source_dir</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;json&#39;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="n">data_files</span><span class="o">=</span><span class="p">{</span><span class="n">split_</span><span class="p">:</span> <span class="n">source_dir</span><span class="p">})</span>
+        <span class="k">elif</span> <span class="n">source_dir</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;easytpp&#39;</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">split_</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="n">py_assert</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">split_</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dim_process&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">as_py</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">,</span>
+                  <span class="ne">ValueError</span><span class="p">,</span>
+                  <span class="s2">&quot;inconsistent dim_process in different splits?&quot;</span><span class="p">)</span>
+
+        <span class="n">source_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">split_</span><span class="p">][</span><span class="s1">&#39;event_seqs&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">time_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">source_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cur_time_seq</span><span class="p">,</span> <span class="n">cur_type_seq</span><span class="p">,</span> <span class="n">cur_time_delta_seq</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">k_</span><span class="p">,</span> <span class="n">v_</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">cur_time_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_</span><span class="p">[</span><span class="s1">&#39;time_since_start&#39;</span><span class="p">])</span>
+                <span class="n">cur_type_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_</span><span class="p">[</span><span class="s1">&#39;type_event&#39;</span><span class="p">])</span>
+                <span class="n">cur_time_delta_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_</span><span class="p">[</span><span class="s1">&#39;time_since_last_event&#39;</span><span class="p">])</span>
+            <span class="n">time_seqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_time_seq</span><span class="p">)</span>
+            <span class="n">type_seqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_type_seq</span><span class="p">)</span>
+            <span class="n">time_delta_seqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_time_delta_seq</span><span class="p">)</span>
+
+        <span class="n">input_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">({</span><span class="s1">&#39;time_seqs&#39;</span><span class="p">:</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="s1">&#39;time_delta_seqs&#39;</span><span class="p">:</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="s1">&#39;type_seqs&#39;</span><span class="p">:</span> <span class="n">type_seqs</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">input_dict</span></div>
+
 <div class="viewcode-block" id="TPPDataLoader.get_loader"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.TPPDataLoader.get_loader">[docs]</a>    <span class="k">def</span> <span class="nf">get_loader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the corresponding data loader.</span>
 
@@ -152,16 +182,17 @@
 
         <span class="k">if</span> <span class="n">data_source_type</span> <span class="o">==</span> <span class="s1">&#39;pkl&#39;</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_input_from_pkl</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">split</span><span class="p">)</span>
-            <span class="n">dataset</span> <span class="o">=</span> <span class="n">TPPDataset</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-            <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">EventTokenizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="o">.</span><span class="n">data_specs</span><span class="p">)</span>
-            <span class="n">loader</span> <span class="o">=</span> <span class="n">get_data_loader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span>
-                                     <span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
-                                     <span class="n">tokenizer</span><span class="p">,</span>
-                                     <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">],</span>
-                                     <span class="n">shuffle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;shuffle&#39;</span><span class="p">],</span>
-                                     <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_input_from_json</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">split</span><span class="p">)</span>
+
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">TPPDataset</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">EventTokenizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_config</span><span class="o">.</span><span class="n">data_specs</span><span class="p">)</span>
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">get_data_loader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
+                                 <span class="n">tokenizer</span><span class="p">,</span>
+                                 <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">],</span>
+                                 <span class="n">shuffle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;shuffle&#39;</span><span class="p">],</span>
+                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">loader</span></div>
 
