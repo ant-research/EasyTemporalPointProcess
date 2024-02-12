@@ -32,6 +32,36 @@ class TPPDataLoader:
         input_dict = dict({'time_seqs': time_seqs, 'time_delta_seqs': time_delta_seqs, 'type_seqs': type_seqs})
         return input_dict
 
+    def build_input_from_json(self, source_dir: str, split: str):
+        from datasets import load_dataset
+        split_ = 'validation' if split == 'dev' else split
+        # load locally
+        if source_dir.split('.')[-1] == 'json':
+            data = load_dataset('json', data_files={split_: source_dir})
+        elif source_dir.startswith('easytpp'):
+            data = load_dataset(source_dir, split=split_)
+        else:
+            raise NotImplementedError
+
+        py_assert(data[split_].data['dim_process'][0].as_py() == self.num_event_types,
+                  ValueError,
+                  "inconsistent dim_process in different splits?")
+
+        source_data = data[split_]['event_seqs'][0]
+        time_seqs, type_seqs, time_delta_seqs = [], [], []
+        for k, v in source_data.items():
+            cur_time_seq, cur_type_seq, cur_time_delta_seq = [], [], []
+            for k_, v_ in v.items():
+                cur_time_seq.append(v_['time_since_start'])
+                cur_type_seq.append(v_['type_event'])
+                cur_time_delta_seq.append(v_['time_since_last_event'])
+            time_seqs.append(cur_time_seq)
+            type_seqs.append(cur_type_seq)
+            time_delta_seqs.append(cur_time_delta_seq)
+
+        input_dict = dict({'time_seqs': time_seqs, 'time_delta_seqs': time_delta_seqs, 'type_seqs': type_seqs})
+        return input_dict
+
     def get_loader(self, split='train', **kwargs):
         """Get the corresponding data loader.
 
@@ -50,16 +80,17 @@ class TPPDataLoader:
 
         if data_source_type == 'pkl':
             data = self.build_input_from_pkl(data_dir, split)
-            dataset = TPPDataset(data)
-            tokenizer = EventTokenizer(self.data_config.data_specs)
-            loader = get_data_loader(dataset,
-                                     self.backend,
-                                     tokenizer,
-                                     batch_size=self.kwargs['batch_size'],
-                                     shuffle=self.kwargs['shuffle'],
-                                     **kwargs)
         else:
-            raise NotImplementedError
+            data = self.build_input_from_json(data_dir, split)
+
+        dataset = TPPDataset(data)
+        tokenizer = EventTokenizer(self.data_config.data_specs)
+        loader = get_data_loader(dataset,
+                                 self.backend,
+                                 tokenizer,
+                                 batch_size=self.kwargs['batch_size'],
+                                 shuffle=self.kwargs['shuffle'],
+                                 **kwargs)
 
         return loader
 

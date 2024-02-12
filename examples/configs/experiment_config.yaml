@@ -2,10 +2,10 @@ pipeline_config_id: runner_config
 
 data:
   taxi:
-    data_format: pkl
-    train_dir: ./data/taxi/train.pkl
-    valid_dir: ./data/taxi/dev.pkl
-    test_dir: ./data/taxi/test.pkl
+    data_format: json
+    train_dir: ./data/taxi/train.json
+    valid_dir: ./data/taxi/dev.json
+    test_dir: ./data/taxi/test.json
     data_specs:
       num_event_types: 10
       pad_token_id: 10
