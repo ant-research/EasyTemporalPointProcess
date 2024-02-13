@@ -115,8 +115,34 @@
 <p>We use the <a class="reference internal" href="#taxi" id="id1"><span>[Taxi]</span></a> dataset as an example to show how to use <code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> to train a model. More details and results are provided in <a class="reference external" href="../user_guide/run_train_pipeline.html">Training Pipeline</a>.</p>
 <section id="download-dataset">
 <h2>Download Dataset<a class="headerlink" href="#download-dataset" title="Permalink to this heading"></a></h2>
-<p>The Taxi dataset we used is preprocessed by <a class="reference external" href="https://github.com/iLampard/hypro_tpp">HYPRO</a> . You can download this dataset <a class="reference external" href="https://drive.google.com/drive/folders/1vNX2gFuGfhoh-vngoebaQlj2-ZIZMiBo">here</a>.</p>
-<p>Create the dir to save the pkl files.</p>
+<p>The Taxi dataset we used is preprocessed by <a class="reference external" href="https://github.com/iLampard/hypro_tpp">HYPRO</a> . You can either download the dataset (in pickle) from Google Drive <a class="reference external" href="https://drive.google.com/drive/folders/1vNX2gFuGfhoh-vngoebaQlj2-ZIZMiBo">here</a> or the dataset (in json) from <a class="reference external" href="https://huggingface.co/easytpp">HuggingFace</a>.</p>
+<p>Note that if the data sources are pickle files, we need to write the data config (in <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/configs/experiment_config.yaml">Example Config</a>) in the following way</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">taxi</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">data_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pickle</span>
+<span class="w">    </span><span class="nt">train_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/train.pkl</span>
+<span class="w">    </span><span class="nt">valid_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/dev.pkl</span>
+<span class="w">    </span><span class="nt">test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/test.pkl</span>
+</pre></div>
+</div>
+<p>If we choose to directly load from HuggingFace, we can put it this way:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">taxi</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">data_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span>
+<span class="w">    </span><span class="nt">train_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">easytpp/taxi</span>
+<span class="w">    </span><span class="nt">valid_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">easytpp/taxi</span>
+<span class="w">    </span><span class="nt">test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">easytpp/taxi</span>
+</pre></div>
+</div>
+<p>Meanwhile, it is also feasible to put the local directory of json files downloaded from HuggingFace in the config:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">taxi</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">data_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span>
+<span class="w">    </span><span class="nt">train_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/train.json</span>
+<span class="w">    </span><span class="nt">valid_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/dev.json</span>
+<span class="w">    </span><span class="nt">test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/test.json</span>
+</pre></div>
+</div>
 </section>
 <section id="setup-the-configuration-file">
 <h2>Setup the configuration file<a class="headerlink" href="#setup-the-configuration-file" title="Permalink to this heading"></a></h2>
@@ -125,7 +151,7 @@
 <section id="train-the-model">
 <h2>Train the Model<a class="headerlink" href="#train-the-model" title="Permalink to this heading"></a></h2>
 <p>At this stage we need to write a script to run the training pipeline. There is a preset script <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/train_nhp.py">train_nhp.py</a> and one can simply copy it.</p>
-<p>After the setup of data, config and running script, the directory structure is as follows:</p>
+<p>Taking the pickle data source for example, after the setup of data, config and running script, the directory structure is as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>data
 <span class="w"> </span><span class="p">|</span>______taxi
 <span class="w">         </span><span class="p">|</span>____<span class="w"> </span>train.pkl
