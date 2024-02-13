@@ -19,7 +19,7 @@
 <a href="https://static.pepy.tech/personalized-badge/easy-tpp"> 
   <img alt="Downloads" src="https://static.pepy.tech/personalized-badge/easy-tpp?period=total&units=international_system&left_color=black&right_color=blue&left_text=Downloads" />
 </a>
-<a href="https://huggingface.co/easttpp" target="_blank">
+<a href="https://huggingface.co/easytpp" target="_blank">
     <img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-EasyTPP-ffc107?color=ffc107&logoColor=white" />
 </a>
 <a href="https://github.com/ant-research/EasyTemporalPointProcess/issues">
