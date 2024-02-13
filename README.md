@@ -1,15 +1,31 @@
 # EasyTPP [ICLR 2024]
 
-![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)
-![](https://img.shields.io/badge/license-Apache-000000.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/ant-research/EasyTemporalPointProcess)
-![Stars](https://img.shields.io/github/stars/ant-research/EasyTemporalPointProcess)
-[![PyPI version](https://img.shields.io/pypi/v/easy-tpp.svg?style=flat-square&color=b7534)](https://pypi.python.org/pypi/easy-tpp/)
-[![Downloads](https://static.pepy.tech/personalized-badge/easy-tpp?period=total&units=international_system&left_color=black&right_color=blue&left_text=Downloads)](https://pepy.tech/project/easy-tpp)
+<div align="center">
+  <a href="PyVersion">
+    <img alt="Python Version" src="https://img.shields.io/badge/python-3.9+-blue.svg">
+  </a>
+  <a href="LICENSE-CODE">
+    <img alt="Code License" src="https://img.shields.io/badge/license-Apache-000000.svg?&color=f5de53">
+  </a>
+  <a href="commit">
+    <img alt="Last Commit" src="https://img.shields.io/github/last-commit/ant-research/EasyTemporalPointProcess">
+  </a>
+</div>
+
+<div align="center">
+<a href="https://pypi.python.org/pypi/easy-tpp/"> 
+  <img alt="PyPI version" src="https://img.shields.io/pypi/v/easy-tpp.svg?style=flat-square&color=b7534" />
+</a>
+<a href="https://static.pepy.tech/personalized-badge/easy-tpp"> 
+  <img alt="Downloads" src="https://static.pepy.tech/personalized-badge/easy-tpp?period=total&units=international_system&left_color=black&right_color=blue&left_text=Downloads" />
+</a>
+<a href="https://huggingface.co/easttpp" target="_blank">
+    <img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-EasyTPP-ffc107?color=ffc107&logoColor=white" />
+</a>
 <a href="https://github.com/ant-research/EasyTemporalPointProcess/issues">
   <img alt="Open Issues" src="https://img.shields.io/github/issues-raw/ant-research/EasyTemporalPointProcess" />
 </a>
-
+</div>
 
 `EasyTPP` is an easy-to-use development and application toolkit for [Temporal Point Process](https://mathworld.wolfram.com/TemporalPointProcess.html) (TPP), with key features in configurability, compatibility and reproducibility. We hope this project could benefit both researchers and practitioners with the goal of easily customized development and open benchmarking in TPP.
 <span id='top'/>
