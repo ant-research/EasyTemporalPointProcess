@@ -50,4 +50,15 @@ def make_hf_dataset(source_dir, target_dir, split='test'):
 
 
 if __name__ == '__main__':
-    make_hf_dataset('../data/taxi/test.pkl', 'test.json', split='test')
+    test_data_dir = ['taxi/test.pkl', 'taxi/test.json']
+    dev_data_dir = ['taxi/dev.pkl', 'taxi/dev.json']
+    train_data_dir = ['taxi/train.pkl', 'taxi/train.json']
+    make_hf_dataset(source_dir=test_data_dir[0], target_dir=test_data_dir[1])
+    make_hf_dataset(source_dir=dev_data_dir[0], target_dir=dev_data_dir[1], split='dev')
+    make_hf_dataset(source_dir=train_data_dir[0], target_dir=train_data_dir[1], split='train')
+    #
+    # from datasets import load_dataset
+    # ds = load_dataset('json', data_files='taxi/dev.json')
+    # print(ds)
+
+
