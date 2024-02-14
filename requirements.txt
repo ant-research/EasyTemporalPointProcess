@@ -4,3 +4,4 @@ pandas
 torch
 tensorboard
 packaging
+datasets
