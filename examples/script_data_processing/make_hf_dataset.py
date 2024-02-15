@@ -25,16 +25,23 @@ def make_hf_dataset(source_dir, target_dir, split='test'):
         seq_len = len(seq)
         time_since_start, time_since_last_event, type_event = [], [], []
         for idx_event, event in enumerate(data_pkl[split][idx]):
-            if idx_event == 0 and event['time_since_start'] > 0:
-                start_timestamp = event['time_since_start']
-                event['time_since_last_event'] -= start_timestamp if event[
-                                                                         'time_since_last_event'] == start_timestamp else \
-                    event['time_since_last_event']
-                event['time_since_start'] -= start_timestamp
+            # if idx_event == 0 and event['time_since_start'] > 0:
+            #     start_timestamp = event['time_since_start']
+            # else:
+            #     start_timestamp = 0
+            if idx_event == 0 and event['time_since_last_event'] > 0:
+                event['time_since_last_event'] = 0
+
+            # event['time_since_start'] -= start_timestamp
+
             event = make_json_serializable(event)
-            time_since_start.append(event['time_since_start'])
+            time_since_start.append(time_since_start)
             time_since_last_event.append(event['time_since_last_event'])
             type_event.append(event['type_event'])
+
+            # re-calculate the time_since start
+            from itertools import accumulate
+            time_since_start = list(accumulate(time_since_last_event))
 
         temp_dict = {'dim_process': dim_process,
                      'seq_idx': idx,
@@ -51,9 +58,9 @@ def make_hf_dataset(source_dir, target_dir, split='test'):
 
 
 if __name__ == '__main__':
-    test_data_dir = ['taxi/test.pkl', 'taxi/test.json']
-    dev_data_dir = ['taxi/dev.pkl', 'taxi/dev.json']
-    train_data_dir = ['taxi/train.pkl', 'taxi/train.json']
+    test_data_dir = ['amazon/test.pkl', 'amazon/test.json']
+    dev_data_dir = ['amazon/dev.pkl', 'amazon/dev.json']
+    train_data_dir = ['amazon/train.pkl', 'amazon/train.json']
     make_hf_dataset(source_dir=test_data_dir[0], target_dir=test_data_dir[1])
     make_hf_dataset(source_dir=dev_data_dir[0], target_dir=dev_data_dir[1], split='dev')
     make_hf_dataset(source_dir=train_data_dir[0], target_dir=train_data_dir[1], split='train')
