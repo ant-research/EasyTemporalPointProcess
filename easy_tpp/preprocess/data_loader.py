@@ -37,27 +37,19 @@ class TPPDataLoader:
         split_ = 'validation' if split == 'dev' else split
         # load locally
         if source_dir.split('.')[-1] == 'json':
-            data = load_dataset('json', data_files={split_: source_dir})
+            data = load_dataset('json', data_files={split_: source_dir}, split=split_)
         elif source_dir.startswith('easytpp'):
             data = load_dataset(source_dir, split=split_)
         else:
             raise NotImplementedError
 
-        py_assert(data[split_].data['dim_process'][0].as_py() == self.num_event_types,
+        py_assert(data['dim_process'][0] == self.num_event_types,
                   ValueError,
                   "inconsistent dim_process in different splits?")
 
-        source_data = data[split_]['event_seqs'][0]
-        time_seqs, type_seqs, time_delta_seqs = [], [], []
-        for k, v in source_data.items():
-            cur_time_seq, cur_type_seq, cur_time_delta_seq = [], [], []
-            for k_, v_ in v.items():
-                cur_time_seq.append(v_['time_since_start'])
-                cur_type_seq.append(v_['type_event'])
-                cur_time_delta_seq.append(v_['time_since_last_event'])
-            time_seqs.append(cur_time_seq)
-            type_seqs.append(cur_type_seq)
-            time_delta_seqs.append(cur_time_delta_seq)
+        time_seqs = data['time_since_start']
+        type_seqs = data['type_event']
+        time_delta_seqs = data['time_since_last_event']
 
         input_dict = dict({'time_seqs': time_seqs, 'time_delta_seqs': time_delta_seqs, 'type_seqs': type_seqs})
         return input_dict
