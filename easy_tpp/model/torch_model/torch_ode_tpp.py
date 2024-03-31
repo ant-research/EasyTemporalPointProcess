@@ -164,7 +164,6 @@ class ODETPP(TorchBaseModel):
                                hidden_size=[self.hidden_size])
 
         self.ode_num_sample_per_step = model_config.model_specs['ode_num_sample_per_step']
-        self.time_factor = model_config.model_specs['time_factor']
 
         self.solver = rk4_step_method
 
@@ -193,7 +192,6 @@ class ODETPP(TorchBaseModel):
         last_state = torch.zeros_like(type_seq_emb[:, 0, :], device=self.device)
         for type_emb, dt in zip(torch.unbind(type_seq_emb, dim=-2),
                                 torch.unbind(time_delta_seqs_, dim=-2)):
-            dt = dt / self.time_factor
             last_state = self.layer_neural_ode(last_state + type_emb, dt)
             total_state_at_event_minus.append(last_state)
             total_state_at_event_plus.append(last_state + type_emb)
