@@ -39,9 +39,9 @@ def make_hf_dataset(source_dir, target_dir, split='test'):
             time_since_last_event.append(event['time_since_last_event'])
             type_event.append(event['type_event'])
 
-            # re-calculate the time_since start
-            from itertools import accumulate
-            time_since_start = list(accumulate(time_since_last_event))
+        # re-calculate the time_since start
+        from itertools import accumulate
+        time_since_start = list(accumulate(time_since_last_event))
 
         temp_dict = {'dim_process': dim_process,
                      'seq_idx': idx,
