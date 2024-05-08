@@ -24,8 +24,8 @@ class RMTPP(TorchBaseModel):
 
         self.layer_hidden = nn.Linear(self.hidden_size, self.num_event_types)
 
-        self.factor_intensity_base = torch.empty([1, 1, self.num_event_types], device=self.device)
-        self.factor_intensity_current_influence = torch.empty([1, 1, self.num_event_types], device=self.device)
+        self.factor_intensity_base = torch.nn.Parameter(torch.empty([1, 1, self.num_event_types], device=self.device))
+        self.factor_intensity_current_influence = torch.nn.Parameter(torch.empty([1, 1, self.num_event_types], device=self.device))
 
         nn.init.xavier_normal_(self.factor_intensity_base)
         nn.init.xavier_normal_(self.factor_intensity_current_influence)
