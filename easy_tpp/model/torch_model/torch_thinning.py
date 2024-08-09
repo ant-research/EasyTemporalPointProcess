@@ -221,19 +221,11 @@ class EventSampler(nn.Module):
         unif_numbers = self.sample_uniform_distribution(intensity_upper_bound)
 
         # 5. find out accepted intensities
-        # criterion, [batch_size, max_len, num_sample, num_exp]
-        # who_has_accepted_times, [batch_size, max_len, num_sample]
+        # [batch_size, seq_len, num_sample]
         res = self.sample_accept(unif_numbers, intensity_upper_bound, total_intensities, exp_numbers)
 
-        # 7. fill out result
-        dtime_boundary_ = dtime_boundary[:, -1:] if compute_last_step_only else dtime_boundary
-
         # [batch_size, seq_len, num_sample]
-        dtime_boundary_ = torch.tile(dtime_boundary_[..., None], [1, 1, self.num_sample])
-
-        # [batch_size, seq_len, num_sample]
-        weights = torch.ones_like(dtime_boundary_)
-        weights /= weights.sum(dim=-1, keepdim=True)
-
+        weights = torch.ones_like(res)/res.shape[2]
+        
         # add a upper bound here in case it explodes, e.g., in ODE models
         return res.clamp(max=1e5), weights
