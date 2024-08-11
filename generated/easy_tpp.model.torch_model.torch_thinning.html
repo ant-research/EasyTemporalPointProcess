@@ -218,25 +218,25 @@ The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_accept">
-<span class="sig-name descname"><span class="pre">sample_accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unif_numbers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_intensities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler.sample_accept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_accept" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sample_accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unif_numbers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_intensities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_numbers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_thinning.html#EventSampler.sample_accept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_accept" title="Permalink to this definition"></a></dt>
 <dd><p>Do the sample-accept process.</p>
-<p>For each parallel draw, find its min criterion： if that &lt; 1.0, the 1st (i.e. smallest) sampled time
-with cri &lt; 1.0 is accepted; if none is accepted, use boundary / maxsampletime for that draw</p>
+<p>For the accumulated exp (delta) samples drawn for each event timestamp, find (from left to right) the first
+that makes the criterion &lt; 1 and accept it as the sampled next-event time. If all exp samples are rejected
+(criterion &gt;= 1), then we set the sampled next-event time dtime_max.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>unif_numbers</strong> (<em>tensor</em>) – [batch_size, max_len, num_sample, num_exp], sampled uniform random number.</p></li>
 <li><p><strong>sample_rate</strong> (<em>tensor</em>) – [batch_size, max_len], sample rate (intensity).</p></li>
 <li><p><strong>total_intensities</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample, num_exp]</p></li>
+<li><p><strong>exp_numbers</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample, num_exp]: sampled exp numbers (delta in Algorithm 2).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>two tensors,
-criterion, [batch_size, max_len, num_sample, num_exp]
-who_has_accepted_times, [batch_size, max_len, num_sample]</p>
+<dd class="field-even"><p>[batch_size, seq_len, num_sample], sampled next-event times.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
+<dd class="field-odd"><p>result (tensor)</p>
 </dd>
 </dl>
 </dd></dl>
