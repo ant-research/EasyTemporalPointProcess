@@ -152,15 +152,12 @@ Part of the code is collected from <a class="reference external" href="https://g
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_sahp.SAHP.state_decay">
-<span class="sig-name descname"><span class="pre">state_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_sahp.html#SAHP.state_decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_sahp.SAHP.state_decay" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">state_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_sahp.html#SAHP.state_decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_sahp.SAHP.state_decay" title="Permalink to this definition"></a></dt>
 <dd><p>Equation (15), which computes the pre-intensity states</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>encode_state</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
-<li><p><strong>mu</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
-<li><p><strong>eta</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
-<li><p><strong>gamma</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
 <li><p><strong>duration_t</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample].</p></li>
 </ul>
 </dd>
