@@ -27,14 +27,22 @@ class THP(TorchBaseModel):
 
         self.layer_temporal_encoding = TimePositionalEncoding(self.d_model, device=self.device)
 
-        self.factor_intensity_base = torch.empty([1, self.num_event_types], device=self.device)
-        self.factor_intensity_decay = torch.empty([1, self.num_event_types], device=self.device)
+        self.factor_intensity_base = nn.Parameter(torch.empty([1, self.num_event_types], device=self.device))
+        self.factor_intensity_decay = nn.Parameter(torch.empty([1, self.num_event_types], device=self.device))
         nn.init.xavier_normal_(self.factor_intensity_base)
         nn.init.xavier_normal_(self.factor_intensity_decay)
 
         # convert hidden vectors into event-type-sized vector
         self.layer_intensity_hidden = nn.Linear(self.d_model, self.num_event_types)
         self.softplus = nn.Softplus()
+
+        # Add MLP layer
+        # Equation (5)
+        self.feed_forward = nn.Sequential(
+            nn.Linear(self.d_model, self.d_model * 2),
+            nn.ReLU(),
+            nn.Linear(self.d_model * 2, self.d_model)
+        )
 
         self.stack_layers = nn.ModuleList(
             [EncoderLayer(
@@ -43,6 +51,7 @@ class THP(TorchBaseModel):
                                    output_linear=False),
 
                 use_residual=False,
+                feed_forward=self.feed_forward,
                 dropout=self.dropout
             ) for _ in range(self.n_layers)])
 

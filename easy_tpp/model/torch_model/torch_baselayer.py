@@ -89,7 +89,11 @@ class EncoderLayer(nn.Module):
             else:
                 return x
         else:
-            return self.self_attn(x, x, x, mask)
+            x = self.self_attn(x, x, x, mask)
+            if self.feed_forward is not None:
+                return self.feed_forward(x)
+            else:
+                return x
 
 
 class TimePositionalEncoding(nn.Module):
