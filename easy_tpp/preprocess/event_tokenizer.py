@@ -142,8 +142,7 @@ class EventTokenizer:
     """
     padding_side: str = "right"
     truncation_side: str = "right"
-    model_input_names: List[str] = ["time_seqs", "time_delta_seqs", "type_seqs", "seq_non_pad_mask", "attention_mask",
-                                    "type_mask"]
+    model_input_names: List[str] = ["time_seqs", "time_delta_seqs", "type_seqs", "seq_non_pad_mask", "attention_mask"]
 
     def __init__(self, config):
         config = copy.deepcopy(config)
@@ -391,8 +390,8 @@ class EventTokenizer:
             max_length = len(required_input)
 
         # check whether we need to pad it
-        is_all_seq_equal_max_length = [len(seq) == max_length for seq in required_input]
-        is_all_seq_equal_max_length = np.prod(is_all_seq_equal_max_length)
+        seq_lens = np.array([len(seq) for seq in required_input])
+        is_all_seq_equal_max_length = np.all(seq_lens == max_length)
         needs_to_be_padded = padding_strategy != PaddingStrategy.DO_NOT_PAD and ~is_all_seq_equal_max_length
 
         batch_output = dict()
@@ -413,15 +412,15 @@ class EventTokenizer:
                                                                              self.pad_token_id,
                                                                              padding_side=self.padding_side,
                                                                              max_len=max_length,
-                                                                             dtype=np.int32)
+                                                                             dtype=np.int64)
         else:
             batch_output = encoded_inputs
 
-        # non_pad_mask
-        # we must use type seqs to check the mask, because the pad_token_id maybe one of valid values in
-        # time seqs
-        seq_pad_mask = batch_output[self.model_input_names[2]] == self.pad_token_id
-        batch_output[self.model_input_names[3]] = ~ seq_pad_mask
+        # non_pad_mask; replaced the use of event types by using the original sequence length
+        seq_pad_mask = np.full_like(batch_output[self.model_input_names[2]], fill_value=True, dtype=bool)
+        for i, seq_len in enumerate(seq_lens):
+            seq_pad_mask[i, seq_len:] = False
+        batch_output[self.model_input_names[3]] = seq_pad_mask
 
         if return_attention_mask:
             # attention_mask
@@ -430,10 +429,6 @@ class EventTokenizer:
                 self.pad_token_id)
         else:
             batch_output[self.model_input_names[4]] = []
-
-        # type_mask
-        batch_output[self.model_input_names[5]] = self.make_type_mask_for_pad_sequence(
-            batch_output[self.model_input_names[2]])
 
         return batch_output
 
@@ -509,19 +504,19 @@ class EventTokenizer:
             ([[ True,  True,  True,  True, False, False],
             [ True,  True,  True,  True,  True,  True]])
             attention_mask
-            [[[ True  True  True  True  True  True]
-              [False  True  True  True  True  True]
-              [False False  True  True  True  True]
-              [False False False  True  True  True]
+            [[[ False  True  True  True  True  True]
+              [False  False  True  True  True  True]
+              [False False  False  True  True  True]
+              [False False False  False  True  True]
               [False False False False  True  True]
               [False False False False  True  True]]
 
-             [[ True  True  True  True  True  True]
-              [False  True  True  True  True  True]
-              [False False  True  True  True  True]
-              [False False False  True  True  True]
-              [False False False False  True  True]
-              [False False False False False  True]]]
+             [[False  True  True  True  True  True]
+              [False  False  True  True  True  True]
+              [False False  False  True  True  True]
+              [False False False  False  True  True]
+              [False False False False  False  True]
+              [False False False False False  False]]]
         ```
 
 
@@ -534,7 +529,7 @@ class EventTokenizer:
 
         # [batch_size, seq_len, seq_len]
         attention_key_pad_mask = np.tile(seq_pad_mask[:, None, :], (1, seq_len, 1))
-        subsequent_mask = np.tile(np.triu(np.ones((seq_len, seq_len), dtype=bool), k=0)[None, :, :], (seq_num, 1, 1))
+        subsequent_mask = np.tile(np.triu(np.ones((seq_len, seq_len), dtype=bool), k=1)[None, :, :], (seq_num, 1, 1))
 
         attention_mask = subsequent_mask | attention_key_pad_mask
 
