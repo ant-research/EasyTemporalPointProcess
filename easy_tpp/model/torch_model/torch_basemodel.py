@@ -158,37 +158,47 @@ class TorchBaseModel(nn.Module):
         Returns:
             tuple: tensors of dtime and type prediction, [batch_size, seq_len].
         """
-        time_seq, time_delta_seq, event_seq, batch_non_pad_mask, _, type_mask = batch
+        time_seq, time_delta_seq, event_seq, batch_non_pad_mask, _ = batch
 
         # remove the last event, as the prediction based on the last event has no label
-        # time_delta_seq should start from 1, because the first one is zero
-        time_seq, time_delta_seq, event_seq = time_seq[:, :-1], time_delta_seq[:, 1:], event_seq[:, :-1]
+        # note: the first dts is 0
+        # [batch_size, seq_len]
+        time_seq, time_delta_seq, event_seq = time_seq[:, :-1], time_delta_seq[:, :-1], event_seq[:, :-1]
 
         # [batch_size, seq_len]
-        dtime_boundary = time_delta_seq + self.event_sampler.dtime_max
+        dtime_boundary = torch.max(time_delta_seq * self.event_sampler.dtime_max,
+                                   time_delta_seq + self.event_sampler.dtime_max)
 
         # [batch_size, seq_len, num_sample]
         accepted_dtimes, weights = self.event_sampler.draw_next_time_one_step(time_seq,
                                                                               time_delta_seq,
                                                                               event_seq,
                                                                               dtime_boundary,
-                                                                              self.compute_intensities_at_sample_times)
+                                                                              self.compute_intensities_at_sample_times,
+                                                                              compute_last_step_only=False)  # make it explicit
 
-        # [batch_size, seq_len]
-        dtimes_pred = torch.sum(accepted_dtimes * weights, dim=-1)
-
-        # [batch_size, seq_len, 1, event_num]
+        # We should condition on each accepted time to sample event mark, but not conditioned on the expected event time.
+        # 1. Use all accepted_dtimes to get intensity.
+        # [batch_size, seq_len, num_sample, num_marks]
         intensities_at_times = self.compute_intensities_at_sample_times(time_seq,
                                                                         time_delta_seq,
                                                                         event_seq,
-                                                                        dtimes_pred[:, :, None],
-                                                                        max_steps=event_seq.size()[1])
+                                                                        accepted_dtimes)
 
-        # [batch_size, seq_len, event_num]
-        intensities_at_times = intensities_at_times.squeeze(dim=-2)
+        # 2. Normalize the intensity over last dim and then compute the weighted sum over the `num_sample` dimension.
+        # Each of the last dimension is a categorical distribution over all marks.
+        # [batch_size, seq_len, num_sample, num_marks]
+        intensities_normalized = intensities_at_times / intensities_at_times.sum(dim=-1, keepdim=True)
 
-        types_pred = torch.argmax(intensities_at_times, dim=-1)
+        # 3. Compute weighted sum of distributions and then take argmax.
+        # [batch_size, seq_len, num_marks]
+        intensities_weighted = torch.einsum('...s,...sm->...m', weights, intensities_normalized)
 
+        # [batch_size, seq_len]
+        types_pred = torch.argmax(intensities_weighted, dim=-1)
+
+        # [batch_size, seq_len]
+        dtimes_pred = torch.sum(accepted_dtimes * weights, dim=-1)  # compute the expected next event time
         return dtimes_pred, types_pred
 
     def predict_multi_step_since_last_event(self, batch, forward=False):
