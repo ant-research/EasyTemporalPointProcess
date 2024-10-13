@@ -125,14 +125,15 @@ class TorchModelWrapper:
                 self.opt.step()
             else:  # by default we do not do evaluation on train set which may take a long time
                 if self.model.event_sampler:
-                    if batch[1] is not None and batch[2] is not None:
-                        label_dtime, label_type = batch[1][:, 1:].cpu().numpy(), batch[2][:, 1:].cpu().numpy()
-                    if batch[3] is not None:
-                        mask = batch[3][:, 1:].cpu().numpy()
-                    pred_dtime, pred_type = self.model.predict_one_step_at_every_event(batch=batch)
-                    pred_dtime = pred_dtime.detach().cpu().numpy()
-                    pred_type = pred_type.detach().cpu().numpy()
-
+                    self.model.eval()
+                    with torch.no_grad():
+                        if batch[1] is not None and batch[2] is not None:
+                            label_dtime, label_type = batch[1][:, 1:].cpu().numpy(), batch[2][:, 1:].cpu().numpy()
+                        if batch[3] is not None:
+                            mask = batch[3][:, 1:].cpu().numpy()
+                        pred_dtime, pred_type = self.model.predict_one_step_at_every_event(batch=batch)
+                        pred_dtime = pred_dtime.detach().cpu().numpy()
+                        pred_type = pred_type.detach().cpu().numpy()
             return loss.item(), num_event, (pred_dtime, pred_type), (label_dtime, label_type), (mask,)
         else:
             pred_dtime, pred_type, label_dtime, label_type = self.model.predict_multi_step_since_last_event(batch=batch)
