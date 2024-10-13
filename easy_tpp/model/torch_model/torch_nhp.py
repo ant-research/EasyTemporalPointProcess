@@ -2,103 +2,84 @@ import torch
 from torch import nn
 
 from easy_tpp.model.torch_model.torch_basemodel import TorchBaseModel
+from easy_tpp.model.torch_model.torch_baselayer import ScaledSoftplus
 
 
 class ContTimeLSTMCell(nn.Module):
     """LSTM Cell in Neural Hawkes Process, NeurIPS'17.
     """
 
-    def __init__(self, hidden_dim, beta=1.0):
+    def __init__(self, hidden_dim):
         """Initialize the continuous LSTM cell.
 
         Args:
             hidden_dim (int): dim of hidden state.
-            beta (float, optional): beta in nn.Softplus. Defaults to 1.0.
         """
         super(ContTimeLSTMCell, self).__init__()
         self.hidden_dim = hidden_dim
-        self.init_dense_layer(hidden_dim, bias=True, beta=beta)
+        self.init_dense_layer(hidden_dim, bias=True)
 
-    def init_dense_layer(self, hidden_dim, bias, beta):
+    def init_dense_layer(self, hidden_dim, bias):
         """Initialize linear layers given Equations (5a-6c) in the paper.
 
         Args:
             hidden_dim (int): dim of hidden state.
-            bias (bool): whether to use bias term in nn.Linear.
-            beta (float): beta in nn.Softplus.
         """
 
-        self.layer_input = nn.Linear(hidden_dim * 2, hidden_dim, bias=bias)
-        self.layer_forget = nn.Linear(hidden_dim * 2, hidden_dim, bias=bias)
-        self.layer_output = nn.Linear(hidden_dim * 2, hidden_dim, bias=bias)
-        self.layer_input_bar = nn.Linear(hidden_dim * 2, hidden_dim, bias=bias)
-        self.layer_forget_bar = nn.Linear(hidden_dim * 2, hidden_dim, bias=bias)
-        self.layer_pre_c = nn.Linear(hidden_dim * 2, hidden_dim, bias=bias)
-        self.layer_decay = nn.Sequential(
-            nn.Linear(hidden_dim * 2, hidden_dim, bias=bias),
-            nn.Softplus(beta=beta))
+        self.linear_layer = nn.Linear(2 * hidden_dim, 7 * hidden_dim, bias=bias)
+        self.softplus = nn.Softplus()
 
-    def forward(self, x_i, hidden_i_minus, cell_i_minus, cell_bar_i_minus_1):
+    def forward(self, x_i, hidden_ti_minus, ct_ti_minus, c_bar_im1):
         """Update the continuous-time LSTM cell.
 
         Args:
             x_i (tensor): event embedding vector at t_i.
-            hidden_i_minus (tensor): hidden state at t_i-
-            cell_i_minus (tensor): cell state at t_i-
-            cell_bar_i_minus_1 (tensor): cell bar state at t_{i-1}
+            hidden_ti_minus (tensor): hidden state at t_i-
+            ct_ti_minus (tensor): cell state c(t) at t_i-
+            c_bar_im1 (tensor): cell state c_bar at t_{i-1} (c_bar_{i-1})
 
         Returns:
             list: cell state, cell bar state, decay and output at t_i
         """
 
-        x_i_ = torch.cat((x_i, hidden_i_minus), dim=1)
+        x_i_ = torch.cat((x_i, hidden_ti_minus), dim=1)
 
-        # update input gate - Equation (5a)
-        gate_input = torch.nn.Sigmoid()(self.layer_input(x_i_))
+        i_i, i_bar_i, f_i, f_bar_i, z_i, o_i, delta_i = self.linear_layer(x_i_).chunk(7, dim=-1)
 
-        # update forget gate - Equation (5b)
-        gate_forget = torch.nn.Sigmoid()(self.layer_forget(x_i_))
+        i_i, i_bar_i, f_i, f_bar_i, z_i, o_i, delta_i = (
+            torch.sigmoid(i_i),  # Eq (5a)
+            torch.sigmoid(i_bar_i),  # Eq (5a) - Bar version
+            torch.sigmoid(f_i),  # Eq (5b)
+            torch.sigmoid(f_bar_i),  # Eq (5b) - Bar version
+            torch.tanh(z_i),  # Eq (5c)
+            torch.sigmoid(o_i),  # Eq (5d)
+            self.softplus(delta_i)  # Eq (6c)
+        )
 
-        # update output gate - Equation (5d)
-        gate_output = torch.nn.Sigmoid()(self.layer_output(x_i_))
+        # Eq (6a)
+        c_i = f_i * ct_ti_minus + i_i * z_i
 
-        # update input bar - similar to Equation (5a)
-        gate_input_bar = torch.nn.Sigmoid()(self.layer_input_bar(x_i_))
+        # Eq (6b)
+        c_bar_i = f_bar_i * c_bar_im1 + i_bar_i * z_i
 
-        # update forget bar - similar to Equation (5b)
-        gate_forget_bar = torch.nn.Sigmoid()(self.layer_forget_bar(x_i_))
+        return c_i, c_bar_i, delta_i, o_i
 
-        # update gate z - Equation (5c)
-        gate_pre_c = torch.tanh(self.layer_pre_c(x_i_))
-
-        # update gate decay - Equation (6c)
-        gate_decay = self.layer_decay(x_i_)
-
-        # update cell state to t_i+ - Equation (6a)
-        cell_i = gate_forget * cell_i_minus + gate_input * gate_pre_c
-
-        # update cell state bar - Equation (6b)
-        cell_bar_i = gate_forget_bar * cell_bar_i_minus_1 + gate_input_bar * gate_pre_c
-
-        return cell_i, cell_bar_i, gate_decay, gate_output
-
-    def decay(self, cell_i, cell_bar_i, gate_decay, gate_output, dtime):
+    def decay(self, c_i, c_bar_i, delta_i, o_i, dtime):
         """Cell and hidden state decay according to Equation (7).
 
         Args:
-            cell_i (tensor): cell state at t_i.
-            cell_bar_i (tensor): cell bar state at t_i.
-            gate_decay (tensor): gate decay state at t_i.
-            gate_output (tensor): gate output state at t_i.
+            c_i (tensor): cell state c(t) at t_i.
+            c_bar_i (tensor): cell state c_bar at t_i (c_bar_i).
+            delta_i (tensor): gate decay state at t_i.
+            o_i (tensor): gate output state at t_i.
             dtime (tensor): delta time to decay.
 
         Returns:
             list: list of cell and hidden state tensors after the decay.
         """
-        c_t = cell_bar_i + (cell_i - cell_bar_i) * torch.exp(-gate_decay * dtime)
 
-        h_t = gate_output * torch.tanh(c_t)
-
+        c_t = c_bar_i + (c_i - c_bar_i) * torch.exp(-delta_i * dtime)
+        h_t = o_i * torch.tanh(c_t)
         return c_t, h_t
 
 
@@ -115,188 +96,113 @@ class NHP(TorchBaseModel):
         """
         super(NHP, self).__init__(model_config)
         self.beta = model_config.model_specs.get('beta', 1.0)
-        self.bias = model_config.model_specs.get('bias', False)
+        self.bias = model_config.model_specs.get('bias', True)
         self.rnn_cell = ContTimeLSTMCell(self.hidden_size)
 
-        self.layer_intensity = nn.Sequential(
+        self.layer_intensity = nn.Sequential(  # eq. 4a,
             nn.Linear(self.hidden_size, self.num_event_types, self.bias),
-            nn.Softplus(self.beta))
+            ScaledSoftplus(self.num_event_types))  # learnable mark-specific beta
 
-    def init_state(self, batch_size):
-        """Initialize hidden and cell states.
+    def get_init_state(self, batch_size):
+        c_t, c_bar_t, delta_t, o_t = torch.zeros(
+            batch_size,
+            4 * self.hidden_size,
+            device=self.device).chunk(4, dim=1)
+        return c_t, c_bar_t, delta_t, o_t  # Okay to initialize delta to be zero because c==c_bar at the beginning
 
-        Args:
-            batch_size (int): size of batch data.
+    def forward(self, batch):
+        '''
+        Suppose we have inputs with original sequence length N+1
+        ts: [t0, t1, ..., t_N]
+        dts: [0, t1 - t0, t2 - t1, ..., t_N - t_{N-1}]
+        marks: [k0, k1, ..., k_N] (k0 and kN could be padded marks if t0 and tN correspond to left and right windows)
 
-        Returns:
-            list: list of hidden states, cell states and cell bar states.
+        Return:
+            Left limits of [t_1, ..., t_N] of shape: (batch_size, seq_len - 1, hidden_dim)
+            Right limits of [t_0, ..., t_{N-1}, t_N] of shape: (batch_size, seq_len, 4 * hidden_dim)
+            We need the right limit of t_N to sample continuation.
+
+        > rnn_cell.recurrence(event_emb_t, h_tm1, c_tm1, c_bar_tm1) -> c_t, c_bar_t, gate_delta, gate_o
+        > rnn_cell.decay(c_t, c_bar_t, delta_t, o_t, dt) -> c_d_t, h_d_t
+        '''
+        t_BN, dt_BN, marks_BN, _, _ = batch
+        B, N = dt_BN.shape
+        left_hs = []
+        right_states = []
+
+        all_event_emb_BNP = self.layer_type_emb(marks_BN)
+        c_t, c_bar_t, delta_t, o_t = self.get_init_state(B)  # initialize the right limits
+        for i in range(N):
+            # Take last right limit and evolve into left limit; we will discard this value for t0 because dt=0
+            ct_d_t, h_d_t = self.rnn_cell.decay(c_t, c_bar_t, delta_t, o_t, dt_BN[..., i][..., None])
+
+            # Take left limit and update to be right limit
+            event_emb_t = all_event_emb_BNP[..., i, :]
+            c_t, c_bar_t, delta_t, o_t = self.rnn_cell(
+                x_i=event_emb_t,
+                hidden_ti_minus=h_d_t,
+                ct_ti_minus=ct_d_t,
+                c_bar_im1=c_bar_t,
+            )
+
+            left_hs.append(h_d_t)
+            right_states.append(torch.cat((c_t, c_bar_t, delta_t, o_t), dim=-1))
+
+        left_hiddens = torch.stack(left_hs[1:], dim=-2)  # (batch_size, seq_len - 1, hidden_dim)
+        right_hiddens = torch.stack(right_states, dim=-2)  # (batch_size, seq_len, 4 * hidden_dim)
+        return left_hiddens, right_hiddens
+
+    def get_states(self, right_hiddens, sample_dts):
         """
-        h_t, c_t, c_bar = torch.zeros(batch_size,
-                                      3 * self.hidden_size,
-                                      device=self.device).chunk(3, dim=1)
-        return h_t, c_t, c_bar
+        right_hiddens:  (batch_size, seq_len, 4 * hidden_dim): (c_t, c_bar_t, delta_t, o_t)
+        sample_dts: (batch_size, seq_len, MC_points)
 
-    def forward(self, batch, **kwargs):
-        """Call the model.
-
-        Args:
-            batch (tuple, list): batch input.
-
-        Returns:
-            list: hidden states, [batch_size, seq_len, hidden_dim], states right before the event happens;
-                  stacked decay states,  [batch_size, max_seq_length, 4, hidden_dim], states right after
-                  the event happens.
+        > rnn_cell.decay(c_t, c_bar_t, delta_t, o_t, dt) -> c_d_t, h_d_t
         """
-        time_seq, time_delta_seq, event_seq, batch_non_pad_mask, _, type_mask = batch
-
-        all_hiddens = []
-        all_outputs = []
-        all_cells = []
-        all_cell_bars = []
-        all_decays = []
-
-        max_steps = kwargs.get('max_steps', None)
-
-        max_decay_time = kwargs.get('max_decay_time', 5.0)
-
-        # last event has no time label
-        max_seq_length = max_steps if max_steps is not None else event_seq.size(1) - 1
-
-        batch_size = len(event_seq)
-        h_t, c_t, c_bar_i = self.init_state(batch_size)
-
-        # if only one event, then we dont decay
-        if max_seq_length == 1:
-            types_sub_batch = event_seq[:, 0]
-            x_t = self.layer_type_emb(types_sub_batch)
-            cell_i, c_bar_i, decay_i, output_i = \
-                self.rnn_cell(x_t, h_t, c_t, c_bar_i)
-
-            # Append all output
-            all_outputs.append(output_i)
-            all_decays.append(decay_i)
-            all_cells.append(cell_i)
-            all_cell_bars.append(c_bar_i)
-            all_hiddens.append(h_t)
-        else:
-            # Loop over all events
-            for i in range(max_seq_length):
-                if i == event_seq.size(1) - 1:
-                    dt = torch.ones_like(time_delta_seq[:, i]) * max_decay_time
-                else:
-                    dt = time_delta_seq[:, i + 1]  # need to carefully check here
-                types_sub_batch = event_seq[:, i]
-                x_t = self.layer_type_emb(types_sub_batch)
-
-                # cell_i  (batch_size, process_dim)
-                cell_i, c_bar_i, decay_i, output_i = \
-                    self.rnn_cell(x_t, h_t, c_t, c_bar_i)
-
-                # States decay - Equation (7) in the paper
-                c_t, h_t = self.rnn_cell.decay(cell_i,
-                                               c_bar_i,
-                                               decay_i,
-                                               output_i,
-                                               dt[:, None])
-
-                # Append all output
-                all_outputs.append(output_i)
-                all_decays.append(decay_i)
-                all_cells.append(cell_i)
-                all_cell_bars.append(c_bar_i)
-                all_hiddens.append(h_t)
-
-        # (batch_size, max_seq_length, hidden_dim)
-        cell_stack = torch.stack(all_cells, dim=1)
-        cell_bar_stack = torch.stack(all_cell_bars, dim=1)
-        decay_stack = torch.stack(all_decays, dim=1)
-        output_stack = torch.stack(all_outputs, dim=1)
-
-        # [batch_size, max_seq_length, hidden_dim]
-        hiddens_stack = torch.stack(all_hiddens, dim=1)
-
-        # [batch_size, max_seq_length, 4, hidden_dim]
-        decay_states_stack = torch.stack((cell_stack,
-                                          cell_bar_stack,
-                                          decay_stack,
-                                          output_stack),
-                                         dim=2)
-
-        return hiddens_stack, decay_states_stack
+        c_t, c_bar_t, delta_t, o_t = torch.chunk(right_hiddens, 4, dim=-1)
+        _, h_ts = self.rnn_cell.decay(c_t[:, :, None, :],
+                                      c_bar_t[:, :, None, :],
+                                      delta_t[:, :, None, :],
+                                      o_t[:, :, None, :],
+                                      sample_dts[..., None])
+        return h_ts
 
     def loglike_loss(self, batch):
-        """Compute the loglike loss.
+        """Compute the log-likelihood loss.
 
         Args:
             batch (list): batch input.
 
         Returns:
-            list: loglike loss, num events.
+            tuple: loglikelihood loss and num of events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _, type_mask = batch
+        ts_BN, dts_BN, marks_BN, batch_non_pad_mask, _ = batch
 
-        hiddens_ti, decay_states = self.forward(batch)
+        # 1. compute hidden states at event time
+        # left limits of [t_1, ..., t_N]
+        # right limits of [t_0, ..., t_{N-1}, t_N]
+        left_hiddens, right_hiddens = self.forward((ts_BN, dts_BN, marks_BN, None, None))
+        right_hiddens = right_hiddens[..., :-1, :]  # discard right limit at t_N for logL
 
-        # Num of samples in each batch and num of event time point in the sequence
-        batch_size, seq_len, _ = hiddens_ti.size()
+        # 2. evaluate intensity values at each event *from the left limit*
+        intensity_B_Nm1_M = self.layer_intensity(left_hiddens)
 
-        # Lambda(t) right before each event time point
-        # lambda_at_event - [batch_size, num_times=max_len-1, num_event_types]
-        # Here we drop the last event because it has no delta_time label (can not decay)
-        lambda_at_event = self.layer_intensity(hiddens_ti)
+        # 3. sample dts in each interval for estimating the integral
+        dts_sample_B_Nm1_G = self.make_dtime_loss_samples(dts_BN[:, 1:])
 
-        # Compute the big lambda integral in Equation (8)
-        # 1 - take num_mc_sample rand points in each event interval
-        # 2 - compute its lambda value for every sample point
-        # 3 - take average of these sample points
-        # 4 - times the interval length
+        # 4. evaluate intensity at dt_samples for MC *from the left limit* after decay -> shape (B, N-1, G, M)
+        intensity_dts_B_Nm1_G_M = self.layer_intensity(self.get_states(right_hiddens, dts_sample_B_Nm1_G))
 
-        # interval_t_sample - [batch_size, num_times=max_len-1, num_mc_sample]
-        # for every batch and every event point => do a sampling (num_mc_sampling)
-        # the first dtime is zero, so we use time_delta_seq[:, 1:]
-        interval_t_sample = self.make_dtime_loss_samples(time_delta_seqs[:, 1:])
+        event_ll, non_event_ll, num_events = self.compute_loglikelihood(
+            lambda_at_event=intensity_B_Nm1_M,
+            lambdas_loss_samples=intensity_dts_B_Nm1_G_M,
+            time_delta_seq=dts_BN[:, 1:],
+            seq_mask=batch_non_pad_mask[:, 1:],
+            type_seq=marks_BN[:, 1:])
 
-        # [batch_size, num_times = max_len - 1, num_mc_sample, hidden_size]
-        state_t_sample = self.compute_states_at_sample_times(decay_states, interval_t_sample)
-
-        # [batch_size, num_times = max_len - 1, num_mc_sample, event_num]
-        lambda_t_sample = self.layer_intensity(state_t_sample)
-
-        event_ll, non_event_ll, num_events = self.compute_loglikelihood(lambda_at_event=lambda_at_event,
-                                                                        lambdas_loss_samples=lambda_t_sample,
-                                                                        time_delta_seq=time_delta_seqs[:, 1:],
-                                                                        seq_mask=batch_non_pad_mask[:, 1:],
-                                                                        lambda_type_mask=type_mask[:, 1:])
-
-        # (num_samples, num_times)
+        # compute loss to minimize
         loss = - (event_ll - non_event_ll).sum()
         return loss, num_events
-
-    def compute_states_at_sample_times(self, decay_states, sample_dtimes):
-        """Compute the states at sampling times.
-
-        Args:
-            decay_states (tensor): states right after the events.
-            sample_dtimes (tensor): delta times in sampling.
-
-        Returns:
-            tensor: hiddens states at sampling times.
-        """
-        # update the states given last event
-        # cells (batch_size, num_times, hidden_dim)
-        cells, cell_bars, decays, outputs = decay_states.unbind(dim=-2)
-
-        # Use broadcasting to compute the decays at all time steps
-        # at all sample points
-        # h_ts shape (batch_size, num_times, num_mc_sample, hidden_dim)
-        # cells[:, :, None, :]  (batch_size, num_times, 1, hidden_dim)
-        _, h_ts = self.rnn_cell.decay(cells[:, :, None, :],
-                                      cell_bars[:, :, None, :],
-                                      decays[:, :, None, :],
-                                      outputs[:, :, None, :],
-                                      sample_dtimes[..., None])
-
-        return h_ts
 
     def compute_intensities_at_sample_times(self, time_seqs, time_delta_seqs, type_seqs, sample_dtimes, **kwargs):
         """Compute the intensity at sampled times, not only event times.
@@ -314,43 +220,38 @@ class NHP(TorchBaseModel):
 
         compute_last_step_only = kwargs.get('compute_last_step_only', False)
 
-        input_ = time_seqs, time_delta_seqs, type_seqs, None, None, None
+        _input = time_seqs, time_delta_seqs, type_seqs, None, None
 
-        # forward to the last but one event
-        hiddens_ti, decay_states = self.forward(input_, **kwargs)
+        # We will need the right limit at the last given event to decay from and get the left limits for sampling
+        _, right_hiddens = self.forward(_input)
 
-        # Num of samples in each batch and num of event time point in the sequence
-        batch_size, seq_len, _ = hiddens_ti.size()
-
-        # update the states given last event
-        # cells (batch_size, num_times, hidden_dim)
-        cells, cell_bars, decays, outputs = decay_states.unbind(dim=-2)
+        c_i, c_bar_i, delta_i, o_i = torch.chunk(right_hiddens, 4, dim=-1)
 
         if compute_last_step_only:
             interval_t_sample = sample_dtimes[:, -1:, :, None]
-            _, h_ts = self.rnn_cell.decay(cells[:, -1:, None, :],
-                                          cell_bars[:, -1:, None, :],
-                                          decays[:, -1:, None, :],
-                                          outputs[:, -1:, None, :],
+            _, h_ts = self.rnn_cell.decay(c_i[:, -1:, None, :],
+                                          c_bar_i[:, -1:, None, :],
+                                          delta_i[:, -1:, None, :],
+                                          o_i[:, -1:, None, :],
                                           interval_t_sample)
 
-            # [batch_size, 1, num_mc_sample, num_event_types]
+            # [batch_size, 1, num_mc_sample, num_marks]
             sampled_intensities = self.layer_intensity(h_ts)
 
         else:
-            # interval_t_sample - [batch_size, num_times, num_mc_sample, 1]
+            # interval_t_sample - [batch_size, seq_len, num_mc_sample, 1]
             interval_t_sample = sample_dtimes[..., None]
             # Use broadcasting to compute the decays at all time steps
             # at all sample points
-            # h_ts shape (batch_size, num_times, num_mc_sample, hidden_dim)
-            # cells[:, :, None, :]  (batch_size, num_times, 1, hidden_dim)
-            _, h_ts = self.rnn_cell.decay(cells[:, :, None, :],
-                                          cell_bars[:, :, None, :],
-                                          decays[:, :, None, :],
-                                          outputs[:, :, None, :],
+            # h_ts shape (batch_size, seq_len, num_mc_sample, hidden_dim)
+            # cells[:, :, None, :]  (batch_size, seq_len, 1, hidden_dim)
+            _, h_ts = self.rnn_cell.decay(c_i[:, :, None, :],
+                                          c_bar_i[:, :, None, :],
+                                          delta_i[:, :, None, :],
+                                          o_i[:, :, None, :],
                                           interval_t_sample)
 
-            # [batch_size, num_times, num_mc_sample, num_event_types]
+            # [batch_size, seq_len, num_mc_sample, num_marks]
             sampled_intensities = self.layer_intensity(h_ts)
 
         return sampled_intensities
