@@ -38,6 +38,12 @@ class Runner(Registrable):
                 backend=backend,
                 **kwargs
             )
+
+        # Needed for Intensity Free model
+        mean_log_inter_time, std_log_inter_time, min_dt, max_dt = (
+            self._data_loader.train_loader().dataset.get_dt_stats())
+        runner_config.model_config.set("mean_log_inter_time", mean_log_inter_time)
+        runner_config.model_config.set("std_log_inter_time", std_log_inter_time)
         self.timer = Timer()
 
     @staticmethod

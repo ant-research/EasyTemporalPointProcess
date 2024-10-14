@@ -172,7 +172,7 @@ class ODETPP(TorchBaseModel):
                                           num_sample_times=self.ode_num_sample_per_step,
                                           device=self.device)
 
-    def forward(self, time_delta_seqs, type_seqs, **kwargs):
+    def forward(self, time_delta_seqs, type_seqs):
         """Call the model.
 
         Args:
@@ -183,26 +183,26 @@ class ODETPP(TorchBaseModel):
             tensor: hidden states at event times.
 
         """
-        # [batch_size, seq_len=max_len-1, hidden_size]
+        # [batch_size, seq_len, hidden_size]
         type_seq_emb = self.layer_type_emb(type_seqs)
         time_delta_seqs_ = time_delta_seqs[..., None]
 
-        total_state_at_event_minus = []
-        total_state_at_event_plus = []
-        last_state = torch.zeros_like(type_seq_emb[:, 0, :], device=self.device)
+        left_limits, right_limits = [], []
+        right_limit = torch.zeros_like(type_seq_emb[:, 0, :], device=self.device)
         for type_emb, dt in zip(torch.unbind(type_seq_emb, dim=-2),
                                 torch.unbind(time_delta_seqs_, dim=-2)):
-            last_state = self.layer_neural_ode(last_state + type_emb, dt)
-            total_state_at_event_minus.append(last_state)
-            total_state_at_event_plus.append(last_state + type_emb)
+            left_limit = self.layer_neural_ode(right_limit, dt)
+            right_limit = left_limit + type_emb
 
+            left_limits.append(left_limit)
+            right_limits.append(right_limit)
+
+        # [batch_size, seq_len-1, hidden_size]
+        left_limits = torch.stack(left_limits[1:], dim=1)
         # [batch_size, seq_len, hidden_size]
-        state_ti = torch.stack(total_state_at_event_minus, dim=1)
+        right_limits = torch.stack(right_limits, dim=1)
 
-        # [batch_size, seq_len, hidden_size]
-        state_to_evolve = torch.stack(total_state_at_event_plus, dim=1)
-
-        return state_ti, state_to_evolve
+        return left_limits, right_limits
 
     def loglike_loss(self, batch):
         """Compute the loglike loss.
@@ -213,17 +213,18 @@ class ODETPP(TorchBaseModel):
         Returns:
             list: loglike loss, num events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _, type_mask = batch
+        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _ = batch
 
-        state_ti, state_ti_plus = self.forward(time_delta_seqs[:, 1:], type_seqs[:, :-1])
-
-        # Num of samples in each batch and num of event time point in the sequence
-        batch_size, seq_len, _ = state_ti.size()
+        # compute hidden states at event time
+        # left limits of [t_1, ..., t_N]
+        # right limits of [t_0, ..., t_{N-1}]
+        left_limits, right_limits = self.forward(time_delta_seqs, type_seqs)
+        right_limits = right_limits[..., :-1, :]
 
         # Lambda(t) right before each event time point
         # lambda_at_event - [batch_size, num_times=max_len-1, num_event_types]
         # Here we drop the last event because it has no delta_time label (can not decay)
-        lambda_at_event = self.layer_intensity(state_ti)
+        lambda_at_event = self.layer_intensity(left_limits)
 
         # interval_t_sample - [batch_size, num_times=max_len-1, num_mc_sample]
         # for every batch and every event point => do a sampling (num_mc_sampling)
@@ -231,7 +232,7 @@ class ODETPP(TorchBaseModel):
         interval_t_sample = self.make_dtime_loss_samples(time_delta_seqs[:, 1:])
 
         # [batch_size, num_times = max_len - 1, num_mc_sample, hidden_size]
-        sample_state_ti = self.compute_states_at_sample_times(state_ti_plus, interval_t_sample)
+        sample_state_ti = self.compute_states_at_sample_times(right_limits, interval_t_sample)
 
         # [batch_size, num_times = max_len - 1, num_mc_sample, event_num]
         lambda_t_sample = self.layer_intensity(sample_state_ti)
@@ -240,10 +241,10 @@ class ODETPP(TorchBaseModel):
                                                                         lambdas_loss_samples=lambda_t_sample,
                                                                         time_delta_seq=time_delta_seqs[:, 1:],
                                                                         seq_mask=batch_non_pad_mask[:, 1:],
-                                                                        lambda_type_mask=type_mask[:, 1:])
+                                                                        type_seq=type_seqs[:, 1:])
 
+        # compute loss to optimize
         loss = - (event_ll - non_event_ll).sum()
-
         return loss, num_events
 
     def compute_states_at_sample_times(self, state_ti_plus, sample_dtimes):
@@ -282,14 +283,10 @@ class ODETPP(TorchBaseModel):
 
         compute_last_step_only = kwargs.get('compute_last_step_only', False)
 
-        # forward to the last but one event
-        state_ti, state_ti_plus = self.forward(time_delta_seqs, type_seqs, **kwargs)
-
-        # Num of samples in each batch and num of event time point in the sequence
-        batch_size, seq_len, _ = state_ti.size()
+        _, right_limits = self.forward(time_delta_seqs, type_seqs)
 
         # [batch_size, num_sample_times, num_mc_sample, hidden_size]
-        sample_state_ti = self.compute_states_at_sample_times(state_ti_plus, sample_dtimes)
+        sample_state_ti = self.compute_states_at_sample_times(right_limits, sample_dtimes)
 
         if compute_last_step_only:
             # [batch_size, 1, num_mc_sample, num_event_types]

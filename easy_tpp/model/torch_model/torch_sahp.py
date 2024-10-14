@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 from easy_tpp.model.torch_model.torch_baselayer import EncoderLayer, MultiHeadAttention, \
-    TimeShiftedPositionalEncoding
+    TimeShiftedPositionalEncoding, ScaledSoftplus
 from easy_tpp.model.torch_model.torch_basemodel import TorchBaseModel
 
 
@@ -36,7 +36,7 @@ class SAHP(TorchBaseModel):
 
         # convert hidden vectors into a scalar
         self.layer_intensity_hidden = nn.Linear(self.d_model, self.num_event_types)
-        self.softplus = nn.Softplus()
+        self.softplus = ScaledSoftplus(self.num_event_types)  # learnable mark-specific beta
 
         self.stack_layers = nn.ModuleList(
             [EncoderLayer(
@@ -56,11 +56,13 @@ class SAHP(TorchBaseModel):
             nn.Linear(self.d_model, self.num_event_types, bias=False),
             nn.GELU(),
         )
+
         # Equation (13): eta = GELU(h*W_eta)
         self.eta = nn.Sequential(
             nn.Linear(self.d_model, self.num_event_types, bias=False),
             nn.GELU(),
         )
+
         # Equation (14): gamma = Softplus(h*W_gamma)
         self.gamma = nn.Sequential(
             nn.Linear(self.d_model, self.num_event_types, bias=False),
@@ -110,7 +112,7 @@ class SAHP(TorchBaseModel):
         return enc_output
 
     def loglike_loss(self, batch):
-        """Compute the loglike loss.
+        """Compute the log-likelihood loss.
 
         Args:
             batch (tuple, list): batch input.
@@ -118,9 +120,9 @@ class SAHP(TorchBaseModel):
         Returns:
             list: loglike loss, num events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, attention_mask, type_mask = batch
+        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, attention_mask = batch
 
-        enc_out = self.forward(time_seqs[:, :-1], time_delta_seqs[:, 1:], type_seqs[:, :-1], attention_mask[:, 1:, :-1])
+        enc_out = self.forward(time_seqs[:, :-1], time_delta_seqs[:, :-1], type_seqs[:, :-1], attention_mask[:, :-1, :-1])
 
         cell_t = self.state_decay(encode_state=enc_out,
                                   duration_t=time_delta_seqs[:, 1:, None])
@@ -143,11 +145,10 @@ class SAHP(TorchBaseModel):
                                                                         lambdas_loss_samples=lambda_t_sample,
                                                                         time_delta_seq=time_delta_seqs[:, 1:],
                                                                         seq_mask=batch_non_pad_mask[:, 1:],
-                                                                        lambda_type_mask=type_mask[:, 1:])
+                                                                        type_seq=type_seqs[:, 1:])
 
-        # return enc_inten to compute accuracy
+        # compute loss to minimize
         loss = - (event_ll - non_event_ll).sum()
-
         return loss, num_events
 
     def compute_states_at_sample_times(self,
