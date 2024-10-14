@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -6,18 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_baselayer &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -75,6 +73,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../ref/models.html#module-easy_tpp.model.tf_model">model.tf_model module</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../ref/models.html#module-easy_tpp.model.torch_model">model.torch_model module</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">easy_tpp.model.torch_model.torch_baselayer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus"><code class="docutils literal notranslate"><span class="pre">ScaledSoftplus</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.MultiHeadAttention"><code class="docutils literal notranslate"><span class="pre">MultiHeadAttention</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.SublayerConnection"><code class="docutils literal notranslate"><span class="pre">SublayerConnection</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.EncoderLayer"><code class="docutils literal notranslate"><span class="pre">EncoderLayer</span></code></a></li>
@@ -162,17 +161,42 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.MultiHeadAttention" title="easy_tpp.model.torch_model.torch_baselayer.MultiHeadAttention"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiHeadAttention</span></code></a>(n_head, d_input, d_model)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.SublayerConnection" title="easy_tpp.model.torch_model.torch_baselayer.SublayerConnection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SublayerConnection</span></code></a>(d_model, dropout)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus" title="easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScaledSoftplus</span></code></a>(num_marks[, threshold])</p></td>
+<td><p>Use different beta for mark-specific intensities</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.SublayerConnection" title="easy_tpp.model.torch_model.torch_baselayer.SublayerConnection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SublayerConnection</span></code></a>(d_model, dropout)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.TimePositionalEncoding" title="easy_tpp.model.torch_model.torch_baselayer.TimePositionalEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimePositionalEncoding</span></code></a>(d_model[, max_len, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.TimePositionalEncoding" title="easy_tpp.model.torch_model.torch_baselayer.TimePositionalEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimePositionalEncoding</span></code></a>(d_model[, max_len, ...])</p></td>
 <td><p>Temporal encoding in THP, ICML 2020</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.TimeShiftedPositionalEncoding" title="easy_tpp.model.torch_model.torch_baselayer.TimeShiftedPositionalEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeShiftedPositionalEncoding</span></code></a>(d_model[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easy_tpp.model.torch_model.torch_baselayer.TimeShiftedPositionalEncoding" title="easy_tpp.model.torch_model.torch_baselayer.TimeShiftedPositionalEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeShiftedPositionalEncoding</span></code></a>(d_model[, ...])</p></td>
 <td><p>Time shifted positional encoding in SAHP, ICML 2020</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.torch_model.torch_baselayer.</span></span><span class="sig-name descname"><span class="pre">ScaledSoftplus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_marks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_baselayer.html#ScaledSoftplus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus" title="Permalink to this definition"></a></dt>
+<dd><p>Use different beta for mark-specific intensities</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_marks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_baselayer.html#ScaledSoftplus.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_baselayer.html#ScaledSoftplus.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus.forward" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> – […, num_marks]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_baselayer.MultiHeadAttention">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.torch_model.torch_baselayer.</span></span><span class="sig-name descname"><span class="pre">MultiHeadAttention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_head</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_linear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_baselayer.html#MultiHeadAttention"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_baselayer.MultiHeadAttention" title="Permalink to this definition"></a></dt>

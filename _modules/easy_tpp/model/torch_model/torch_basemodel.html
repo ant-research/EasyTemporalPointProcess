@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -5,18 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_basemodel &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../../../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -104,6 +102,7 @@
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
 
 <span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_thinning</span> <span class="kn">import</span> <span class="n">EventSampler</span>
 <span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">set_device</span>
@@ -131,6 +130,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">thinning</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">set_device</span><span class="p">(</span><span class="n">model_config</span><span class="o">.</span><span class="n">gpu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_mc_samples</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">use_mc_samples</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
@@ -183,8 +183,7 @@
         <span class="n">last_logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">select_index</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">last_logits</span></div>
 
-<div class="viewcode-block" id="TorchBaseModel.compute_loglikelihood"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.compute_loglikelihood">[docs]</a>    <span class="k">def</span> <span class="nf">compute_loglikelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">lambda_at_event</span><span class="p">,</span> <span class="n">lambdas_loss_samples</span><span class="p">,</span> <span class="n">seq_mask</span><span class="p">,</span>
-                              <span class="n">lambda_type_mask</span><span class="p">):</span>
+<div class="viewcode-block" id="TorchBaseModel.compute_loglikelihood"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.compute_loglikelihood">[docs]</a>    <span class="k">def</span> <span class="nf">compute_loglikelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">lambda_at_event</span><span class="p">,</span> <span class="n">lambdas_loss_samples</span><span class="p">,</span> <span class="n">seq_mask</span><span class="p">,</span> <span class="n">type_seq</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the loglikelihood of the event sequence based on Equation (8) of NHP paper.</span>
 
 <span class="sd">        Args:</span>
@@ -194,38 +193,35 @@
 <span class="sd">            lambdas_loss_samples (tensor): [batch_size, seq_len, num_sample, num_event_types],</span>
 <span class="sd">            intensity at sampling times.</span>
 <span class="sd">            seq_mask (tensor): [batch_size, seq_len], sequence mask vector to mask the padded events.</span>
-<span class="sd">            lambda_type_mask (tensor): [batch_size, seq_len, num_event_types], type mask matrix to mask the</span>
-<span class="sd">            padded event types.</span>
+<span class="sd">            type_seq (tensor): [batch_size, seq_len], sequence of mark ids, with padded events having a mark of self.pad_token_id</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: event loglike, non-event loglike, intensity at event with padding events masked</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Sum of lambda over every type and every event point</span>
-        <span class="c1"># [batch_size, seq_len]</span>
-        <span class="n">event_lambdas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lambda_at_event</span> <span class="o">*</span> <span class="n">lambda_type_mask</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span>
+        <span class="c1"># First, add an epsilon to every marked intensity for stability</span>
+        <span class="n">lambda_at_event</span> <span class="o">=</span> <span class="n">lambda_at_event</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span>
+        <span class="n">lambdas_loss_samples</span> <span class="o">=</span> <span class="n">lambdas_loss_samples</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span>
 
-        <span class="c1"># mask the pad event</span>
-        <span class="n">event_lambdas</span> <span class="o">=</span> <span class="n">event_lambdas</span><span class="o">.</span><span class="n">masked_fill_</span><span class="p">(</span><span class="o">~</span><span class="n">seq_mask</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">log_marked_event_lambdas</span> <span class="o">=</span> <span class="n">lambda_at_event</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>
+        <span class="n">total_sampled_lambdas</span> <span class="o">=</span> <span class="n">lambdas_loss_samples</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="c1"># [batch_size, seq_len)</span>
-        <span class="n">event_ll</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">event_lambdas</span><span class="p">)</span>
+        <span class="c1"># Compute event LL - [batch_size, seq_len]</span>
+        <span class="n">event_ll</span> <span class="o">=</span> <span class="o">-</span><span class="n">F</span><span class="o">.</span><span class="n">nll_loss</span><span class="p">(</span>
+            <span class="n">log_marked_event_lambdas</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># mark dimension needs to come second, not third to match nll_loss specs</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">type_seq</span><span class="p">,</span>
+            <span class="n">ignore_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">,</span>  <span class="c1"># Padded events have a pad_token_id as a value</span>
+            <span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="c1"># Does not aggregate, and replaces what would have been the log(marked intensity) with 0.</span>
+        <span class="p">)</span>
 
-        <span class="c1"># Compute the big lambda integral in equation (8) of NHP paper</span>
-        <span class="c1"># 1 - take num_mc_sample rand points in each event interval</span>
-        <span class="c1"># 2 - compute its lambda value for every sample point</span>
-        <span class="c1"># 3 - take average of these sample points</span>
-        <span class="c1"># 4 - times the interval length</span>
-
-        <span class="c1"># [batch_size, seq_len, n_loss_sample]</span>
-        <span class="n">lambdas_total_samples</span> <span class="o">=</span> <span class="n">lambdas_loss_samples</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-
-        <span class="c1"># interval_integral - [batch_size, seq_len]</span>
+        <span class="c1"># Compute non-event LL [batch_size, seq_len]</span>
         <span class="c1"># interval_integral = length_interval * average of sampled lambda(t)</span>
-        <span class="n">non_event_ll</span> <span class="o">=</span> <span class="n">lambdas_total_samples</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_delta_seq</span> <span class="o">*</span> <span class="n">seq_mask</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_mc_samples</span><span class="p">:</span>
+            <span class="n">non_event_ll</span> <span class="o">=</span> <span class="n">total_sampled_lambdas</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_delta_seq</span> <span class="o">*</span> <span class="n">seq_mask</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># Use trapezoid rule</span>
+            <span class="n">non_event_ll</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">total_sampled_lambdas</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">total_sampled_lambdas</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_delta_seq</span> <span class="o">*</span> <span class="n">seq_mask</span>
 
         <span class="n">num_events</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">masked_select</span><span class="p">(</span><span class="n">event_ll</span><span class="p">,</span> <span class="n">event_ll</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-
         <span class="k">return</span> <span class="n">event_ll</span><span class="p">,</span> <span class="n">non_event_ll</span><span class="p">,</span> <span class="n">num_events</span></div>
 
 <div class="viewcode-block" id="TorchBaseModel.make_dtime_loss_samples"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.make_dtime_loss_samples">[docs]</a>    <span class="k">def</span> <span class="nf">make_dtime_loss_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">):</span>
@@ -262,37 +258,47 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: tensors of dtime and type prediction, [batch_size, seq_len].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">type_mask</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">batch</span>
 
         <span class="c1"># remove the last event, as the prediction based on the last event has no label</span>
-        <span class="c1"># time_delta_seq should start from 1, because the first one is zero</span>
-        <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span> <span class="o">=</span> <span class="n">time_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">event_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># note: the first dts is 0</span>
+        <span class="c1"># [batch_size, seq_len]</span>
+        <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span> <span class="o">=</span> <span class="n">time_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">event_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="c1"># [batch_size, seq_len]</span>
-        <span class="n">dtime_boundary</span> <span class="o">=</span> <span class="n">time_delta_seq</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">dtime_max</span>
+        <span class="n">dtime_boundary</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">time_delta_seq</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">dtime_max</span><span class="p">,</span>
+                                   <span class="n">time_delta_seq</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">dtime_max</span><span class="p">)</span>
 
         <span class="c1"># [batch_size, seq_len, num_sample]</span>
         <span class="n">accepted_dtimes</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">draw_next_time_one_step</span><span class="p">(</span><span class="n">time_seq</span><span class="p">,</span>
                                                                               <span class="n">time_delta_seq</span><span class="p">,</span>
                                                                               <span class="n">event_seq</span><span class="p">,</span>
                                                                               <span class="n">dtime_boundary</span><span class="p">,</span>
-                                                                              <span class="bp">self</span><span class="o">.</span><span class="n">compute_intensities_at_sample_times</span><span class="p">)</span>
+                                                                              <span class="bp">self</span><span class="o">.</span><span class="n">compute_intensities_at_sample_times</span><span class="p">,</span>
+                                                                              <span class="n">compute_last_step_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># make it explicit</span>
 
-        <span class="c1"># [batch_size, seq_len]</span>
-        <span class="n">dtimes_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">accepted_dtimes</span> <span class="o">*</span> <span class="n">weights</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-
-        <span class="c1"># [batch_size, seq_len, 1, event_num]</span>
+        <span class="c1"># We should condition on each accepted time to sample event mark, but not conditioned on the expected event time.</span>
+        <span class="c1"># 1. Use all accepted_dtimes to get intensity.</span>
+        <span class="c1"># [batch_size, seq_len, num_sample, num_marks]</span>
         <span class="n">intensities_at_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_intensities_at_sample_times</span><span class="p">(</span><span class="n">time_seq</span><span class="p">,</span>
                                                                         <span class="n">time_delta_seq</span><span class="p">,</span>
                                                                         <span class="n">event_seq</span><span class="p">,</span>
-                                                                        <span class="n">dtimes_pred</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">],</span>
-                                                                        <span class="n">max_steps</span><span class="o">=</span><span class="n">event_seq</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+                                                                        <span class="n">accepted_dtimes</span><span class="p">)</span>
 
-        <span class="c1"># [batch_size, seq_len, event_num]</span>
-        <span class="n">intensities_at_times</span> <span class="o">=</span> <span class="n">intensities_at_times</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># 2. Normalize the intensity over last dim and then compute the weighted sum over the `num_sample` dimension.</span>
+        <span class="c1"># Each of the last dimension is a categorical distribution over all marks.</span>
+        <span class="c1"># [batch_size, seq_len, num_sample, num_marks]</span>
+        <span class="n">intensities_normalized</span> <span class="o">=</span> <span class="n">intensities_at_times</span> <span class="o">/</span> <span class="n">intensities_at_times</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">types_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">intensities_at_times</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># 3. Compute weighted sum of distributions and then take argmax.</span>
+        <span class="c1"># [batch_size, seq_len, num_marks]</span>
+        <span class="n">intensities_weighted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...s,...sm-&gt;...m&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">intensities_normalized</span><span class="p">)</span>
 
+        <span class="c1"># [batch_size, seq_len]</span>
+        <span class="n">types_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">intensities_weighted</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len]</span>
+        <span class="n">dtimes_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">accepted_dtimes</span> <span class="o">*</span> <span class="n">weights</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># compute the expected next event time</span>
         <span class="k">return</span> <span class="n">dtimes_pred</span><span class="p">,</span> <span class="n">types_pred</span></div>
 
 <div class="viewcode-block" id="TorchBaseModel.predict_multi_step_since_last_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.predict_multi_step_since_last_event">[docs]</a>    <span class="k">def</span> <span class="nf">predict_multi_step_since_last_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">forward</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>

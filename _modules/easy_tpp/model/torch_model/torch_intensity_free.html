@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -5,18 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_intensity_free &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../../../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -223,11 +221,14 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">IntensityFree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">num_mix_components</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">model_specs</span><span class="p">[</span><span class="s1">&#39;num_mix_components&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_log_inter_time</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mean_log_inter_time&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">std_log_inter_time</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;std_log_inter_time&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">num_features</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GRU</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_features</span><span class="p">,</span>
                                 <span class="n">hidden_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span>
-                                <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># used in original paper</span>
                                 <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">mark_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types_pad</span><span class="p">)</span>
@@ -267,15 +268,10 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: loglikelihood loss and num of events.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">type_mask</span> <span class="o">=</span> <span class="n">batch</span>
-
-        <span class="n">mean_log_inter_time</span> <span class="o">=</span> \
-            <span class="n">torch</span><span class="o">.</span><span class="n">masked_select</span><span class="p">(</span><span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">)</span><span class="o">.</span><span class="n">log</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="n">std_log_inter_time</span> <span class="o">=</span> \
-            <span class="n">torch</span><span class="o">.</span><span class="n">masked_select</span><span class="p">(</span><span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">)</span><span class="o">.</span><span class="n">log</span><span class="p">()</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">batch</span>
 
         <span class="c1"># [batch_size, seq_len, hidden_size]</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">type_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">type_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="c1"># [batch_size, seq_len, 3 * num_mix_components]</span>
         <span class="n">raw_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
@@ -289,35 +285,73 @@
             <span class="n">locs</span><span class="o">=</span><span class="n">locs</span><span class="p">,</span>
             <span class="n">log_scales</span><span class="o">=</span><span class="n">log_scales</span><span class="p">,</span>
             <span class="n">log_weights</span><span class="o">=</span><span class="n">log_weights</span><span class="p">,</span>
-            <span class="n">mean_log_inter_time</span><span class="o">=</span><span class="n">mean_log_inter_time</span><span class="p">,</span>
-            <span class="n">std_log_inter_time</span><span class="o">=</span><span class="n">std_log_inter_time</span>
+            <span class="n">mean_log_inter_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_log_inter_time</span><span class="p">,</span>
+            <span class="n">std_log_inter_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">std_log_inter_time</span>
         <span class="p">)</span>
 
         <span class="n">inter_times</span> <span class="o">=</span> <span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
         <span class="c1"># [batch_size, seq_len]</span>
-        <span class="n">log_p</span> <span class="o">=</span> <span class="n">inter_time_dist</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">inter_times</span><span class="p">)</span>
-
-        <span class="c1"># i comment these lines</span>
-        <span class="c1"># (batch_size, 1)</span>
-        <span class="c1"># last_event_idx = batch_non_pad_mask.sum(-1, keepdim=True).long() - 1</span>
-        <span class="c1"># log_surv_all = inter_time_dist.log_survival_function(inter_times)</span>
-        <span class="c1"># (batch_size,)</span>
-        <span class="c1"># log_surv_last = torch.gather(log_surv_all, dim=-1, index=last_event_idx).squeeze(-1)</span>
+        <span class="n">event_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">type_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">)</span>
+        <span class="n">time_ll</span> <span class="o">=</span> <span class="n">inter_time_dist</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">inter_times</span><span class="p">)</span> <span class="o">*</span> <span class="n">event_mask</span>
 
         <span class="c1"># [batch_size, seq_len, num_marks]</span>
         <span class="n">mark_logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mark_linear</span><span class="p">(</span><span class="n">context</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">mark_dist</span> <span class="o">=</span> <span class="n">Categorical</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">mark_logits</span><span class="p">)</span>
-        <span class="n">log_p</span> <span class="o">+=</span> <span class="n">mark_dist</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">type_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">mark_ll</span> <span class="o">=</span> <span class="n">mark_dist</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">type_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span> <span class="o">*</span> <span class="n">event_mask</span>
 
-        <span class="c1"># [batch_size, seq_len]</span>
-        <span class="n">log_p</span> <span class="o">*=</span> <span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">log_p</span> <span class="o">=</span> <span class="n">time_ll</span> <span class="o">+</span> <span class="n">mark_ll</span>
 
         <span class="c1"># [batch_size,]</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">log_p</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">log_p</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-        <span class="n">num_events</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">masked_select</span><span class="p">(</span><span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">num_events</span> <span class="o">=</span> <span class="n">event_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div></div>
+        <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div>
+
+<div class="viewcode-block" id="IntensityFree.predict_one_step_at_every_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.predict_one_step_at_every_event">[docs]</a>    <span class="k">def</span> <span class="nf">predict_one_step_at_every_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;One-step prediction for every event in the sequence.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time_seqs (tensor): [batch_size, seq_len].</span>
+<span class="sd">            time_delta_seqs (tensor): [batch_size, seq_len].</span>
+<span class="sd">            type_seqs (tensor): [batch_size, seq_len].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: tensors of dtime and type prediction, [batch_size, seq_len].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">batch</span>
+
+        <span class="c1"># remove the last event, as the prediction based on the last event has no label</span>
+        <span class="c1"># time_delta_seq should start from 1, because the first one is zero</span>
+        <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span> <span class="o">=</span> <span class="n">time_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">event_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># [batch_size, seq_len, hidden_size]</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len, 3 * num_mix_components]</span>
+        <span class="n">raw_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">locs</span> <span class="o">=</span> <span class="n">raw_params</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">num_mix_components</span><span class="p">]</span>
+        <span class="n">log_scales</span> <span class="o">=</span> <span class="n">raw_params</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_mix_components</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_mix_components</span><span class="p">)]</span>
+        <span class="n">log_weights</span> <span class="o">=</span> <span class="n">raw_params</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_mix_components</span><span class="p">):]</span>
+
+        <span class="n">log_scales</span> <span class="o">=</span> <span class="n">clamp_preserve_gradients</span><span class="p">(</span><span class="n">log_scales</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)</span>
+        <span class="n">log_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">log_weights</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">inter_time_dist</span> <span class="o">=</span> <span class="n">LogNormalMixtureDistribution</span><span class="p">(</span>
+            <span class="n">locs</span><span class="o">=</span><span class="n">locs</span><span class="p">,</span>
+            <span class="n">log_scales</span><span class="o">=</span><span class="n">log_scales</span><span class="p">,</span>
+            <span class="n">log_weights</span><span class="o">=</span><span class="n">log_weights</span><span class="p">,</span>
+            <span class="n">mean_log_inter_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_log_inter_time</span><span class="p">,</span>
+            <span class="n">std_log_inter_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">std_log_inter_time</span>
+        <span class="p">)</span>
+
+        <span class="c1"># [num_samples, batch_size, seq_len]</span>
+        <span class="n">accepted_dtimes</span> <span class="o">=</span> <span class="n">inter_time_dist</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">event_sampler</span><span class="o">.</span><span class="n">num_sample</span><span class="p">,))</span>
+        <span class="n">dtimes_pred</span> <span class="o">=</span> <span class="n">accepted_dtimes</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># [batch_size, seq_len, num_marks]</span>
+        <span class="n">mark_logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mark_linear</span><span class="p">(</span><span class="n">context</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Marks are modeled conditionally independently from times</span>
+        <span class="n">types_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mark_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dtimes_pred</span><span class="p">,</span> <span class="n">types_pred</span></div></div>
 </pre></div>
 
            </div>

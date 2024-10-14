@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -5,18 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_baselayer &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../../../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -116,6 +114,28 @@
     <span class="k">if</span> <span class="n">dropout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">p_attn</span> <span class="o">=</span> <span class="n">dropout</span><span class="p">(</span><span class="n">p_attn</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">p_attn</span><span class="p">,</span> <span class="n">value</span><span class="p">),</span> <span class="n">p_attn</span>
+
+
+<div class="viewcode-block" id="ScaledSoftplus"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_baselayer.html#easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus">[docs]</a><span class="k">class</span> <span class="nc">ScaledSoftplus</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Use different beta for mark-specific intensities</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="ScaledSoftplus.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_baselayer.html#easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_marks</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">20.</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ScaledSoftplus</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_beta</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_marks</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># [num_marks]</span></div>
+
+<div class="viewcode-block" id="ScaledSoftplus.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_baselayer.html#easy_tpp.model.torch_model.torch_baselayer.ScaledSoftplus.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param x: [..., num_marks]</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_beta</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+        <span class="n">beta_x</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">x</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">beta_x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">beta_x</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">max</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))</span><span class="o">.</span><span class="n">exp</span><span class="p">())</span> <span class="o">/</span> <span class="n">beta</span><span class="p">,</span>
+            <span class="n">x</span><span class="p">,</span>  <span class="c1"># if above threshold, then the transform is effectively linear</span>
+        <span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="MultiHeadAttention"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_baselayer.html#easy_tpp.model.torch_model.torch_baselayer.MultiHeadAttention">[docs]</a><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>

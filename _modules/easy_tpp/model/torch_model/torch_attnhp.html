@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -5,18 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_attnhp &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../../../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -105,7 +103,7 @@
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_baselayer</span> <span class="kn">import</span> <span class="n">EncoderLayer</span><span class="p">,</span> <span class="n">MultiHeadAttention</span>
+<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_baselayer</span> <span class="kn">import</span> <span class="n">EncoderLayer</span><span class="p">,</span> <span class="n">MultiHeadAttention</span><span class="p">,</span> <span class="n">ScaledSoftplus</span>
 <span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
 
 
@@ -154,7 +152,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_norm</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inten_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d_model</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">softplus</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Softplus</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">softplus</span> <span class="o">=</span> <span class="n">ScaledSoftplus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">)</span>  <span class="c1"># learnable mark-specific beta</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_event_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d_model</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inten_linear</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">softplus</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span></div>
@@ -253,7 +251,7 @@
 <span class="sd">            a diagonal matrix, [batch_size, seq_len, seq_len]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># [batch_size, seq_len, seq_len]</span>
-        <span class="n">layer_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">attention_mask</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">attention_mask</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">attention_mask</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">layer_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">attention_mask</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">attention_mask</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">layer_mask</span></div>
 
 <div class="viewcode-block" id="AttNHP.make_combined_att_mask"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.make_combined_att_mask">[docs]</a>    <span class="k">def</span> <span class="nf">make_combined_att_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">layer_mask</span><span class="p">):</span>
@@ -307,11 +305,11 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: loglike loss, num events.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">type_mask</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">batch</span>
         <span class="c1"># 1. compute event-loglik</span>
         <span class="c1"># the prediction of last event has no label, so we proceed to the last but one</span>
         <span class="c1"># att mask =&gt; diag is False, not mask.</span>
-        <span class="n">enc_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">time_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">type_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">attention_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
+        <span class="n">enc_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">time_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">type_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">attention_mask</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
         <span class="c1"># [batch_size, seq_len, num_event_types]</span>
         <span class="n">lambda_at_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span><span class="p">(</span><span class="n">enc_out</span><span class="p">)</span>
 
@@ -329,17 +327,16 @@
                                                                    <span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>  <span class="c1"># not used</span>
                                                                    <span class="n">type_seqs</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                                                                    <span class="n">sample_times</span><span class="p">,</span>
-                                                                   <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                                                                   <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="n">event_ll</span><span class="p">,</span> <span class="n">non_event_ll</span><span class="p">,</span> <span class="n">num_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_loglikelihood</span><span class="p">(</span><span class="n">lambda_at_event</span><span class="o">=</span><span class="n">lambda_at_event</span><span class="p">,</span>
                                                                         <span class="n">lambdas_loss_samples</span><span class="o">=</span><span class="n">lambda_t_sample</span><span class="p">,</span>
                                                                         <span class="n">time_delta_seq</span><span class="o">=</span><span class="n">time_delta_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
                                                                         <span class="n">seq_mask</span><span class="o">=</span><span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
-                                                                        <span class="n">lambda_type_mask</span><span class="o">=</span><span class="n">type_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
+                                                                        <span class="n">type_seq</span><span class="o">=</span><span class="n">type_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
 
-        <span class="c1"># return enc_inten to compute accuracy</span>
+        <span class="c1"># compute loss to minimize</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">event_ll</span> <span class="o">-</span> <span class="n">non_event_ll</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-
         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div>
 
 <div class="viewcode-block" id="AttNHP.compute_states_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_states_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_states_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -387,7 +384,7 @@
         <span class="n">encoder_output</span> <span class="o">=</span> <span class="n">encoder_output</span><span class="o">.</span><span class="n">permute</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">encoder_output</span></div>
 
-<div class="viewcode-block" id="AttNHP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_times</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the intensity at sampled times.</span>
 
 <span class="sd">        Args:</span>
@@ -404,17 +401,17 @@
 
         <span class="k">if</span> <span class="n">attention_mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="n">time_seqs</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-            <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">),</span> <span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">attention_mask</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">time_seqs</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">),</span> <span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">type_seqs</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">attention_mask</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">sample_times</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">time_seqs</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">sample_dtimes</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">time_seqs</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">1</span><span class="p">]:</span>
             <span class="c1"># we pass sample_dtimes for last time step here</span>
             <span class="c1"># we do a temp solution</span>
             <span class="c1"># [batch_size, seq_len, num_samples]</span>
-            <span class="n">sample_times</span> <span class="o">=</span> <span class="n">time_seqs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">sample_times</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">time_seqs</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">sample_dtimes</span> <span class="o">=</span> <span class="n">time_seqs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">sample_dtimes</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">time_seqs</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">])</span>
 
         <span class="c1"># [batch_size, seq_len, num_samples, hidden_size]</span>
-        <span class="n">encoder_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_states_at_sample_times</span><span class="p">(</span><span class="n">time_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">sample_times</span><span class="p">)</span>
+        <span class="n">encoder_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_states_at_sample_times</span><span class="p">(</span><span class="n">time_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">compute_last_step_only</span><span class="p">:</span>
             <span class="n">lambdas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span><span class="p">(</span><span class="n">encoder_output</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:,</span> <span class="p">:])</span>

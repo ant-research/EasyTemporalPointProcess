@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -6,18 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EasyTPP Preprocess Modules &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -95,6 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#preprocess.TPPDataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataset.__init__"><code class="docutils literal notranslate"><span class="pre">TPPDataset.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataset.to_tf_dataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset.to_tf_dataset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess.TPPDataset.get_dt_stats"><code class="docutils literal notranslate"><span class="pre">TPPDataset.get_dt_stats()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#preprocess.get_data_loader"><code class="docutils literal notranslate"><span class="pre">get_data_loader()</span></code></a></li>
@@ -250,7 +249,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="preprocess.EventTokenizer.model_input_names">
-<span class="sig-name descname"><span class="pre">model_input_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['time_seqs',</span> <span class="pre">'time_delta_seqs',</span> <span class="pre">'type_seqs',</span> <span class="pre">'seq_non_pad_mask',</span> <span class="pre">'attention_mask',</span> <span class="pre">'type_mask']</span></em><a class="headerlink" href="#preprocess.EventTokenizer.model_input_names" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_input_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['time_seqs',</span> <span class="pre">'time_delta_seqs',</span> <span class="pre">'type_seqs',</span> <span class="pre">'seq_non_pad_mask',</span> <span class="pre">'attention_mask']</span></em><a class="headerlink" href="#preprocess.EventTokenizer.model_input_names" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -374,21 +373,21 @@ make_attn_mask_for_pad_sequence(seqs, pad_index=12)
 ([[ True,  True,  True,  True, False, False],
 [ True,  True,  True,  True,  True,  True]])
 attention_mask
-[[[ True  True  True  True  True  True]</p>
+[[[ False  True  True  True  True  True]</p>
 <blockquote>
 <div><blockquote>
-<div><p>[False  True  True  True  True  True]
-[False False  True  True  True  True]
-[False False False  True  True  True]
+<div><p>[False  False  True  True  True  True]
+[False False  False  True  True  True]
+[False False False  False  True  True]
 [False False False False  True  True]
 [False False False False  True  True]]</p>
 </div></blockquote>
 <dl class="simple">
-<dt>[[ True  True  True  True  True  True]</dt><dd><p>[False  True  True  True  True  True]
-[False False  True  True  True  True]
-[False False False  True  True  True]
-[False False False False  True  True]
-[False False False False False  True]]]</p>
+<dt>[[False  True  True  True  True  True]</dt><dd><p>[False  False  True  True  True  True]
+[False False  False  True  True  True]
+[False False False  False  True  True]
+[False False False False  False  True]
+[False False False False False  False]]]</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -443,6 +442,11 @@ attention_mask
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocess.TPPDataset.get_dt_stats">
+<span class="sig-name descname"><span class="pre">get_dt_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/preprocess/dataset.html#TPPDataset.get_dt_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#preprocess.TPPDataset.get_dt_stats" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 

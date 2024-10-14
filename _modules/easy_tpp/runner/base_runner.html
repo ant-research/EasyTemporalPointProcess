@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -5,18 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.runner.base_runner &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -140,6 +138,12 @@
                 <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span>
                 <span class="o">**</span><span class="n">kwargs</span>
             <span class="p">)</span>
+
+        <span class="c1"># Needed for Intensity Free model</span>
+        <span class="n">mean_log_inter_time</span><span class="p">,</span> <span class="n">std_log_inter_time</span><span class="p">,</span> <span class="n">min_dt</span><span class="p">,</span> <span class="n">max_dt</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_loader</span><span class="o">.</span><span class="n">train_loader</span><span class="p">()</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dt_stats</span><span class="p">())</span>
+        <span class="n">runner_config</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;mean_log_inter_time&quot;</span><span class="p">,</span> <span class="n">mean_log_inter_time</span><span class="p">)</span>
+        <span class="n">runner_config</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;std_log_inter_time&quot;</span><span class="p">,</span> <span class="n">std_log_inter_time</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Runner.build_from_config"><a class="viewcode-back" href="../../../ref/runner.html#runner.Runner.build_from_config">[docs]</a>    <span class="nd">@staticmethod</span>

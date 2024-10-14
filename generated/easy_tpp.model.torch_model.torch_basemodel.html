@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -6,18 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_basemodel &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -185,7 +183,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.compute_loglikelihood">
-<span class="sig-name descname"><span class="pre">compute_loglikelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_at_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas_loss_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_type_mask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_basemodel.html#TorchBaseModel.compute_loglikelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.compute_loglikelihood" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_loglikelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_at_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas_loss_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_basemodel.html#TorchBaseModel.compute_loglikelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.compute_loglikelihood" title="Permalink to this definition"></a></dt>
 <dd><p>Compute the loglikelihood of the event sequence based on Equation (8) of NHP paper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -196,8 +194,7 @@
 <li><p><strong>lambdas_loss_samples</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample, num_event_types],</p></li>
 <li><p><strong>times.</strong> (<em>intensity at sampling</em>) – </p></li>
 <li><p><strong>seq_mask</strong> (<em>tensor</em>) – [batch_size, seq_len], sequence mask vector to mask the padded events.</p></li>
-<li><p><strong>lambda_type_mask</strong> (<em>tensor</em>) – [batch_size, seq_len, num_event_types], type mask matrix to mask the</p></li>
-<li><p><strong>types.</strong> (<em>padded event</em>) – </p></li>
+<li><p><strong>type_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], sequence of mark ids, with padded events having a mark of self.pad_token_id</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

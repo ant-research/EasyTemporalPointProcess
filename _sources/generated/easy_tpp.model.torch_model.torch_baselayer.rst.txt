@@ -29,6 +29,7 @@
       GELU
       Identity
       MultiHeadAttention
+      ScaledSoftplus
       SublayerConnection
       TimePositionalEncoding
       TimeShiftedPositionalEncoding

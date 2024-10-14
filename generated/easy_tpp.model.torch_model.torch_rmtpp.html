@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -6,18 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_rmtpp &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -150,29 +148,26 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_rmtpp.RMTPP.state_decay">
-<span class="sig-name descname"><span class="pre">state_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states_to_decay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_rmtpp.html#RMTPP.state_decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.state_decay" title="Permalink to this definition"></a></dt>
-<dd><p>Equation (11), which computes intensity</p>
+<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_rmtpp.RMTPP.evolve_and_get_intentsity">
+<span class="sig-name descname"><span class="pre">evolve_and_get_intentsity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">right_hiddens_BNH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dts_BNG</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_rmtpp.html#RMTPP.evolve_and_get_intentsity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.evolve_and_get_intentsity" title="Permalink to this definition"></a></dt>
+<dd><p>Eq.11 that computes intensity.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_rmtpp.RMTPP.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_rmtpp.html#RMTPP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.forward" title="Permalink to this definition"></a></dt>
-<dd><p>Call the model.</p>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_rmtpp.html#RMTPP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Suppose we have inputs with original sequence length N+1
+ts: [t0, t1, …, t_N]
+dts: [0, t1 - t0, t2 - t1, …, t_N - t_{N-1}]
+marks: [k0, k1, …, k_N] (k0 and kN could be padded marks if t0 and tN correspond to left and right windows)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>batch</strong> (<em>list</em>) – batch input.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(batch_size, seq_len - 1, hidden_dim)
+right limits of <em>hidden states</em> [t_0, …, t_{N-1}, t_N] of shape: (batch_size, seq_len, hidden_dim)
+We need the right limit of t_N to sample continuation.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>hidden states, [batch_size, seq_len, hidden_dim], states right before the event happens;</dt><dd><p>stacked decay states,  [batch_size, max_seq_length, 4, hidden_dim], states right after
-the event happens.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>left limits of <em>intensity</em> at [t_1, …, t_N] of shape</p>
 </dd>
 </dl>
 </dd></dl>
@@ -180,7 +175,7 @@ the event happens.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_rmtpp.RMTPP.loglike_loss">
 <span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_rmtpp.html#RMTPP.loglike_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.loglike_loss" title="Permalink to this definition"></a></dt>
-<dd><p>Compute the loglike loss.</p>
+<dd><p>Compute the log-likelihood loss.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>batch</strong> (<em>list</em>) – batch input.</p>
@@ -195,28 +190,8 @@ the event happens.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_rmtpp.RMTPP.compute_states_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_states_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decay_states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_rmtpp.html#RMTPP.compute_states_at_sample_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.compute_states_at_sample_times" title="Permalink to this definition"></a></dt>
-<dd><p>Compute the hidden states at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>decay_states</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples].</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden state at each sampled time.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.torch_model.torch_rmtpp.RMTPP.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_times</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_rmtpp.html#RMTPP.compute_intensities_at_sample_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.compute_intensities_at_sample_times" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/model/torch_model/torch_rmtpp.html#RMTPP.compute_intensities_at_sample_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.compute_intensities_at_sample_times" title="Permalink to this definition"></a></dt>
 <dd><p>Compute the intensity at sampled times, not only event times.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

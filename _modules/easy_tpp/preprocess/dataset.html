@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
@@ -5,18 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.preprocess.dataset &mdash; EasyTPP 0.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c1dcd045"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c1dcd045"></script>
+      <script src="../../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -204,7 +202,29 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">:</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">TfTPPDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_seqs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_delta_seqs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_seqs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">TfTPPDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_seqs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_delta_seqs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_seqs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TPPDataset.get_dt_stats"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.TPPDataset.get_dt_stats">[docs]</a>    <span class="k">def</span> <span class="nf">get_dt_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x_bar</span><span class="p">,</span> <span class="n">s_2_x</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="n">min_dt</span><span class="p">,</span> <span class="n">max_dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+        <span class="k">for</span> <span class="n">dts</span><span class="p">,</span> <span class="n">marks</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_delta_seqs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_seqs</span><span class="p">):</span>
+            <span class="n">dts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">marks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="kc">None</span><span class="p">])</span>
+            <span class="n">min_dt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_dt</span><span class="p">,</span> <span class="n">dts</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+            <span class="n">max_dt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_dt</span><span class="p">,</span> <span class="n">dts</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="n">y_bar</span> <span class="o">=</span> <span class="n">dts</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="n">s_2_y</span> <span class="o">=</span> <span class="n">dts</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">dts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="n">m</span>
+            <span class="c1"># Formulat taken from https://math.stackexchange.com/questions/3604607/can-i-work-out-the-variance-in-batches</span>
+            <span class="n">s_2_x</span> <span class="o">=</span> <span class="p">(((</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">s_2_x</span> <span class="o">+</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">s_2_y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span>
+                        <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="p">((</span><span class="n">x_bar</span> <span class="o">-</span> <span class="n">y_bar</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="p">((</span><span class="n">n</span> <span class="o">+</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+            <span class="n">x_bar</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">x_bar</span> <span class="o">+</span> <span class="n">m</span> <span class="o">*</span> <span class="n">y_bar</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">m</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">x_bar</span><span class="p">,</span> <span class="p">(</span><span class="n">s_2_x</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;min_dt: </span><span class="si">{</span><span class="n">min_dt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;max_dt: </span><span class="si">{</span><span class="n">max_dt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x_bar</span><span class="p">,</span> <span class="p">(</span><span class="n">s_2_x</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">min_dt</span><span class="p">,</span> <span class="n">max_dt</span></div></div>
 
 
 <div class="viewcode-block" id="get_data_loader"><a class="viewcode-back" href="../../../ref/preprocess.html#preprocess.get_data_loader">[docs]</a><span class="k">def</span> <span class="nf">get_data_loader</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">TPPDataset</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">:</span> <span class="n">EventTokenizer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
