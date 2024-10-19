@@ -202,9 +202,9 @@ class ModelConfig(Config):
         self.time_emb_size = kwargs.get('time_emb_size', 16)
         self.num_layers = kwargs.get('num_layers', 2)
         self.num_heads = kwargs.get('num_heads', 2)
-        self.mc_num_sample_per_step = kwargs.get('mc_num_sample_per_step', 20)
         self.sharing_param_layer = kwargs.get('sharing_param_layer', False)
-        self.loss_integral_num_sample_per_step = kwargs.get('loss_integral_num_sample_per_step', 20)
+        self.use_mc_samples = kwargs.get('use_mc_samples', True)  # if using MC samples in computing log-likelihood
+        self.loss_integral_num_sample_per_step = kwargs.get('loss_integral_num_sample_per_step', 20)  # mc_num_sample_per_step
         self.dropout_rate = kwargs.get('dropout_rate', 0.0)
         self.use_ln = kwargs.get('use_ln', False)
         self.thinning = ThinningConfig.parse_from_yaml_config(kwargs.get('thinning'))
@@ -227,7 +227,6 @@ class ModelConfig(Config):
                 'hidden_size': self.hidden_size,
                 'time_emb_size': self.time_emb_size,
                 'num_layers': self.num_layers,
-                'mc_num_sample_per_step': self.mc_num_sample_per_step,
                 'sharing_param_layer': self.sharing_param_layer,
                 'loss_integral_num_sample_per_step': self.loss_integral_num_sample_per_step,
                 'dropout_rate': self.dropout_rate,
@@ -265,7 +264,6 @@ class ModelConfig(Config):
                            hidden_size=self.hidden_size,
                            time_emb_size=self.time_emb_size,
                            num_layers=self.num_layers,
-                           mc_num_sample_per_step=self.mc_num_sample_per_step,
                            sharing_param_layer=self.sharing_param_layer,
                            loss_integral_num_sample_per_step=self.loss_integral_num_sample_per_step,
                            dropout_rate=self.dropout_rate,

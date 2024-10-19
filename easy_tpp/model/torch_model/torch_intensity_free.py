@@ -121,11 +121,14 @@ class IntensityFree(TorchBaseModel):
         super(IntensityFree, self).__init__(model_config)
 
         self.num_mix_components = model_config.model_specs['num_mix_components']
+        self.mean_log_inter_time = model_config.get("mean_log_inter_time", 0.0)
+        self.std_log_inter_time = model_config.get("std_log_inter_time", 1.0)
+
         self.num_features = 1 + self.hidden_size
 
         self.layer_rnn = nn.GRU(input_size=self.num_features,
                                 hidden_size=self.hidden_size,
-                                num_layers=1,
+                                num_layers=1,  # used in original paper
                                 batch_first=True)
 
         self.mark_linear = nn.Linear(self.hidden_size, self.num_event_types_pad)
@@ -165,15 +168,10 @@ class IntensityFree(TorchBaseModel):
         Returns:
             tuple: loglikelihood loss and num of events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _, type_mask = batch
-
-        mean_log_inter_time = \
-            torch.masked_select(time_delta_seqs[:, 1:], batch_non_pad_mask[:, 1:]).clamp(1e-5).log().mean()
-        std_log_inter_time = \
-            torch.masked_select(time_delta_seqs[:, 1:], batch_non_pad_mask[:, 1:]).clamp(1e-5).log().std()
+        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _ = batch
 
         # [batch_size, seq_len, hidden_size]
-        context = self.forward(time_delta_seqs[:, 1:], type_seqs[:, :-1])
+        context = self.forward(time_delta_seqs[:, :-1], type_seqs[:, :-1])
 
         # [batch_size, seq_len, 3 * num_mix_components]
         raw_params = self.linear(context)
@@ -187,32 +185,70 @@ class IntensityFree(TorchBaseModel):
             locs=locs,
             log_scales=log_scales,
             log_weights=log_weights,
-            mean_log_inter_time=mean_log_inter_time,
-            std_log_inter_time=std_log_inter_time
+            mean_log_inter_time=self.mean_log_inter_time,
+            std_log_inter_time=self.std_log_inter_time
         )
 
         inter_times = time_delta_seqs[:, 1:].clamp(min=1e-5)
         # [batch_size, seq_len]
-        log_p = inter_time_dist.log_prob(inter_times)
-
-        # i comment these lines
-        # (batch_size, 1)
-        # last_event_idx = batch_non_pad_mask.sum(-1, keepdim=True).long() - 1
-        # log_surv_all = inter_time_dist.log_survival_function(inter_times)
-        # (batch_size,)
-        # log_surv_last = torch.gather(log_surv_all, dim=-1, index=last_event_idx).squeeze(-1)
+        event_mask = torch.logical_and(batch_non_pad_mask[:, 1:], type_seqs[:, 1:] != self.pad_token_id)
+        time_ll = inter_time_dist.log_prob(inter_times) * event_mask
 
         # [batch_size, seq_len, num_marks]
         mark_logits = torch.log_softmax(self.mark_linear(context), dim=-1)
         mark_dist = Categorical(logits=mark_logits)
-        log_p += mark_dist.log_prob(type_seqs[:, :-1])
+        mark_ll = mark_dist.log_prob(type_seqs[:, 1:]) * event_mask
 
-        # [batch_size, seq_len]
-        log_p *= batch_non_pad_mask[:, 1:]
+        log_p = time_ll + mark_ll
 
         # [batch_size,]
-        loss = -(log_p.sum(-1)).mean()
+        loss = -log_p.sum()
 
-        num_events = torch.masked_select(batch_non_pad_mask[:, 1:], batch_non_pad_mask[:, 1:]).size()[0]
+        num_events = event_mask.sum().item()
 
         return loss, num_events
+
+    def predict_one_step_at_every_event(self, batch):
+        """One-step prediction for every event in the sequence.
+
+        Args:
+            time_seqs (tensor): [batch_size, seq_len].
+            time_delta_seqs (tensor): [batch_size, seq_len].
+            type_seqs (tensor): [batch_size, seq_len].
+
+        Returns:
+            tuple: tensors of dtime and type prediction, [batch_size, seq_len].
+        """
+        time_seq, time_delta_seq, event_seq, batch_non_pad_mask, _ = batch
+
+        # remove the last event, as the prediction based on the last event has no label
+        # time_delta_seq should start from 1, because the first one is zero
+        time_seq, time_delta_seq, event_seq = time_seq[:, :-1], time_delta_seq[:, :-1], event_seq[:, :-1]
+
+        # [batch_size, seq_len, hidden_size]
+        context = self.forward(time_delta_seq, event_seq)
+
+        # [batch_size, seq_len, 3 * num_mix_components]
+        raw_params = self.linear(context)
+        locs = raw_params[..., :self.num_mix_components]
+        log_scales = raw_params[..., self.num_mix_components: (2 * self.num_mix_components)]
+        log_weights = raw_params[..., (2 * self.num_mix_components):]
+
+        log_scales = clamp_preserve_gradients(log_scales, -5.0, 3.0)
+        log_weights = torch.log_softmax(log_weights, dim=-1)
+        inter_time_dist = LogNormalMixtureDistribution(
+            locs=locs,
+            log_scales=log_scales,
+            log_weights=log_weights,
+            mean_log_inter_time=self.mean_log_inter_time,
+            std_log_inter_time=self.std_log_inter_time
+        )
+
+        # [num_samples, batch_size, seq_len]
+        accepted_dtimes = inter_time_dist.sample((self.event_sampler.num_sample,))
+        dtimes_pred = accepted_dtimes.mean(dim=0)
+
+        # [batch_size, seq_len, num_marks]
+        mark_logits = torch.log_softmax(self.mark_linear(context), dim=-1)  # Marks are modeled conditionally independently from times
+        types_pred = torch.argmax(mark_logits, dim=-1)
+        return dtimes_pred, types_pred

@@ -104,6 +104,28 @@ class TPPDataset(Dataset):
 
         return TfTPPDataset(self.time_seqs, self.time_delta_seqs, self.type_seqs, **kwargs)
 
+    def get_dt_stats(self):
+        x_bar, s_2_x, n = 0., 0., 0
+        min_dt, max_dt = np.inf, -np.inf
+
+        for dts, marks in zip(self.time_delta_seqs, self.type_seqs):
+            dts = np.array(dts[1:-1 if marks[-1] == -1 else None])
+            min_dt = min(min_dt, dts.min())
+            max_dt = max(max_dt, dts.max())
+            y_bar = dts.mean()
+            s_2_y = dts.var()
+            m = dts.shape[0]
+            n += m
+            # Formulat taken from https://math.stackexchange.com/questions/3604607/can-i-work-out-the-variance-in-batches
+            s_2_x = (((n - 1) * s_2_x + (m - 1) * s_2_y) / (n + m - 1)) + (
+                        (n * m * ((x_bar - y_bar) ** 2)) / ((n + m) * (n + m - 1)))
+            x_bar = (n * x_bar + m * y_bar) / (n + m)
+
+        print(x_bar, (s_2_x ** 0.5))
+        print(f'min_dt: {min_dt}')
+        print(f'max_dt: {max_dt}')
+        return x_bar, (s_2_x ** 0.5), min_dt, max_dt
+
 
 def get_data_loader(dataset: TPPDataset, backend: str, tokenizer: EventTokenizer, **kwargs):
     use_torch = backend == 'torch'

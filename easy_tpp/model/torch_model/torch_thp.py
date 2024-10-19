@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from easy_tpp.model.torch_model.torch_baselayer import EncoderLayer, MultiHeadAttention, TimePositionalEncoding
+from easy_tpp.model.torch_model.torch_baselayer import EncoderLayer, MultiHeadAttention, TimePositionalEncoding, ScaledSoftplus
 from easy_tpp.model.torch_model.torch_basemodel import TorchBaseModel
 
 
@@ -34,7 +34,7 @@ class THP(TorchBaseModel):
 
         # convert hidden vectors into event-type-sized vector
         self.layer_intensity_hidden = nn.Linear(self.d_model, self.num_event_types)
-        self.softplus = nn.Softplus()
+        self.softplus = ScaledSoftplus(self.num_event_types)   # learnable mark-specific beta
 
         # Add MLP layer
         # Equation (5)
@@ -49,7 +49,6 @@ class THP(TorchBaseModel):
                 self.d_model,
                 MultiHeadAttention(self.n_head, self.d_model, self.d_model, self.dropout,
                                    output_linear=False),
-
                 use_residual=False,
                 feed_forward=self.feed_forward,
                 dropout=self.dropout
@@ -88,11 +87,11 @@ class THP(TorchBaseModel):
         Returns:
             tuple: loglike loss, num events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, attention_mask, type_mask = batch
+        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, attention_mask = batch
 
         # 1. compute event-loglik
         # [batch_size, seq_len, hidden_size]
-        enc_out = self.forward(time_seqs[:, :-1], type_seqs[:, :-1], attention_mask[:, 1:, :-1])
+        enc_out = self.forward(time_seqs[:, :-1], type_seqs[:, :-1], attention_mask[:, :-1, :-1])
 
         # [batch_size, seq_len, num_event_types]
         # update time decay based on Equation (6)
@@ -122,11 +121,10 @@ class THP(TorchBaseModel):
                                                                         lambdas_loss_samples=lambda_t_sample,
                                                                         time_delta_seq=time_delta_seqs[:, 1:],
                                                                         seq_mask=batch_non_pad_mask[:, 1:],
-                                                                        lambda_type_mask=type_mask[:, 1:])
+                                                                        type_seq=type_seqs[:, 1:])
 
-        # return enc_inten to compute accuracy
+        # compute loss to minimize
         loss = - (event_ll - non_event_ll).sum()
-
         return loss, num_events
 
     def compute_states_at_sample_times(self, event_states, sample_dtimes):
