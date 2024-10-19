@@ -4,7 +4,7 @@ import pickle
 
 import numpy as np
 import yaml
-
+import json
 from easy_tpp.utils.const import RunnerPhase
 
 
@@ -137,6 +137,41 @@ def save_pickle(file_dir, object_to_save):
         pickle.dump(object_to_save, f_out)
 
     return
+
+
+def save_json(data, file_dir):
+    """
+    Save data to a JSON file.
+
+    Args:
+        data: The data to be saved. It should be JSON serializable (e.g., a dictionary or list).
+        file_dir (str): The path to the file where the data will be saved.
+
+    Raises:
+        IOError: If the file cannot be opened or written to.
+    """
+    with open(file_dir, 'w') as outfile:
+        json.dump(data, outfile, indent=4)
+    print(f"Data successfully saved to {file_dir}")
+
+
+def load_json(file_dir):
+    """
+    Reads data from a JSON file.
+
+    Args:
+        file_dir (str): The path to the JSON file to be read.
+
+    Returns:
+        The data read from the JSON file.
+
+    Raises:
+        IOError: If the file cannot be opened or read.
+        json.JSONDecodeError: If the file is not a valid JSON.
+    """
+    with open(file_dir, 'r') as infile:
+        data = json.load(infile)
+    return data
 
 
 def has_key(target_dict, target_keys):
