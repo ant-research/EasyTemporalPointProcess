@@ -121,6 +121,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#utils.Registrable.registry_dict"><code class="docutils literal notranslate"><span class="pre">Registrable.registry_dict()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#utils.get_unique_id"><code class="docutils literal notranslate"><span class="pre">get_unique_id()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#utils.Timer.__init__"><code class="docutils literal notranslate"><span class="pre">Timer.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#utils.Timer.start"><code class="docutils literal notranslate"><span class="pre">Timer.start()</span></code></a></li>
@@ -159,8 +160,17 @@
 <li class="toctree-l3"><a class="reference internal" href="#utils.TruncationStrategy.DO_NOT_TRUNCATE"><code class="docutils literal notranslate"><span class="pre">TruncationStrategy.DO_NOT_TRUNCATE</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#utils.TensorType"><code class="docutils literal notranslate"><span class="pre">TensorType</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#utils.TensorType.PYTORCH"><code class="docutils literal notranslate"><span class="pre">TensorType.PYTORCH</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.TensorType.TENSORFLOW"><code class="docutils literal notranslate"><span class="pre">TensorType.TENSORFLOW</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.TensorType.NUMPY"><code class="docutils literal notranslate"><span class="pre">TensorType.NUMPY</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#utils.is_torch_device"><code class="docutils literal notranslate"><span class="pre">is_torch_device()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#utils.is_numpy_array"><code class="docutils literal notranslate"><span class="pre">is_numpy_array()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utils.save_json"><code class="docutils literal notranslate"><span class="pre">save_json()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utils.load_json"><code class="docutils literal notranslate"><span class="pre">load_json()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utils.generate_and_save_json"><code class="docutils literal notranslate"><span class="pre">generate_and_save_json()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -622,6 +632,20 @@ function to use).</p>
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.get_unique_id">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_unique_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/multiprocess_utils.html#get_unique_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.get_unique_id" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a unique id string based on process id (pid), thread id and timestamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Unique id</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="utils.Timer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/multiprocess_utils.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Timer" title="Permalink to this definition"></a></dt>
@@ -844,6 +868,29 @@ an IDE.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.TensorType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">TensorType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/const.html#TensorType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.TensorType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#utils.ExplicitEnum" title="easy_tpp.utils.const.ExplicitEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitEnum</span></code></a></p>
+<p>Possible values for the <cite>return_tensors</cite> argument in [<cite>EventTokenizerBase.__call__</cite>]. Useful for
+tab-completion in an IDE.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.TensorType.PYTORCH">
+<span class="sig-name descname"><span class="pre">PYTORCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pt'</span></em><a class="headerlink" href="#utils.TensorType.PYTORCH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.TensorType.TENSORFLOW">
+<span class="sig-name descname"><span class="pre">TENSORFLOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tf'</span></em><a class="headerlink" href="#utils.TensorType.TENSORFLOW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.TensorType.NUMPY">
+<span class="sig-name descname"><span class="pre">NUMPY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'np'</span></em><a class="headerlink" href="#utils.TensorType.NUMPY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.is_torch_device">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">is_torch_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_torch_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.is_torch_device" title="Permalink to this definition"></a></dt>
@@ -854,6 +901,65 @@ an IDE.</p>
 <dt class="sig sig-object py" id="utils.is_numpy_array">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">is_numpy_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/generic.html#is_numpy_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.is_numpy_array" title="Permalink to this definition"></a></dt>
 <dd><p>Tests if <cite>x</cite> is a numpy array or not.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.save_json">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">save_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#save_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.save_json" title="Permalink to this definition"></a></dt>
+<dd><p>Save data to a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The data to be saved. It should be JSON serializable (e.g., a dictionary or list).</p></li>
+<li><p><strong>file_dir</strong> (<em>str</em>) – The path to the file where the data will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IOError</strong> – If the file cannot be opened or written to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.load_json">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">load_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/misc.html#load_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.load_json" title="Permalink to this definition"></a></dt>
+<dd><p>Reads data from a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_dir</strong> (<em>str</em>) – The path to the JSON file to be read.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data read from the JSON file.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>IOError</strong> – If the file cannot be opened or read.</p></li>
+<li><p><strong>json.JSONDecodeError</strong> – If the file is not a valid JSON.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_and_save_json">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">generate_and_save_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjacency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_len</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/easy_tpp/utils/gen_utils.html#generate_and_save_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_and_save_json" title="Permalink to this definition"></a></dt>
+<dd><p>Generates synthetic data, formats it, and saves it to a file in Hugging Face format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_nodes</strong> (<em>int</em>) – Number of nodes (or dimensions) in the Hawkes process.</p></li>
+<li><p><strong>end_time</strong> (<em>float</em>) – The time until which the process is simulated.</p></li>
+<li><p><strong>baseline</strong> (<em>float</em>) – Baseline intensity for each node.</p></li>
+<li><p><strong>adjacency</strong> (<em>float</em>) – Adjacency matrix value for the influence between nodes.</p></li>
+<li><p><strong>decay</strong> (<em>float</em>) – Decay parameter for the exponential kernel.</p></li>
+<li><p><strong>max_seq_len</strong> (<em>int</em>) – Maximum sequence length.</p></li>
+<li><p><strong>target_file</strong> (<em>str</em>) – Path to the file where the formatted data will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IOError</strong> – If the file cannot be opened or written to.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

@@ -139,7 +139,7 @@
     <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%y%m</span><span class="si">%d</span><span class="s1">-%H%M%S&#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">get_unique_id</span><span class="p">():</span>
+<div class="viewcode-block" id="get_unique_id"><a class="viewcode-back" href="../../../ref/utils.html#utils.get_unique_id">[docs]</a><span class="k">def</span> <span class="nf">get_unique_id</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Generate a unique id string based on process id (pid), thread id and timestamp.</span>
 
 <span class="sd">    Returns:</span>
@@ -151,7 +151,7 @@
     <span class="n">tid</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">currentThread</span><span class="p">()</span><span class="o">.</span><span class="n">ident</span>
     <span class="n">ts_id</span> <span class="o">=</span> <span class="n">get_now_timestamp_id</span><span class="p">()</span>
 
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">ts_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">ts_id</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="parse_uri_to_protocol_and_path"><a class="viewcode-back" href="../../../ref/utils.html#utils.parse_uri_to_protocol_and_path">[docs]</a><span class="k">def</span> <span class="nf">parse_uri_to_protocol_and_path</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
