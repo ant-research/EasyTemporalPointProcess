@@ -414,7 +414,9 @@ class EventTokenizer:
                                                                              max_len=max_length,
                                                                              dtype=np.int64)
         else:
-            batch_output = encoded_inputs
+            batch_output[self.model_input_names[0]] = np.array(encoded_inputs[self.model_input_names[0]])
+            batch_output[self.model_input_names[1]] = np.array(encoded_inputs[self.model_input_names[1]])
+            batch_output[self.model_input_names[2]] = np.array(encoded_inputs[self.model_input_names[2]])
 
         # non_pad_mask; replaced the use of event types by using the original sequence length
         seq_pad_mask = np.full_like(batch_output[self.model_input_names[2]], fill_value=True, dtype=bool)
