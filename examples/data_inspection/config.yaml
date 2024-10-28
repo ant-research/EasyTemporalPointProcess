@@ -1,0 +1,10 @@
+pipeline_config_id: data_config
+
+data_format: json
+train_dir:  easytpp/taxi  # ./data/taxi/train.json
+valid_dir:  easytpp/taxi # ./data/taxi/dev.json
+test_dir:  easytpp/taxi # ./data/taxi/test.json
+data_specs:
+  num_event_types: 10
+  pad_token_id: 10
+  padding_side: right

@@ -1,33 +1,34 @@
 from abc import abstractmethod
 from typing import Any
+from omegaconf import OmegaConf
 
-from easy_tpp.utils import save_yaml_config, load_yaml_config, Registrable, logger
+from easy_tpp.utils import save_yaml_config, Registrable, logger
 
 
 class Config(Registrable):
 
-    def save_to_yaml_file(self, fn):
-        """Save the config into the yaml file 'fn'.
+    def save_to_yaml_file(self, config_dir):
+        """Save the config into the yaml file 'config_dir'.
 
         Args:
-            fn (str): Target filename.
+            config_dir (str): Target filename.
 
         Returns:
         """
         yaml_config = self.get_yaml_config()
-        save_yaml_config(fn, yaml_config)
+        OmegaConf.save(yaml_config, config_dir)
 
     @staticmethod
-    def build_from_yaml_file(yaml_fn, **kwargs):
+    def build_from_yaml_file(yaml_dir, **kwargs):
         """Load yaml config file from disk.
 
         Args:
-            yaml_fn (str): Path of the yaml config file.
+            yaml_dir (str): Path of the yaml config file.
 
         Returns:
             EasyTPP.Config: Config object corresponding to cls.
         """
-        config = load_yaml_config(yaml_fn)
+        config = OmegaConf.load(yaml_dir)
         pipeline_config = config.get('pipeline_config_id')
         config_cls = Config.by_name(pipeline_config.lower())
         logger.critical(f'Load pipeline config class {config_cls.__name__}')

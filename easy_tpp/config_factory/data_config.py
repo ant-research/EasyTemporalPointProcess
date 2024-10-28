@@ -69,8 +69,9 @@ class DataSpecConfig(Config):
                               max_len=self.max_len)
 
 
+@Config.register('data_config')
 class DataConfig(Config):
-    def __init__(self, train_dir, valid_dir, test_dir, specs=None):
+    def __init__(self, train_dir, valid_dir, test_dir, data_format, specs=None):
         """Initialize the DataConfig object.
 
         Args:
@@ -83,7 +84,7 @@ class DataConfig(Config):
         self.valid_dir = valid_dir
         self.test_dir = test_dir
         self.data_specs = specs or DataSpecConfig()
-        self.data_format = train_dir.split('.')[-1]
+        self.data_format = train_dir.split('.')[-1] if data_format is None else data_format
 
     def get_yaml_config(self):
         """Return the config in dict (yaml compatible) format.
@@ -113,6 +114,7 @@ class DataConfig(Config):
             train_dir=yaml_config.get('train_dir'),
             valid_dir=yaml_config.get('valid_dir'),
             test_dir=yaml_config.get('test_dir'),
+            data_format=yaml_config.get('data_format'),
             specs=DataSpecConfig.parse_from_yaml_config(yaml_config.get('data_specs'))
         )
 
