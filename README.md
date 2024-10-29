@@ -102,6 +102,16 @@ Per users' request, we processed two non-anthropogenic datasets
 ## Quick Start <a href='#top'>[Back to Top]</a>
 <span id='quick-start'/>
 
+
+### Colab Tutorials
+
+Explore the following tutorials that can be opened directly in Google Colab:
+
+- [![Open Tutorial 1 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/ant-research/EasyTemporalPointProcess/blob/main/notebooks/easytpp_1_dataset.ipynb) Tutorial 1: Dataset in EasyTPP.
+
+
+### End-to-end Example
+
 We provide an end-to-end example for users to run a standard TPP model with `EasyTPP`.
 
 
