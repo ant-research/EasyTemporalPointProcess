@@ -1,0 +1,255 @@
+pipeline_config_id: runner_config
+
+data:
+  retweet:
+    data_format: json
+    train_dir: easytpp/retweet
+    valid_dir: easytpp/retweet
+    test_dir: easytpp/retweet
+    data_specs:
+      num_event_types: 3
+      pad_token_id: 3
+      padding_side: right
+      truncation_side: right
+
+NHP_train:
+  base_config:
+    stage: train
+    backend: torch
+    dataset_id: retweet
+    runner_id: std_tpp
+    model_id: NHP # model name
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 256
+    max_epoch: 20
+    shuffle: False
+    optimizer: adam
+    learning_rate: 1.e-3
+    valid_freq: 1
+    use_tfb: False
+    metrics: [ 'acc', 'rmse' ]
+    seed: 2019
+    gpu: -1
+  model_config:
+    hidden_size: 64
+    loss_integral_num_sample_per_step: 20
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+      look_ahead_time: 10
+      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 1
+
+
+
+SAHP_train:
+  base_config:
+    stage: train
+    backend: torch
+    dataset_id: taxi
+    runner_id: std_tpp
+    model_id: SAHP # model name
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 256
+    max_epoch: 20
+    shuffle: False
+    optimizer: adam
+    learning_rate: 1.e-3
+    valid_freq: 1
+    use_tfb: False
+    metrics: [ 'acc', 'rmse' ]
+    seed: 2019
+    gpu: 0
+  model_config:
+    hidden_size: 32
+    time_emb_size: 16
+    num_layers: 2
+    num_heads: 2
+    loss_integral_num_sample_per_step: 20
+    use_ln: False
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+      look_ahead_time: 10
+      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 1
+
+
+
+SAHP_gen:
+  base_config:
+    stage: gen
+    backend: torch
+    dataset_id: retweet
+    runner_id: std_tpp
+    model_id: SAHP # model name
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 256
+    max_epoch: 1
+  model_config:
+    hidden_size: 16
+    time_emb_size: 4
+    num_layers: 2
+    num_heads: 2
+    loss_integral_num_sample_per_step: 20
+    use_ln: False
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+      look_ahead_time: 10
+      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 10
+
+THP_train:
+  base_config:
+    stage: train
+    backend: torch
+    dataset_id: taxi
+    runner_id: std_tpp
+    model_id: THP # model name
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 256
+    max_epoch: 30
+    shuffle: False
+    optimizer: adam
+    learning_rate: 1.e-3
+    valid_freq: 1
+    use_tfb: False
+    metrics: [ 'acc', 'rmse' ]
+    seed: 2019
+    gpu: -1
+  model_config:
+    hidden_size: 32
+    time_emb_size: 16
+    num_layers: 2
+    num_heads: 2
+    mc_num_sample_per_step: 20
+    loss_integral_num_sample_per_step: 20
+    use_ln: False
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+      look_ahead_time: 10
+      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 1
+
+
+THP_gen:
+  base_config:
+    stage: gen
+    backend: torch
+    dataset_id: retweet
+    runner_id: std_tpp
+    model_id: THP # model name
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 256
+    max_epoch: 1
+  model_config:
+    hidden_size: 32
+    time_emb_size: 16
+    num_layers: 2
+    num_heads: 2
+    mc_num_sample_per_step: 20
+    loss_integral_num_sample_per_step: 20
+    use_ln: False
+#    pretrained_model_dir: ./checkpoints/2694_4384867712_230603-160544/models/saved_model
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+      look_ahead_time: 10
+      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 10
+
+AttNHP_train:
+  base_config:
+    stage: train
+    backend: torch
+    dataset_id: taxi
+    runner_id: std_tpp
+    model_id: AttNHP # model name
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 256
+    max_epoch: 200
+    shuffle: False
+    optimizer: adam
+    learning_rate: 1.e-3
+    valid_freq: 1
+    use_tfb: False
+    metrics: [ 'acc', 'rmse' ]
+    seed: 2019
+    gpu: -1
+  model_config:
+    hidden_size: 16
+    time_emb_size: 4
+    num_layers: 2
+    num_heads: 2
+    loss_integral_num_sample_per_step: 10
+    use_ln: False
+    thinning:
+      num_seq: 2
+      num_sample: 1
+      num_exp: 50 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+      look_ahead_time: 10
+      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 1
+
+
+AttNHP_gen:
+  base_config:
+    stage: gen
+    backend: torch
+    dataset_id: retweet
+    runner_id: std_tpp
+    model_id: AttNHP # model name
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 256
+    max_epoch: 1
+  model_config:
+    hidden_size: 16
+    time_emb_size: 4
+    num_layers: 2
+    num_heads: 2
+    mc_num_sample_per_step: 20
+    loss_integral_num_sample_per_step: 20
+    use_ln: False
+#    pretrained_model_dir: ./checkpoints/6934_4375315840_230603-222826/models/saved_model
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 50 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+      look_ahead_time: 10
+      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 10
