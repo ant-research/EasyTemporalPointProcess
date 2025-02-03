@@ -94,9 +94,6 @@ class RunnerConfig(Config):
         # during testing we dont do shuffle by default
         self.trainer_config.shuffle = False
 
-        # during testing we dont apply tfb by default
-        self.trainer_config.use_tfb = False
-
         return
 
     def update_config(self):

@@ -33,11 +33,10 @@ class TorchModelWrapper:
             self.opt = set_optimizer(optimizer, self.model.parameters(), self.learning_rate)
 
         # set up tensorboard
-        self.use_tfb = self.trainer_config.use_tfb
         self.train_summary_writer, self.valid_summary_writer = None, None
-        if self.use_tfb:
-            self.train_summary_writer = SummaryWriter(log_dir=self.base_config.spec['tfb_train_dir'])
-            self.valid_summary_writer = SummaryWriter(log_dir=self.base_config.spec['tfb_valid_dir'])
+        if self.trainer_config.use_tfb:
+            self.train_summary_writer = SummaryWriter(log_dir=self.base_config.specs['tfb_train_dir'])
+            self.valid_summary_writer = SummaryWriter(log_dir=self.base_config.specs['tfb_valid_dir'])
 
     def restore(self, ckpt_dir):
         """Load the checkpoint to restore the model.
@@ -64,7 +63,7 @@ class TorchModelWrapper:
             kv_pairs (dict): metrics dict.
             phase (RunnerPhase): a const that defines the stage of model runner.
         """
-        if self.use_tfb:
+        if self.trainer_config.use_tfb:
             summary_writer = None
             if phase == RunnerPhase.TRAIN:
                 summary_writer = self.train_summary_writer

@@ -218,7 +218,7 @@ To run the script, one should download the Taxi data following the above instruc
 
 ```shell
 cd examples
-python benchmark_script.py
+python run_retweet.py
 ```
 
 
