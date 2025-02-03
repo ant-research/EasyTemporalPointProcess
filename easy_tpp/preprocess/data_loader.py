@@ -136,6 +136,8 @@ class TPPDataLoader:
         Returns:
             EasyTPP.DataLoader: data loader for test set.
         """
+        # for test set, we do not shuffle
+        kwargs['shuffle'] = False
         return self.get_loader('test', **kwargs)
 
     def get_statistics(self, split='train'):

@@ -26,7 +26,6 @@ class RunnerConfig(Config):
         self.base_config = base_config
         self.trainer_config = trainer_config
 
-        self.ensure_valid_config()
         self.update_config()
 
         # save the complete config
@@ -86,15 +85,6 @@ class RunnerConfig(Config):
             model_config=model_config,
             trainer_config=trainer_config
         )
-
-    def ensure_valid_config(self):
-        """Do some sanity check about the config, to avoid conflicts in settings.
-        """
-
-        # during testing we dont do shuffle by default
-        self.trainer_config.shuffle = False
-
-        return
 
     def update_config(self):
         """Updated config dict.
