@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_fullynn &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,20 +98,20 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.model.torch_model.torch_fullynn</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
-<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">grad</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.autograd</span><span class="w"> </span><span class="kn">import</span> <span class="n">grad</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchBaseModel</span>
 
 
-<div class="viewcode-block" id="CumulHazardFunctionNetwork"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.CumulHazardFunctionNetwork">[docs]</a><span class="k">class</span> <span class="nc">CumulHazardFunctionNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="CumulHazardFunctionNetwork"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.CumulHazardFunctionNetwork">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">CumulHazardFunctionNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Cumulative Hazard Function Network</span>
 <span class="sd">    ref: https://github.com/wassname/torch-neuralpointprocess</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CumulHazardFunctionNetwork.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.CumulHazardFunctionNetwork.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<div class="viewcode-block" id="CumulHazardFunctionNetwork.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.CumulHazardFunctionNetwork.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CumulHazardFunctionNetwork</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">hidden_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_mlp_layers</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">model_specs</span><span class="p">[</span><span class="s1">&#39;num_mlp_layers&#39;</span><span class="p">]</span>
@@ -137,12 +137,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">init_weights_positive</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">init_weights_positive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_weights_positive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
             <span class="n">p</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
             <span class="n">p</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params_eps</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CumulHazardFunctionNetwork.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.CumulHazardFunctionNetwork.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_states</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">):</span>
+<div class="viewcode-block" id="CumulHazardFunctionNetwork.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.CumulHazardFunctionNetwork.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_states</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
             <span class="n">p</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params_eps</span><span class="p">)</span>
 
@@ -178,7 +178,7 @@
         <span class="k">return</span> <span class="n">integral_lambda</span><span class="p">,</span> <span class="n">derivative_integral_lambda</span></div></div>
 
 
-<div class="viewcode-block" id="FullyNN"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN">[docs]</a><span class="k">class</span> <span class="nc">FullyNN</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="FullyNN"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FullyNN</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Torch implementation of</span>
 <span class="sd">        Fully Neural Network based Model for General Temporal Point Processes, NeurIPS 2019.</span>
 <span class="sd">        https://arxiv.org/abs/1905.09690</span>
@@ -187,7 +187,7 @@
 <span class="sd">            https://github.com/wassname/torch-neuralpointprocess</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="FullyNN.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<div class="viewcode-block" id="FullyNN.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model</span>
 
 <span class="sd">        Args:</span>
@@ -209,7 +209,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span> <span class="o">=</span> <span class="n">CumulHazardFunctionNetwork</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FullyNN.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">):</span>
+<div class="viewcode-block" id="FullyNN.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Call the model</span>
 
 <span class="sd">        Args:</span>
@@ -232,7 +232,7 @@
 
         <span class="k">return</span> <span class="n">hidden_states</span></div>
 
-<div class="viewcode-block" id="FullyNN.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN.loglike_loss">[docs]</a>    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="FullyNN.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN.loglike_loss">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the loglike loss.</span>
 
 <span class="sd">        Args:</span>
@@ -275,7 +275,7 @@
 
         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div>
 
-<div class="viewcode-block" id="FullyNN.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="FullyNN.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_fullynn.html#easy_tpp.model.torch_model.torch_fullynn.FullyNN.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                             <span class="n">time_seqs</span><span class="p">,</span>
                                             <span class="n">time_delta_seqs</span><span class="p">,</span>
                                             <span class="n">type_seqs</span><span class="p">,</span>

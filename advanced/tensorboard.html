@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Launching the Tensorboard &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
@@ -151,9 +151,9 @@
 <h2>Step 2: Launching the tensorboard<a class="headerlink" href="#step-2-launching-the-tensorboard" title="Permalink to this heading"></a></h2>
 <p>We simply go to the output file of the training runner (its directory is specified in <cite>base_dir</cite> of <code class="docutils literal notranslate"><span class="pre">base_config</span></code>), find out the tensorboard file address and launch it.</p>
 <p>A complete example of using tensorboard can be seen at <em>examples/run_tensorboard.py</em>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="c1"># one can find this dir in the config out file</span>
     <span class="n">log_dir</span> <span class="o">=</span> <span class="s1">&#39;./checkpoints/NHP_train_taxi_20220527-20:18:30/tfb_train&#39;</span>
     <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;tensorboard --logdir=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">log_dir</span><span class="p">))</span>

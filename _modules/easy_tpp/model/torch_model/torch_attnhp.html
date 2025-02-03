@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_attnhp &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,22 +98,22 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.model.torch_model.torch_attnhp</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">math</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_baselayer</span> <span class="kn">import</span> <span class="n">EncoderLayer</span><span class="p">,</span> <span class="n">MultiHeadAttention</span><span class="p">,</span> <span class="n">ScaledSoftplus</span>
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_baselayer</span><span class="w"> </span><span class="kn">import</span> <span class="n">EncoderLayer</span><span class="p">,</span> <span class="n">MultiHeadAttention</span><span class="p">,</span> <span class="n">ScaledSoftplus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchBaseModel</span>
 
 
-<div class="viewcode-block" id="AttNHP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP">[docs]</a><span class="k">class</span> <span class="nc">AttNHP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">AttNHP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Torch implementation of Attentive Neural Hawkes Process, ICLR 2022.</span>
 <span class="sd">    https://arxiv.org/abs/2201.00044.</span>
 <span class="sd">    Source code: https://github.com/yangalan123/anhp-andtt/blob/master/anhp/model/xfmr_nhp_fast.py</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="AttNHP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model</span>
 
 <span class="sd">        Args:</span>
@@ -157,7 +157,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_intensity</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inten_linear</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">softplus</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span></div>
 
-<div class="viewcode-block" id="AttNHP.compute_temporal_embedding"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_temporal_embedding">[docs]</a>    <span class="k">def</span> <span class="nf">compute_temporal_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.compute_temporal_embedding"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_temporal_embedding">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_temporal_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the temporal embedding.</span>
 
 <span class="sd">        Args:</span>
@@ -176,7 +176,7 @@
 
         <span class="k">return</span> <span class="n">pe</span></div>
 
-<div class="viewcode-block" id="AttNHP.forward_pass"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.forward_pass">[docs]</a>    <span class="k">def</span> <span class="nf">forward_pass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_cur_layer</span><span class="p">,</span> <span class="n">time_emb</span><span class="p">,</span> <span class="n">sample_time_emb</span><span class="p">,</span> <span class="n">event_emb</span><span class="p">,</span> <span class="n">combined_mask</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.forward_pass"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.forward_pass">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward_pass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_cur_layer</span><span class="p">,</span> <span class="n">time_emb</span><span class="p">,</span> <span class="n">sample_time_emb</span><span class="p">,</span> <span class="n">event_emb</span><span class="p">,</span> <span class="n">combined_mask</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;update the structure sequentially.</span>
 
 <span class="sd">        Args:</span>
@@ -221,7 +221,7 @@
 
         <span class="k">return</span> <span class="n">cur_layer_</span></div>
 
-<div class="viewcode-block" id="AttNHP.seq_encoding"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.seq_encoding">[docs]</a>    <span class="k">def</span> <span class="nf">seq_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">event_seqs</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.seq_encoding"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.seq_encoding">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">seq_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">event_seqs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Encode the sequence.</span>
 
 <span class="sd">        Args:</span>
@@ -240,7 +240,7 @@
 
         <span class="k">return</span> <span class="n">event_emb</span><span class="p">,</span> <span class="n">time_emb</span><span class="p">,</span> <span class="n">type_emb</span></div>
 
-<div class="viewcode-block" id="AttNHP.make_layer_mask"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.make_layer_mask">[docs]</a>    <span class="k">def</span> <span class="nf">make_layer_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.make_layer_mask"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.make_layer_mask">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">make_layer_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a tensor to do masking on layers.</span>
 
 <span class="sd">        Args:</span>
@@ -254,7 +254,7 @@
         <span class="n">layer_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">attention_mask</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">attention_mask</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">layer_mask</span></div>
 
-<div class="viewcode-block" id="AttNHP.make_combined_att_mask"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.make_combined_att_mask">[docs]</a>    <span class="k">def</span> <span class="nf">make_combined_att_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">layer_mask</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.make_combined_att_mask"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.make_combined_att_mask">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">make_combined_att_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">layer_mask</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Combined attention mask and layer mask.</span>
 
 <span class="sd">        Args:</span>
@@ -272,7 +272,7 @@
         <span class="n">combined_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">contextual_mask</span><span class="p">,</span> <span class="n">combined_mask</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">combined_mask</span></div>
 
-<div class="viewcode-block" id="AttNHP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">event_seqs</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">sample_times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">event_seqs</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">sample_times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Call the model.</span>
 
 <span class="sd">        Args:</span>
@@ -296,7 +296,7 @@
 
         <span class="k">return</span> <span class="n">cur_layer_</span></div>
 
-<div class="viewcode-block" id="AttNHP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.loglike_loss">[docs]</a>    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.loglike_loss">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the loglike loss.</span>
 
 <span class="sd">        Args:</span>
@@ -339,7 +339,7 @@
         <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">event_ll</span> <span class="o">-</span> <span class="n">non_event_ll</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div>
 
-<div class="viewcode-block" id="AttNHP.compute_states_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_states_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_states_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="AttNHP.compute_states_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_states_at_sample_times">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_states_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                        <span class="n">time_seqs</span><span class="p">,</span>
                                        <span class="n">type_seqs</span><span class="p">,</span>
                                        <span class="n">attention_mask</span><span class="p">,</span>
@@ -384,7 +384,7 @@
         <span class="n">encoder_output</span> <span class="o">=</span> <span class="n">encoder_output</span><span class="o">.</span><span class="n">permute</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">encoder_output</span></div>
 
-<div class="viewcode-block" id="AttNHP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AttNHP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_attnhp.html#easy_tpp.model.torch_model.torch_attnhp.AttNHP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the intensity at sampled times.</span>
 
 <span class="sd">        Args:</span>

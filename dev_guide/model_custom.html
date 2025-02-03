@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Customize a Model &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
@@ -110,54 +110,54 @@
 <section id="create-a-new-tpp-model-class">
 <h2>Create a new TPP Model Class<a class="headerlink" href="#create-a-new-tpp-model-class" title="Permalink to this heading"></a></h2>
 <p>Assume we are building a PyTorch model. We need to initialize the model by inheriting class <a class="reference external" href="../ref/models.html">EasyTPP.model.torch_model.TorchBaseModel</a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchBaseModel</span>
 
 <span class="c1"># Custom Torch TPP implementations need to</span>
 <span class="c1"># inherit from the TorchBaseModel interface</span>
-<span class="k">class</span> <span class="nc">NewModel</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NewModel</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NewModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
 
     <span class="c1"># Forward along the sequence, output the states / intensities at the event times</span>
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
         <span class="o">...</span>
         <span class="k">return</span> <span class="n">states</span>
 
     <span class="c1"># Compute the loglikelihood loss</span>
-    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
         <span class="o">....</span>
         <span class="k">return</span> <span class="n">loglike</span>
 
     <span class="c1"># Compute the intensities at given sampling times</span>
     <span class="c1"># Used in the Thinning sampler</span>
-    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">sample_times</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">sample_times</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="o">...</span>
         <span class="k">return</span> <span class="n">intensities</span>
 </pre></div>
 </div>
 <p>If we are building a Tensorflow model, we start with the following code</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.tf_basemodel</span> <span class="kn">import</span> <span class="n">TfBaseModel</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.tf_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfBaseModel</span>
 
 <span class="c1"># Custom Tf TPP implementations need to</span>
 <span class="c1"># inherit from the TorchBaseModel interface</span>
-<span class="k">class</span> <span class="nc">NewModel</span><span class="p">(</span><span class="n">TfBaseModel</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NewModel</span><span class="p">(</span><span class="n">TfBaseModel</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NewModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
 
     <span class="c1"># Forward along the sequence, output the states / intensities at the event times</span>
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
         <span class="o">...</span>
         <span class="k">return</span> <span class="n">states</span>
 
 
     <span class="c1"># Compute the loglikelihood loss</span>
-    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
         <span class="o">....</span>
         <span class="k">return</span> <span class="n">loglike</span>
 
     <span class="c1"># Compute the intensities at given sampling times</span>
     <span class="c1"># Used in the Thinning sampler</span>
-    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">sample_times</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">sample_times</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="o">...</span>
         <span class="k">return</span> <span class="n">intensities</span>
 </pre></div>

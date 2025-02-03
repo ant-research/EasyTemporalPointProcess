@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_basemodel &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -100,16 +100,16 @@
   <h1>Source code for easy_tpp.model.torch_model.torch_basemodel</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot; Base model with common functionality  &quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_thinning</span> <span class="kn">import</span> <span class="n">EventSampler</span>
-<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">set_device</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_thinning</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventSampler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_device</span>
 
 
-<div class="viewcode-block" id="TorchBaseModel"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel">[docs]</a><span class="k">class</span> <span class="nc">TorchBaseModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<div class="viewcode-block" id="TorchBaseModel.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<div class="viewcode-block" id="TorchBaseModel"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TorchBaseModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="TorchBaseModel.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the BaseModel</span>
 
 <span class="sd">        Args:</span>
@@ -144,7 +144,7 @@
                                               <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TorchBaseModel.generate_model_from_config"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.generate_model_from_config">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">generate_model_from_config</span><span class="p">(</span><span class="n">model_config</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_model_from_config</span><span class="p">(</span><span class="n">model_config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the model in derived class based on model config.</span>
 
 <span class="sd">        Args:</span>
@@ -159,7 +159,7 @@
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;No model named &#39;</span> <span class="o">+</span> <span class="n">model_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TorchBaseModel.get_logits_at_last_step"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.get_logits_at_last_step">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_logits_at_last_step</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">sample_len</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_logits_at_last_step</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">batch_non_pad_mask</span><span class="p">,</span> <span class="n">sample_len</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the hidden states of last non-pad events.</span>
 
 <span class="sd">        Args:</span>
@@ -183,7 +183,7 @@
         <span class="n">last_logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">select_index</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">last_logits</span></div>
 
-<div class="viewcode-block" id="TorchBaseModel.compute_loglikelihood"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.compute_loglikelihood">[docs]</a>    <span class="k">def</span> <span class="nf">compute_loglikelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">lambda_at_event</span><span class="p">,</span> <span class="n">lambdas_loss_samples</span><span class="p">,</span> <span class="n">seq_mask</span><span class="p">,</span> <span class="n">type_seq</span><span class="p">):</span>
+<div class="viewcode-block" id="TorchBaseModel.compute_loglikelihood"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.compute_loglikelihood">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_loglikelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">lambda_at_event</span><span class="p">,</span> <span class="n">lambdas_loss_samples</span><span class="p">,</span> <span class="n">seq_mask</span><span class="p">,</span> <span class="n">type_seq</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the loglikelihood of the event sequence based on Equation (8) of NHP paper.</span>
 
 <span class="sd">        Args:</span>
@@ -224,7 +224,7 @@
         <span class="n">num_events</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">masked_select</span><span class="p">(</span><span class="n">event_ll</span><span class="p">,</span> <span class="n">event_ll</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">event_ll</span><span class="p">,</span> <span class="n">non_event_ll</span><span class="p">,</span> <span class="n">num_events</span></div>
 
-<div class="viewcode-block" id="TorchBaseModel.make_dtime_loss_samples"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.make_dtime_loss_samples">[docs]</a>    <span class="k">def</span> <span class="nf">make_dtime_loss_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">):</span>
+<div class="viewcode-block" id="TorchBaseModel.make_dtime_loss_samples"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.make_dtime_loss_samples">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">make_dtime_loss_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the time point samples for every interval.</span>
 
 <span class="sd">        Args:</span>
@@ -244,10 +244,10 @@
 
         <span class="k">return</span> <span class="n">sampled_dtimes</span></div>
 
-    <span class="k">def</span> <span class="nf">compute_states_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_states_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;This need to implemented in inherited class ! &#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TorchBaseModel.predict_one_step_at_every_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.predict_one_step_at_every_event">[docs]</a>    <span class="k">def</span> <span class="nf">predict_one_step_at_every_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="TorchBaseModel.predict_one_step_at_every_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.predict_one_step_at_every_event">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict_one_step_at_every_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;One-step prediction for every event in the sequence.</span>
 
 <span class="sd">        Args:</span>
@@ -301,7 +301,7 @@
         <span class="n">dtimes_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">accepted_dtimes</span> <span class="o">*</span> <span class="n">weights</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># compute the expected next event time</span>
         <span class="k">return</span> <span class="n">dtimes_pred</span><span class="p">,</span> <span class="n">types_pred</span></div>
 
-<div class="viewcode-block" id="TorchBaseModel.predict_multi_step_since_last_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.predict_multi_step_since_last_event">[docs]</a>    <span class="k">def</span> <span class="nf">predict_multi_step_since_last_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">forward</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TorchBaseModel.predict_multi_step_since_last_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_basemodel.html#easy_tpp.model.torch_model.torch_basemodel.TorchBaseModel.predict_multi_step_since_last_event">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict_multi_step_since_last_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">forward</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Multi-step prediction since last event in the sequence.</span>
 
 <span class="sd">        Args:</span>

@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.utils.registrable &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,12 +98,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.utils.registrable</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">.log_utils</span> <span class="kn">import</span> <span class="n">default_logger</span> <span class="k">as</span> <span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.log_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_logger</span> <span class="k">as</span> <span class="n">logger</span>
 
 
-<div class="viewcode-block" id="Registrable"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable">[docs]</a><span class="k">class</span> <span class="nc">Registrable</span><span class="p">:</span>
+<div class="viewcode-block" id="Registrable"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Registrable</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Any class that inherits from ``Registrable`` gains access to a named registry for its subclasses. To register them, just decorate them with the classmethod ``@BaseClass.register(name)``.</span>
 
 <span class="sd">    After which you can call ``BaseClass.list_available()`` to get the keys for the registered subclasses, and ``BaseClass.by_name(name)`` to get the corresponding subclass.</span>
@@ -115,7 +115,7 @@
     <span class="n">_default_impl</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Registrable.register"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.register">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">constructor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">constructor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a class under a particular name.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            name (str): The name to register the class under.</span>
@@ -150,7 +150,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">registry</span> <span class="o">=</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>
 
-        <span class="k">def</span> <span class="nf">add_subclass_to_registry</span><span class="p">(</span><span class="n">subclass</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">add_subclass_to_registry</span><span class="p">(</span><span class="n">subclass</span><span class="p">):</span>
             <span class="c1"># Add to registry, raise an error if key has already been used.</span>
             <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
@@ -171,7 +171,7 @@
         <span class="k">return</span> <span class="n">add_subclass_to_registry</span></div>
 
 <div class="viewcode-block" id="Registrable.by_name"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.by_name">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">by_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">by_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a callable function that constructs an argument of the registered class.  Because</span>
 <span class="sd">        you can register particular functions as constructors for specific names, this isn&#39;t</span>
@@ -185,7 +185,7 @@
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">subclass</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Registrable.resolve_class_name"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.resolve_class_name">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">resolve_class_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_class_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the subclass that corresponds to the given ``name``, along with the name of the</span>
 <span class="sd">        method that was registered as a constructor for that ``name``, if any.</span>
@@ -209,7 +209,7 @@
             <span class="n">parts</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
             <span class="n">submodule</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">class_name</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="kn">import</span> <span class="nn">importlib</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">submodule</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
@@ -239,7 +239,7 @@
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Registrable.list_available"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.list_available">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">list_available</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_available</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List default first if it exists&quot;&quot;&quot;</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">default</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_default_impl</span>
@@ -252,7 +252,7 @@
             <span class="k">return</span> <span class="p">[</span><span class="n">default</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">default</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Registrable.registry_dict"><a class="viewcode-back" href="../../../ref/utils.html#utils.Registrable.registry_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">registry_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">registry_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Registrable</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span></div></div>
 </pre></div>
 

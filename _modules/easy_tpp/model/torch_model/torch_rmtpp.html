@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_rmtpp &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,18 +98,18 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.model.torch_model.torch_rmtpp</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="nn">math</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchBaseModel</span>
 
-<div class="viewcode-block" id="RMTPP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP">[docs]</a><span class="k">class</span> <span class="nc">RMTPP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="RMTPP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">RMTPP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Torch implementation of Recurrent Marked Temporal Point Processes, KDD 2016.</span>
 <span class="sd">    https://www.kdd.org/kdd2016/papers/files/rpp1081-duA.pdf</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="RMTPP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<div class="viewcode-block" id="RMTPP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model</span>
 
 <span class="sd">        Args:</span>
@@ -127,7 +127,7 @@
         <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_normal_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b_t</span><span class="p">)</span>
         <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_normal_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w_t</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RMTPP.evolve_and_get_intentsity"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.evolve_and_get_intentsity">[docs]</a>    <span class="k">def</span> <span class="nf">evolve_and_get_intentsity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right_hiddens_BNH</span><span class="p">,</span> <span class="n">dts_BNG</span><span class="p">):</span>
+<div class="viewcode-block" id="RMTPP.evolve_and_get_intentsity"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.evolve_and_get_intentsity">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">evolve_and_get_intentsity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right_hiddens_BNH</span><span class="p">,</span> <span class="n">dts_BNG</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Eq.11 that computes intensity.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -136,7 +136,7 @@
                          <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_t</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">max</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">intensity_BNGM</span></div>
 
-<div class="viewcode-block" id="RMTPP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="RMTPP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Suppose we have inputs with original sequence length N+1</span>
 <span class="sd">        ts: [t0, t1, ..., t_N]</span>
@@ -157,7 +157,7 @@
         <span class="k">return</span> <span class="n">left_intensity_B_Nm1_M</span><span class="p">,</span> <span class="n">right_hiddens_BNH</span></div>
 
 
-<div class="viewcode-block" id="RMTPP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.loglike_loss">[docs]</a>    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="RMTPP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.loglike_loss">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the log-likelihood loss.</span>
 
 <span class="sd">        Args:</span>
@@ -191,7 +191,7 @@
 
 
 
-<div class="viewcode-block" id="RMTPP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="RMTPP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_rmtpp.html#easy_tpp.model.torch_model.torch_rmtpp.RMTPP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the intensity at sampled times, not only event times.</span>
 
 <span class="sd">        Args:</span>

@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_thinning &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,12 +98,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.model.torch_model.torch_thinning</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">logger</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
 
-<div class="viewcode-block" id="EventSampler"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler">[docs]</a><span class="k">class</span> <span class="nc">EventSampler</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="EventSampler"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">EventSampler</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Event Sequence Sampler based on thinning algorithm, which corresponds to Algorithm 2 of</span>
 <span class="sd">    The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process,</span>
 <span class="sd">    https://arxiv.org/abs/1612.09328.</span>
@@ -111,7 +111,7 @@
 <span class="sd">    The implementation uses code from https://github.com/yangalan123/anhp-andtt/blob/master/anhp/esm/thinning.py.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="EventSampler.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_sample</span><span class="p">,</span> <span class="n">num_exp</span><span class="p">,</span> <span class="n">over_sample_rate</span><span class="p">,</span> <span class="n">num_samples_boundary</span><span class="p">,</span> <span class="n">dtime_max</span><span class="p">,</span> <span class="n">patience_counter</span><span class="p">,</span>
+<div class="viewcode-block" id="EventSampler.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_sample</span><span class="p">,</span> <span class="n">num_exp</span><span class="p">,</span> <span class="n">over_sample_rate</span><span class="p">,</span> <span class="n">num_samples_boundary</span><span class="p">,</span> <span class="n">dtime_max</span><span class="p">,</span> <span class="n">patience_counter</span><span class="p">,</span>
                  <span class="n">device</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the event sampler.</span>
 
@@ -133,7 +133,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">patience_counter</span> <span class="o">=</span> <span class="n">patience_counter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span></div>
 
-<div class="viewcode-block" id="EventSampler.compute_intensity_upper_bound"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.compute_intensity_upper_bound">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensity_upper_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">,</span> <span class="n">intensity_fn</span><span class="p">,</span>
+<div class="viewcode-block" id="EventSampler.compute_intensity_upper_bound"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.compute_intensity_upper_bound">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensity_upper_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">,</span> <span class="n">intensity_fn</span><span class="p">,</span>
                                       <span class="n">compute_last_step_only</span><span class="p">):</span>
         <span class="c1"># logger.critical(f&#39;time_seq: {time_seq}&#39;)</span>
         <span class="c1"># logger.critical(f&#39;time_delta_seq: {time_delta_seq}&#39;)</span>
@@ -176,7 +176,7 @@
 
         <span class="k">return</span> <span class="n">bounds</span></div>
 
-<div class="viewcode-block" id="EventSampler.sample_exp_distribution"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_exp_distribution">[docs]</a>    <span class="k">def</span> <span class="nf">sample_exp_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">):</span>
+<div class="viewcode-block" id="EventSampler.sample_exp_distribution"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_exp_distribution">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">sample_exp_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample an exponential distribution.</span>
 
 <span class="sd">        Args:</span>
@@ -208,7 +208,7 @@
 
         <span class="k">return</span> <span class="n">exp_numbers</span></div>
 
-<div class="viewcode-block" id="EventSampler.sample_uniform_distribution"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_uniform_distribution">[docs]</a>    <span class="k">def</span> <span class="nf">sample_uniform_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intensity_upper_bound</span><span class="p">):</span>
+<div class="viewcode-block" id="EventSampler.sample_uniform_distribution"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_uniform_distribution">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">sample_uniform_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intensity_upper_bound</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample an uniform distribution</span>
 
 <span class="sd">        Args:</span>
@@ -226,7 +226,7 @@
 
         <span class="k">return</span> <span class="n">unif_numbers</span></div>
 
-<div class="viewcode-block" id="EventSampler.sample_accept"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_accept">[docs]</a>    <span class="k">def</span> <span class="nf">sample_accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unif_numbers</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">total_intensities</span><span class="p">,</span> <span class="n">exp_numbers</span><span class="p">):</span>
+<div class="viewcode-block" id="EventSampler.sample_accept"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.sample_accept">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">sample_accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unif_numbers</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">total_intensities</span><span class="p">,</span> <span class="n">exp_numbers</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the sample-accept process.</span>
 
 <span class="sd">        For the accumulated exp (delta) samples drawn for each event timestamp, find (from left to right) the first</span>
@@ -267,7 +267,7 @@
         
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="EventSampler.draw_next_time_one_step"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.draw_next_time_one_step">[docs]</a>    <span class="k">def</span> <span class="nf">draw_next_time_one_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">,</span> <span class="n">dtime_boundary</span><span class="p">,</span>
+<div class="viewcode-block" id="EventSampler.draw_next_time_one_step"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_thinning.html#easy_tpp.model.torch_model.torch_thinning.EventSampler.draw_next_time_one_step">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">draw_next_time_one_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seq</span><span class="p">,</span> <span class="n">time_delta_seq</span><span class="p">,</span> <span class="n">event_seq</span><span class="p">,</span> <span class="n">dtime_boundary</span><span class="p">,</span>
                                 <span class="n">intensity_fn</span><span class="p">,</span> <span class="n">compute_last_step_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute next event time based on Thinning algorithm.</span>
 

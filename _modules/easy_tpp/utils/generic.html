@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.utils.generic &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,22 +98,22 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.utils.generic</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">is_torch_available</span><span class="p">,</span> <span class="n">is_tf_available</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_torch_available</span><span class="p">,</span> <span class="n">is_tf_available</span>
 
 
-<span class="k">def</span> <span class="nf">is_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tests if `x` is a `torch.Tensor`, `tf.Tensor`, `jaxlib.xla_extension.DeviceArray` or `np.ndarray`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">is_torch_available</span><span class="p">():</span>
-        <span class="kn">import</span> <span class="nn">torch</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="n">is_tf_available</span><span class="p">():</span>
-        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -121,45 +121,45 @@
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_is_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="is_numpy_array"><a class="viewcode-back" href="../../../ref/utils.html#utils.is_numpy_array">[docs]</a><span class="k">def</span> <span class="nf">is_numpy_array</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="is_numpy_array"><a class="viewcode-back" href="../../../ref/utils.html#utils.is_numpy_array">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_numpy_array</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tests if `x` is a numpy array or not.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_is_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_is_torch</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">torch</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_torch</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">is_torch_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_torch_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tests if `x` is a torch tensor or not. Safe to call even if torch is not installed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="kc">False</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">is_torch_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">_is_torch</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_is_torch_device</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">torch</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_torch_device</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="is_torch_device"><a class="viewcode-back" href="../../../ref/utils.html#utils.is_torch_device">[docs]</a><span class="k">def</span> <span class="nf">is_torch_device</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="is_torch_device"><a class="viewcode-back" href="../../../ref/utils.html#utils.is_torch_device">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_torch_device</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tests if `x` is a torch device or not. Safe to call even if torch is not installed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="kc">False</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">is_torch_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">_is_torch_device</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_is_torch_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">torch</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_torch_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">torch</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -169,28 +169,28 @@
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">is_torch_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_torch_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tests if `x` is a torch dtype or not. Safe to call even if torch is not installed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="kc">False</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">is_torch_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">_is_torch_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_is_tensorflow</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_tensorflow</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
 
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">is_tf_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_tf_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tests if `x` is a tensorflow tensor or not. Safe to call even if tensorflow is not installed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="kc">False</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">is_tf_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">_is_tensorflow</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_is_tf_symbolic_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_tf_symbolic_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
 
     <span class="c1"># the `is_symbolic_tensor` predicate is only available starting with TF 2.14</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tf</span><span class="p">,</span> <span class="s2">&quot;is_symbolic_tensor&quot;</span><span class="p">):</span>
@@ -198,7 +198,7 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span>
 
 
-<span class="k">def</span> <span class="nf">is_tf_symbolic_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_tf_symbolic_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tests if `x` is a tensorflow symbolic tensor or not (ie. not eager). Safe to call even if tensorflow is not</span>
 <span class="sd">    installed.</span>

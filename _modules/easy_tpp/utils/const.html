@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.utils.const &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,25 +98,25 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.utils.const</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 
 
-<div class="viewcode-block" id="ExplicitEnum"><a class="viewcode-back" href="../../../ref/utils.html#utils.ExplicitEnum">[docs]</a><span class="k">class</span> <span class="nc">ExplicitEnum</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="ExplicitEnum"><a class="viewcode-back" href="../../../ref/utils.html#utils.ExplicitEnum">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ExplicitEnum</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enum with more explicit error message for missing values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_missing_</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_missing_</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> is not a valid </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, please select one of </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_value2member_map_</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="PaddingStrategy"><a class="viewcode-back" href="../../../ref/utils.html#utils.PaddingStrategy">[docs]</a><span class="k">class</span> <span class="nc">PaddingStrategy</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
+<div class="viewcode-block" id="PaddingStrategy"><a class="viewcode-back" href="../../../ref/utils.html#utils.PaddingStrategy">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PaddingStrategy</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Possible values for the `padding` argument in [`EventTokenizer.__call__`]. Useful for tab-completion in an</span>
 <span class="sd">    IDE.</span>
@@ -127,7 +127,7 @@
     <span class="n">DO_NOT_PAD</span> <span class="o">=</span> <span class="s2">&quot;do_not_pad&quot;</span></div>
 
 
-<div class="viewcode-block" id="TensorType"><a class="viewcode-back" href="../../../ref/utils.html#utils.TensorType">[docs]</a><span class="k">class</span> <span class="nc">TensorType</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
+<div class="viewcode-block" id="TensorType"><a class="viewcode-back" href="../../../ref/utils.html#utils.TensorType">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TensorType</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Possible values for the `return_tensors` argument in [`EventTokenizerBase.__call__`]. Useful for</span>
 <span class="sd">    tab-completion in an IDE.</span>
@@ -138,7 +138,7 @@
     <span class="n">NUMPY</span> <span class="o">=</span> <span class="s2">&quot;np&quot;</span></div>
 
 
-<div class="viewcode-block" id="RunnerPhase"><a class="viewcode-back" href="../../../ref/utils.html#utils.RunnerPhase">[docs]</a><span class="k">class</span> <span class="nc">RunnerPhase</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
+<div class="viewcode-block" id="RunnerPhase"><a class="viewcode-back" href="../../../ref/utils.html#utils.RunnerPhase">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">RunnerPhase</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Model runner phase enum.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">TRAIN</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span>
@@ -146,7 +146,7 @@
     <span class="n">PREDICT</span> <span class="o">=</span> <span class="s1">&#39;predict&#39;</span></div>
 
 
-<span class="k">class</span> <span class="nc">LossFunction</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LossFunction</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Loss function for neural TPP model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">LOGLIKE</span> <span class="o">=</span> <span class="s1">&#39;loglike&#39;</span>
@@ -154,7 +154,7 @@
     <span class="n">PARTIAL_EVENT_LOSS</span> <span class="o">=</span> <span class="s1">&#39;accuracy&#39;</span>
 
 
-<div class="viewcode-block" id="LogConst"><a class="viewcode-back" href="../../../ref/utils.html#utils.LogConst">[docs]</a><span class="k">class</span> <span class="nc">LogConst</span><span class="p">:</span>
+<div class="viewcode-block" id="LogConst"><a class="viewcode-back" href="../../../ref/utils.html#utils.LogConst">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LogConst</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Format for log handler.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">DEFAULT_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">] [</span><span class="si">%(levelname)s</span><span class="s1">] </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
@@ -162,18 +162,18 @@
                           <span class="s1">&#39; - </span><span class="si">%(levelname)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span></div>
 
 
-<span class="k">class</span> <span class="nc">PredOutputIndex</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PredOutputIndex</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Positional index for the output tuple in ModelRunner.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">TimePredIndex</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">TypePredIndex</span> <span class="o">=</span> <span class="mi">1</span>
 
 
-<div class="viewcode-block" id="DefaultRunnerConfig"><a class="viewcode-back" href="../../../ref/utils.html#utils.DefaultRunnerConfig">[docs]</a><span class="k">class</span> <span class="nc">DefaultRunnerConfig</span><span class="p">:</span>
+<div class="viewcode-block" id="DefaultRunnerConfig"><a class="viewcode-back" href="../../../ref/utils.html#utils.DefaultRunnerConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">DefaultRunnerConfig</span><span class="p">:</span>
     <span class="n">DEFAULT_DATASET_ID</span> <span class="o">=</span> <span class="s1">&#39;conttime&#39;</span></div>
 
 
-<div class="viewcode-block" id="TruncationStrategy"><a class="viewcode-back" href="../../../ref/utils.html#utils.TruncationStrategy">[docs]</a><span class="k">class</span> <span class="nc">TruncationStrategy</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
+<div class="viewcode-block" id="TruncationStrategy"><a class="viewcode-back" href="../../../ref/utils.html#utils.TruncationStrategy">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TruncationStrategy</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Possible values for the `truncation` argument in [`EventTokenizer.__call__`]. Useful for tab-completion in</span>
 <span class="sd">    an IDE.</span>
@@ -183,7 +183,7 @@
     <span class="n">DO_NOT_TRUNCATE</span> <span class="o">=</span> <span class="s2">&quot;do_not_truncate&quot;</span></div>
 
 
-<span class="k">class</span> <span class="nc">Backend</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Backend</span><span class="p">(</span><span class="n">ExplicitEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Possible values for the `truncation` argument in [`EventTokenizer.__call__`]. Useful for tab-completion in</span>
 <span class="sd">    an IDE.</span>

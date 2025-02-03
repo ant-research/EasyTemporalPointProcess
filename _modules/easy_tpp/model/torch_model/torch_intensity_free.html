@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_intensity_free &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,17 +98,17 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.model.torch_model.torch_intensity_free</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.distributions</span> <span class="k">as</span> <span class="nn">D</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">torch.distributions</span> <span class="kn">import</span> <span class="n">Categorical</span><span class="p">,</span> <span class="n">TransformedDistribution</span>
-<span class="kn">from</span> <span class="nn">torch.distributions</span> <span class="kn">import</span> <span class="n">MixtureSameFamily</span> <span class="k">as</span> <span class="n">TorchMixtureSameFamily</span>
-<span class="kn">from</span> <span class="nn">torch.distributions</span> <span class="kn">import</span> <span class="n">Normal</span> <span class="k">as</span> <span class="n">TorchNormal</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.distributions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Categorical</span><span class="p">,</span> <span class="n">TransformedDistribution</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MixtureSameFamily</span> <span class="k">as</span> <span class="n">TorchMixtureSameFamily</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span> <span class="k">as</span> <span class="n">TorchNormal</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchBaseModel</span>
 
 
-<div class="viewcode-block" id="clamp_preserve_gradients"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.clamp_preserve_gradients">[docs]</a><span class="k">def</span> <span class="nf">clamp_preserve_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">):</span>
+<div class="viewcode-block" id="clamp_preserve_gradients"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.clamp_preserve_gradients">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">clamp_preserve_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Clamp the tensor while preserving gradients in the clamped region.</span>
 
 <span class="sd">    Args:</span>
@@ -119,38 +119,38 @@
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Normal"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.Normal">[docs]</a><span class="k">class</span> <span class="nc">Normal</span><span class="p">(</span><span class="n">TorchNormal</span><span class="p">):</span>
+<div class="viewcode-block" id="Normal"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.Normal">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Normal</span><span class="p">(</span><span class="n">TorchNormal</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Normal distribution, redefined `log_cdf` and `log_survival_function` due to</span>
 <span class="sd">    no numerically stable implementation of them is available for normal distribution.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">log_cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="n">cdf</span> <span class="o">=</span> <span class="n">clamp_preserve_gradients</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mf">1e-7</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="mf">1e-7</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cdf</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">log_survival_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_survival_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="n">cdf</span> <span class="o">=</span> <span class="n">clamp_preserve_gradients</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mf">1e-7</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="mf">1e-7</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">cdf</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MixtureSameFamily"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.MixtureSameFamily">[docs]</a><span class="k">class</span> <span class="nc">MixtureSameFamily</span><span class="p">(</span><span class="n">TorchMixtureSameFamily</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureSameFamily"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.MixtureSameFamily">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MixtureSameFamily</span><span class="p">(</span><span class="n">TorchMixtureSameFamily</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixture (same-family) distribution, redefined `log_cdf` and `log_survival_function`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">log_cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">log_cdf_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_distribution</span><span class="o">.</span><span class="n">log_cdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">mix_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mixture_distribution</span><span class="o">.</span><span class="n">logits</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">log_cdf_x</span> <span class="o">+</span> <span class="n">mix_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">log_survival_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_survival_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">log_sf_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_distribution</span><span class="o">.</span><span class="n">log_survival_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">mix_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mixture_distribution</span><span class="o">.</span><span class="n">logits</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">log_sf_x</span> <span class="o">+</span> <span class="n">mix_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="LogNormalMixtureDistribution"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.LogNormalMixtureDistribution">[docs]</a><span class="k">class</span> <span class="nc">LogNormalMixtureDistribution</span><span class="p">(</span><span class="n">TransformedDistribution</span><span class="p">):</span>
+<div class="viewcode-block" id="LogNormalMixtureDistribution"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.LogNormalMixtureDistribution">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LogNormalMixtureDistribution</span><span class="p">(</span><span class="n">TransformedDistribution</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mixture of log-normal distributions.</span>
 
@@ -162,7 +162,7 @@
 <span class="sd">        std_log_inter_time (float): Std of log-inter-event-times.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LogNormalMixtureDistribution.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.LogNormalMixtureDistribution.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locs</span><span class="p">,</span> <span class="n">log_scales</span><span class="p">,</span> <span class="n">log_weights</span><span class="p">,</span> <span class="n">mean_log_inter_time</span><span class="p">,</span> <span class="n">std_log_inter_time</span><span class="p">,</span> <span class="n">validate_args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="LogNormalMixtureDistribution.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.LogNormalMixtureDistribution.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locs</span><span class="p">,</span> <span class="n">log_scales</span><span class="p">,</span> <span class="n">log_weights</span><span class="p">,</span> <span class="n">mean_log_inter_time</span><span class="p">,</span> <span class="n">std_log_inter_time</span><span class="p">,</span> <span class="n">validate_args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">mixture_dist</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">log_weights</span><span class="p">)</span>
         <span class="n">component_dist</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">locs</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">log_scales</span><span class="o">.</span><span class="n">exp</span><span class="p">())</span>
         <span class="n">GMM</span> <span class="o">=</span> <span class="n">MixtureSameFamily</span><span class="p">(</span><span class="n">mixture_dist</span><span class="p">,</span> <span class="n">component_dist</span><span class="p">)</span>
@@ -181,7 +181,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sign</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">GMM</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">validate_args</span><span class="o">=</span><span class="n">validate_args</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">log_cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_args</span><span class="p">:</span>
@@ -192,7 +192,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dist</span><span class="o">.</span><span class="n">log_survival_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">log_survival_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_survival_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_args</span><span class="p">:</span>
@@ -204,14 +204,14 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dist</span><span class="o">.</span><span class="n">log_cdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="IntensityFree"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree">[docs]</a><span class="k">class</span> <span class="nc">IntensityFree</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="IntensityFree"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">IntensityFree</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Torch implementation of Intensity-Free Learning of Temporal Point Processes, ICLR 2020.</span>
 <span class="sd">    https://openreview.net/pdf?id=HygOjhEYDH</span>
 
 <span class="sd">    reference: https://github.com/shchur/ifl-tpp</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="IntensityFree.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<div class="viewcode-block" id="IntensityFree.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model</span>
 
 <span class="sd">        Args:</span>
@@ -234,7 +234,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mark_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types_pad</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_mix_components</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="IntensityFree.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">):</span>
+<div class="viewcode-block" id="IntensityFree.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Call the model.</span>
 
 <span class="sd">        Args:</span>
@@ -259,7 +259,7 @@
 
         <span class="k">return</span> <span class="n">context</span></div>
 
-<div class="viewcode-block" id="IntensityFree.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.loglike_loss">[docs]</a>    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="IntensityFree.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.loglike_loss">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the loglike loss.</span>
 
 <span class="sd">        Args:</span>
@@ -308,7 +308,7 @@
 
         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div>
 
-<div class="viewcode-block" id="IntensityFree.predict_one_step_at_every_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.predict_one_step_at_every_event">[docs]</a>    <span class="k">def</span> <span class="nf">predict_one_step_at_every_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="IntensityFree.predict_one_step_at_every_event"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_intensity_free.html#easy_tpp.model.torch_model.torch_intensity_free.IntensityFree.predict_one_step_at_every_event">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict_one_step_at_every_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;One-step prediction for every event in the sequence.</span>
 
 <span class="sd">        Args:</span>

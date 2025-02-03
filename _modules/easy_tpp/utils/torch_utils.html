@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.utils.torch_utils &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,16 +98,16 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.utils.torch_utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">random</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.utils.import_utils</span> <span class="kn">import</span> <span class="n">is_torch_mps_available</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.utils.import_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_torch_mps_available</span>
 
 
-<div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../../../ref/utils.html#utils.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1029</span><span class="p">):</span>
+<div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../../../ref/utils.html#utils.set_seed">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1029</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup random seed.</span>
 
 <span class="sd">    Args:</span>
@@ -121,7 +121,7 @@
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="set_device"><a class="viewcode-back" href="../../../ref/utils.html#utils.set_device">[docs]</a><span class="k">def</span> <span class="nf">set_device</span><span class="p">(</span><span class="n">gpu</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="set_device"><a class="viewcode-back" href="../../../ref/utils.html#utils.set_device">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">set_device</span><span class="p">(</span><span class="n">gpu</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup the device.</span>
 
 <span class="sd">    Args:</span>
@@ -137,7 +137,7 @@
     <span class="k">return</span> <span class="n">device</span></div>
 
 
-<div class="viewcode-block" id="set_optimizer"><a class="viewcode-back" href="../../../ref/utils.html#utils.set_optimizer">[docs]</a><span class="k">def</span> <span class="nf">set_optimizer</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+<div class="viewcode-block" id="set_optimizer"><a class="viewcode-back" href="../../../ref/utils.html#utils.set_optimizer">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">set_optimizer</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup the optimizer.</span>
 
 <span class="sd">    Args:</span>
@@ -162,7 +162,7 @@
     <span class="k">return</span> <span class="n">optimizer</span></div>
 
 
-<div class="viewcode-block" id="count_model_params"><a class="viewcode-back" href="../../../ref/utils.html#utils.count_model_params">[docs]</a><span class="k">def</span> <span class="nf">count_model_params</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+<div class="viewcode-block" id="count_model_params"><a class="viewcode-back" href="../../../ref/utils.html#utils.count_model_params">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">count_model_params</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Count the number of params of the model.</span>
 
 <span class="sd">    Args:</span>

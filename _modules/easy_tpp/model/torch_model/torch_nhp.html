@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_nhp &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,18 +98,18 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.model.torch_model.torch_nhp</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_baselayer</span> <span class="kn">import</span> <span class="n">ScaledSoftplus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_baselayer</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScaledSoftplus</span>
 
 
-<div class="viewcode-block" id="ContTimeLSTMCell"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell">[docs]</a><span class="k">class</span> <span class="nc">ContTimeLSTMCell</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="ContTimeLSTMCell"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ContTimeLSTMCell</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;LSTM Cell in Neural Hawkes Process, NeurIPS&#39;17.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ContTimeLSTMCell.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">):</span>
+<div class="viewcode-block" id="ContTimeLSTMCell.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the continuous LSTM cell.</span>
 
 <span class="sd">        Args:</span>
@@ -119,7 +119,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="o">=</span> <span class="n">hidden_dim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_dense_layer</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ContTimeLSTMCell.init_dense_layer"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.init_dense_layer">[docs]</a>    <span class="k">def</span> <span class="nf">init_dense_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">bias</span><span class="p">):</span>
+<div class="viewcode-block" id="ContTimeLSTMCell.init_dense_layer"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.init_dense_layer">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">init_dense_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">bias</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize linear layers given Equations (5a-6c) in the paper.</span>
 
 <span class="sd">        Args:</span>
@@ -129,7 +129,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">linear_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="mi">7</span> <span class="o">*</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">softplus</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Softplus</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ContTimeLSTMCell.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">hidden_ti_minus</span><span class="p">,</span> <span class="n">ct_ti_minus</span><span class="p">,</span> <span class="n">c_bar_im1</span><span class="p">):</span>
+<div class="viewcode-block" id="ContTimeLSTMCell.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">hidden_ti_minus</span><span class="p">,</span> <span class="n">ct_ti_minus</span><span class="p">,</span> <span class="n">c_bar_im1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the continuous-time LSTM cell.</span>
 
 <span class="sd">        Args:</span>
@@ -164,7 +164,7 @@
 
         <span class="k">return</span> <span class="n">c_i</span><span class="p">,</span> <span class="n">c_bar_i</span><span class="p">,</span> <span class="n">delta_i</span><span class="p">,</span> <span class="n">o_i</span></div>
 
-<div class="viewcode-block" id="ContTimeLSTMCell.decay"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.decay">[docs]</a>    <span class="k">def</span> <span class="nf">decay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c_i</span><span class="p">,</span> <span class="n">c_bar_i</span><span class="p">,</span> <span class="n">delta_i</span><span class="p">,</span> <span class="n">o_i</span><span class="p">,</span> <span class="n">dtime</span><span class="p">):</span>
+<div class="viewcode-block" id="ContTimeLSTMCell.decay"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.ContTimeLSTMCell.decay">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">decay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c_i</span><span class="p">,</span> <span class="n">c_bar_i</span><span class="p">,</span> <span class="n">delta_i</span><span class="p">,</span> <span class="n">o_i</span><span class="p">,</span> <span class="n">dtime</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Cell and hidden state decay according to Equation (7).</span>
 
 <span class="sd">        Args:</span>
@@ -183,12 +183,12 @@
         <span class="k">return</span> <span class="n">c_t</span><span class="p">,</span> <span class="n">h_t</span></div></div>
 
 
-<div class="viewcode-block" id="NHP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP">[docs]</a><span class="k">class</span> <span class="nc">NHP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="NHP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">NHP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Torch implementation of The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process,</span>
 <span class="sd">       NeurIPS 2017, https://arxiv.org/abs/1612.09328.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="NHP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<div class="viewcode-block" id="NHP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the NHP model.</span>
 
 <span class="sd">        Args:</span>
@@ -203,14 +203,14 @@
             <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">),</span>
             <span class="n">ScaledSoftplus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_event_types</span><span class="p">))</span>  <span class="c1"># learnable mark-specific beta</span></div>
 
-    <span class="k">def</span> <span class="nf">get_init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
         <span class="n">c_t</span><span class="p">,</span> <span class="n">c_bar_t</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">,</span> <span class="n">o_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
             <span class="n">batch_size</span><span class="p">,</span>
             <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span>
             <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">c_t</span><span class="p">,</span> <span class="n">c_bar_t</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">,</span> <span class="n">o_t</span>  <span class="c1"># Okay to initialize delta to be zero because c==c_bar at the beginning</span>
 
-<div class="viewcode-block" id="NHP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="NHP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Suppose we have inputs with original sequence length N+1</span>
 <span class="sd">        ts: [t0, t1, ..., t_N]</span>
@@ -252,7 +252,7 @@
         <span class="n">right_hiddens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">right_states</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (batch_size, seq_len, 4 * hidden_dim)</span>
         <span class="k">return</span> <span class="n">left_hiddens</span><span class="p">,</span> <span class="n">right_hiddens</span></div>
 
-<div class="viewcode-block" id="NHP.get_states"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.get_states">[docs]</a>    <span class="k">def</span> <span class="nf">get_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right_hiddens</span><span class="p">,</span> <span class="n">sample_dts</span><span class="p">):</span>
+<div class="viewcode-block" id="NHP.get_states"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.get_states">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right_hiddens</span><span class="p">,</span> <span class="n">sample_dts</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        right_hiddens:  (batch_size, seq_len, 4 * hidden_dim): (c_t, c_bar_t, delta_t, o_t)</span>
 <span class="sd">        sample_dts: (batch_size, seq_len, MC_points)</span>
@@ -267,7 +267,7 @@
                                       <span class="n">sample_dts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">h_ts</span></div>
 
-<div class="viewcode-block" id="NHP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.loglike_loss">[docs]</a>    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="NHP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.loglike_loss">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the log-likelihood loss.</span>
 
 <span class="sd">        Args:</span>
@@ -304,7 +304,7 @@
         <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">event_ll</span> <span class="o">-</span> <span class="n">non_event_ll</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div>
 
-<div class="viewcode-block" id="NHP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="NHP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_nhp.html#easy_tpp.model.torch_model.torch_nhp.NHP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the intensity at sampled times, not only event times.</span>
 
 <span class="sd">        Args:</span>

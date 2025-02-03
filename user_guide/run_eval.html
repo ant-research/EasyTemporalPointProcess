@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Evaluate a Model &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
@@ -146,13 +146,13 @@
 <h2>Step 2: Run the evaluation script<a class="headerlink" href="#step-2-run-the-evaluation-script" title="Permalink to this heading"></a></h2>
 <p>Same as in the training pipeline, we need to initialize a <code class="docutils literal notranslate"><span class="pre">ModelRunner</span></code> object to do the evaluation.</p>
 <p>The following code is an example, which is a copy from <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/train_nhp.py">examples/train_nhp.py</a> .</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.config_factory</span> <span class="kn">import</span> <span class="n">RunnerConfig</span>
-<span class="kn">from</span> <span class="nn">easy_tpp.runner</span> <span class="kn">import</span> <span class="n">Runner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.config_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunnerConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runner</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--config_dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;configs/experiment_config.yaml&#39;</span><span class="p">,</span>

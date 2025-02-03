@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>easy_tpp.model.torch_model.torch_ode_tpp &mdash; EasyTPP 0.0.2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -98,15 +98,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for easy_tpp.model.torch_model.torch_ode_tpp</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
 
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_baselayer</span> <span class="kn">import</span> <span class="n">DNN</span>
-<span class="kn">from</span> <span class="nn">easy_tpp.model.torch_model.torch_basemodel</span> <span class="kn">import</span> <span class="n">TorchBaseModel</span>
-<span class="kn">from</span> <span class="nn">easy_tpp.utils</span> <span class="kn">import</span> <span class="n">rk4_step_method</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_baselayer</span><span class="w"> </span><span class="kn">import</span> <span class="n">DNN</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">rk4_step_method</span>
 
 
-<span class="k">def</span> <span class="nf">flatten_parameters</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">flatten_parameters</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="n">p_shapes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">flat_parameters</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
@@ -115,14 +115,14 @@
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">flat_parameters</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="NeuralODEAdjoint"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint">[docs]</a><span class="k">class</span> <span class="nc">NeuralODEAdjoint</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>
+<div class="viewcode-block" id="NeuralODEAdjoint"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">NeuralODEAdjoint</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>
 
-<div class="viewcode-block" id="NeuralODEAdjoint.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+<div class="viewcode-block" id="NeuralODEAdjoint.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NeuralODEAdjoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span></div>
 
 <div class="viewcode-block" id="NeuralODEAdjoint.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.forward">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">z_init</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">,</span> <span class="n">ode_fn</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">num_sample_times</span><span class="p">,</span> <span class="o">*</span><span class="n">model_parameters</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">z_init</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">,</span> <span class="n">ode_fn</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">num_sample_times</span><span class="p">,</span> <span class="o">*</span><span class="n">model_parameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Args:</span>
@@ -158,7 +158,7 @@
         <span class="k">return</span> <span class="n">state</span></div>
 
 <div class="viewcode-block" id="NeuralODEAdjoint.backward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODEAdjoint.backward">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">grad_z</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">grad_z</span><span class="p">):</span>
         <span class="n">output_state</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">saved_tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># return a tuple</span>
         <span class="n">ode_fn</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ode_fn</span>
         <span class="n">solver</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">solver</span>
@@ -167,7 +167,7 @@
         <span class="n">num_sample_times</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">num_sample_times</span>
 
         <span class="c1"># Dynamics of augmented system to be calculated backwards in time</span>
-        <span class="k">def</span> <span class="nf">aug_dynamics</span><span class="p">(</span><span class="n">aug_states</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">aug_dynamics</span><span class="p">(</span><span class="n">aug_states</span><span class="p">):</span>
             <span class="n">tmp_z</span> <span class="o">=</span> <span class="n">aug_states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">tmp_neg_a</span> <span class="o">=</span> <span class="o">-</span><span class="n">aug_states</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -209,8 +209,8 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">grad_z0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">grad_theta</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="NeuralODE"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE">[docs]</a><span class="k">class</span> <span class="nc">NeuralODE</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<div class="viewcode-block" id="NeuralODE.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">num_sample_times</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+<div class="viewcode-block" id="NeuralODE"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">NeuralODE</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="NeuralODE.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">num_sample_times</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">solver</span>
@@ -218,7 +218,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">num_sample_times</span> <span class="o">=</span> <span class="n">num_sample_times</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span></div>
 
-<div class="viewcode-block" id="NeuralODE.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_state</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+<div class="viewcode-block" id="NeuralODE.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.NeuralODE.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_state</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Args:</span>
@@ -239,7 +239,7 @@
         <span class="k">return</span> <span class="n">output_state</span></div></div>
 
 
-<div class="viewcode-block" id="ODETPP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP">[docs]</a><span class="k">class</span> <span class="nc">ODETPP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ODETPP"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ODETPP</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Torch implementation of a TPP with Neural ODE state evolution, which is a simplified version of TPP in</span>
 <span class="sd">    https://arxiv.org/abs/2011.04583, ICLR 2021</span>
 
@@ -248,7 +248,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ODETPP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
+<div class="viewcode-block" id="ODETPP.__init__"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.__init__">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model</span>
 
 <span class="sd">        Args:</span>
@@ -272,7 +272,7 @@
                                           <span class="n">num_sample_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ode_num_sample_per_step</span><span class="p">,</span>
                                           <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ODETPP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">):</span>
+<div class="viewcode-block" id="ODETPP.forward"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.forward">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Call the model.</span>
 
 <span class="sd">        Args:</span>
@@ -304,7 +304,7 @@
 
         <span class="k">return</span> <span class="n">left_limits</span><span class="p">,</span> <span class="n">right_limits</span></div>
 
-<div class="viewcode-block" id="ODETPP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.loglike_loss">[docs]</a>    <span class="k">def</span> <span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+<div class="viewcode-block" id="ODETPP.loglike_loss"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.loglike_loss">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">loglike_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the loglike loss.</span>
 
 <span class="sd">        Args:</span>
@@ -347,7 +347,7 @@
         <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">event_ll</span> <span class="o">-</span> <span class="n">non_event_ll</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_events</span></div>
 
-<div class="viewcode-block" id="ODETPP.compute_states_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.compute_states_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_states_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_ti_plus</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">):</span>
+<div class="viewcode-block" id="ODETPP.compute_states_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.compute_states_at_sample_times">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_states_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_ti_plus</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the states at sampling times.</span>
 
 <span class="sd">        Args:</span>
@@ -367,7 +367,7 @@
 
         <span class="k">return</span> <span class="n">state</span></div>
 
-<div class="viewcode-block" id="ODETPP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span> <span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ODETPP.compute_intensities_at_sample_times"><a class="viewcode-back" href="../../../../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#easy_tpp.model.torch_model.torch_ode_tpp.ODETPP.compute_intensities_at_sample_times">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensities_at_sample_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_seqs</span><span class="p">,</span> <span class="n">time_delta_seqs</span><span class="p">,</span> <span class="n">type_seqs</span><span class="p">,</span> <span class="n">sample_dtimes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the intensity at sampled times, not only event times.</span>
 
 <span class="sd">        Args:</span>
