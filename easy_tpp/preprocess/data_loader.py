@@ -105,11 +105,15 @@ class TPPDataLoader:
 
         dataset = TPPDataset(data)
         tokenizer = EventTokenizer(self.data_config.data_specs)
+
+        # Remove 'shuffle' from kwargs if it exists to avoid conflict
+        shuffle = kwargs.pop('shuffle', self.kwargs.get('shuffle', False))
+
         loader = get_data_loader(dataset,
                                  self.backend,
                                  tokenizer,
                                  batch_size=self.kwargs['batch_size'],
-                                 shuffle=self.kwargs['shuffle'],
+                                 shuffle=shuffle,
                                  **kwargs)
 
         return loader
