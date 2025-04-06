@@ -251,10 +251,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
-<li><p><strong>num_step</strong> (<em>int</em>) – num of steps for prediction.</p></li>
+<li><p><strong>batch</strong> (<em>tuple</em>) – A tuple containing:
+- time_seq_label (tensor): Timestamps of events [batch_size, seq_len].
+- time_delta_seq_label (tensor): Time intervals between events [batch_size, seq_len].
+- event_seq_label (tensor): Event types [batch_size, seq_len].
+- batch_non_pad_mask_label (tensor): Mask for non-padding elements [batch_size, seq_len].
+- attention_mask (tensor): Mask for attention [batch_size, seq_len].</p></li>
+<li><p><strong>forward</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use the entire sequence for prediction. Defaults to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

@@ -305,15 +305,18 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Multi-step prediction since last event in the sequence.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            time_seqs (tensor): [batch_size, seq_len].</span>
-<span class="sd">            time_delta_seqs (tensor): [batch_size, seq_len].</span>
-<span class="sd">            type_seqs (tensor): [batch_size, seq_len].</span>
-<span class="sd">            num_step (int): num of steps for prediction.</span>
+<span class="sd">            batch (tuple): A tuple containing:</span>
+<span class="sd">                - time_seq_label (tensor): Timestamps of events [batch_size, seq_len].</span>
+<span class="sd">                - time_delta_seq_label (tensor): Time intervals between events [batch_size, seq_len].</span>
+<span class="sd">                - event_seq_label (tensor): Event types [batch_size, seq_len].</span>
+<span class="sd">                - batch_non_pad_mask_label (tensor): Mask for non-padding elements [batch_size, seq_len].</span>
+<span class="sd">                - attention_mask (tensor): Mask for attention [batch_size, seq_len].</span>
+<span class="sd">            forward (bool, optional): Whether to use the entire sequence for prediction. Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: tensors of dtime and type prediction, [batch_size, seq_len].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">time_seq_label</span><span class="p">,</span> <span class="n">time_delta_seq_label</span><span class="p">,</span> <span class="n">event_seq_label</span><span class="p">,</span> <span class="n">batch_non_pad_mask_label</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">type_mask_label</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">time_seq_label</span><span class="p">,</span> <span class="n">time_delta_seq_label</span><span class="p">,</span> <span class="n">event_seq_label</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span>  <span class="o">=</span> <span class="n">batch</span>
 
         <span class="n">num_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gen_config</span><span class="o">.</span><span class="n">num_step_gen</span>
 
