@@ -16,8 +16,13 @@ def rmse_metric_function(predictions, labels, **kwargs):
         float: average rmse of the time predictions.
     """
     seq_mask = kwargs.get('seq_mask')
-    pred = predictions[PredOutputIndex.TimePredIndex][seq_mask]
-    label = labels[PredOutputIndex.TimePredIndex][seq_mask]
+    if seq_mask is None or len(seq_mask) == 0:
+        # If mask is empty or None, use all predictions
+        pred = predictions[PredOutputIndex.TimePredIndex]
+        label = labels[PredOutputIndex.TimePredIndex]
+    else:
+        pred = predictions[PredOutputIndex.TimePredIndex][seq_mask]
+        label = labels[PredOutputIndex.TimePredIndex][seq_mask]
 
     pred = np.reshape(pred, [-1])
     label = np.reshape(label, [-1])
@@ -36,8 +41,13 @@ def acc_metric_function(predictions, labels, **kwargs):
         float: accuracy ratio of the type predictions.
     """
     seq_mask = kwargs.get('seq_mask')
-    pred = predictions[PredOutputIndex.TypePredIndex][seq_mask]
-    label = labels[PredOutputIndex.TypePredIndex][seq_mask]
+    if seq_mask is None or len(seq_mask) == 0:
+        # If mask is empty or None, use all predictions
+        pred = predictions[PredOutputIndex.TypePredIndex]
+        label = labels[PredOutputIndex.TypePredIndex]
+    else:
+        pred = predictions[PredOutputIndex.TypePredIndex][seq_mask]
+        label = labels[PredOutputIndex.TypePredIndex][seq_mask]
     pred = np.reshape(pred, [-1])
     label = np.reshape(label, [-1])
     return np.mean(pred == label)

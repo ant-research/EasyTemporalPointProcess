@@ -205,15 +205,18 @@ class TorchBaseModel(nn.Module):
         """Multi-step prediction since last event in the sequence.
 
         Args:
-            time_seqs (tensor): [batch_size, seq_len].
-            time_delta_seqs (tensor): [batch_size, seq_len].
-            type_seqs (tensor): [batch_size, seq_len].
-            num_step (int): num of steps for prediction.
+            batch (tuple): A tuple containing:
+                - time_seq_label (tensor): Timestamps of events [batch_size, seq_len].
+                - time_delta_seq_label (tensor): Time intervals between events [batch_size, seq_len].
+                - event_seq_label (tensor): Event types [batch_size, seq_len].
+                - batch_non_pad_mask_label (tensor): Mask for non-padding elements [batch_size, seq_len].
+                - attention_mask (tensor): Mask for attention [batch_size, seq_len].
+            forward (bool, optional): Whether to use the entire sequence for prediction. Defaults to False.
 
         Returns:
             tuple: tensors of dtime and type prediction, [batch_size, seq_len].
         """
-        time_seq_label, time_delta_seq_label, event_seq_label, batch_non_pad_mask_label, _, type_mask_label = batch
+        time_seq_label, time_delta_seq_label, event_seq_label, _, _  = batch
 
         num_step = self.gen_config.num_step_gen
 

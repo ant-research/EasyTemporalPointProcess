@@ -25,3 +25,5 @@ log
 .idea
 
 examples/checkpoints/*
+
+notebooks/checkpoints/*
