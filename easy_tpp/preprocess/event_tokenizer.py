@@ -4,7 +4,7 @@ from typing import Optional, Union, Dict, Any, List, Mapping
 
 import numpy as np
 
-from easy_tpp.utils import is_torch_available, logger, TruncationStrategy, PaddingStrategy, \
+from easy_tpp.utils import logger, TruncationStrategy, PaddingStrategy, \
     TensorType, is_torch_device, requires_backends, is_numpy_array, py_assert
 
 
