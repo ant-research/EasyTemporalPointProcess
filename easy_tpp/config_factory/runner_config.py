@@ -5,7 +5,7 @@ from easy_tpp.config_factory.config import Config
 from easy_tpp.config_factory.data_config import DataConfig
 from easy_tpp.config_factory.model_config import TrainerConfig, ModelConfig, BaseConfig
 from easy_tpp.utils import create_folder, logger, get_unique_id, get_stage, RunnerPhase, \
-    MetricsHelper, DefaultRunnerConfig, py_assert, is_torch_available, is_tf_available, is_tf_gpu_available, \
+    MetricsHelper, DefaultRunnerConfig, py_assert, is_torch_available, \
     is_torch_gpu_available
 from easy_tpp.utils.const import Backend
 
@@ -119,28 +119,17 @@ class RunnerConfig(Config):
         model_id = self.base_config.model_id
         self.model_config.model_id = model_id
 
-        if self.base_config.model_id == 'ODETPP' and self.base_config.backend == Backend.TF:
-            py_assert(self.data_config.data_specs.padding_strategy == 'max_length',
-                      ValueError,
-                      'For ODETPP in TensorFlow, we must pad all sequence to '
-                      'the same length (max len of the sequences)!')
-
         run = current_stage
         use_torch = self.base_config.backend == Backend.Torch
         device = 'GPU' if self.trainer_config.gpu >= 0 else 'CPU'
 
-        py_assert(is_torch_available() if use_torch else is_tf_available(), ValueError,
-                  f'Backend {self.base_config.backend} is not supported in the current environment yet !')
+        py_assert(is_torch_available(), ValueError,
+                  f'PyTorch is not available in the current environment!')
 
         if use_torch and device == 'GPU':
             py_assert(is_torch_gpu_available(),
                       ValueError,
                       f'Torch cuda is not supported in the current environment yet!')
-
-        if not use_torch and device == 'GPU':
-            py_assert(is_tf_gpu_available(),
-                      ValueError,
-                      f'Tensorflow GPU is not supported in the current environment yet!')
 
         critical_msg = '{run} model {model_name} using {device} ' \
                        'with {tf_torch} backend'.format(run=run,

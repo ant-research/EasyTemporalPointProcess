@@ -37,7 +37,7 @@ def main():
 
     tokenizer = EventTokenizer(config)
 
-    output = tokenizer.pad(input_data, return_tensors='tf')
+    output = tokenizer.pad(input_data, return_tensors='pt')
 
     print(output)
 

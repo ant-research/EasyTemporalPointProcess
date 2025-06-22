@@ -144,12 +144,9 @@ class BaseConfig(Config):
     def set_backend(backend):
         if backend.lower() in ['torch', 'pytorch']:
             return Backend.Torch
-        elif backend.lower() in ['tf', 'tensorflow']:
-            return Backend.TF
         else:
             raise ValueError(
-                f"Backend  should be selected between 'torch or pytorch' and 'tf or tensorflow', "
-                f"current value: {backend}"
+                f"Backend should be 'torch' or 'pytorch', current value: {backend}"
             )
 
     def get_yaml_config(self):

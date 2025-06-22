@@ -1,7 +1,7 @@
 from easy_tpp.utils.const import RunnerPhase, LogConst, DefaultRunnerConfig, PaddingStrategy, TensorType, ExplicitEnum, \
     TruncationStrategy
-from easy_tpp.utils.import_utils import is_tf_available, is_tensorflow_probability_available, is_torchvision_available, \
-    is_torch_cuda_available, is_torch_available, requires_backends, is_tf_gpu_available, is_torch_gpu_available
+from easy_tpp.utils.import_utils import is_torchvision_available, \
+    is_torch_cuda_available, is_torch_available, requires_backends, is_torch_gpu_available
 from easy_tpp.utils.log_utils import default_logger as logger, DEFAULT_FORMATTER
 from easy_tpp.utils.metrics import MetricsHelper, MetricsTracker
 from easy_tpp.utils.misc import py_assert, make_config_string, create_folder, save_yaml_config, load_yaml_config, \
@@ -46,11 +46,8 @@ __all__ = ['py_assert',
            'dict_deep_update',
            'DefaultRunnerConfig',
            'rk4_step_method',
-           'is_tf_available',
-           'is_tensorflow_probability_available',
            'is_torchvision_available',
            'is_torch_cuda_available',
-           'is_tf_gpu_available',
            'is_torch_gpu_available',
            'is_torch_available',
            'requires_backends',

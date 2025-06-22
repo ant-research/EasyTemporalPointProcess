@@ -4,7 +4,7 @@ from typing import Optional, Union, Dict, Any, List, Mapping
 
 import numpy as np
 
-from easy_tpp.utils import is_torch_available, is_tf_available, logger, TruncationStrategy, PaddingStrategy, \
+from easy_tpp.utils import is_torch_available, logger, TruncationStrategy, PaddingStrategy, \
     TensorType, is_torch_device, requires_backends, is_numpy_array, py_assert
 
 
@@ -69,18 +69,7 @@ class BatchEncoding(UserDict):
             tensor_type = TensorType(tensor_type)
 
         # Get a function reference for the correct framework
-        if tensor_type == TensorType.TENSORFLOW:
-            if not is_tf_available():
-                raise ImportError(
-                    "Unable to convert output to TensorFlow tensors format, TensorFlow is not installed."
-                )
-            import tensorflow as tf
-
-            as_tensor = tf.constant
-            is_tensor = tf.is_tensor
-        elif tensor_type == TensorType.PYTORCH:
-            if not is_torch_available():
-                raise ImportError("Unable to convert output to PyTorch tensors format, PyTorch is not installed.")
+        if tensor_type == TensorType.PYTORCH:
             import torch
 
             as_tensor = torch.tensor

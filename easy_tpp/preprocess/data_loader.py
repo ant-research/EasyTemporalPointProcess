@@ -13,7 +13,7 @@ class TPPDataLoader:
 
         Args:
             data_config (EasyTPP.DataConfig): data config.
-            backend (str): backend engine, e.g., tensorflow or torch.
+            backend (str): backend engine, defaults to 'torch'.
         """
         self.data_config = data_config
         self.num_event_types = data_config.data_specs.num_event_types

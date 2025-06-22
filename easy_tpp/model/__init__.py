@@ -9,21 +9,6 @@ from easy_tpp.model.torch_model.torch_rmtpp import RMTPP as TorchRMTPP
 from easy_tpp.model.torch_model.torch_sahp import SAHP as TorchSAHP
 from easy_tpp.model.torch_model.torch_thp import THP as TorchTHP
 
-# by default, we use torch and do not install tf, therefore we ignore the import error
-try:
-    from easy_tpp.model.tf_model.tf_basemodel import TfBaseModel
-    from easy_tpp.model.tf_model.tf_nhp import NHP as TfNHP
-    from easy_tpp.model.tf_model.tf_ode_tpp import ODETPP as TfODETPP
-    from easy_tpp.model.tf_model.tf_thp import THP as TfTHP
-    from easy_tpp.model.tf_model.tf_sahp import SAHP as TfSAHP
-    from easy_tpp.model.tf_model.tf_rmtpp import RMTPP as TfRMTPP
-    from easy_tpp.model.tf_model.tf_attnhp import AttNHP as TfAttNHP
-    from easy_tpp.model.tf_model.tf_anhn import ANHN as TfANHN
-    from easy_tpp.model.tf_model.tf_fullynn import FullyNN as TfFullyNN
-    from easy_tpp.model.tf_model.tf_intensity_free import IntensityFree as TfIntensityFree
-except ImportError:
-    pass
-
 __all__ = ['TorchBaseModel',
            'TorchNHP',
            'TorchAttNHP',
@@ -32,12 +17,5 @@ __all__ = ['TorchBaseModel',
            'TorchFullyNN',
            'TorchIntensityFree',
            'TorchODETPP',
-           'TfBaseModel',
-           'TfNHP',
-           'TfAttNHP',
-           'TfTHP',
-           'TfSAHP',
-           'TfANHN',
-           'TfFullyNN',
-           'TfIntensityFree',
-           'TfODETPP']
+           'TorchRMTPP',
+           'TorchANHN']
