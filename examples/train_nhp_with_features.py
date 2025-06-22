@@ -59,6 +59,7 @@ class EventTokenizerV2(EventTokenizer):
     def __init__(self, config):
         super(EventTokenizerV2, self).__init__(config)
         self.model_input_names.append('loan_amt_seqs')
+        self.model_input_names.append('type_mask')
 
     def _pad(
             self,
@@ -142,11 +143,11 @@ class EventTokenizerV2(EventTokenizer):
             batch_output[self.model_input_names[4]] = []
 
         # type_mask
-        batch_output[self.model_input_names[5]] = self.make_type_mask_for_pad_sequence(
+        batch_output[self.model_input_names[6]] = self.make_type_mask_for_pad_sequence(
             batch_output[self.model_input_names[2]])
 
         # loan_amt_seqs
-        batch_output[self.model_input_names[6]] = self.make_pad_sequence(encoded_inputs[self.model_input_names[-1]],
+        batch_output[self.model_input_names[5]] = self.make_pad_sequence(encoded_inputs[self.model_input_names[-2]],
                                                                          self.pad_token_id,
                                                                          padding_side=self.padding_side,
                                                                          max_len=max_length)
@@ -223,7 +224,10 @@ class NHPV2(NHP):
         max_seq_length = max_steps if max_steps is not None else event_seq.size(1) - 1
 
         batch_size = len(event_seq)
-        h_t, c_t, c_bar_i = self.init_state(batch_size)
+        c_t, c_bar_t, delta_t, o_t = self.get_init_state(batch_size)
+        h_t = o_t  # Use o_t as the initial hidden state, as in the base NHP
+        c_t = c_t
+        c_bar_i = c_bar_t
 
         # if only one event, then we dont decay
         if max_seq_length == 1:
@@ -331,18 +335,37 @@ class NHPV2(NHP):
         # [batch_size, num_times = max_len - 1, num_mc_sample, event_num]
         lambda_t_sample = self.layer_intensity(state_t_sample)
 
-        event_ll, non_event_ll, num_events = self.compute_loglikelihood(lambda_at_event=lambda_at_event,
-                                                                        lambdas_loss_samples=lambda_t_sample,
-                                                                        time_delta_seq=time_delta_seqs[:, 1:],
-                                                                        seq_mask=batch_non_pad_mask[:, 1:],
-                                                                        lambda_type_mask=type_mask[:, 1:])
+        type_seqs = type_seqs.long()
+        event_ll, non_event_ll, num_events = self.compute_loglikelihood(
+            time_delta_seq=time_delta_seqs[:, 1:],
+            lambda_at_event=lambda_at_event,
+            lambdas_loss_samples=lambda_t_sample,
+            seq_mask=batch_non_pad_mask[:, 1:],
+            type_seq=type_seqs[:, 1:]
+        )
 
         # (num_samples, num_times)
         loss = - (event_ll - non_event_ll).sum()
         return loss, num_events
 
+    def compute_states_at_sample_times(self, decay_states, sample_dtimes):
+        """
+        decay_states: (batch_size, seq_len, 4, hidden_dim)
+        sample_dtimes: (batch_size, seq_len, num_mc_sample)
+        """
+        cell_stack, cell_bar_stack, decay_stack, output_stack = torch.unbind(decay_states, dim=2)
+        # Add a new axis for samples
+        _, h_ts = self.rnn_cell.decay(
+            cell_stack[:, :, None, :],
+            cell_bar_stack[:, :, None, :],
+            decay_stack[:, :, None, :],
+            output_stack[:, :, None, :],
+            sample_dtimes[..., None]
+        )
+        return h_ts
+
 def make_model():
-    config = Config.build_from_yaml_file('configs/experiment_config.yaml', experiment_id='NHP_train')
+    config = Config.build_from_yaml_file('examples/configs/experiment_config.yaml', experiment_id='NHP_train')
     model_config = config.model_config
 
     # hack this
