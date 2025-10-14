@@ -586,3 +586,40 @@ AttNHP_gen:
       num_samples_boundary: 5
       dtime_max: 5
       num_step_gen: 10
+
+
+# Example configuration for training State-Space Point Process (S2P2) model.
+S2P2_train:
+  base_config:
+    stage: train
+    backend: torch
+    dataset_id: taxi
+    runner_id: std_tpp
+    model_id: S2P2
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 256
+    max_epoch: 300
+    shuffle: True
+    optimizer: adam
+    learning_rate: 1.e-2
+    valid_freq: 1
+    use_tfb: False
+    metrics: [ 'acc', 'rmse' ]
+    seed: 2019
+    gpu: -1  # ID of GPU to use. Set to -1 to use CPU instead. `mps` backend could lead to incorrect results, please use CPU or CUDA.
+  model_config:
+    hidden_size: 128  # Number of dimensions for u_t and y_t, labeled as H in the paper.
+    loss_integral_num_sample_per_step: 10  # How many time points to use to estimate the integrated intensity between each pair of subsequent events for the log-likelihood.
+    use_mc_samples: True  # Use Monte-Carlo sampling for the integral estimation. If False, uses a quadrature with a grid of evenly spaced points.
+    num_layers: 4  # Number of LLH layers.
+    model_specs:
+      P: 16  # Number of dimensions for the hidden state x_t, labeled as P in the paper.
+      dropout_rate: 0.1  # Dropout rate, used immediately after the activation function between layers but before the normalization. Formally, we set u^{(l+1)}_t = LayerNorm(dropout(\sigma(y^{(l)}_t)) + u^{(l)}_t).
+      act_func: gelu  # gelu | half_glu | full_glu  # Activation function to use between layers.
+      for_loop: True  # If enabled, uses for-loop for computing the recurrence in the LLH layers. If disabled, uses a parallel scan.
+      pre_norm: False  # Should be set to False. If True, uses a LayerNorm on the inputs to a LLH layer.
+      post_norm: True  # Should be set to True. If True, uses a LayerNorm on the outputs of a LLH layer (after transforming and adding the residual).
+      int_forward_variant: False  # Should be set to False. If True, uses u_{t_i} as the ZOH constant for u_t with t \in (t_i, t_{i+1}].
+      int_backward_variant: True  # Should be set to True. If True, uses u_{t_{i+1}-} as the ZOH constant for u_t with t \in (t_i, t_{i+1}].
+      relative_time: True  # If True, predicts the scaling factor to be applied to the dynamics between each pair of subsequent events. See Sec. 3.3 of the paper.

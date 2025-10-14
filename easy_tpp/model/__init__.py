@@ -6,6 +6,7 @@ from easy_tpp.model.torch_model.torch_intensity_free import IntensityFree as Tor
 from easy_tpp.model.torch_model.torch_nhp import NHP as TorchNHP
 from easy_tpp.model.torch_model.torch_ode_tpp import ODETPP as TorchODETPP
 from easy_tpp.model.torch_model.torch_rmtpp import RMTPP as TorchRMTPP
+from easy_tpp.model.torch_model.torch_s2p2 import S2P2 as TorchS2P2
 from easy_tpp.model.torch_model.torch_sahp import SAHP as TorchSAHP
 from easy_tpp.model.torch_model.torch_thp import THP as TorchTHP
 
@@ -18,4 +19,5 @@ __all__ = ['TorchBaseModel',
            'TorchIntensityFree',
            'TorchODETPP',
            'TorchRMTPP',
-           'TorchANHN']
+           'TorchANHN',
+           'TorchS2P2']
