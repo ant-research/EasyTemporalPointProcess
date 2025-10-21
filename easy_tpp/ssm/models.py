@@ -25,9 +25,9 @@ class LLH(nn.Module):
         P: int,
         H: int,
         dt_init_min: float = 1e-4,
-        dt_init_max: float = 0.1,  # 1e-3
+        dt_init_max: float = 0.1,
         dropout_rate: float = 0.0,
-        act_func: str = "full_glu",  # F.gelu,
+        act_func: str = "gelu",  # F.gelu,
         for_loop: bool = False,
         pre_norm: bool = True,
         post_norm: bool = False,
@@ -418,9 +418,6 @@ class LLH(nn.Module):
         To get the left limit, we roll on the layer for the right dt.
         Computed for a single point (vmap for multiple).
 
-        TODO - its kind of messy that this repeats from forward.
-         Find a way to re-use that code.
-
         :param right_limit_P: at [t_0, ..., t_{N-1}]
         :param dt: Length of time to roll the layer on for. at [t_1 - t_0, ..., t_N - t_{N-1}]
         :param current_right_u_H: at [t_0, ..., t_{N-1}] -- for relative-time variant
@@ -616,9 +613,6 @@ class Int_Forward_LLH(LLH):
         To get the left limit, we roll on the layer for the right dt.
         Computed for a single point (vmap for multiple).
 
-        TODO - its kind of messy that this repeats from forward.
-         Find a way to re-use that code.
-
         :param right_limit_P:
         :param dt: Length of time to roll the layer on for.
         :return:
@@ -630,12 +624,10 @@ class Int_Forward_LLH(LLH):
             current_right_u_H, shift_u=False
         )  # U should already be shifted
         if "lambda_rescaled_P" in lambda_res:
-            lambda_rescaled = lambda_res["lambda_rescaled_P"]
             lambda_bar_GP = th.exp(
                 th.einsum("...g,p->...gp", dt_G, lambda_res["lambda_rescaled_P"])
             )
         else:
-            lambda_rescaled = lambda_res["lambda_rescaled_NP"]
             lambda_bar_GP = th.exp(
                 th.einsum("...g,...p->...gp", dt_G, lambda_res["lambda_rescaled_NP"])
             )
@@ -697,12 +689,10 @@ class Int_Backward_LLH(Int_Forward_LLH):
         # lambda_dt_NP = th.einsum('...n,p->...np', dt_N, lambda_rescaled_P)
         lambda_res = self.get_lambda(right_u_NH=right_u_NH, shift_u=True)
         if "lambda_rescaled_P" in lambda_res:
-            lambda_rescaled = lambda_res["lambda_rescaled_P"]
             lambda_dt_NP = th.einsum(
                 "...n,p->...np", dt_N, lambda_res["lambda_rescaled_P"]
             )
         else:
-            lambda_rescaled = lambda_res["lambda_rescaled_NP"]
             lambda_dt_NP = th.einsum(
                 "...n,...np->...np", dt_N, lambda_res["lambda_rescaled_NP"]
             )
@@ -790,9 +780,6 @@ class Int_Backward_LLH(Int_Forward_LLH):
         To get the left limit, we roll on the layer for the right dt.
         Computed for a single point (vmap for multiple).
 
-        TODO - its kind of messy that this repeats from forward.
-         Find a way to re-use that code.
-
         :param right_limit_P:
         :param dt: Length of time to roll the layer on for.
         :return:
@@ -805,12 +792,10 @@ class Int_Backward_LLH(Int_Forward_LLH):
             current_right_u_H, shift_u=False
         )  # U should already be shifted
         if "lambda_rescaled_P" in lambda_res:
-            lambda_rescaled = lambda_res["lambda_rescaled_P"]
             lambda_bar_GP = th.exp(
                 th.einsum("...g,p->...gp", dt_G, lambda_res["lambda_rescaled_P"])
             )
         else:
-            lambda_rescaled = lambda_res["lambda_rescaled_NP"]
             lambda_bar_GP = th.exp(
                 th.einsum("...g,...p->...gp", dt_G, lambda_res["lambda_rescaled_NP"])
             )
