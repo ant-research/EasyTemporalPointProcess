@@ -47,7 +47,6 @@ class S2P2(TorchBaseModel):
         self.H = model_config.hidden_size  # Residual stream dimension
         self.beta = model_config.model_specs.get("beta", 1.0)
         self.bias = model_config.model_specs.get("bias", True)
-        # self.softplus = torch.nn.Softplus(beta=self.beta)
         self.simple_mark = model_config.model_specs.get("simple_mark", True)
 
         layer_kwargs = dict(
@@ -233,7 +232,7 @@ class S2P2(TorchBaseModel):
             for right_u_BNH in right_us_BNH
         ]
 
-        event_times_BN, inter_event_times_BN, marks_BN, batch_non_pad_mask, _ = batch
+        ts_BN, dts_BN, marks_BN, batch_non_pad_mask, _ = batch
 
         # evaluate intensity values at each event *from the left limit*, _get_intensity: [LP] -> [M]
         # left_xs_B_Nm1_LP = left_xs_BNm1LP[:, :-1, ...]  # discard the left limit of t_N
@@ -241,7 +240,7 @@ class S2P2(TorchBaseModel):
         if "left_u_BNm1H" in forward_results:  # ONLY backward variant
             intensity_B_Nm1_M = self.intensity_net(
                 forward_results["left_u_BNm1H"]
-            )  # self.softplus(self.linear(forward_results["left_u_BNm1H"]))
+            )  # self.ScaledSoftplus(self.linear(forward_results["left_u_BNm1H"]))
         else:  # NOT backward variant
             intensity_B_Nm1_M = self._get_intensity(
                 forward_results["left_xs_BNm1LP"], right_us_BNm1H
@@ -250,7 +249,7 @@ class S2P2(TorchBaseModel):
         # sample dt in each interval for MC: [batch_size, num_times=N-1, num_mc_sample]
         # N-1 because we only consider the intervals between N events
         # G for grid points
-        dts_sample_B_Nm1_G = self.make_dtime_loss_samples(inter_event_times_BN[:, 1:])
+        dts_sample_B_Nm1_G = self.make_dtime_loss_samples(dts_BN[:, 1:])
 
         # evaluate intensity at dt_samples for MC *from the left limit* after decay -> shape (B, N-1, MC, M)
         intensity_dts_B_Nm1_G_M = self._evolve_and_get_intensity_at_sampled_dts(
@@ -264,7 +263,7 @@ class S2P2(TorchBaseModel):
         event_ll, non_event_ll, num_events = self.compute_loglikelihood(
                 lambda_at_event=intensity_B_Nm1_M,
                 lambdas_loss_samples=intensity_dts_B_Nm1_G_M,
-                time_delta_seq=inter_event_times_BN[:, 1:],
+                time_delta_seq=dts_BN[:, 1:],
                 seq_mask=batch_non_pad_mask[:, 1:],
                 type_seq=marks_BN[:, 1:],
         )

@@ -295,7 +295,6 @@ class LLH(nn.Module):
         prime_left_u_NH = left_u_NH
         prime_right_u_NH = right_u_NH
         if prime_left_u_NH is not None:  # ONLY for backward variant
-            # assert u_NH.shape[:-1] == alpha_NP[:-1]  # For some reason even when returning True would fail assertion
             assert all(
                 u_d == a_d
                 for u_d, a_d in zip(prime_left_u_NH.shape, mark_embedding_NH.shape)
@@ -303,7 +302,6 @@ class LLH(nn.Module):
             if self.pre_norm:
                 prime_left_u_NH = self.norm(prime_left_u_NH)
         if prime_right_u_NH is not None:
-            # assert u_NH.shape[:-1] == alpha_NP[:-1]  # For some reason even when returning True would fail assertion
             assert all(
                 u_d == a_d
                 for u_d, a_d in zip(prime_right_u_NH.shape, mark_embedding_NH.shape)
@@ -318,12 +316,14 @@ class LLH(nn.Module):
             dt_N=dt_N,
             initial_state_P=initial_state_P,
         )
+
         # Given the following:
         # right_u: u0, u1, u2, ... <-> u_{t_0}, u_{t_1}, u_{t_2}, ...
         # left_u: u0, u1, u2, ... <-> u_{t_0-}, u_{t_1-}, u_{t_2-}, ...
         # a: a0, a1, a2, ... <-> mark embeddings for m_0, m_1, m_2, ... at times t_0, t_1, t_2
         # dt: dt0, dt1, dt2, ... <-> 0, t_1-t_0, t_2-t_1, ...
         # initial_state_p: hidden state to evolve to to compute x_{0}
+
         # Returns the following:
         # right_x: x0, x1, x2, ... <-> x_{t_0}, x_{t_1}, x_{t_2}, ...
         # right_y: y0, y1, y2, ... <-> y_{t_0}, y_{t_1}, y_{t_2}, ...
@@ -559,7 +559,6 @@ class Int_Forward_LLH(LLH):
             right_x_P = initial_state_P
             left_x_NP, right_x_NP = [], []
             for i in range(N):
-                # TODO: check left_u_NH starts at t_0 or t_1
                 left_x_P = lambda_dt_NP[..., i, :].exp() * right_x_P + (
                     right_Bu_NP[..., i, :] if left_u_NH is not None else 0.0
                 )
@@ -698,7 +697,7 @@ class Int_Backward_LLH(Int_Forward_LLH):
             )
 
         if left_u_NH is not None:
-            left_Bu_NP = th.einsum(  # try a different mapping
+            left_Bu_NP = th.einsum(
                 "...np,ph,...nh->...np",
                 lambda_dt_NP.exp() - 1.0,  # dts: [0, t1-t0, t2-t1, ...]
                 self.B_tilde_PH,
@@ -809,7 +808,7 @@ class Int_Backward_LLH(Int_Forward_LLH):
             if self.pre_norm:
                 next_left_u_GH = self.norm(next_left_u_GH)
 
-            impulse_GP = th.einsum(  # try a different mapping
+            impulse_GP = th.einsum(
                 "...gp,ph,...gh->...gp",
                 lambda_bar_GP - 1.0,
                 self.B_tilde_PH,
