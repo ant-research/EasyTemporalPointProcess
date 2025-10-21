@@ -43,8 +43,8 @@ class S2P2(TorchBaseModel):
         """
         super(S2P2, self).__init__(model_config)
         self.n_layers = model_config.num_layers
-        self.P = model_config.model_specs["P"]
-        self.H = model_config.hidden_size
+        self.P = model_config.model_specs["P"]  # Hidden state dimension
+        self.H = model_config.hidden_size  # Residual stream dimension
         self.beta = model_config.model_specs.get("beta", 1.0)
         self.bias = model_config.model_specs.get("bias", True)
         # self.softplus = torch.nn.Softplus(beta=self.beta)
@@ -92,7 +92,7 @@ class S2P2(TorchBaseModel):
             self.num_event_types_pad,
             self.H,
         )  # One embedding to share amongst layers to be used as input into a layer-specific and input-aware impulse
-        self.layer_type_emb = None  # Remove old embeddings
+        self.layer_type_emb = None  # Remove old embeddings from EasyTPP
         self.intensity_net = IntensityNet(
             input_dim=self.H,
             bias=self.bias,
@@ -120,7 +120,7 @@ class S2P2(TorchBaseModel):
                     prev_right_u_H=right_us_BNH[i],
                 )
 
-        return self.intensity_net(left_u_H)  # self.softplus(self.linear(left_u_H))
+        return self.intensity_net(left_u_H)  # self.ScaledSoftplus(self.linear(left_u_H))
 
     def _evolve_and_get_intensity_at_sampled_dts(self, x_LP, dt_G, right_us_H):
         left_u_GH = None
@@ -136,7 +136,7 @@ class S2P2(TorchBaseModel):
                 current_left_u_H=left_u_GH,
                 prev_right_u_H=right_us_H[i],
             ) 
-        return self.intensity_net(left_u_GH)  # self.softplus(self.linear(left_u_GH))
+        return self.intensity_net(left_u_GH)  # self.ScaledSoftplus(self.linear(left_u_GH))
 
     def forward(
         self, batch, initial_state_BLP: Optional[torch.Tensor] = None, **kwargs
@@ -267,7 +267,6 @@ class S2P2(TorchBaseModel):
                 time_delta_seq=inter_event_times_BN[:, 1:],
                 seq_mask=batch_non_pad_mask[:, 1:],
                 type_seq=marks_BN[:, 1:],
-                # lambda_type_mask=marks_mask[:, 1:],
         )
 
         # compute loss to optimize
