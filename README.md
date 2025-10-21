@@ -77,6 +77,7 @@ We provide reference implementations of various state-of-the-art TPP papers:
 |  6  |   ICLR'20   | IntensityFree | [Intensity-Free Learning of Temporal Point Processes](https://arxiv.org/abs/1909.12127)                                                  | [PyTorch](easy_tpp/model/torch_model/torch_intensity_free.py)                                                              |
 |  7  |   ICLR'21   |    ODETPP     | [Neural Spatio-Temporal Point Processes (simplified)](https://arxiv.org/abs/2011.04583)                                                  | [PyTorch](easy_tpp/model/torch_model/torch_ode_tpp.py)                                                                     |
 |  8  |   ICLR'22   |    AttNHP     | [Transformer Embeddings of Irregularly Spaced Events and Their Participants](https://arxiv.org/abs/2201.00044)                           | [PyTorch](easy_tpp/model/torch_model/torch_attnhp.py)                                                                     |
+|  9  |   NeurIPS'25   |    S2P2     | Deep Continuous-Time State-Space Models for Marked Event Sequences   | [PyTorch](easy_tpp/model/torch_model/torch_s2p2.py)                                                                     |
 
 
 
