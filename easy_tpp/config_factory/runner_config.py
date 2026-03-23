@@ -118,6 +118,7 @@ class RunnerConfig(Config):
         # update base config => model config
         model_id = self.base_config.model_id
         self.model_config.model_id = model_id
+        self._maybe_set_max_observed_time()
 
         run = current_stage
         use_torch = self.base_config.backend == Backend.Torch
@@ -140,6 +141,42 @@ class RunnerConfig(Config):
         logger.critical(critical_msg)
 
         return
+
+    def _maybe_set_max_observed_time(self):
+        """Resolve the observation-window end T for WSM models."""
+        if self.base_config.model_id != 'WSMTHP':
+            return
+
+        model_specs = self.model_config.model_specs
+        t_mode = str(model_specs.get('T_mode', 'train_global')).lower()
+
+        if t_mode == 'manual':
+            py_assert(model_specs.get('max_observed_time') is not None,
+                      ValueError,
+                      'WSMTHP with T_mode=manual requires model_specs.max_observed_time.')
+            return
+
+        if t_mode == 'batch':
+            model_specs['max_observed_time'] = None
+            logger.info('WSMTHP uses batch-wise T (T_mode=batch).')
+            return
+
+        py_assert(t_mode == 'train_global',
+                  ValueError,
+                  f'Unsupported WSMTHP T_mode: {t_mode}. Use manual, train_global, or batch.')
+
+        from easy_tpp.preprocess.data_loader import TPPDataLoader
+
+        data_loader = TPPDataLoader(
+            data_config=self.data_config,
+            backend=self.base_config.backend,
+            batch_size=self.trainer_config.batch_size,
+            shuffle=False,
+        )
+        max_observed_time = data_loader.get_max_event_time('train')
+        if max_observed_time is not None:
+            model_specs['max_observed_time'] = float(max_observed_time)
+            logger.info(f'Auto-set model_specs.max_observed_time={max_observed_time} from train split (T_mode=train_global)')
 
     def get_metric_functions(self):
         return MetricsHelper.get_metrics_callback_from_names(self.trainer_config.metrics)

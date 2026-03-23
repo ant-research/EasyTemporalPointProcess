@@ -36,13 +36,43 @@ data:
       padding_side: right
       truncation_side: right
   retweet:
-    data_format: pkl
-    train_dir: ../data/retweet/train.pkl
-    valid_dir: ../data/retweet/dev.pkl
-    test_dir: ../data/retweet/test.pkl
+    data_format: json
+    train_dir: easytpp/retweet
+    valid_dir: easytpp/retweet
+    test_dir: easytpp/retweet
     data_specs:
       num_event_types: 3
       pad_token_id: 3
+      padding_side: right
+      truncation_side: right
+  stackoverflow:
+    data_format: json
+    train_dir: easytpp/stackoverflow
+    valid_dir: easytpp/stackoverflow
+    test_dir: easytpp/stackoverflow
+    data_specs:
+      num_event_types: 22
+      pad_token_id: 22
+      padding_side: right
+      truncation_side: right
+  taobao:
+    data_format: json
+    train_dir: easytpp/taobao
+    valid_dir: easytpp/taobao
+    test_dir: easytpp/taobao
+    data_specs:
+      num_event_types: 17
+      pad_token_id: 17
+      padding_side: right
+      truncation_side: right
+  amazon:
+    data_format: json
+    train_dir: easytpp/amazon
+    valid_dir: easytpp/amazon
+    test_dir: easytpp/amazon
+    data_specs:
+      num_event_types: 16
+      pad_token_id: 16
       padding_side: right
       truncation_side: right
 
@@ -452,13 +482,13 @@ THP_train:
   base_config:
     stage: train
     backend: torch
-    dataset_id: taxi
+    dataset_id: taobao
     runner_id: std_tpp
     model_id: THP # model name
     base_dir: './checkpoints/'
   trainer_config:
     batch_size: 256
-    max_epoch: 30
+    max_epoch: 200
     shuffle: False
     optimizer: adam
     learning_rate: 1.e-3
@@ -623,3 +653,92 @@ S2P2_train:
       int_forward_variant: False  # Should be set to False. If True, uses u_{t_i} as the ZOH constant for u_t with t \in (t_i, t_{i+1}].
       int_backward_variant: True  # Should be set to True. If True, uses u_{t_{i+1}-} as the ZOH constant for u_t with t \in (t_i, t_{i+1}].
       relative_time: True  # If True, predicts the scaling factor to be applied to the dynamics between each pair of subsequent events. See Sec. 3.3 of the paper.
+
+
+# WSM-THP: Weighted Score Matching Temporal Hawkes Process
+# Ref: "Is Score Matching Suitable for Estimating Point Processes?" NeurIPS 2024
+# https://arxiv.org/abs/2512.04617
+WSMTHP_train:
+  base_config:
+    stage: train
+    backend: torch
+    dataset_id: taobao           # change to the dataset you want to use
+    runner_id: std_tpp
+    model_id: WSMTHP           # must match the class name in torch_wsm_thp.py
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 64
+    max_epoch: 200
+    shuffle: False
+    optimizer: adam
+    learning_rate: 1.e-3
+    valid_freq: 10
+    use_tfb: False
+    metrics: [ 'acc', 'rmse' ]
+    seed: 2019
+    gpu: -1
+  model_config:
+    hidden_size: 16            # Transformer model dimension d_model
+    num_layers: 2              # Number of Transformer encoder layers
+    num_heads: 2               # Number of attention heads
+    dropout_rate: 0.1
+    loss_integral_num_sample_per_step: 20  # kept for EasyTPP compatibility
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 500
+      look_ahead_time: 10
+      patience_counter: 5
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 1
+    model_specs:
+      # WSM-specific hyperparameters      CE_coef: 10.0            # weight for mark cross-entropy loss (??in the paper)
+      h_type: two_side_op      # weight function; only 'two_side_op' is currently supported
+      T_mode: train_global     # manual | train_global | batch
+      max_observed_time:       # used when T_mode=manual
+      d_inner: 32              # FFN hidden dimension (default: hidden_size * 2)
+      with_survival: false     # optional finite-window survival classifier from the paper
+      alpha_survival: 10.0     # weight for the survival classification loss when enabled
+      alpha_neg: 10.0          # class weight for non-terminal events in the survival loss
+
+
+WSMTHP_gen:
+  base_config:
+    stage: gen
+    backend: torch
+    dataset_id: taxi
+    runner_id: std_tpp
+    model_id: WSMTHP
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 64
+    max_epoch: 1
+    seed: 2019
+    gpu: -1
+  model_config:
+    hidden_size: 16
+    num_layers: 2
+    num_heads: 2
+    dropout_rate: 0.1
+    loss_integral_num_sample_per_step: 20
+#    pretrained_model_dir: ./checkpoints/<your_run_dir>/models/saved_model
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 500
+      look_ahead_time: 10
+      patience_counter: 5
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 10
+    model_specs:
+      h_type: two_side_op
+      T_mode: train_global
+      max_observed_time:
+      d_inner: 32
+      with_survival: false
+      alpha_survival: 10.0
+      alpha_neg: 10.0

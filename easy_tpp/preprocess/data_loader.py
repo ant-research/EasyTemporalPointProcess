@@ -118,6 +118,36 @@ class TPPDataLoader:
 
         return loader
 
+    def get_max_event_time(self, split='train'):
+        """Return the maximum absolute event time in a data split."""
+        data_dir = self.data_config.get_data_dir(split)
+        if data_dir is None:
+            return None
+
+        data = self.build_input(data_dir, self.data_config.data_format, split)
+        if not data['time_seqs']:
+            return None
+
+        max_time = None
+        for seq in data['time_seqs']:
+            if not seq:
+                continue
+            seq_max = max(seq)
+            max_time = seq_max if max_time is None else max(max_time, seq_max)
+
+        return max_time
+
+    def get_global_max_event_time(self):
+        """Return the maximum absolute event time across all available splits."""
+        max_time = None
+        for split in ('train', 'dev', 'test'):
+            split_max = self.get_max_event_time(split)
+            if split_max is None:
+                continue
+            max_time = split_max if max_time is None else max(max_time, split_max)
+
+        return max_time
+
     def train_loader(self, **kwargs):
         """Return the train loader
 
