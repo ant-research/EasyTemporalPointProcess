@@ -14,6 +14,8 @@ class DataSpecConfig(Config):
         self.truncation_strategy = kwargs.get('truncation_strategy')
         self.num_event_types_pad = self.num_event_types + 1
         self.model_input_names = kwargs.get('model_input_names')
+        self.rescale_time = kwargs.get('rescale_time', False)
+        self.time_scale = kwargs.get('time_scale', None)
 
         if self.padding_side is not None and self.padding_side not in ["right", "left"]:
             raise ValueError(
@@ -38,7 +40,9 @@ class DataSpecConfig(Config):
             'truncation_side': self.truncation_side,
             'padding_strategy': self.padding_strategy,
             'truncation_strategy': self.truncation_strategy,
-            'max_len': self.max_len
+            'max_len': self.max_len,
+            'rescale_time': self.rescale_time,
+            'time_scale': self.time_scale
         }
 
     @staticmethod
@@ -66,7 +70,9 @@ class DataSpecConfig(Config):
                               truncation_side=self.truncation_side,
                               padding_strategy=self.padding_strategy,
                               truncation_strategy=self.truncation_strategy,
-                              max_len=self.max_len)
+                              max_len=self.max_len,
+                              rescale_time=self.rescale_time,
+                              time_scale=self.time_scale)
 
 
 @Config.register('data_config')

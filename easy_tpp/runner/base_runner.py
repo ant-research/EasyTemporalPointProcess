@@ -1,4 +1,5 @@
 import logging
+import math
 from abc import abstractmethod
 
 from easy_tpp.preprocess import TPPDataLoader
@@ -44,6 +45,13 @@ class Runner(Registrable):
             self._data_loader.train_loader().dataset.get_dt_stats())
         runner_config.model_config.set("mean_log_inter_time", mean_log_inter_time)
         runner_config.model_config.set("std_log_inter_time", std_log_inter_time)
+        runner_config.model_config.set('time_scale', getattr(self._data_loader, 'time_scale', None) or 1.0)
+        if (not getattr(self._data_loader, 'rescale_time', False)
+                and mean_log_inter_time > math.log(100)):
+            logger.warning(
+                "Inter-event times are large; consider enabling data_specs.rescale_time "
+                "to improve training stability (see issue #55)."
+            )
         self.timer = Timer()
 
     @staticmethod

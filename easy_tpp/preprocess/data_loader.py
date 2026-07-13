@@ -4,7 +4,7 @@ from collections import Counter
 from easy_tpp.preprocess.dataset import TPPDataset
 from easy_tpp.preprocess.dataset import get_data_loader
 from easy_tpp.preprocess.event_tokenizer import EventTokenizer
-from easy_tpp.utils import load_pickle, py_assert
+from easy_tpp.utils import load_pickle, logger, py_assert
 
 
 class TPPDataLoader:
@@ -19,6 +19,40 @@ class TPPDataLoader:
         self.num_event_types = data_config.data_specs.num_event_types
         self.backend = kwargs.get('backend', 'torch')
         self.kwargs = kwargs
+        self.rescale_time = getattr(data_config.data_specs, 'rescale_time', False)
+        self.time_scale = getattr(data_config.data_specs, 'time_scale', None)
+
+    def _resolve_time_scale(self):
+        """Resolve and cache the divisor used to normalize event times."""
+        if self.time_scale is not None:
+            return self.time_scale
+
+        train_dir = self.data_config.get_data_dir('train')
+        if not train_dir:
+            raise ValueError(
+                "Cannot automatically compute the time scale because the training data directory is unavailable. "
+                "Set data_specs.time_scale explicitly."
+            )
+
+        data_format = self.data_config.data_format
+        if data_format == 'pkl':
+            train_data = self._build_input_from_pkl(train_dir, 'train')
+        elif data_format == 'json':
+            train_data = self._build_input_from_json(train_dir, 'train')
+        else:
+            raise ValueError(f"Unsupported file format: {data_format}")
+
+        time_deltas = [delta for seq in train_data['time_delta_seqs'] for delta in seq[1:]]
+        scale = np.mean(time_deltas) if time_deltas else None
+        if scale is None or not np.isfinite(scale) or scale <= 0:
+            logger.warning(
+                "Could not compute a positive time scale from the training data; falling back to 1.0."
+            )
+            scale = 1.0
+
+        self.time_scale = float(scale)
+        logger.info(f'Using time scale {self.time_scale} to rescale event times.')
+        return self.time_scale
 
     def build_input(self, source_dir, data_format, split):
         """Helper function to load and process dataset based on file format.
@@ -32,11 +66,20 @@ class TPPDataLoader:
         """
 
         if data_format == 'pkl':
-            return self._build_input_from_pkl(source_dir, split)
+            data = self._build_input_from_pkl(source_dir, split)
         elif data_format == 'json':
-            return self._build_input_from_json(source_dir, split)
+            data = self._build_input_from_json(source_dir, split)
         else:
             raise ValueError(f"Unsupported file format: {data_format}")
+
+        if self.rescale_time:
+            time_scale = self._resolve_time_scale()
+            data['time_seqs'] = [[value / time_scale for value in seq] for seq in data['time_seqs']]
+            data['time_delta_seqs'] = [
+                [value / time_scale for value in seq] for seq in data['time_delta_seqs']
+            ]
+
+        return data
 
     def _build_input_from_pkl(self, source_dir, split):
         """Load and process data from a pickle file.

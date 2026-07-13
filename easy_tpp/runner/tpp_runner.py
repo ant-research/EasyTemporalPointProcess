@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from easy_tpp.runner.base_runner import Runner
 from easy_tpp.utils import RunnerPhase, logger, MetricsHelper, MetricsTracker, concat_element, save_pickle
-from easy_tpp.utils.const import Backend
+from easy_tpp.utils.const import Backend, PredOutputIndex
 
 
 @Runner.register(name='std_tpp')
@@ -215,6 +215,18 @@ class TPPRunner(Runner):
             if len(epoch_mask):
                 epoch_mask = concat_element(epoch_mask, False)[0]  # retrieve the first element of concat array
                 epoch_mask = epoch_mask.astype(bool)
+
+        data_loader_rescales_time = (
+            hasattr(self, '_data_loader')
+            and getattr(self._data_loader, 'rescale_time', False)
+            and getattr(self._data_loader, 'time_scale', None) is not None
+        )
+        if pred_exists and label_exists and data_loader_rescales_time:
+            time_scale = self._data_loader.time_scale
+            epoch_pred[PredOutputIndex.TimePredIndex] = \
+                epoch_pred[PredOutputIndex.TimePredIndex] * time_scale
+            epoch_label[PredOutputIndex.TimePredIndex] = \
+                epoch_label[PredOutputIndex.TimePredIndex] * time_scale
 
         if pred_exists and label_exists:
             metrics_dict.update(self.metric_functions(epoch_pred, epoch_label, seq_mask=epoch_mask))

@@ -2,6 +2,7 @@ import unittest
 
 from easy_tpp.config_factory import DataSpecConfig
 from easy_tpp.utils import load_json
+from easy_tpp.preprocess.data_loader import TPPDataLoader
 from easy_tpp.preprocess.dataset import TPPDataset, EventTokenizer, get_data_loader
 
 
@@ -49,6 +50,23 @@ class TestDataLoader(unittest.TestCase):
         for batch in self.data_loader:
             self.assertEqual(len(batch['time_seqs']), len(batch['time_delta_seqs']))
             self.assertEqual(len(batch['time_seqs']), len(batch['type_seqs']))
+
+
+class TestTimeRescaling(unittest.TestCase):
+    def test_explicit_time_scale_config(self):
+        """Test time-rescaling config round-tripping and explicit scale resolution."""
+        config = DataSpecConfig(num_event_types=3, rescale_time=True, time_scale=10.0)
+        parsed_config = DataSpecConfig.parse_from_yaml_config(config.get_yaml_config())
+
+        self.assertTrue(parsed_config.rescale_time)
+        self.assertEqual(parsed_config.time_scale, 10.0)
+        copied_config = parsed_config.copy()
+        self.assertTrue(copied_config.rescale_time)
+        self.assertEqual(copied_config.time_scale, 10.0)
+
+        data_config = type('DataConfigStub', (), {'data_specs': parsed_config})()
+        loader = TPPDataLoader(data_config)
+        self.assertEqual(loader._resolve_time_scale(), 10.0)
 
 
 if __name__ == '__main__':
