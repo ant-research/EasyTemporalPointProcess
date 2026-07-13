@@ -167,10 +167,9 @@ the <code class="docutils literal notranslate"><span class="pre">TPPDataLoader</
 <section id="implemented-models">
 <h2>Implemented Models<a class="headerlink" href="#implemented-models" title="Link to this heading"></a></h2>
 <p>Version 0.2.4 provides the following registered model IDs. Their implementation
-classes are exported from <code class="docutils literal notranslate"><span class="pre">easy_tpp.model</span></code> under the plain model names.
-<code class="docutils literal notranslate"><span class="pre">BaseModel</span></code> is the common implementation base; the other eleven entries are
-trainable reference models. The former <code class="docutils literal notranslate"><span class="pre">Torch</span></code>-prefixed names remain aliases
-for backward compatibility.</p>
+classes are exported from <code class="docutils literal notranslate"><span class="pre">easy_tpp.model</span></code> with a <code class="docutils literal notranslate"><span class="pre">Torch</span></code> prefix (for
+example, <code class="docutils literal notranslate"><span class="pre">NHP</span></code> is <code class="docutils literal notranslate"><span class="pre">TorchNHP</span></code>). <code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code> is the common
+implementation base; the other eleven entries are trainable reference models.</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 18.0%" />
@@ -228,7 +227,7 @@ for backward compatibility.</p>
 <td><p><a class="reference external" href="https://arxiv.org/abs/2410.04037">Is Score Matching Suitable for Estimating Point Processes?</a></p></td>
 <td><p>NeurIPS 2024</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BaseModel</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code></p></td>
 <td><p>Common base class (not a paper model)</p></td>
 <td><p>–</p></td>
 </tr>

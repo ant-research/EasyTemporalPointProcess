@@ -1,9 +1,9 @@
 .. _api-wrapper:
 
-EasyTPP Model Wrapper Module
+EasyTPP Torch Wrapper Module
 ============================
 
-.. automodule:: easy_tpp.model_wrapper
+.. automodule:: easy_tpp.torch_wrapper
     :members:
     :undoc-members:
     :show-inheritance:

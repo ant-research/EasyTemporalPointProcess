@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EasyTPP Model Wrapper Module &mdash; EasyTPP 0.2.4 documentation</title>
+  <title>EasyTPP Torch Wrapper Module &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
@@ -73,15 +73,14 @@
 <li class="toctree-l1"><a class="reference internal" href="runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hpo.html"> Hyper-parameter Optimization</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Torch Wrapper</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model_wrapper.ModelWrapper"><code class="docutils literal notranslate"><span class="pre">ModelWrapper</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model_wrapper.ModelWrapper.restore"><code class="docutils literal notranslate"><span class="pre">ModelWrapper.restore()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model_wrapper.ModelWrapper.save"><code class="docutils literal notranslate"><span class="pre">ModelWrapper.save()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model_wrapper.ModelWrapper.write_summary"><code class="docutils literal notranslate"><span class="pre">ModelWrapper.write_summary()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model_wrapper.ModelWrapper.close_summary"><code class="docutils literal notranslate"><span class="pre">ModelWrapper.close_summary()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model_wrapper.ModelWrapper.run_batch"><code class="docutils literal notranslate"><span class="pre">ModelWrapper.run_batch()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.torch_wrapper.TorchModelWrapper"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.torch_wrapper.TorchModelWrapper.restore"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper.restore()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.torch_wrapper.TorchModelWrapper.save"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.torch_wrapper.TorchModelWrapper.write_summary"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper.write_summary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.torch_wrapper.TorchModelWrapper.close_summary"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper.close_summary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.torch_wrapper.TorchModelWrapper.run_batch"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper.run_batch()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model_wrapper.TorchModelWrapper"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> Utilities</a></li>
@@ -101,7 +100,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">EasyTPP Model Wrapper Module</li>
+      <li class="breadcrumb-item active">EasyTPP Torch Wrapper Module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/ref/wrapper.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -111,16 +110,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-easy_tpp.model_wrapper">
-<span id="easytpp-model-wrapper-module"></span><span id="api-wrapper"></span><h1>EasyTPP Model Wrapper Module<a class="headerlink" href="#module-easy_tpp.model_wrapper" title="Link to this heading"></a></h1>
+  <section id="module-easy_tpp.torch_wrapper">
+<span id="easytpp-torch-wrapper-module"></span><span id="api-wrapper"></span><h1>EasyTPP Torch Wrapper Module<a class="headerlink" href="#module-easy_tpp.torch_wrapper" title="Link to this heading"></a></h1>
 <p>Initialize a Pytorch model wrapper that feed into Model Runner</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model_wrapper.ModelWrapper">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model_wrapper.</span></span><span class="sig-name descname"><span class="pre">ModelWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model_wrapper.ModelWrapper" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.torch_wrapper.TorchModelWrapper">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.torch_wrapper.</span></span><span class="sig-name descname"><span class="pre">TorchModelWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.torch_wrapper.TorchModelWrapper" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model_wrapper.ModelWrapper.restore">
-<span class="sig-name descname"><span class="pre">restore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ckpt_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model_wrapper.ModelWrapper.restore" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.torch_wrapper.TorchModelWrapper.restore">
+<span class="sig-name descname"><span class="pre">restore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ckpt_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.torch_wrapper.TorchModelWrapper.restore" title="Link to this definition"></a></dt>
 <dd><p>Load the checkpoint to restore the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -130,8 +129,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model_wrapper.ModelWrapper.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ckpt_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model_wrapper.ModelWrapper.save" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.torch_wrapper.TorchModelWrapper.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ckpt_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.torch_wrapper.TorchModelWrapper.save" title="Link to this definition"></a></dt>
 <dd><p>Save the checkpoint for the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -141,8 +140,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model_wrapper.ModelWrapper.write_summary">
-<span class="sig-name descname"><span class="pre">write_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kv_pairs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model_wrapper.ModelWrapper.write_summary" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.torch_wrapper.TorchModelWrapper.write_summary">
+<span class="sig-name descname"><span class="pre">write_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kv_pairs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.torch_wrapper.TorchModelWrapper.write_summary" title="Link to this definition"></a></dt>
 <dd><p>Write the kv_paris into the tensorboard</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -156,14 +155,14 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model_wrapper.ModelWrapper.close_summary">
-<span class="sig-name descname"><span class="pre">close_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model_wrapper.ModelWrapper.close_summary" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.torch_wrapper.TorchModelWrapper.close_summary">
+<span class="sig-name descname"><span class="pre">close_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.torch_wrapper.TorchModelWrapper.close_summary" title="Link to this definition"></a></dt>
 <dd><p>Close the tensorboard summary writer.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model_wrapper.ModelWrapper.run_batch">
-<span class="sig-name descname"><span class="pre">run_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model_wrapper.ModelWrapper.run_batch" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.torch_wrapper.TorchModelWrapper.run_batch">
+<span class="sig-name descname"><span class="pre">run_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.torch_wrapper.TorchModelWrapper.run_batch" title="Link to this definition"></a></dt>
 <dd><p>Run one batch.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -182,12 +181,6 @@ for prediction we return prediction.</p>
 </dl>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="easy_tpp.model_wrapper.TorchModelWrapper">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model_wrapper.</span></span><span class="sig-name descname"><span class="pre">TorchModelWrapper</span></span><a class="headerlink" href="#easy_tpp.model_wrapper.TorchModelWrapper" title="Link to this definition"></a></dt>
-<dd><p>alias of <a class="reference internal" href="#easy_tpp.model_wrapper.ModelWrapper" title="easy_tpp.model_wrapper.ModelWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelWrapper</span></code></a></p>
 </dd></dl>
 
 </section>

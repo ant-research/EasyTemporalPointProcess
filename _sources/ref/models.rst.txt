@@ -8,50 +8,50 @@ The public torch model classes are exported by ``easy_tpp.model``:
 
 .. automodule:: easy_tpp.model
 
-.. autoclass:: easy_tpp.model.BaseModel
+.. autoclass:: easy_tpp.model.TorchBaseModel
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.ANHN
+.. autoclass:: easy_tpp.model.TorchANHN
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.AttNHP
+.. autoclass:: easy_tpp.model.TorchAttNHP
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.FullyNN
+.. autoclass:: easy_tpp.model.TorchFullyNN
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.IntensityFree
+.. autoclass:: easy_tpp.model.TorchIntensityFree
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.NHP
+.. autoclass:: easy_tpp.model.TorchNHP
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.ODETPP
+.. autoclass:: easy_tpp.model.TorchODETPP
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.RMTPP
+.. autoclass:: easy_tpp.model.TorchRMTPP
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.S2P2
+.. autoclass:: easy_tpp.model.TorchS2P2
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.SAHP
+.. autoclass:: easy_tpp.model.TorchSAHP
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.THP
+.. autoclass:: easy_tpp.model.TorchTHP
    :members:
    :show-inheritance:
 
-.. autoclass:: easy_tpp.model.WSMTHP
+.. autoclass:: easy_tpp.model.TorchWSMTHP
    :members:
    :show-inheritance:

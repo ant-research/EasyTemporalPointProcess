@@ -7,7 +7,7 @@ Basic structure
 
 In the model folder, ``basemodel.py`` implements shared likelihood,
 sampling, and generation utilities. Concrete model classes inherit from
-``BaseModel`` and may use or override those utilities.
+``TorchBaseModel`` and may use or override those utilities.
 
 
 Computing the loglikelihood of non-pad event sequence

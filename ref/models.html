@@ -70,98 +70,27 @@
 <li class="toctree-l1"><a class="reference internal" href="config.html"> Config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocess.html"> Preprocess</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.BaseModel"><code class="docutils literal notranslate"><span class="pre">BaseModel</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.BaseModel.generate_model_from_config"><code class="docutils literal notranslate"><span class="pre">BaseModel.generate_model_from_config()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.BaseModel.resolve_batch_inputs"><code class="docutils literal notranslate"><span class="pre">BaseModel.resolve_batch_inputs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.BaseModel.get_logits_at_last_step"><code class="docutils literal notranslate"><span class="pre">BaseModel.get_logits_at_last_step()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.BaseModel.compute_loglikelihood"><code class="docutils literal notranslate"><span class="pre">BaseModel.compute_loglikelihood()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.BaseModel.make_dtime_loss_samples"><code class="docutils literal notranslate"><span class="pre">BaseModel.make_dtime_loss_samples()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.BaseModel.predict_one_step_at_every_event"><code class="docutils literal notranslate"><span class="pre">BaseModel.predict_one_step_at_every_event()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.BaseModel.predict_multi_step_since_last_event"><code class="docutils literal notranslate"><span class="pre">BaseModel.predict_multi_step_since_last_event()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.generate_model_from_config"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.generate_model_from_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.resolve_batch_inputs"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.resolve_batch_inputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.get_logits_at_last_step"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.get_logits_at_last_step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.compute_loglikelihood"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.compute_loglikelihood()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.make_dtime_loss_samples"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.make_dtime_loss_samples()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.predict_one_step_at_every_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.predict_multi_step_since_last_event()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.ANHN"><code class="docutils literal notranslate"><span class="pre">ANHN</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ANHN.forward"><code class="docutils literal notranslate"><span class="pre">ANHN.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ANHN.loglike_loss"><code class="docutils literal notranslate"><span class="pre">ANHN.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ANHN.compute_cumsum_dtime"><code class="docutils literal notranslate"><span class="pre">ANHN.compute_cumsum_dtime()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ANHN.compute_states_at_event_times"><code class="docutils literal notranslate"><span class="pre">ANHN.compute_states_at_event_times()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ANHN.compute_states_at_sample_times"><code class="docutils literal notranslate"><span class="pre">ANHN.compute_states_at_sample_times()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ANHN.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">ANHN.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.AttNHP"><code class="docutils literal notranslate"><span class="pre">AttNHP</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.compute_temporal_embedding"><code class="docutils literal notranslate"><span class="pre">AttNHP.compute_temporal_embedding()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.forward_pass"><code class="docutils literal notranslate"><span class="pre">AttNHP.forward_pass()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.seq_encoding"><code class="docutils literal notranslate"><span class="pre">AttNHP.seq_encoding()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.make_layer_mask"><code class="docutils literal notranslate"><span class="pre">AttNHP.make_layer_mask()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.make_combined_att_mask"><code class="docutils literal notranslate"><span class="pre">AttNHP.make_combined_att_mask()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.forward"><code class="docutils literal notranslate"><span class="pre">AttNHP.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.loglike_loss"><code class="docutils literal notranslate"><span class="pre">AttNHP.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.compute_states_at_sample_times"><code class="docutils literal notranslate"><span class="pre">AttNHP.compute_states_at_sample_times()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.AttNHP.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">AttNHP.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.FullyNN"><code class="docutils literal notranslate"><span class="pre">FullyNN</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.FullyNN.forward"><code class="docutils literal notranslate"><span class="pre">FullyNN.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.FullyNN.loglike_loss"><code class="docutils literal notranslate"><span class="pre">FullyNN.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.FullyNN.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">FullyNN.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.IntensityFree"><code class="docutils literal notranslate"><span class="pre">IntensityFree</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.IntensityFree.forward"><code class="docutils literal notranslate"><span class="pre">IntensityFree.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.IntensityFree.loglike_loss"><code class="docutils literal notranslate"><span class="pre">IntensityFree.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.IntensityFree.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">IntensityFree.compute_intensities_at_sample_times()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.IntensityFree.predict_one_step_at_every_event"><code class="docutils literal notranslate"><span class="pre">IntensityFree.predict_one_step_at_every_event()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.NHP"><code class="docutils literal notranslate"><span class="pre">NHP</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.NHP.forward"><code class="docutils literal notranslate"><span class="pre">NHP.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.NHP.get_states"><code class="docutils literal notranslate"><span class="pre">NHP.get_states()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.NHP.loglike_loss"><code class="docutils literal notranslate"><span class="pre">NHP.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.NHP.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">NHP.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.ODETPP"><code class="docutils literal notranslate"><span class="pre">ODETPP</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ODETPP.forward"><code class="docutils literal notranslate"><span class="pre">ODETPP.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ODETPP.loglike_loss"><code class="docutils literal notranslate"><span class="pre">ODETPP.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ODETPP.compute_states_at_sample_times"><code class="docutils literal notranslate"><span class="pre">ODETPP.compute_states_at_sample_times()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.ODETPP.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">ODETPP.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.RMTPP"><code class="docutils literal notranslate"><span class="pre">RMTPP</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.RMTPP.evolve_and_get_intentsity"><code class="docutils literal notranslate"><span class="pre">RMTPP.evolve_and_get_intentsity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.RMTPP.forward"><code class="docutils literal notranslate"><span class="pre">RMTPP.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.RMTPP.loglike_loss"><code class="docutils literal notranslate"><span class="pre">RMTPP.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.RMTPP.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">RMTPP.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.S2P2"><code class="docutils literal notranslate"><span class="pre">S2P2</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.S2P2.forward"><code class="docutils literal notranslate"><span class="pre">S2P2.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.S2P2.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">S2P2.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.SAHP"><code class="docutils literal notranslate"><span class="pre">SAHP</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.SAHP.state_decay"><code class="docutils literal notranslate"><span class="pre">SAHP.state_decay()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.SAHP.forward"><code class="docutils literal notranslate"><span class="pre">SAHP.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.SAHP.loglike_loss"><code class="docutils literal notranslate"><span class="pre">SAHP.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.SAHP.compute_states_at_sample_times"><code class="docutils literal notranslate"><span class="pre">SAHP.compute_states_at_sample_times()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.SAHP.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">SAHP.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.THP"><code class="docutils literal notranslate"><span class="pre">THP</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.THP.forward"><code class="docutils literal notranslate"><span class="pre">THP.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.THP.loglike_loss"><code class="docutils literal notranslate"><span class="pre">THP.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.THP.compute_states_at_sample_times"><code class="docutils literal notranslate"><span class="pre">THP.compute_states_at_sample_times()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.THP.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">THP.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.WSMTHP"><code class="docutils literal notranslate"><span class="pre">WSMTHP</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.WSMTHP.forward"><code class="docutils literal notranslate"><span class="pre">WSMTHP.forward()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.WSMTHP.nll_loss"><code class="docutils literal notranslate"><span class="pre">WSMTHP.nll_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.WSMTHP.loglike_loss"><code class="docutils literal notranslate"><span class="pre">WSMTHP.loglike_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.WSMTHP.compute_intensities_at_sample_times"><code class="docutils literal notranslate"><span class="pre">WSMTHP.compute_intensities_at_sample_times()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchANHN"><code class="docutils literal notranslate"><span class="pre">TorchANHN</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchAttNHP"><code class="docutils literal notranslate"><span class="pre">TorchAttNHP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchFullyNN"><code class="docutils literal notranslate"><span class="pre">TorchFullyNN</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchIntensityFree"><code class="docutils literal notranslate"><span class="pre">TorchIntensityFree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchNHP"><code class="docutils literal notranslate"><span class="pre">TorchNHP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchODETPP"><code class="docutils literal notranslate"><span class="pre">TorchODETPP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchRMTPP"><code class="docutils literal notranslate"><span class="pre">TorchRMTPP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchS2P2"><code class="docutils literal notranslate"><span class="pre">TorchS2P2</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchSAHP"><code class="docutils literal notranslate"><span class="pre">TorchSAHP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchTHP"><code class="docutils literal notranslate"><span class="pre">TorchTHP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchWSMTHP"><code class="docutils literal notranslate"><span class="pre">TorchWSMTHP</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="runner.html"> Runner</a></li>
@@ -198,12 +127,12 @@
 <span id="api-model"></span><h1>EasyTPP Models<a class="headerlink" href="#easytpp-models" title="Link to this heading"></a></h1>
 <p>The public torch model classes are exported by <code class="docutils literal notranslate"><span class="pre">easy_tpp.model</span></code>:</p>
 <dl class="py class" id="module-easy_tpp.model">
-<dt class="sig sig-object py" id="easy_tpp.model.BaseModel">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">BaseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.BaseModel" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchBaseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.BaseModel.generate_model_from_config">
-<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">generate_model_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.BaseModel.generate_model_from_config" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.generate_model_from_config">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">generate_model_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.generate_model_from_config" title="Link to this definition"></a></dt>
 <dd><p>Generate the model in derived class based on model config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -213,8 +142,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.BaseModel.resolve_batch_inputs">
-<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">resolve_batch_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.BaseModel.resolve_batch_inputs" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.resolve_batch_inputs">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">resolve_batch_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.resolve_batch_inputs" title="Link to this definition"></a></dt>
 <dd><p>Normalize model inputs.</p>
 <p>Returns (time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask,
 attention_mask). Accepts HF-style keyword arguments; a dict or
@@ -222,8 +151,8 @@ BatchEncoding; or the legacy positional tuple/list (deprecated).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.BaseModel.get_logits_at_last_step">
-<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_logits_at_last_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_non_pad_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.BaseModel.get_logits_at_last_step" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.get_logits_at_last_step">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_logits_at_last_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_non_pad_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.get_logits_at_last_step" title="Link to this definition"></a></dt>
 <dd><p>Retrieve the hidden states of last non-pad events.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -246,8 +175,8 @@ BatchEncoding; or the legacy positional tuple/list (deprecated).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.BaseModel.compute_loglikelihood">
-<span class="sig-name descname"><span class="pre">compute_loglikelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_at_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas_loss_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.BaseModel.compute_loglikelihood" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.compute_loglikelihood">
+<span class="sig-name descname"><span class="pre">compute_loglikelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_at_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas_loss_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.compute_loglikelihood" title="Link to this definition"></a></dt>
 <dd><p>Compute the loglikelihood of the event sequence based on Equation (8) of NHP paper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -271,8 +200,8 @@ BatchEncoding; or the legacy positional tuple/list (deprecated).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.BaseModel.make_dtime_loss_samples">
-<span class="sig-name descname"><span class="pre">make_dtime_loss_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.BaseModel.make_dtime_loss_samples" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.make_dtime_loss_samples">
+<span class="sig-name descname"><span class="pre">make_dtime_loss_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.make_dtime_loss_samples" title="Link to this definition"></a></dt>
 <dd><p>Generate the time point samples for every interval.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -288,8 +217,8 @@ BatchEncoding; or the legacy positional tuple/list (deprecated).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.BaseModel.predict_one_step_at_every_event">
-<span class="sig-name descname"><span class="pre">predict_one_step_at_every_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.BaseModel.predict_one_step_at_every_event" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event">
+<span class="sig-name descname"><span class="pre">predict_one_step_at_every_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event" title="Link to this definition"></a></dt>
 <dd><p>One-step prediction for every event in the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -310,8 +239,8 @@ attention_mask as keyword inputs.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.BaseModel.predict_multi_step_since_last_event">
-<span class="sig-name descname"><span class="pre">predict_multi_step_since_last_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.BaseModel.predict_multi_step_since_last_event" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event">
+<span class="sig-name descname"><span class="pre">predict_multi_step_since_last_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event" title="Link to this definition"></a></dt>
 <dd><p>Multi-step prediction since last event in the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -334,1113 +263,70 @@ attention_mask as keyword inputs.</p></li>
 
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.ANHN">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">ANHN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ANHN" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of Attentive Neural Hawkes Network, IJCNN 2021.
-<a class="reference external" href="http://arxiv.org/abs/2211.11758">http://arxiv.org/abs/2211.11758</a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ANHN.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtime_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attention_mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ANHN.forward" title="Link to this definition"></a></dt>
-<dd><p>Call the model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dtime_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
-<li><p><strong>attention_mask</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>hidden states, [batch_size, seq_len, hidden_size], states right before the event happens;</dt><dd><p>stacked decay states,  [batch_size, max_seq_length, 4, hidden_dim], states right after
-the event happens.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchANHN">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchANHN</span></span><a class="headerlink" href="#easy_tpp.model.TorchANHN" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ANHN</span></code></p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ANHN.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ANHN.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the loglike loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglikelihood loss and num of events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchAttNHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchAttNHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchAttNHP" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">AttNHP</span></code></p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ANHN.compute_cumsum_dtime">
-<span class="sig-name descname"><span class="pre">compute_cumsum_dtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtime_seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ANHN.compute_cumsum_dtime" title="Link to this definition"></a></dt>
-<dd><p>Compute cumulative delta times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dtime_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchFullyNN">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchFullyNN</span></span><a class="headerlink" href="#easy_tpp.model.TorchFullyNN" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">FullyNN</span></code></p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ANHN.compute_states_at_event_times">
-<span class="sig-name descname"><span class="pre">compute_states_at_event_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intensity_base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cumsum_dtimes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ANHN.compute_states_at_event_times" title="Link to this definition"></a></dt>
-<dd><p>Compute implied lambda based on Equation (3).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>intensity_base</strong> (<em>tensor</em>) – [batch_size, seq_len, (num_sample), hidden_size]</p></li>
-<li><p><strong>intensity_alpha</strong> (<em>tensor</em>) – [batch_size, seq_len, seq_len, (num_sample), hidden_size]</p></li>
-<li><p><strong>intensity_delta</strong> (<em>tensor</em>) – [batch_size, seq_len, seq_len, (num_sample), hidden_size]</p></li>
-<li><p><strong>cumsum_dtimes</strong> – [batch_size, seq_len, (num_sample), 1]</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len, num_samples, hidden_size]</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>hidden states at all cumsum_dtimes</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchIntensityFree">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchIntensityFree</span></span><a class="headerlink" href="#easy_tpp.model.TorchIntensityFree" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">IntensityFree</span></code></p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ANHN.compute_states_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_states_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intensity_base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dtime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ANHN.compute_states_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the hidden states at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>intensity_base</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
-<li><p><strong>intensity_alpha</strong> (<em>tensor</em>) – [batch_size, seq_len, seq_len, hidden_size].</p></li>
-<li><p><strong>intensity_delta</strong> (<em>tensor</em>) – [batch_size, seq_len, seq_len, hidden_size].</p></li>
-<li><p><strong>base_dtime</strong> (<em>tensor</em>) – [batch_size, seq_len, seq_len, hidden_size].</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples].</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden state at each sampled time, [batch_size, seq_len, num_sample, hidden_size].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchNHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchNHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchNHP" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">NHP</span></code></p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ANHN.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ANHN.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the intensity at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of timestamps.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of delta times.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of event types.</p></li>
-<li><p><strong>sampled_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample], sampled time delta sequence.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>intensities as sampled_dtimes, [batch_size, seq_len, num_samples, event_num].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchODETPP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchODETPP</span></span><a class="headerlink" href="#easy_tpp.model.TorchODETPP" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ODETPP</span></code></p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchRMTPP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchRMTPP</span></span><a class="headerlink" href="#easy_tpp.model.TorchRMTPP" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">RMTPP</span></code></p>
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">AttNHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of Attentive Neural Hawkes Process, ICLR 2022.
-<a class="reference external" href="https://arxiv.org/abs/2201.00044">https://arxiv.org/abs/2201.00044</a>.
-Source code: <a class="reference external" href="https://github.com/yangalan123/anhp-andtt/blob/master/anhp/model/xfmr_nhp_fast.py">https://github.com/yangalan123/anhp-andtt/blob/master/anhp/model/xfmr_nhp_fast.py</a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.compute_temporal_embedding">
-<span class="sig-name descname"><span class="pre">compute_temporal_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.compute_temporal_embedding" title="Link to this definition"></a></dt>
-<dd><p>Compute the temporal embedding.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>time</strong> (<em>tensor</em>) – [batch_size, seq_len].</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len, emb_size].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchS2P2">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchS2P2</span></span><a class="headerlink" href="#easy_tpp.model.TorchS2P2" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">S2P2</span></code></p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.forward_pass">
-<span class="sig-name descname"><span class="pre">forward_pass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_cur_layer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_emb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_time_emb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_emb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined_mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.forward_pass" title="Link to this definition"></a></dt>
-<dd><p>update the structure sequentially.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>init_cur_layer</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size]</p></li>
-<li><p><strong>time_emb</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size]</p></li>
-<li><p><strong>sample_time_emb</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size]</p></li>
-<li><p><strong>event_emb</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size]</p></li>
-<li><p><strong>combined_mask</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size]</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len, hidden_size*2]</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchSAHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchSAHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchSAHP" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SAHP</span></code></p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.seq_encoding">
-<span class="sig-name descname"><span class="pre">seq_encoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.seq_encoding" title="Link to this definition"></a></dt>
-<dd><p>Encode the sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – time seqs input, [batch_size, seq_len].</p></li>
-<li><p><strong>event_seqs</strong> (<em>_type_</em>) – event type seqs input, [batch_size, seq_len].</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>event embedding, time embedding and type embedding.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchTHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchTHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchTHP" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">THP</span></code></p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.make_layer_mask">
-<span class="sig-name descname"><span class="pre">make_layer_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attention_mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.make_layer_mask" title="Link to this definition"></a></dt>
-<dd><p>Create a tensor to do masking on layers.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>attention_mask</strong> (<em>tensor</em>) – mask for attention operation, [batch_size, seq_len, seq_len]</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>aim to keep the current layer, the same size of attention mask
-a diagonal matrix, [batch_size, seq_len, seq_len]</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.make_combined_att_mask">
-<span class="sig-name descname"><span class="pre">make_combined_att_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attention_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.make_combined_att_mask" title="Link to this definition"></a></dt>
-<dd><p>Combined attention mask and layer mask.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>attention_mask</strong> (<em>tensor</em>) – mask for attention operation, [batch_size, seq_len, seq_len]</p></li>
-<li><p><strong>layer_mask</strong> (<em>tensor</em>) – mask for other layers, [batch_size, seq_len, seq_len]</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len * 2, seq_len * 2]</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attention_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.forward" title="Link to this definition"></a></dt>
-<dd><p>Call the model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of timestamps.</p></li>
-<li><p><strong>event_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of event types.</p></li>
-<li><p><strong>attention_mask</strong> (<em>tensor</em>) – [batch_size, seq_len, seq_len], masks for event sequences.</p></li>
-<li><p><strong>sample_times</strong> (<em>tensor</em><em>, </em><em>optional</em>) – [batch_size, seq_len, num_samples]. Defaults to None.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>states at sampling times, [batch_size, seq_len, num_samples].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the loglike loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglike loss, num events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.compute_states_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_states_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attention_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_times</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.compute_states_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the states at sampling times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of timestamps.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of delta times.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of event types.</p></li>
-<li><p><strong>attention_mask</strong> (<em>tensor</em>) – [batch_size, seq_len, seq_len], masks for event sequences.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – delta times in sampling.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hiddens states at sampling times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.AttNHP.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.AttNHP.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the intensity at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of timestamps.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of delta times.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], sequences of event types.</p></li>
-<li><p><strong>sampled_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample], sampled time delta sequence.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>intensities as sampled_dtimes, [batch_size, seq_len, num_samples, event_num].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.FullyNN">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">FullyNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.FullyNN" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of
-Fully Neural Network based Model for General Temporal Point Processes, NeurIPS 2019.
-<a class="reference external" href="https://arxiv.org/abs/1905.09690">https://arxiv.org/abs/1905.09690</a></p>
-<dl class="simple">
-<dt>ref: <a class="reference external" href="https://github.com/KanghoonYoon/torch-neuralpointprocess/blob/master/module.py">https://github.com/KanghoonYoon/torch-neuralpointprocess/blob/master/module.py</a>;</dt><dd><p><a class="reference external" href="https://github.com/wassname/torch-neuralpointprocess">https://github.com/wassname/torch-neuralpointprocess</a></p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.FullyNN.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.FullyNN.forward" title="Link to this definition"></a></dt>
-<dd><p>Call the model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], timestamp seqs.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], inter-event time seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden states at event times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.FullyNN.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.FullyNN.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the loglike loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglike loss, num events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.FullyNN.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.FullyNN.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute hidden states at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], times seqs.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples], sampled inter-event timestamps.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len, num_samples, num_event_types], intensity at all sampled times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.IntensityFree">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">IntensityFree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.IntensityFree" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of Intensity-Free Learning of Temporal Point Processes, ICLR 2020.
-<a class="reference external" href="https://openreview.net/pdf?id=HygOjhEYDH">https://openreview.net/pdf?id=HygOjhEYDH</a></p>
-<p>reference: <a class="reference external" href="https://github.com/shchur/ifl-tpp">https://github.com/shchur/ifl-tpp</a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.IntensityFree.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.IntensityFree.forward" title="Link to this definition"></a></dt>
-<dd><p>Call the model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], inter-event time seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden states, [batch_size, seq_len, hidden_dim], states right before the event happens.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.IntensityFree.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.IntensityFree.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the loglike loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglikelihood loss and num of events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.IntensityFree.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.IntensityFree.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute marked intensities at sampled inter-event times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event timestamps.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], inter-event times.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event types.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples], sampled inter-event times.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len, num_samples, num_event_types], marked intensities.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.IntensityFree.predict_one_step_at_every_event">
-<span class="sig-name descname"><span class="pre">predict_one_step_at_every_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.IntensityFree.predict_one_step_at_every_event" title="Link to this definition"></a></dt>
-<dd><p>One-step prediction for every event in the sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer passing
-model inputs as keywords.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>tensors of dtime and type prediction, [batch_size, seq_len].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.NHP">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">NHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.NHP" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process,
-NeurIPS 2017, <a class="reference external" href="https://arxiv.org/abs/1612.09328">https://arxiv.org/abs/1612.09328</a>.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.NHP.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.NHP.forward" title="Link to this definition"></a></dt>
-<dd><p>Suppose we have inputs with original sequence length N+1
-ts: [t0, t1, …, t_N]
-dts: [0, t1 - t0, t2 - t1, …, t_N - t_{N-1}]
-marks: [k0, k1, …, k_N] (k0 and kN could be padded marks if t0 and tN correspond to left and right windows)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>(batch_size, seq_len - 1, hidden_dim)
-Right limits of [t_0, …, t_{N-1}, t_N] of shape: (batch_size, seq_len, 4 * hidden_dim)
-We need the right limit of t_N to sample continuation.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Left limits of [t_1, …, t_N] of shape</p>
-</dd>
-</dl>
-<p>&gt; rnn_cell.recurrence(event_emb_t, h_tm1, c_tm1, c_bar_tm1) -&gt; c_t, c_bar_t, gate_delta, gate_o
-&gt; rnn_cell.decay(c_t, c_bar_t, delta_t, o_t, dt) -&gt; c_d_t, h_d_t</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.NHP.get_states">
-<span class="sig-name descname"><span class="pre">get_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">right_hiddens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.NHP.get_states" title="Link to this definition"></a></dt>
-<dd><p>right_hiddens:  (batch_size, seq_len, 4 * hidden_dim): (c_t, c_bar_t, delta_t, o_t)
-sample_dts: (batch_size, seq_len, MC_points)</p>
-<p>&gt; rnn_cell.decay(c_t, c_bar_t, delta_t, o_t, dt) -&gt; c_d_t, h_d_t</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.NHP.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.NHP.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the log-likelihood loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglikelihood loss and num of events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.NHP.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.NHP.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the intensity at sampled times, not only event times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], times seqs.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample], sampled inter-event timestamps.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>[batch_size, num_times, num_mc_sample, num_event_types],</dt><dd><p>intensity at each timestamp for each event type.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.ODETPP">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">ODETPP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ODETPP" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of a TPP with Neural ODE state evolution, which is a simplified version of TPP in
-<a class="reference external" href="https://arxiv.org/abs/2011.04583">https://arxiv.org/abs/2011.04583</a>, ICLR 2021</p>
-<p>code reference: <a class="reference external" href="https://msurtsukov.github.io/Neural-ODE/">https://msurtsukov.github.io/Neural-ODE/</a>;
-<a class="reference external" href="https://github.com/liruilong940607/NeuralODE/blob/master/NeuralODE.py">https://github.com/liruilong940607/NeuralODE/blob/master/NeuralODE.py</a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ODETPP.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ODETPP.forward" title="Link to this definition"></a></dt>
-<dd><p>Call the model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], inter-event time seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden states at event times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ODETPP.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ODETPP.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the loglike loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglike loss, num events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ODETPP.compute_states_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_states_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_ti_plus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ODETPP.compute_states_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the states at sampling times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>state_ti_plus</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size], states right after the events.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples], delta times in sampling.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hiddens states at sampling times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.ODETPP.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.ODETPP.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the intensity at sampled times, not only event times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], times seqs.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample], sampled inter-event timestamps.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>[batch_size, num_times, num_mc_sample, num_event_types],</dt><dd><p>intensity at each timestamp for each event type.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.RMTPP">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">RMTPP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.RMTPP" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of Recurrent Marked Temporal Point Processes, KDD 2016.
-<a class="reference external" href="https://www.kdd.org/kdd2016/papers/files/rpp1081-duA.pdf">https://www.kdd.org/kdd2016/papers/files/rpp1081-duA.pdf</a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.RMTPP.evolve_and_get_intentsity">
-<span class="sig-name descname"><span class="pre">evolve_and_get_intentsity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">right_hiddens_BNH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dts_BNG</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.RMTPP.evolve_and_get_intentsity" title="Link to this definition"></a></dt>
-<dd><p>Eq.11 that computes intensity.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.RMTPP.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.RMTPP.forward" title="Link to this definition"></a></dt>
-<dd><p>Suppose we have inputs with original sequence length N+1
-ts: [t0, t1, …, t_N]
-dts: [0, t1 - t0, t2 - t1, …, t_N - t_{N-1}]
-marks: [k0, k1, …, k_N] (k0 and kN could be padded marks if t0 and tN correspond to left and right windows)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>(batch_size, seq_len - 1, hidden_dim)
-right limits of <em>hidden states</em> [t_0, …, t_{N-1}, t_N] of shape: (batch_size, seq_len, hidden_dim)
-We need the right limit of t_N to sample continuation.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>left limits of <em>intensity</em> at [t_1, …, t_N] of shape</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.RMTPP.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.RMTPP.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the log-likelihood loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglikelihood loss and num of events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.RMTPP.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.RMTPP.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the intensity at sampled times, not only event times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], times seqs.</p></li>
-<li><p><strong>time_delta_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
-<li><p><strong>event_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample], sampled inter-event timestamps.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>[batch_size, num_times, num_mc_sample, num_event_types],</dt><dd><p>intensity at each timestamp for each event type.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.S2P2">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">S2P2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.S2P2" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.S2P2.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_state_BLP</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#easy_tpp.model.S2P2.forward" title="Link to this definition"></a></dt>
-<dd><p>Batch operations of self._forward</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.S2P2.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_times_BN</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inter_event_times_BN</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marks_BN</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.S2P2.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the intensity at sampled times, not only event times.  <em>from the left limit</em></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], times seqs.</p></li>
-<li><p><strong>time_delta_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
-<li><p><strong>event_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample], sampled inter-event timestamps.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>[batch_size, num_times, num_mc_sample, num_event_types],</dt><dd><p>intensity at each timestamp for each event type.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.SAHP">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">SAHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.SAHP" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of Self-Attentive Hawkes Process, ICML 2020.
-Part of the code is collected from <a class="reference external" href="https://github.com/yangalan123/anhp-andtt/blob/master/sahp">https://github.com/yangalan123/anhp-andtt/blob/master/sahp</a></p>
-<p>I slightly modify the original code because it is not stable.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.SAHP.state_decay">
-<span class="sig-name descname"><span class="pre">state_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration_t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.SAHP.state_decay" title="Link to this definition"></a></dt>
-<dd><p>Equation (15), which computes the pre-intensity states</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>encode_state</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
-<li><p><strong>duration_t</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample].</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden states at event times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.SAHP.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attention_mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.SAHP.forward" title="Link to this definition"></a></dt>
-<dd><p>Call the model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], timestamp seqs.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], inter-event time seqs.</p></li>
-<li><p><strong>event_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>attention_mask</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size], attention masks.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden states at event times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.SAHP.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.SAHP.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the log-likelihood loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglike loss, num events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.SAHP.compute_states_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_states_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.SAHP.compute_states_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the hidden states at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>encode_state</strong> (<em>tensor</em>) – three tensors with each shape [batch_size, seq_len, hidden_size].</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples].</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len, num_samples, hidden_size]， hidden state at each sampled time.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.SAHP.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.SAHP.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute hidden states at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], times seqs.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples], sampled inter-event timestamps.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len, num_samples, num_event_types], intensity at all sampled times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.THP">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">THP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.THP" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>Torch implementation of Transformer Hawkes Process, ICML 2020, <a class="reference external" href="https://arxiv.org/abs/2002.09291">https://arxiv.org/abs/2002.09291</a>.
-Note: Part of the code is collected from <a class="reference external" href="https://github.com/yangalan123/anhp-andtt/tree/master/thp">https://github.com/yangalan123/anhp-andtt/tree/master/thp</a>.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.THP.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attention_mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.THP.forward" title="Link to this definition"></a></dt>
-<dd><p>Call the model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], timestamp seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>attention_mask</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size], attention masks.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden states at event times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.THP.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.THP.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the loglike loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer HF-style
-keyword model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>loglike loss, num events.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.THP.compute_states_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_states_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.THP.compute_states_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute the hidden states at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>event_states</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_size].</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples].</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>hidden state at each sampled time.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.THP.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.THP.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute hidden states at sampled times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], times seqs.</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], time delta seqs.</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len], event type seqs.</p></li>
-<li><p><strong>sample_dtimes</strong> (<em>tensor</em>) – [batch_size, seq_len, num_samples], sampled inter-event timestamps.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[batch_size, seq_len, num_samples, num_event_types], intensity at all sampled times.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="easy_tpp.model.WSMTHP">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">WSMTHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.WSMTHP" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#easy_tpp.model.BaseModel" title="easy_tpp.model.basemodel.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
-<p>THP encoder trained with Weighted Score Matching (WSM).</p>
-<p>The class name <code class="docutils literal notranslate"><span class="pre">WSMTHP</span></code> must match the <code class="docutils literal notranslate"><span class="pre">model_id</span></code> field in the YAML config.</p>
-<section id="yaml-model-config-parameters">
-<h2>YAML <code class="docutils literal notranslate"><span class="pre">model_config</span></code> parameters<a class="headerlink" href="#yaml-model-config-parameters" title="Link to this heading"></a></h2>
-<dl>
-<dt>Standard (top-level):</dt><dd><p>hidden_size            int    Transformer embedding / model dimension.
-num_layers             int    Number of Transformer encoder layers.
-num_heads              int    Number of attention heads.
-dropout_rate           float  Dropout probability.</p>
-</dd>
-<dt>WSM-specific (under <code class="docutils literal notranslate"><span class="pre">model_specs</span></code>):</dt><dd><p>d_inner          int    FFN inner dimension (default: hidden_size * 2).
-CE_coef          float  Weight for the mark cross-entropy term (default: 10.0).
-h_type           str    Weight function selector; currently only</p>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">'two_side_op'</span></code> is supported (default).</p>
-</div></blockquote>
-<dl class="simple">
-<dt>T_mode           str    How to obtain the observation window end T:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">'manual'</span></code>, <code class="docutils literal notranslate"><span class="pre">'train_global'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'batch'</span></code>.</p>
-</dd>
-<dt>max_observed_time float  Observation window end T used when <code class="docutils literal notranslate"><span class="pre">T_mode</span></code> is</dt><dd><p><code class="docutils literal notranslate"><span class="pre">'manual'</span></code>. When omitted under <code class="docutils literal notranslate"><span class="pre">'batch'</span></code>,
-T = max(time_seqs) inside each batch.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.WSMTHP.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.WSMTHP.forward" title="Link to this definition"></a></dt>
-<dd><p>Run the encoder on a batch.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>batch</strong> – tuple (time_seqs, time_delta_seqs, type_seqs, non_pad_mask, attn_mask)</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[B, N, d_model]</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>enc_output</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.WSMTHP.nll_loss">
-<span class="sig-name descname"><span class="pre">nll_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.WSMTHP.nll_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute approximate negative log-likelihood for evaluation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.WSMTHP.loglike_loss">
-<span class="sig-name descname"><span class="pre">loglike_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.WSMTHP.loglike_loss" title="Link to this definition"></a></dt>
-<dd><p>Compute the WSM training loss.</p>
-<p>Required by EasyTPP’s ModelWrapper.run_batch().
-Despite the method name, this returns the Weighted Score Matching
-objective (NOT log-likelihood). See module docstring for details.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> – Legacy mapping or positional batch. Prefer HF-style keyword
-model inputs.</p></li>
-<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>scalar Tensor (WSM + CE mark loss)
-num_events: int, number of real (non-padded) events in the batch</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>loss</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="easy_tpp.model.WSMTHP.compute_intensities_at_sample_times">
-<span class="sig-name descname"><span class="pre">compute_intensities_at_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_delta_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_dtimes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.WSMTHP.compute_intensities_at_sample_times" title="Link to this definition"></a></dt>
-<dd><p>Compute intensities at sampled inter-event times (for thinning-based generation).</p>
-<p>Called by the EventSampler in BaseModel for prediction.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> – [B, N]</p></li>
-<li><p><strong>time_delta_seqs</strong> – [B, N]</p></li>
-<li><p><strong>type_seqs</strong> – [B, N]</p></li>
-<li><p><strong>sample_dtimes</strong> – [B, N, S]</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[B, N, S, M] or [B, 1, S, M] intensities</p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchWSMTHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchWSMTHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchWSMTHP" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">WSMTHP</span></code></p>
 </dd></dl>
 
 </section>
