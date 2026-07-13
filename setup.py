@@ -12,7 +12,7 @@ def readme():
 
 
 def get_version():
-    version_file = os.path.join(os.path.dirname(__file__), "version.py")
+    version_file = os.path.join(os.path.dirname(__file__), "easy_tpp", "__init__.py")
     version_regex = r"__version__ = ['\"]([^'\"]*)['\"]"
     with open(version_file, "r") as f:
         version = re.search(version_regex, f.read(), re.M).group(1)
