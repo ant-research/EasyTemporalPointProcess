@@ -1,51 +1,53 @@
-import importlib
-import sys
-
-import pytest
-
-
-def test_new_imports():
+def test_flat_model_imports_and_aliases():
     from easy_tpp.model import (
+        ANHN,
+        AttNHP,
         BaseModel,
         EventSampler,
+        FullyNN,
         IntensityFree,
         NHP,
+        ODETPP,
+        RMTPP,
+        S2P2,
+        SAHP,
+        THP,
+        TorchANHN,
+        TorchAttNHP,
         TorchBaseModel,
+        TorchFullyNN,
+        TorchIntensityFree,
         TorchNHP,
+        TorchODETPP,
+        TorchRMTPP,
+        TorchS2P2,
+        TorchSAHP,
+        TorchTHP,
+        TorchWSMTHP,
+        WSMTHP,
     )
     from easy_tpp.model.intensity_free import LogNormalMixtureDistribution
 
-    assert NHP is TorchNHP
-    assert BaseModel is TorchBaseModel
-    assert all((EventSampler, IntensityFree, LogNormalMixtureDistribution))
-
-
-def test_legacy_deep_import_warns():
-    legacy_package = 'easy_tpp.model.' + 'torch_' + 'model'
-
-    with pytest.warns(
-            DeprecationWarning,
-            match=rf'{legacy_package} is deprecated'):
-        if legacy_package in sys.modules:
-            importlib.reload(sys.modules[legacy_package])
-        else:
-            importlib.import_module(legacy_package)
-
-
-def test_legacy_deep_module_paths():
-    from easy_tpp.model.basemodel import BaseModel, TorchBaseModel
-    from easy_tpp.model.intensity_free import (
-        LogNormalMixtureDistribution as NewLogNormalMixtureDistribution,
+    alias_pairs = (
+        (ANHN, TorchANHN),
+        (AttNHP, TorchAttNHP),
+        (BaseModel, TorchBaseModel),
+        (FullyNN, TorchFullyNN),
+        (IntensityFree, TorchIntensityFree),
+        (NHP, TorchNHP),
+        (ODETPP, TorchODETPP),
+        (RMTPP, TorchRMTPP),
+        (S2P2, TorchS2P2),
+        (SAHP, TorchSAHP),
+        (THP, TorchTHP),
+        (WSMTHP, TorchWSMTHP),
     )
-    from easy_tpp.model.thinning import EventSampler as NewEventSampler
-    legacy_package = 'easy_tpp.model.' + 'torch_' + 'model'
-    legacy_basemodel = importlib.import_module(f'{legacy_package}.torch_basemodel')
-    legacy_intensity_free = importlib.import_module(
-        f'{legacy_package}.torch_intensity_free'
-    )
-    legacy_thinning = importlib.import_module(f'{legacy_package}.torch_thinning')
 
-    assert (legacy_intensity_free.LogNormalMixtureDistribution
-            is NewLogNormalMixtureDistribution)
-    assert legacy_basemodel.TorchBaseModel is BaseModel is TorchBaseModel
-    assert legacy_thinning.EventSampler is NewEventSampler
+    assert all(model is torch_alias for model, torch_alias in alias_pairs)
+    assert all((EventSampler, LogNormalMixtureDistribution))
+
+
+def test_model_wrapper_imports_from_flat_module():
+    from easy_tpp.model_wrapper import ModelWrapper, TorchModelWrapper
+
+    assert ModelWrapper is TorchModelWrapper
