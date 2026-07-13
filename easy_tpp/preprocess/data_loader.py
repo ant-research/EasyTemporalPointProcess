@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from collections import Counter
 from easy_tpp.preprocess.dataset import TPPDataset
@@ -260,6 +259,7 @@ class TPPDataLoader:
         Args:
             split (str): Dataset split, e.g., 'train', 'dev', 'test'. Default is 'train'.
         """
+        import matplotlib.pyplot as plt
         stats = self.get_statistics(split)
         event_type_distribution = stats['event_type_distribution']
 
@@ -276,6 +276,7 @@ class TPPDataLoader:
         Args:
             split (str): Dataset split, e.g., 'train', 'dev', 'test'. Default is 'train'.
         """
+        import matplotlib.pyplot as plt
         data_dir = self.data_config.get_data_dir(split)
         data = self.build_input(data_dir, self.data_config.data_format, split)
 
@@ -296,6 +297,7 @@ class TPPDataLoader:
         Args:
             split (str): Dataset split, e.g., 'train', 'dev', 'test'. Default is 'train'.
         """
+        import matplotlib.pyplot as plt
         data_dir = self.data_config.get_data_dir(split)
         data = self.build_input(data_dir, self.data_config.data_format, split)
         sequence_lengths = [len(seq) for seq in data['time_seqs']]
