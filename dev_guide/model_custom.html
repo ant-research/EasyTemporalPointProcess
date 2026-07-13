@@ -110,12 +110,13 @@
 <section id="create-a-new-tpp-model-class">
 <h2>Create a new TPP Model Class<a class="headerlink" href="#create-a-new-tpp-model-class" title="Link to this heading"></a></h2>
 <p>New models inherit from
-<a class="reference external" href="../ref/models.html">easy_tpp.model.torch_model.TorchBaseModel</a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.torch_model.torch_basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchBaseModel</span>
+<a class="reference external" href="../ref/models.html">easy_tpp.model.BaseModel</a>. <code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code> remains an
+alias for backward compatibility.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.model.basemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="c1"># Custom Torch TPP implementations need to</span>
-<span class="c1"># inherit from the TorchBaseModel interface</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">NewModel</span><span class="p">(</span><span class="n">TorchBaseModel</span><span class="p">):</span>
+<span class="c1"># inherit from the BaseModel interface</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NewModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NewModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
 

@@ -110,7 +110,7 @@
 <p>EasyTPP’s <code class="docutils literal notranslate"><span class="pre">EventSampler</span></code> implements the thinning procedure associated with
 Algorithm 2 of <a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural Hawkes Process: A Neurally Self-Modulating
 Multivariate Point Process</a>. Its torch
-implementation is in <code class="docutils literal notranslate"><span class="pre">easy_tpp/model/torch_model/torch_thinning.py</span></code>.</p>
+implementation is in <code class="docutils literal notranslate"><span class="pre">easy_tpp/model/thinning.py</span></code>.</p>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">draw_next_time_one_step</span></code> performs these operations for every history:</p>
@@ -134,9 +134,9 @@ over event types to predict the mark.</p>
 <section id="one-step-and-multi-step-prediction">
 <h2>One-step and multi-step prediction<a class="headerlink" href="#one-step-and-multi-step-prediction" title="Link to this heading"></a></h2>
 <p>With a <code class="docutils literal notranslate"><span class="pre">thinning</span></code> block in <code class="docutils literal notranslate"><span class="pre">model_config</span></code>, intensity-based models use
-<code class="docutils literal notranslate"><span class="pre">TorchBaseModel.predict_one_step_at_every_event</span></code> for next-event prediction.
+<code class="docutils literal notranslate"><span class="pre">BaseModel.predict_one_step_at_every_event</span></code> for next-event prediction.
 Set <code class="docutils literal notranslate"><span class="pre">num_step_gen</span></code> above 1 to activate recursive generation through
-<code class="docutils literal notranslate"><span class="pre">TorchBaseModel.predict_multi_step_since_last_event</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">BaseModel.predict_multi_step_since_last_event</span></code>.</p>
 <p>As of 0.2.4, <code class="docutils literal notranslate"><span class="pre">IntensityFree</span></code> also provides the marked intensity required by
 the shared sampler. For its log-normal-mixture inter-event distribution,</p>
 <div class="math notranslate nohighlight">

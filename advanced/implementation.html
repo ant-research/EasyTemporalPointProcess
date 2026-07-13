@@ -123,9 +123,9 @@
 <h1>Model Implementation Details<a class="headerlink" href="#model-implementation-details" title="Link to this heading"></a></h1>
 <section id="basic-structure">
 <h2>Basic structure<a class="headerlink" href="#basic-structure" title="Link to this heading"></a></h2>
-<p>In the model folder, <code class="docutils literal notranslate"><span class="pre">torch_basemodel.py</span></code> implements shared likelihood,
+<p>In the model folder, <code class="docutils literal notranslate"><span class="pre">basemodel.py</span></code> implements shared likelihood,
 sampling, and generation utilities. Concrete model classes inherit from
-<code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code> and may use or override those utilities.</p>
+<code class="docutils literal notranslate"><span class="pre">BaseModel</span></code> and may use or override those utilities.</p>
 <section id="computing-the-loglikelihood-of-non-pad-event-sequence">
 <h3>Computing the loglikelihood of non-pad event sequence<a class="headerlink" href="#computing-the-loglikelihood-of-non-pad-event-sequence" title="Link to this heading"></a></h3>
 <p>The shared <code class="docutils literal notranslate"><span class="pre">compute_loglikelihood</span></code> method follows Equation 8 of <a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural
@@ -209,7 +209,7 @@ recursive multi-step generation supplies the hazard to the thinning sampler.</p>
 <section id="fully-neural-network-based-model-for-general-temporal-point-processes-fullynn">
 <h2>Fully Neural Network based Model for General Temporal Point Processes (FullyNN)<a class="headerlink" href="#fully-neural-network-based-model-for-general-temporal-point-processes-fullynn" title="Link to this heading"></a></h2>
 <p>The implementation follows the paper’s cumulative-hazard construction and the
-torch references linked in <code class="docutils literal notranslate"><span class="pre">torch_fullynn.py</span></code>.</p>
+torch references linked in <code class="docutils literal notranslate"><span class="pre">fullynn.py</span></code>.</p>
 </section>
 <section id="ode-based-temporal-point-process-odetpp">
 <h2>ODE-based Temporal Point Process (ODETPP)<a class="headerlink" href="#ode-based-temporal-point-process-odetpp" title="Link to this heading"></a></h2>

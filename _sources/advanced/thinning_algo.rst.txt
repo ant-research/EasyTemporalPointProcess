@@ -5,7 +5,7 @@ Thinning Algorithm for Sampling Event Sequences
 EasyTPP's ``EventSampler`` implements the thinning procedure associated with
 Algorithm 2 of `The Neural Hawkes Process: A Neurally Self-Modulating
 Multivariate Point Process <https://arxiv.org/abs/1612.09328>`_. Its torch
-implementation is in ``easy_tpp/model/torch_model/torch_thinning.py``.
+implementation is in ``easy_tpp/model/thinning.py``.
 
 
 Implementation
@@ -36,9 +36,9 @@ One-step and multi-step prediction
 ==================================
 
 With a ``thinning`` block in ``model_config``, intensity-based models use
-``TorchBaseModel.predict_one_step_at_every_event`` for next-event prediction.
+``BaseModel.predict_one_step_at_every_event`` for next-event prediction.
 Set ``num_step_gen`` above 1 to activate recursive generation through
-``TorchBaseModel.predict_multi_step_since_last_event``.
+``BaseModel.predict_multi_step_since_last_event``.
 
 As of 0.2.4, ``IntensityFree`` also provides the marked intensity required by
 the shared sampler. For its log-normal-mixture inter-event distribution,
