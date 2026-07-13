@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from easy_tpp.config_factory import DataSpecConfig
@@ -9,7 +10,7 @@ from easy_tpp.preprocess.dataset import TPPDataset, EventTokenizer, get_data_loa
 class TestDataLoader(unittest.TestCase):
     def setUp(self):
         # Assuming the data is already generated and saved in 'synthetic_hf_data.json'
-        self.data_file = 'synthetic_data.json'
+        self.data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'examples', 'synthetic_data.json')
         self.batch_size = 4
         self.input_data = self._make_json_2_dict(self.data_file)
         self.dataset = TPPDataset(self.input_data)

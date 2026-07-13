@@ -20,7 +20,7 @@ class TestNeuralHawkesProcess(unittest.TestCase):
     def setUp(self):
         """Set up the test environment."""
         # Assuming the data is already generated and saved in 'synthetic_hf_data.json'
-        self.data_file = 'synthetic_data.json'
+        self.data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'examples', 'synthetic_data.json')
         self.batch_size = 4
         self.input_data = self._make_json_2_dict(self.data_file)
         self.dataset = TPPDataset(self.input_data)
