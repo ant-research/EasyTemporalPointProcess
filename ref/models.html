@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,9 +13,9 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -123,15 +123,15 @@
            <div itemprop="articleBody">
              
   <section id="easytpp-models">
-<span id="api-model"></span><h1>EasyTPP Models<a class="headerlink" href="#easytpp-models" title="Permalink to this heading"></a></h1>
+<span id="api-model"></span><h1>EasyTPP Models<a class="headerlink" href="#easytpp-models" title="Link to this heading"></a></h1>
 <p>The public torch model classes are exported by <code class="docutils literal notranslate"><span class="pre">easy_tpp.model</span></code>:</p>
-<span class="target" id="module-easy_tpp.model"></span><dl class="py class">
+<dl class="py class" id="module-easy_tpp.model">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchBaseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel" title="Permalink to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchBaseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.generate_model_from_config">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_model_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.generate_model_from_config" title="Permalink to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">generate_model_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.generate_model_from_config" title="Link to this definition"></a></dt>
 <dd><p>Generate the model in derived class based on model config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -142,7 +142,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.get_logits_at_last_step">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_logits_at_last_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_non_pad_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.get_logits_at_last_step" title="Permalink to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_logits_at_last_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_non_pad_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.get_logits_at_last_step" title="Link to this definition"></a></dt>
 <dd><p>Retrieve the hidden states of last non-pad events.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -166,16 +166,16 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.compute_loglikelihood">
-<span class="sig-name descname"><span class="pre">compute_loglikelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_at_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas_loss_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.compute_loglikelihood" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_loglikelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_at_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas_loss_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.compute_loglikelihood" title="Link to this definition"></a></dt>
 <dd><p>Compute the loglikelihood of the event sequence based on Equation (8) of NHP paper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>time_delta_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], time_delta_seq from model input.</p></li>
 <li><p><strong>lambda_at_event</strong> (<em>tensor</em>) – [batch_size, seq_len, num_event_types], unmasked intensity at</p></li>
-<li><p><strong>event.</strong> (<em>(</em><em>right after</em><em>) </em><em>the</em>) – </p></li>
+<li><p><strong>event.</strong> (<em>(</em><em>right after</em><em>) </em><em>the</em>)</p></li>
 <li><p><strong>lambdas_loss_samples</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample, num_event_types],</p></li>
-<li><p><strong>times.</strong> (<em>intensity at sampling</em>) – </p></li>
+<li><p><strong>times.</strong> (<em>intensity at sampling</em>)</p></li>
 <li><p><strong>seq_mask</strong> (<em>tensor</em>) – [batch_size, seq_len], sequence mask vector to mask the padded events.</p></li>
 <li><p><strong>type_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], sequence of mark ids, with padded events having a mark of self.pad_token_id</p></li>
 </ul>
@@ -191,7 +191,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.make_dtime_loss_samples">
-<span class="sig-name descname"><span class="pre">make_dtime_loss_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.make_dtime_loss_samples" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_dtime_loss_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.make_dtime_loss_samples" title="Link to this definition"></a></dt>
 <dd><p>Generate the time point samples for every interval.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -208,7 +208,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event">
-<span class="sig-name descname"><span class="pre">predict_one_step_at_every_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">predict_one_step_at_every_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event" title="Link to this definition"></a></dt>
 <dd><p>One-step prediction for every event in the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -229,7 +229,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event">
-<span class="sig-name descname"><span class="pre">predict_multi_step_since_last_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">predict_multi_step_since_last_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event" title="Link to this definition"></a></dt>
 <dd><p>Multi-step prediction since last event in the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -256,67 +256,67 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchANHN">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchANHN</span></span><a class="headerlink" href="#easy_tpp.model.TorchANHN" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchANHN</span></span><a class="headerlink" href="#easy_tpp.model.TorchANHN" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ANHN</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchAttNHP">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchAttNHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchAttNHP" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchAttNHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchAttNHP" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">AttNHP</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchFullyNN">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchFullyNN</span></span><a class="headerlink" href="#easy_tpp.model.TorchFullyNN" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchFullyNN</span></span><a class="headerlink" href="#easy_tpp.model.TorchFullyNN" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">FullyNN</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchIntensityFree">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchIntensityFree</span></span><a class="headerlink" href="#easy_tpp.model.TorchIntensityFree" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchIntensityFree</span></span><a class="headerlink" href="#easy_tpp.model.TorchIntensityFree" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">IntensityFree</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchNHP">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchNHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchNHP" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchNHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchNHP" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">NHP</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchODETPP">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchODETPP</span></span><a class="headerlink" href="#easy_tpp.model.TorchODETPP" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchODETPP</span></span><a class="headerlink" href="#easy_tpp.model.TorchODETPP" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ODETPP</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchRMTPP">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchRMTPP</span></span><a class="headerlink" href="#easy_tpp.model.TorchRMTPP" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchRMTPP</span></span><a class="headerlink" href="#easy_tpp.model.TorchRMTPP" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">RMTPP</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchS2P2">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchS2P2</span></span><a class="headerlink" href="#easy_tpp.model.TorchS2P2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchS2P2</span></span><a class="headerlink" href="#easy_tpp.model.TorchS2P2" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">S2P2</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchSAHP">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchSAHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchSAHP" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchSAHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchSAHP" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SAHP</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchTHP">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchTHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchTHP" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchTHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchTHP" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">THP</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchWSMTHP">
-<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchWSMTHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchWSMTHP" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchWSMTHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchWSMTHP" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">WSMTHP</span></code></p>
 </dd></dl>
 

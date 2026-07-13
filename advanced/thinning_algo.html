@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,10 +13,10 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -106,13 +106,13 @@
            <div itemprop="articleBody">
              
   <section id="thinning-algorithm-for-sampling-event-sequences">
-<h1>Thinning Algorithm for Sampling Event Sequences<a class="headerlink" href="#thinning-algorithm-for-sampling-event-sequences" title="Permalink to this heading"></a></h1>
+<h1>Thinning Algorithm for Sampling Event Sequences<a class="headerlink" href="#thinning-algorithm-for-sampling-event-sequences" title="Link to this heading"></a></h1>
 <p>EasyTPP’s <code class="docutils literal notranslate"><span class="pre">EventSampler</span></code> implements the thinning procedure associated with
 Algorithm 2 of <a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural Hawkes Process: A Neurally Self-Modulating
 Multivariate Point Process</a>. Its torch
 implementation is in <code class="docutils literal notranslate"><span class="pre">easy_tpp/model/torch_model/torch_thinning.py</span></code>.</p>
 <section id="implementation">
-<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading"></a></h2>
+<h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">draw_next_time_one_step</span></code> performs these operations for every history:</p>
 <ol class="arabic simple">
 <li><p>Evaluate total intensity at <code class="docutils literal notranslate"><span class="pre">num_samples_boundary</span></code> points and multiply
@@ -132,7 +132,7 @@ over event types to predict the mark.</p>
 <img alt="Thinning algorithm" src="../_images/thinning_algo.jpg" />
 </section>
 <section id="one-step-and-multi-step-prediction">
-<h2>One-step and multi-step prediction<a class="headerlink" href="#one-step-and-multi-step-prediction" title="Permalink to this heading"></a></h2>
+<h2>One-step and multi-step prediction<a class="headerlink" href="#one-step-and-multi-step-prediction" title="Link to this heading"></a></h2>
 <p>With a <code class="docutils literal notranslate"><span class="pre">thinning</span></code> block in <code class="docutils literal notranslate"><span class="pre">model_config</span></code>, intensity-based models use
 <code class="docutils literal notranslate"><span class="pre">TorchBaseModel.predict_one_step_at_every_event</span></code> for next-event prediction.
 Set <code class="docutils literal notranslate"><span class="pre">num_step_gen</span></code> above 1 to activate recursive generation through

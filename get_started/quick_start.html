@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,9 +13,9 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -105,12 +105,12 @@
            <div itemprop="articleBody">
              
   <section id="quick-start">
-<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading"></a></h1>
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h1>
 <p>The smallest current workflow is a YAML experiment plus the registered
 <code class="docutils literal notranslate"><span class="pre">Config</span></code> and <code class="docutils literal notranslate"><span class="pre">Runner</span></code> APIs. This example uses the Taxi dataset directly
 from <a class="reference external" href="https://huggingface.co/easytpp/taxi">EasyTPP on Hugging Face</a>.</p>
 <section id="create-a-config">
-<h2>Create a config<a class="headerlink" href="#create-a-config" title="Permalink to this heading"></a></h2>
+<h2>Create a config<a class="headerlink" href="#create-a-config" title="Link to this heading"></a></h2>
 <p>Save this as <code class="docutils literal notranslate"><span class="pre">taxi.yaml</span></code>:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">pipeline_config_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runner_config</span>
 
@@ -155,7 +155,7 @@ from <a class="reference external" href="https://huggingface.co/easytpp/taxi">Ea
 </div>
 </section>
 <section id="run-it">
-<h2>Run it<a class="headerlink" href="#run-it" title="Permalink to this heading"></a></h2>
+<h2>Run it<a class="headerlink" href="#run-it" title="Link to this heading"></a></h2>
 <p>Save this as <code class="docutils literal notranslate"><span class="pre">train.py</span></code> and run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">train.py</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.config_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runner</span>

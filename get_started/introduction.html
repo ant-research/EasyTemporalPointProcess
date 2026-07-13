@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,9 +13,9 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -108,10 +108,10 @@
            <div itemprop="articleBody">
              
   <section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> provides an open-source library for <cite>Neural TPP</cite>, with a fully automated pipeline for model training and prediction.</p>
 <section id="framework">
-<h2>Framework<a class="headerlink" href="#framework" title="Permalink to this heading"></a></h2>
+<h2>Framework<a class="headerlink" href="#framework" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> is a PyTorch library. Its data processing, model training,
 evaluation, and generation pipeline all use the torch backend.</p>
 <p>At the module level, <code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> is a package that consists of the following components, which are designed as loose-coupled modules that provide flexibility for users to develop customized functionalities.</p>
@@ -138,13 +138,13 @@ evaluation, and generation pipeline all use the torch backend.</p>
 </table>
 </section>
 <section id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this heading"></a></h2>
+<h2>Install<a class="headerlink" href="#install" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> can be installed either from PyPI or from source. PyTorch and the
 other runtime dependencies are installed with the package.</p>
 <p>Please see <a class="reference external" href="./install.html">Installation</a> for details of requirement and installation.</p>
 </section>
 <section id="prepare-data">
-<h2>Prepare Data<a class="headerlink" href="#prepare-data" title="Permalink to this heading"></a></h2>
+<h2>Prepare Data<a class="headerlink" href="#prepare-data" title="Link to this heading"></a></h2>
 <p>EasyTPP accepts the legacy pickle representation and JSON files (including
 datasets hosted by the <a class="reference external" href="https://huggingface.co/easytpp">EasyTPP Hugging Face organization</a>). Both representations provide
 <code class="docutils literal notranslate"><span class="pre">time_since_start</span></code>, <code class="docutils literal notranslate"><span class="pre">time_since_last_event</span></code>, <code class="docutils literal notranslate"><span class="pre">type_event</span></code>, and
@@ -156,7 +156,7 @@ See <a class="reference external" href="../user_guide/dataset.html">Dataset</a> 
 the <code class="docutils literal notranslate"><span class="pre">TPPDataLoader</span></code> pipeline.</p>
 </section>
 <section id="model-training-and-prediction">
-<h2>Model Training and Prediction<a class="headerlink" href="#model-training-and-prediction" title="Permalink to this heading"></a></h2>
+<h2>Model Training and Prediction<a class="headerlink" href="#model-training-and-prediction" title="Link to this heading"></a></h2>
 <p>The training and prediction pipeline consists of two steps:</p>
 <ol class="arabic simple">
 <li><p>Setup the config file, which specifies the dataset dir, model params and pipeline settings.</p></li>
@@ -165,7 +165,7 @@ the <code class="docutils literal notranslate"><span class="pre">TPPDataLoader</
 <p>Please see <a class="reference external" href="../user_guide/run_train_pipeline.html">Training Pipeline</a> and <a class="reference external" href="../user_guide/run_eval.html">Evaluation Pipeline</a> for more details.</p>
 </section>
 <section id="implemented-models">
-<h2>Implemented Models<a class="headerlink" href="#implemented-models" title="Permalink to this heading"></a></h2>
+<h2>Implemented Models<a class="headerlink" href="#implemented-models" title="Link to this heading"></a></h2>
 <p>Version 0.2.4 provides the following registered model IDs. Their implementation
 classes are exported from <code class="docutils literal notranslate"><span class="pre">easy_tpp.model</span></code> with a <code class="docutils literal notranslate"><span class="pre">Torch</span></code> prefix (for
 example, <code class="docutils literal notranslate"><span class="pre">NHP</span></code> is <code class="docutils literal notranslate"><span class="pre">TorchNHP</span></code>). <code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code> is the common

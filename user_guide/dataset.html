@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,9 +13,9 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -116,14 +116,14 @@
            <div itemprop="articleBody">
              
   <section id="expected-dataset-format-and-data-processing">
-<h1>Expected Dataset Format and Data Processing<a class="headerlink" href="#expected-dataset-format-and-data-processing" title="Permalink to this heading"></a></h1>
+<h1>Expected Dataset Format and Data Processing<a class="headerlink" href="#expected-dataset-format-and-data-processing" title="Link to this heading"></a></h1>
 <section id="supported-formats">
-<h2>Supported formats<a class="headerlink" href="#supported-formats" title="Permalink to this heading"></a></h2>
+<h2>Supported formats<a class="headerlink" href="#supported-formats" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">TPPDataLoader</span></code> supports <code class="docutils literal notranslate"><span class="pre">pkl</span></code> and <code class="docutils literal notranslate"><span class="pre">json</span></code>. In both formats event type
 indices start at 0, and <code class="docutils literal notranslate"><span class="pre">dim_process</span></code> is the number of event types without
 the padding type configured by <code class="docutils literal notranslate"><span class="pre">pad_token_id</span></code>.</p>
 <section id="legacy-pickle-files">
-<h3>Legacy pickle files<a class="headerlink" href="#legacy-pickle-files" title="Permalink to this heading"></a></h3>
+<h3>Legacy pickle files<a class="headerlink" href="#legacy-pickle-files" title="Link to this heading"></a></h3>
 <p>A pickle file contains <code class="docutils literal notranslate"><span class="pre">dim_process</span></code> and one split named <code class="docutils literal notranslate"><span class="pre">train</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>,
 or <code class="docutils literal notranslate"><span class="pre">test</span></code>. The split is a list of event sequences, and every event must
 provide the three fields read by the loader:</p>
@@ -150,7 +150,7 @@ provide the three fields read by the loader:</p>
 <code class="docutils literal notranslate"><span class="pre">test_dir</span></code> accordingly.</p>
 </section>
 <section id="json-and-hugging-face-datasets">
-<h3>JSON and Hugging Face datasets<a class="headerlink" href="#json-and-hugging-face-datasets" title="Permalink to this heading"></a></h3>
+<h3>JSON and Hugging Face datasets<a class="headerlink" href="#json-and-hugging-face-datasets" title="Link to this heading"></a></h3>
 <p>JSON data represents each event sequence as one record. The loader reads four
 columns: <code class="docutils literal notranslate"><span class="pre">time_since_start</span></code>, <code class="docutils literal notranslate"><span class="pre">time_since_last_event</span></code>, <code class="docutils literal notranslate"><span class="pre">type_event</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">dim_process</span></code>. The first three are equally sized arrays; <code class="docutils literal notranslate"><span class="pre">dim_process</span></code> is
@@ -179,7 +179,7 @@ dataset identifier such as <code class="docutils literal notranslate"><span clas
 <code class="docutils literal notranslate"><span class="pre">time_since_last_event</span></code>), and <code class="docutils literal notranslate"><span class="pre">type_seqs</span></code> (from <code class="docutils literal notranslate"><span class="pre">type_event</span></code>).</p>
 </section>
 <section id="time-rescaling-0-2-4">
-<h3>Time rescaling (0.2.4)<a class="headerlink" href="#time-rescaling-0-2-4" title="Permalink to this heading"></a></h3>
+<h3>Time rescaling (0.2.4)<a class="headerlink" href="#time-rescaling-0-2-4" title="Link to this heading"></a></h3>
 <p>Temporal encodings are not scale-invariant, so rescaling is recommended for
 datasets whose raw inter-event times are large. <code class="docutils literal notranslate"><span class="pre">rescale_time</span></code> is a boolean
 and defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code>. When enabled, both absolute event times and
@@ -212,10 +212,10 @@ retains the scale.</p>
 </section>
 </section>
 <section id="data-processing">
-<h2>Data processing<a class="headerlink" href="#data-processing" title="Permalink to this heading"></a></h2>
+<h2>Data processing<a class="headerlink" href="#data-processing" title="Link to this heading"></a></h2>
 <p>The data processing follows the similar pipeline as in official code of <a class="reference external" href="https://github.com/yangalan123/anhp-andtt">AttNHP</a>. We name it the process of <cite>event tokenize</cite>.</p>
 <section id="sequence-padding">
-<h3>Sequence padding<a class="headerlink" href="#sequence-padding" title="Permalink to this heading"></a></h3>
+<h3>Sequence padding<a class="headerlink" href="#sequence-padding" title="Link to this heading"></a></h3>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">time_seqs</span></code>, <code class="docutils literal notranslate"><span class="pre">time_delta_seqs</span></code>, and <code class="docutils literal notranslate"><span class="pre">type_seqs</span></code> are padded
 to the longest sequence in each batch. Setting <code class="docutils literal notranslate"><span class="pre">padding_strategy</span></code> to
 <code class="docutils literal notranslate"><span class="pre">max_length</span></code> uses the configured <code class="docutils literal notranslate"><span class="pre">max_len</span></code> instead.</p>
@@ -231,7 +231,7 @@ output:
 <p>By default, we set the value of time_pad and type_pad to be the <em>num_event_types</em> (because we assume the event type index starts from 0, therefore the integer value of num_event_types is unused).</p>
 </section>
 <section id="sequence-masking">
-<h3>Sequence masking<a class="headerlink" href="#sequence-masking" title="Permalink to this heading"></a></h3>
+<h3>Sequence masking<a class="headerlink" href="#sequence-masking" title="Link to this heading"></a></h3>
 <p>After padding, we generate two masks for the event sequences:</p>
 <ol class="arabic simple">
 <li><p><cite>batch_non_pad_mask</cite>: it indicates the position of masks in the sequence.</p></li>
@@ -242,7 +242,7 @@ output:
 is implemented in <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/easy_tpp/preprocess/event_tokenizer.py">event_tokenizer</a>.</p>
 </section>
 <section id="an-example">
-<h3>An example<a class="headerlink" href="#an-example" title="Permalink to this heading"></a></h3>
+<h3>An example<a class="headerlink" href="#an-example" title="Link to this heading"></a></h3>
 <p>We take a real event sequence for example. Assume we have an input sequence $[ 1,  9,  5,  0]$ with num_event_types=11 and max_len=6.</p>
 <p>Then the padded time_seqs, time_delta_seqs and type_seqs become</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># time_seqs</span>
@@ -272,7 +272,7 @@ is implemented in <a class="reference external" href="https://github.com/ant-res
 </section>
 </section>
 <section id="preprocessed-datasets">
-<h2>Preprocessed Datasets<a class="headerlink" href="#preprocessed-datasets" title="Permalink to this heading"></a></h2>
+<h2>Preprocessed Datasets<a class="headerlink" href="#preprocessed-datasets" title="Link to this heading"></a></h2>
 <p>We have preprocessed several widely used open-source datasets. Current JSON
 versions are available from <a class="reference external" href="https://huggingface.co/easytpp">Hugging Face</a>;
 legacy Gatech-format pickle files remain available from <a class="reference external" href="https://drive.google.com/drive/folders/0BwqmV0EcoUc8UklIR1BKV25YR1U?resourcekey=0-OrlU87jyc1m-dVMmY5aC4w">Google Drive</a>.</p>

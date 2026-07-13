@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,10 +13,10 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -120,14 +120,14 @@
            <div itemprop="articleBody">
              
   <section id="model-implementation-details">
-<h1>Model Implementation Details<a class="headerlink" href="#model-implementation-details" title="Permalink to this heading"></a></h1>
+<h1>Model Implementation Details<a class="headerlink" href="#model-implementation-details" title="Link to this heading"></a></h1>
 <section id="basic-structure">
-<h2>Basic structure<a class="headerlink" href="#basic-structure" title="Permalink to this heading"></a></h2>
+<h2>Basic structure<a class="headerlink" href="#basic-structure" title="Link to this heading"></a></h2>
 <p>In the model folder, <code class="docutils literal notranslate"><span class="pre">torch_basemodel.py</span></code> implements shared likelihood,
 sampling, and generation utilities. Concrete model classes inherit from
 <code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code> and may use or override those utilities.</p>
 <section id="computing-the-loglikelihood-of-non-pad-event-sequence">
-<h3>Computing the loglikelihood of non-pad event sequence<a class="headerlink" href="#computing-the-loglikelihood-of-non-pad-event-sequence" title="Permalink to this heading"></a></h3>
+<h3>Computing the loglikelihood of non-pad event sequence<a class="headerlink" href="#computing-the-loglikelihood-of-non-pad-event-sequence" title="Link to this heading"></a></h3>
 <p>The shared <code class="docutils literal notranslate"><span class="pre">compute_loglikelihood</span></code> method follows Equation 8 of <a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural
 Hawkes Process: A Neurally Self-Modulating Multivariate Point Process</a>. Models whose objectives have a different
 form implement their own loss.</p>
@@ -161,7 +161,7 @@ The same logic applies to the attention mask and event type mask.</p>
 </div>
 </section>
 <section id="computing-the-integral-inside-the-loglikelihood">
-<h3>Computing the integral inside the loglikelihood<a class="headerlink" href="#computing-the-integral-inside-the-loglikelihood" title="Permalink to this heading"></a></h3>
+<h3>Computing the integral inside the loglikelihood<a class="headerlink" href="#computing-the-integral-inside-the-loglikelihood" title="Link to this heading"></a></h3>
 <p>The loglikelihood of the parameters is the sum of the log-intensities of the events that happened, at the times they happened,
 minus an integral of the total intensities over the observation interval over [0,T]:</p>
 <div class="math notranslate nohighlight">
@@ -170,7 +170,7 @@ minus an integral of the total intensities over the observation interval over [0
 </section>
 </section>
 <section id="neural-hawkes-process-nhp">
-<h2>Neural Hawkes Process (NHP)<a class="headerlink" href="#neural-hawkes-process-nhp" title="Permalink to this heading"></a></h2>
+<h2>Neural Hawkes Process (NHP)<a class="headerlink" href="#neural-hawkes-process-nhp" title="Link to this heading"></a></h2>
 <p>We implement NHP based on author’s official pytorch code <a class="reference external" href="https://github.com/hongyuanmei/nce-mpp/blob/main/ncempp/models/nhp.py">Github:nce-mpp</a>.</p>
 <ol class="arabic simple">
 <li><p>A continuous-time LSTM is introduced, with the code mainly come from <a class="reference external" href="https://github.com/hongyuanmei/nce-mpp/blob/main/ncempp/models/nhp.py">Github:nce-mpp</a>.</p></li>
@@ -178,28 +178,28 @@ minus an integral of the total intensities over the observation interval over [0
 </ol>
 </section>
 <section id="attentive-neural-hawkes-process-attnhp">
-<h2>Attentive Neural Hawkes Process (AttNHP)<a class="headerlink" href="#attentive-neural-hawkes-process-attnhp" title="Permalink to this heading"></a></h2>
+<h2>Attentive Neural Hawkes Process (AttNHP)<a class="headerlink" href="#attentive-neural-hawkes-process-attnhp" title="Link to this heading"></a></h2>
 <p>We implement AttNHP based on the authors’ official pytorch code <a class="reference external" href="https://github.com/yangalan123/anhp-andtt">Github:anhp-andtt</a>
 and similar to NHP, we factorize it into based model and inherited model.</p>
 <p>The forward functions is implemented faithfully to that of the author’s repo.</p>
 </section>
 <section id="transformer-hawkes-process-thp">
-<h2>Transformer Hawkes Process (THP)<a class="headerlink" href="#transformer-hawkes-process-thp" title="Permalink to this heading"></a></h2>
+<h2>Transformer Hawkes Process (THP)<a class="headerlink" href="#transformer-hawkes-process-thp" title="Link to this heading"></a></h2>
 <p>We implement THP based on a fixed version of pytorch code <a class="reference external" href="https://github.com/yangalan123/anhp-andtt/tree/master/thp">Github:anhp-andtt/thp</a>
 and we factorize it into based model and inherited model.</p>
 </section>
 <section id="self-attentive-hawkes-process-sahp">
-<h2>Self-Attentive Hawkes Process (SAHP)<a class="headerlink" href="#self-attentive-hawkes-process-sahp" title="Permalink to this heading"></a></h2>
+<h2>Self-Attentive Hawkes Process (SAHP)<a class="headerlink" href="#self-attentive-hawkes-process-sahp" title="Link to this heading"></a></h2>
 <p>We implement SAHP based on a fixed version of pytorch code <a class="reference external" href="https://github.com/yangalan123/anhp-andtt/tree/master/sahp">Github:anhp-andtt/sahp</a>
 and we factorize it into based model and inherited model.</p>
 <p><cite>SAHP</cite> basically shares very similar structure to that of <cite>THP</cite>.</p>
 </section>
 <section id="recurrent-marked-temporal-point-processes-rmtpp">
-<h2>Recurrent Marked Temporal Point Processes (RMTPP)<a class="headerlink" href="#recurrent-marked-temporal-point-processes-rmtpp" title="Permalink to this heading"></a></h2>
+<h2>Recurrent Marked Temporal Point Processes (RMTPP)<a class="headerlink" href="#recurrent-marked-temporal-point-processes-rmtpp" title="Link to this heading"></a></h2>
 <p>We implement RMTPP faithfully to the author’s paper.</p>
 </section>
 <section id="intensity-free-learning-of-temporal-point-process-intensityfree">
-<h2>Intensity Free Learning of Temporal Point Process (IntensityFree)<a class="headerlink" href="#intensity-free-learning-of-temporal-point-process-intensityfree" title="Permalink to this heading"></a></h2>
+<h2>Intensity Free Learning of Temporal Point Process (IntensityFree)<a class="headerlink" href="#intensity-free-learning-of-temporal-point-process-intensityfree" title="Link to this heading"></a></h2>
 <p>We implement the model based on the author’s torch code <a class="reference external" href="https://github.com/shchur/ifl-tpp">Github:ifl-tpp</a>.</p>
 <p>A small difference between our implementation and the author’s is we ignore the <cite>context_init</cite> (the initial state of the RNN) because in our data setup, we do not need a learnable initial RNN state. This modification generally makes little impact on the learning process.</p>
 <p>IntensityFree exposes a closed-form hazard derived from its inter-event-time
@@ -207,27 +207,27 @@ distribution. Its one-step prediction samples that distribution directly;
 recursive multi-step generation supplies the hazard to the thinning sampler.</p>
 </section>
 <section id="fully-neural-network-based-model-for-general-temporal-point-processes-fullynn">
-<h2>Fully Neural Network based Model for General Temporal Point Processes (FullyNN)<a class="headerlink" href="#fully-neural-network-based-model-for-general-temporal-point-processes-fullynn" title="Permalink to this heading"></a></h2>
+<h2>Fully Neural Network based Model for General Temporal Point Processes (FullyNN)<a class="headerlink" href="#fully-neural-network-based-model-for-general-temporal-point-processes-fullynn" title="Link to this heading"></a></h2>
 <p>The implementation follows the paper’s cumulative-hazard construction and the
 torch references linked in <code class="docutils literal notranslate"><span class="pre">torch_fullynn.py</span></code>.</p>
 </section>
 <section id="ode-based-temporal-point-process-odetpp">
-<h2>ODE-based Temporal Point Process (ODETPP)<a class="headerlink" href="#ode-based-temporal-point-process-odetpp" title="Permalink to this heading"></a></h2>
+<h2>ODE-based Temporal Point Process (ODETPP)<a class="headerlink" href="#ode-based-temporal-point-process-odetpp" title="Link to this heading"></a></h2>
 <p>We implement a TPP with Neural ODE state evolution, which is a simplified version of <a class="reference external" href="https://arxiv.org/abs/2011.04583">Neural Spatio-Temporal Point Processes</a>. The ODE implementation uses the code from the <a class="reference external" href="https://msurtsukov.github.io/Neural-ODE/">blog</a></p>
 </section>
 <section id="attentive-neural-hawkes-network-anhn">
-<h2>Attentive Neural Hawkes Network (ANHN)<a class="headerlink" href="#attentive-neural-hawkes-network-anhn" title="Permalink to this heading"></a></h2>
+<h2>Attentive Neural Hawkes Network (ANHN)<a class="headerlink" href="#attentive-neural-hawkes-network-anhn" title="Link to this heading"></a></h2>
 <p>We implement the model based on the author’s paper: the attentive model without the graph regularizer is named ANHN.</p>
 </section>
 <section id="state-space-point-process-s2p2">
-<h2>State-Space Point Process (S2P2)<a class="headerlink" href="#state-space-point-process-s2p2" title="Permalink to this heading"></a></h2>
+<h2>State-Space Point Process (S2P2)<a class="headerlink" href="#state-space-point-process-s2p2" title="Link to this heading"></a></h2>
 <p>S2P2 implements <a class="reference external" href="https://openreview.net/pdf?id=74SvE2GZwW">Deep Continuous-Time State-Space Models for Marked Event
 Sequences</a> (NeurIPS 2025). It uses
 the continuous-time state-space components in <code class="docutils literal notranslate"><span class="pre">easy_tpp.ssm</span></code> and a
 mark-specific intensity network.</p>
 </section>
 <section id="weighted-score-matching-thp-wsmthp">
-<h2>Weighted Score Matching THP (WSMTHP)<a class="headerlink" href="#weighted-score-matching-thp-wsmthp" title="Permalink to this heading"></a></h2>
+<h2>Weighted Score Matching THP (WSMTHP)<a class="headerlink" href="#weighted-score-matching-thp-wsmthp" title="Link to this heading"></a></h2>
 <p>WSMTHP implements the THP-style model from <a class="reference external" href="https://arxiv.org/abs/2410.04037">Is Score Matching Suitable for
 Estimating Point Processes?</a> (NeurIPS
 2024). Training uses the weighted score-matching objective plus mark

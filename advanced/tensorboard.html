@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,9 +13,9 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -105,10 +105,10 @@
            <div itemprop="articleBody">
              
   <section id="launching-the-tensorboard">
-<h1>Launching the Tensorboard<a class="headerlink" href="#launching-the-tensorboard" title="Permalink to this heading"></a></h1>
+<h1>Launching the Tensorboard<a class="headerlink" href="#launching-the-tensorboard" title="Link to this heading"></a></h1>
 <p>Here we present how to launch the tensorboard within the  <code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> framework.</p>
 <section id="step-1-activate-the-usage-of-tensorboard-in-config-file">
-<h2>Step 1: Activate the usage of tensorboard in Config file<a class="headerlink" href="#step-1-activate-the-usage-of-tensorboard-in-config-file" title="Permalink to this heading"></a></h2>
+<h2>Step 1: Activate the usage of tensorboard in Config file<a class="headerlink" href="#step-1-activate-the-usage-of-tensorboard-in-config-file" title="Link to this heading"></a></h2>
 <p>As shown in <a class="reference external" href="../user_guide/run_train_pipeline.html">Training Pipeline</a>, enable
 TensorBoard in the experiment’s <code class="docutils literal notranslate"><span class="pre">trainer_config</span></code> before training.</p>
 <p>In the <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">config</span></code> (<cite>modeling</cite> attribute of the config), one needs to set <code class="docutils literal notranslate"><span class="pre">use_tfb</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> in <cite>trainer</cite>. Then before the running process, summary writers tracking the performance on training and valid sets are both initialized.</p>
@@ -146,7 +146,7 @@ TensorBoard in the experiment’s <code class="docutils literal notranslate"><sp
 </div>
 </section>
 <section id="step-2-launching-the-tensorboard">
-<h2>Step 2: Launching the tensorboard<a class="headerlink" href="#step-2-launching-the-tensorboard" title="Permalink to this heading"></a></h2>
+<h2>Step 2: Launching the tensorboard<a class="headerlink" href="#step-2-launching-the-tensorboard" title="Link to this heading"></a></h2>
 <p>Find <code class="docutils literal notranslate"><span class="pre">tfb_train</span></code> in the timestamped run directory below <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> and
 launch TensorBoard from the shell:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tensorboard<span class="w"> </span>--logdir<span class="w"> </span>./checkpoints/&lt;run-id&gt;/tfb_train

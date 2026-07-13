@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,9 +13,9 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -105,12 +105,12 @@
            <div itemprop="articleBody">
              
   <section id="evaluate-a-model">
-<h1>Evaluate a Model<a class="headerlink" href="#evaluate-a-model" title="Permalink to this heading"></a></h1>
+<h1>Evaluate a Model<a class="headerlink" href="#evaluate-a-model" title="Link to this heading"></a></h1>
 <p>Evaluation uses the same config and runner API as training. Keep the dataset
 entry and architecture settings used for training, set <code class="docutils literal notranslate"><span class="pre">stage</span></code> to <code class="docutils literal notranslate"><span class="pre">eval</span></code>,
 and point <code class="docutils literal notranslate"><span class="pre">model_config.pretrained_model_dir</span></code> at the saved model.</p>
 <section id="evaluation-configuration">
-<h2>Evaluation configuration<a class="headerlink" href="#evaluation-configuration" title="Permalink to this heading"></a></h2>
+<h2>Evaluation configuration<a class="headerlink" href="#evaluation-configuration" title="Link to this heading"></a></h2>
 <p>The following experiment can live beside the <code class="docutils literal notranslate"><span class="pre">data.taxi</span></code> entry shown in
 <a class="reference external" href="./run_train_pipeline.html">Training a Model</a>:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">NHP_eval</span><span class="p">:</span>
@@ -155,7 +155,7 @@ time prediction by intensity-based models. The supported thinning keys are
 <code class="docutils literal notranslate"><span class="pre">num_step_gen</span></code>.</p>
 </section>
 <section id="run-evaluation">
-<h2>Run evaluation<a class="headerlink" href="#run-evaluation" title="Permalink to this heading"></a></h2>
+<h2>Run evaluation<a class="headerlink" href="#run-evaluation" title="Link to this heading"></a></h2>
 <p>Use <code class="docutils literal notranslate"><span class="pre">Config</span></code>, not a separate evaluation config class:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.config_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runner</span>

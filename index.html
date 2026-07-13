@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,9 +13,9 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=4d875023"></script>
-      <script src="_static/doctools.js?v=888ff710"></script>
-      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -100,10 +100,10 @@
            <div itemprop="articleBody">
              
   <section id="easytpp-documentation">
-<h1><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> Documentation<a class="headerlink" href="#easytpp-documentation" title="Permalink to this heading"></a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> Documentation<a class="headerlink" href="#easytpp-documentation" title="Link to this heading"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> is an easy-to-use development and application toolkit for <a class="reference external" href="https://mathworld.wolfram.com/TemporalPointProcess.html">Neural Temporal Point Process</a> (<em>Neural TPP</em>), with key features in configurability, compatibility and reproducibility. We hope this project could benefit both researchers and practitioners with the goal of easily customized development and open benchmarking.</p>
 <section id="tutorial-notebooks">
-<h2>Tutorial Notebooks<a class="headerlink" href="#tutorial-notebooks" title="Permalink to this heading"></a></h2>
+<h2>Tutorial Notebooks<a class="headerlink" href="#tutorial-notebooks" title="Link to this heading"></a></h2>
 <p>The repository contains five walkthroughs:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/notebooks/easytpp_1_dataset.ipynb">Dataset loading and inspection</a></p></li>
@@ -206,7 +206,17 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="ref/config.html"> Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/config.html"> Config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#easy_tpp.config_factory.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#easy_tpp.config_factory.DataConfig"><code class="docutils literal notranslate"><span class="pre">DataConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#easy_tpp.config_factory.DataSpecConfig"><code class="docutils literal notranslate"><span class="pre">DataSpecConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#easy_tpp.config_factory.ModelConfig"><code class="docutils literal notranslate"><span class="pre">ModelConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#easy_tpp.config_factory.BaseConfig"><code class="docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#easy_tpp.config_factory.RunnerConfig"><code class="docutils literal notranslate"><span class="pre">RunnerConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#easy_tpp.config_factory.HPOConfig"><code class="docutils literal notranslate"><span class="pre">HPOConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/config.html#easy_tpp.config_factory.HPORunnerConfig"><code class="docutils literal notranslate"><span class="pre">HPORunnerConfig</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="ref/preprocess.html"> Preprocess</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#easy_tpp.preprocess.TPPDataLoader"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="ref/preprocess.html#easy_tpp.preprocess.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a></li>
@@ -234,8 +244,15 @@
 <li class="toctree-l2"><a class="reference internal" href="ref/runner.html#easy_tpp.runner.TPPRunner"><code class="docutils literal notranslate"><span class="pre">TPPRunner</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ref/hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ref/wrapper.html"> Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/hpo.html"> Hyper-parameter Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/hpo.html#easy_tpp.hpo.HyperTuner"><code class="docutils literal notranslate"><span class="pre">HyperTuner</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref/hpo.html#easy_tpp.hpo.OptunaTuner"><code class="docutils literal notranslate"><span class="pre">OptunaTuner</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ref/wrapper.html"> Torch Wrapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/wrapper.html#easy_tpp.torch_wrapper.TorchModelWrapper"><code class="docutils literal notranslate"><span class="pre">TorchModelWrapper</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="ref/utils.html"> Utilities</a></li>
 </ul>
 </div>

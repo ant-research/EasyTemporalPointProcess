@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,9 +13,9 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/documentation_options.js?v=6ffd866b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -120,20 +120,20 @@
            <div itemprop="articleBody">
              
   <section id="module-easy_tpp.runner">
-<span id="easytpp-model-runner-modules"></span><span id="api-modelrunner"></span><h1>EasyTPP Model Runner Modules<a class="headerlink" href="#module-easy_tpp.runner" title="Permalink to this heading"></a></h1>
+<span id="easytpp-model-runner-modules"></span><span id="api-modelrunner"></span><h1>EasyTPP Model Runner Modules<a class="headerlink" href="#module-easy_tpp.runner" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.runner.</span></span><span class="sig-name descname"><span class="pre">Runner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runner_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_model_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner" title="Permalink to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.runner.</span></span><span class="sig-name descname"><span class="pre">Runner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runner_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_model_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Registrable</span></code></p>
 <p>Registrable Base Runner class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.build_from_config">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runner_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_model_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.build_from_config" title="Permalink to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">build_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runner_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_model_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.build_from_config" title="Link to this definition"></a></dt>
 <dd><p>Build up the runner from runner config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>runner_config</strong> (<em>RunnerConfig</em>) – config for the runner.</p></li>
+<li><p><strong>runner_config</strong> (<a class="reference internal" href="config.html#easy_tpp.config_factory.RunnerConfig" title="easy_tpp.config_factory.RunnerConfig"><em>RunnerConfig</em></a>) – config for the runner.</p></li>
 <li><p><strong>unique_model_dir</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to give unique dir to save the model. Defaults to False.</p></li>
 </ul>
 </dd>
@@ -148,22 +148,22 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.get_config">
-<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.get_config" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.get_config" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.set_model_dir">
-<span class="sig-name descname"><span class="pre">set_model_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.set_model_dir" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_model_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.set_model_dir" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.get_model_dir">
-<span class="sig-name descname"><span class="pre">get_model_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.get_model_dir" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_model_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.get_model_dir" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.train" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.train" title="Link to this definition"></a></dt>
 <dd><p>Train the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -184,28 +184,28 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.evaluate">
-<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valid_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.evaluate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valid_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.evaluate" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.gen">
-<span class="sig-name descname"><span class="pre">gen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gen_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.gen" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">gen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gen_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.gen" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.save_log">
-<span class="sig-name descname"><span class="pre">save_log</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.save_log" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">save_log</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.save_log" title="Link to this definition"></a></dt>
 <dd><p>Save log to local files</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.save" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.save" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.Runner.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.run" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.Runner.run" title="Link to this definition"></a></dt>
 <dd><p>Start the runner.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -224,12 +224,12 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="easy_tpp.runner.TPPRunner">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.runner.</span></span><span class="sig-name descname"><span class="pre">TPPRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runner_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_model_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.TPPRunner" title="Permalink to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">easy_tpp.runner.</span></span><span class="sig-name descname"><span class="pre">TPPRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runner_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_model_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.TPPRunner" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#easy_tpp.runner.Runner" title="easy_tpp.runner.base_runner.Runner"><code class="xref py py-class docutils literal notranslate"><span class="pre">Runner</span></code></a></p>
 <p>Standard TPP runner</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.runner.TPPRunner.run_one_epoch">
-<span class="sig-name descname"><span class="pre">run_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.TPPRunner.run_one_epoch" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.runner.TPPRunner.run_one_epoch" title="Link to this definition"></a></dt>
 <dd><p>Run one complete epoch.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
