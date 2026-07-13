@@ -36,9 +36,9 @@ One-step and multi-step prediction
 ==================================
 
 With a ``thinning`` block in ``model_config``, intensity-based models use
-``TorchBaseModel.predict_one_step_at_every_event`` for next-event prediction.
+``BaseModel.predict_one_step_at_every_event`` for next-event prediction.
 Set ``num_step_gen`` above 1 to activate recursive generation through
-``TorchBaseModel.predict_multi_step_since_last_event``.
+``BaseModel.predict_multi_step_since_last_event``.
 
 As of 0.2.4, ``IntensityFree`` also provides the marked intensity required by
 the shared sampler. For its log-normal-mixture inter-event distribution,

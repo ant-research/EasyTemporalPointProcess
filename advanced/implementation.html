@@ -125,7 +125,7 @@
 <h2>Basic structure<a class="headerlink" href="#basic-structure" title="Link to this heading"></a></h2>
 <p>In the model folder, <code class="docutils literal notranslate"><span class="pre">basemodel.py</span></code> implements shared likelihood,
 sampling, and generation utilities. Concrete model classes inherit from
-<code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code> and may use or override those utilities.</p>
+<code class="docutils literal notranslate"><span class="pre">BaseModel</span></code> and may use or override those utilities.</p>
 <section id="computing-the-loglikelihood-of-non-pad-event-sequence">
 <h3>Computing the loglikelihood of non-pad event sequence<a class="headerlink" href="#computing-the-loglikelihood-of-non-pad-event-sequence" title="Link to this heading"></a></h3>
 <p>The shared <code class="docutils literal notranslate"><span class="pre">compute_loglikelihood</span></code> method follows Equation 8 of <a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural
