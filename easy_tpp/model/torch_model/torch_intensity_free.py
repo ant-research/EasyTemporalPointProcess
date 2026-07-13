@@ -208,6 +208,53 @@ class IntensityFree(TorchBaseModel):
 
         return loss, num_events
 
+    def compute_intensities_at_sample_times(self,
+                                            time_seqs,
+                                            time_delta_seqs,
+                                            type_seqs,
+                                            sample_dtimes,
+                                            **kwargs):
+        """Compute marked intensities at sampled inter-event times.
+
+        Args:
+            time_seqs (tensor): [batch_size, seq_len], event timestamps.
+            time_delta_seqs (tensor): [batch_size, seq_len], inter-event times.
+            type_seqs (tensor): [batch_size, seq_len], event types.
+            sample_dtimes (tensor): [batch_size, seq_len, num_samples], sampled inter-event times.
+
+        Returns:
+            tensor: [batch_size, seq_len, num_samples, num_event_types], marked intensities.
+        """
+        compute_last_step_only = kwargs.get('compute_last_step_only', False)
+
+        context = self.forward(time_delta_seqs, type_seqs)
+        raw_params = self.linear(context)
+        locs = raw_params[..., :self.num_mix_components]
+        log_scales = raw_params[..., self.num_mix_components: (2 * self.num_mix_components)]
+        log_weights = raw_params[..., (2 * self.num_mix_components):]
+
+        log_scales = clamp_preserve_gradients(log_scales, -5.0, 3.0)
+        log_weights = torch.log_softmax(log_weights, dim=-1)
+        inter_time_dist = LogNormalMixtureDistribution(
+            locs=locs.unsqueeze(2),
+            log_scales=log_scales.unsqueeze(2),
+            log_weights=log_weights.unsqueeze(2),
+            mean_log_inter_time=self.mean_log_inter_time,
+            std_log_inter_time=self.std_log_inter_time
+        )
+
+        sample_dtimes = sample_dtimes.clamp(min=1e-5)
+        log_intensity = (inter_time_dist.log_prob(sample_dtimes)
+                         - inter_time_dist.log_survival_function(sample_dtimes))
+        intensity = log_intensity.exp()
+
+        mark_probs = torch.softmax(self.mark_linear(context), dim=-1)
+        marked_intensity = intensity[..., None] * mark_probs[:, :, None, :] + self.eps
+
+        if compute_last_step_only:
+            return marked_intensity[:, -1:, :, :]
+        return marked_intensity
+
     def predict_one_step_at_every_event(self, batch):
         """One-step prediction for every event in the sequence.
 

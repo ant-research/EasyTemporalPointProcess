@@ -216,55 +216,78 @@ class TorchBaseModel(nn.Module):
         Returns:
             tuple: tensors of dtime and type prediction, [batch_size, seq_len].
         """
-        time_seq_label, time_delta_seq_label, event_seq_label, _, _  = batch
+        time_seq_label, time_delta_seq_label, event_seq_label, batch_non_pad_mask, _ = batch
 
         num_step = self.gen_config.num_step_gen
+        true_lengths = batch_non_pad_mask.sum(dim=-1)
+        if not forward and torch.any(true_lengths <= num_step):
+            raise ValueError('All sequences must contain more events than num_step_gen for multi-step prediction.')
 
-        if not forward:
-            time_seq = time_seq_label[:, :-num_step]
-            time_delta_seq = time_delta_seq_label[:, :-num_step]
-            event_seq = event_seq_label[:, :-num_step]
-        else:
-            time_seq, time_delta_seq, event_seq = time_seq_label, time_delta_seq_label, event_seq_label
+        batch_size = time_seq_label.size(0)
+        output_shape = (batch_size, num_step + 1)
+        pred_dtimes = time_delta_seq_label.new_empty(output_shape)
+        pred_types = event_seq_label.new_empty(output_shape)
+        label_dtimes = time_delta_seq_label.new_empty(output_shape)
+        label_types = event_seq_label.new_empty(output_shape)
 
-        for i in range(num_step):
-            # [batch_size, seq_len]
-            dtime_boundary = time_delta_seq + self.event_sampler.dtime_max
+        for true_length in torch.unique(true_lengths):
+            length = int(true_length.item())
+            row_indices = torch.nonzero(true_lengths == true_length, as_tuple=False).squeeze(-1)
 
-            # [batch_size, 1, num_sample]
-            accepted_dtimes, weights = \
-                self.event_sampler.draw_next_time_one_step(time_seq,
-                                                           time_delta_seq,
-                                                           event_seq,
-                                                           dtime_boundary,
-                                                           self.compute_intensities_at_sample_times,
-                                                           compute_last_step_only=True)
+            time_seq_group = time_seq_label.index_select(0, row_indices)[:, :length]
+            time_delta_seq_group = time_delta_seq_label.index_select(0, row_indices)[:, :length]
+            event_seq_group = event_seq_label.index_select(0, row_indices)[:, :length]
 
-            # [batch_size, 1]
-            dtimes_pred = torch.sum(accepted_dtimes * weights, dim=-1)
+            if not forward:
+                time_seq = time_seq_group[:, :length - num_step]
+                time_delta_seq = time_delta_seq_group[:, :length - num_step]
+                event_seq = event_seq_group[:, :length - num_step]
+            else:
+                time_seq, time_delta_seq, event_seq = time_seq_group, time_delta_seq_group, event_seq_group
 
-            # [batch_size, seq_len, 1, event_num]
-            intensities_at_times = self.compute_intensities_at_sample_times(time_seq,
-                                                                            time_delta_seq,
-                                                                            event_seq,
-                                                                            dtimes_pred[:, :, None],
-                                                                            max_steps=event_seq.size()[1])
+            for i in range(num_step):
+                # [batch_size, seq_len]
+                dtime_boundary = time_delta_seq + self.event_sampler.dtime_max
 
-            # [batch_size, seq_len, event_num]
-            intensities_at_times = intensities_at_times.squeeze(dim=-2)
+                # [batch_size, 1, num_sample]
+                accepted_dtimes, weights = \
+                    self.event_sampler.draw_next_time_one_step(time_seq,
+                                                               time_delta_seq,
+                                                               event_seq,
+                                                               dtime_boundary,
+                                                               self.compute_intensities_at_sample_times,
+                                                               compute_last_step_only=True)
 
-            # [batch_size, seq_len]
-            types_pred = torch.argmax(intensities_at_times, dim=-1)
+                # [batch_size, 1]
+                dtimes_pred = torch.sum(accepted_dtimes * weights, dim=-1)
 
-            # [batch_size, 1]
-            types_pred_ = types_pred[:, -1:]
-            dtimes_pred_ = dtimes_pred[:, -1:]
-            time_pred_ = time_seq[:, -1:] + dtimes_pred_
+                # [batch_size, seq_len, 1, event_num]
+                intensities_at_times = self.compute_intensities_at_sample_times(time_seq,
+                                                                                time_delta_seq,
+                                                                                event_seq,
+                                                                                dtimes_pred[:, :, None],
+                                                                                max_steps=event_seq.size()[1])
 
-            # concat to the prefix sequence
-            time_seq = torch.cat([time_seq, time_pred_], dim=-1)
-            time_delta_seq = torch.cat([time_delta_seq, dtimes_pred_], dim=-1)
-            event_seq = torch.cat([event_seq, types_pred_], dim=-1)
+                # [batch_size, seq_len, event_num]
+                intensities_at_times = intensities_at_times.squeeze(dim=-2)
 
-        return time_delta_seq[:, -num_step - 1:], event_seq[:, -num_step - 1:], \
-               time_delta_seq_label[:, -num_step - 1:], event_seq_label[:, -num_step - 1:]
+                # [batch_size, seq_len]
+                types_pred = torch.argmax(intensities_at_times, dim=-1)
+
+                # [batch_size, 1]
+                types_pred_ = types_pred[:, -1:]
+                dtimes_pred_ = dtimes_pred[:, -1:]
+                time_pred_ = time_seq[:, -1:] + dtimes_pred_
+
+                # concat to the prefix sequence
+                time_seq = torch.cat([time_seq, time_pred_], dim=-1)
+                time_delta_seq = torch.cat([time_delta_seq, dtimes_pred_], dim=-1)
+                event_seq = torch.cat([event_seq, types_pred_], dim=-1)
+
+            pred_dtimes.index_copy_(0, row_indices, time_delta_seq[:, -num_step - 1:])
+            pred_types.index_copy_(0, row_indices, event_seq[:, -num_step - 1:])
+            label_dtimes.index_copy_(0, row_indices,
+                                     time_delta_seq_group[:, length - num_step - 1:length])
+            label_types.index_copy_(0, row_indices, event_seq_group[:, length - num_step - 1:length])
+
+        return pred_dtimes, pred_types, label_dtimes, label_types
