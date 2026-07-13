@@ -703,7 +703,7 @@ WSMTHP_train:
     backend: torch
     dataset_id: taobao           # change to the dataset you want to use
     runner_id: std_tpp
-    model_id: WSMTHP           # must match the class name in torch_wsm_thp.py
+    model_id: WSMTHP           # must match the class name in wsm_thp.py
     base_dir: './checkpoints/'
   trainer_config:
     batch_size: 64

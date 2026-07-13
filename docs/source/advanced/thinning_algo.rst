@@ -5,7 +5,7 @@ Thinning Algorithm for Sampling Event Sequences
 EasyTPP's ``EventSampler`` implements the thinning procedure associated with
 Algorithm 2 of `The Neural Hawkes Process: A Neurally Self-Modulating
 Multivariate Point Process <https://arxiv.org/abs/1612.09328>`_. Its torch
-implementation is in ``easy_tpp/model/torch_model/torch_thinning.py``.
+implementation is in ``easy_tpp/model/thinning.py``.
 
 
 Implementation

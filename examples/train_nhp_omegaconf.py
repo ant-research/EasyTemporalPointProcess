@@ -1,7 +1,7 @@
 from omegaconf import OmegaConf
 
 from easy_tpp.config_factory import ModelConfig
-from easy_tpp.model.torch_model.torch_nhp import NHP
+from easy_tpp.model.nhp import NHP
 
 
 def main():

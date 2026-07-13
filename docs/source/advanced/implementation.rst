@@ -5,7 +5,7 @@ Model Implementation Details
 Basic structure
 ===================================
 
-In the model folder, ``torch_basemodel.py`` implements shared likelihood,
+In the model folder, ``basemodel.py`` implements shared likelihood,
 sampling, and generation utilities. Concrete model classes inherit from
 ``TorchBaseModel`` and may use or override those utilities.
 
@@ -136,7 +136,7 @@ Fully Neural Network based Model for General Temporal Point Processes (FullyNN)
 ===============================================================================
 
 The implementation follows the paper's cumulative-hazard construction and the
-torch references linked in ``torch_fullynn.py``.
+torch references linked in ``fullynn.py``.
 
 
 ODE-based Temporal Point Process (ODETPP)

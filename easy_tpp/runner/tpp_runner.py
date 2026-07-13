@@ -30,7 +30,7 @@ class TPPRunner(Runner):
 
         if self.use_torch:
             from easy_tpp.utils import set_seed
-            from easy_tpp.model.torch_model.torch_basemodel import TorchBaseModel
+            from easy_tpp.model.basemodel import TorchBaseModel
             from easy_tpp.torch_wrapper import TorchModelWrapper
             from easy_tpp.utils import count_model_params
             set_seed(self.runner_config.trainer_config.seed)

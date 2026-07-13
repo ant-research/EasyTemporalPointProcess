@@ -1,25 +1,52 @@
-from easy_tpp.model.torch_model.torch_anhn import ANHN as TorchANHN
-from easy_tpp.model.torch_model.torch_attnhp import AttNHP as TorchAttNHP
-from easy_tpp.model.torch_model.torch_basemodel import TorchBaseModel
-from easy_tpp.model.torch_model.torch_fullynn import FullyNN as TorchFullyNN
-from easy_tpp.model.torch_model.torch_intensity_free import IntensityFree as TorchIntensityFree
-from easy_tpp.model.torch_model.torch_nhp import NHP as TorchNHP
-from easy_tpp.model.torch_model.torch_ode_tpp import ODETPP as TorchODETPP
-from easy_tpp.model.torch_model.torch_rmtpp import RMTPP as TorchRMTPP
-from easy_tpp.model.torch_model.torch_s2p2 import S2P2 as TorchS2P2
-from easy_tpp.model.torch_model.torch_sahp import SAHP as TorchSAHP
-from easy_tpp.model.torch_model.torch_thp import THP as TorchTHP
-from easy_tpp.model.torch_model.torch_wsm_thp import WSMTHP as TorchWSMTHP
+from easy_tpp.model.anhn import ANHN
+from easy_tpp.model.attnhp import AttNHP
+from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.fullynn import FullyNN
+from easy_tpp.model.intensity_free import IntensityFree
+from easy_tpp.model.nhp import NHP
+from easy_tpp.model.ode_tpp import ODETPP
+from easy_tpp.model.rmtpp import RMTPP
+from easy_tpp.model.s2p2 import S2P2
+from easy_tpp.model.sahp import SAHP
+from easy_tpp.model.thinning import EventSampler
+from easy_tpp.model.thp import THP
+from easy_tpp.model.wsm_thp import WSMTHP
 
-__all__ = ['TorchBaseModel',
-           'TorchNHP',
-           'TorchAttNHP',
-           'TorchTHP',
-           'TorchSAHP',
-           'TorchFullyNN',
-           'TorchIntensityFree',
-           'TorchODETPP',
-           'TorchRMTPP',
-           'TorchANHN',
-           'TorchS2P2',
-           'TorchWSMTHP']
+TorchANHN = ANHN
+TorchAttNHP = AttNHP
+TorchFullyNN = FullyNN
+TorchIntensityFree = IntensityFree
+TorchNHP = NHP
+TorchODETPP = ODETPP
+TorchRMTPP = RMTPP
+TorchS2P2 = S2P2
+TorchSAHP = SAHP
+TorchTHP = THP
+TorchWSMTHP = WSMTHP
+
+__all__ = [
+    'ANHN',
+    'AttNHP',
+    'FullyNN',
+    'IntensityFree',
+    'NHP',
+    'ODETPP',
+    'RMTPP',
+    'S2P2',
+    'SAHP',
+    'THP',
+    'WSMTHP',
+    'TorchBaseModel',
+    'EventSampler',
+    'TorchANHN',
+    'TorchAttNHP',
+    'TorchFullyNN',
+    'TorchIntensityFree',
+    'TorchNHP',
+    'TorchODETPP',
+    'TorchRMTPP',
+    'TorchS2P2',
+    'TorchSAHP',
+    'TorchTHP',
+    'TorchWSMTHP',
+]
