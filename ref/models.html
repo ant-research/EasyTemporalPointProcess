@@ -72,6 +72,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.generate_model_from_config"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.generate_model_from_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.resolve_batch_inputs"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.resolve_batch_inputs()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.get_logits_at_last_step"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.get_logits_at_last_step()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.compute_loglikelihood"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.compute_loglikelihood()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.make_dtime_loss_samples"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.make_dtime_loss_samples()</span></code></a></li>
@@ -138,6 +139,15 @@
 <dd class="field-odd"><p><strong>model_config</strong> (<em>EasyTPP.ModelConfig</em>) – config of model specs.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.resolve_batch_inputs">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">resolve_batch_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.resolve_batch_inputs" title="Link to this definition"></a></dt>
+<dd><p>Normalize model inputs.</p>
+<p>Returns (time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask,
+attention_mask). Accepts HF-style keyword arguments; a dict or
+BatchEncoding; or the legacy positional tuple/list (deprecated).</p>
 </dd></dl>
 
 <dl class="py method">
@@ -208,14 +218,15 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event">
-<span class="sig-name descname"><span class="pre">predict_one_step_at_every_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">predict_one_step_at_every_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event" title="Link to this definition"></a></dt>
 <dd><p>One-step prediction for every event in the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
-<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
-<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
+<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer passing
+time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, and
+attention_mask as keyword inputs.</p></li>
+<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -229,18 +240,16 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event">
-<span class="sig-name descname"><span class="pre">predict_multi_step_since_last_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">predict_multi_step_since_last_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event" title="Link to this definition"></a></dt>
 <dd><p>Multi-step prediction since last event in the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>tuple</em>) – A tuple containing:
-- time_seq_label (tensor): Timestamps of events [batch_size, seq_len].
-- time_delta_seq_label (tensor): Time intervals between events [batch_size, seq_len].
-- event_seq_label (tensor): Event types [batch_size, seq_len].
-- batch_non_pad_mask_label (tensor): Mask for non-padding elements [batch_size, seq_len].
-- attention_mask (tensor): Mask for attention [batch_size, seq_len].</p></li>
+<li><p><strong>batch</strong> (<em>Mapping</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Legacy batch input. Prefer passing
+time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, and
+attention_mask as keyword inputs.</p></li>
 <li><p><strong>forward</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use the entire sequence for prediction. Defaults to False.</p></li>
+<li><p><strong>**kwargs</strong> – HF-style keyword model inputs.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
