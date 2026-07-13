@@ -1,10 +1,10 @@
-.. _api-config:
+.. _api-hpo:
 
-EasyTPP Config Modules
-============================
+EasyTPP Hyper-parameter Optimization Modules
+============================================
 
 
-.. automodule:: hpo
+.. automodule:: easy_tpp.hpo
     :members:
     :undoc-members:
     :show-inheritance:

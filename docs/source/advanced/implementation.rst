@@ -5,18 +5,22 @@ Model Implementation Details
 Basic structure
 ===================================
 
-In the model folder, `torch_basemodel` (**/model/torch_model/torch_basemodel.py**) / `tf_basemodel` (**/model/tf_model/tf_basemodel.py**) implements functionalities of computing loglikelihood and sampling procedures that are common
-to all the TPP models. In the inherited class, models with specific structures are defined, explained in below sections. 
+In the model folder, ``torch_basemodel.py`` implements shared likelihood,
+sampling, and generation utilities. Concrete model classes inherit from
+``TorchBaseModel`` and may use or override those utilities.
 
 
 Computing the loglikelihood of non-pad event sequence
 ------------------------------------------------------
 
-The loglikelihood computation, following the definition in Equation 8 of `The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process <https://arxiv.org/abs/1612.09328>`_, is shared by all the TPP models.
+The shared ``compute_loglikelihood`` method follows Equation 8 of `The Neural
+Hawkes Process: A Neurally Self-Modulating Multivariate Point Process
+<https://arxiv.org/abs/1612.09328>`_. Models whose objectives have a different
+form implement their own loss.
 
-it takes `time_delta_seqs`, `lambda_at_event`, `lambdas_loss_samples`, `seq_mask`,
-                              `lambda_type_mask` as the input and output the loglikelihood items, please see  `torch_basemodel` (**/model/torch_model/torch_basemodel.py**) / `tf_basemodel` (**/model/tf_model/tf_basemodel.py**)
-for details.
+It takes ``time_delta_seq``, ``lambda_at_event``,
+``lambdas_loss_samples``, ``seq_mask``, and ``type_seq`` and returns the event
+term, non-event term, and number of events.
 
 It is noted that:
 
@@ -25,7 +29,8 @@ and `type_seqs[:, :-1]`. For `time_delta_seqs` it is different; please see the n
 
 
 
-2. Continuous-time evolution: recall the definition in [dataset](./dataset.rst), assume we have a sequence of 4 events and 1 pad event
+2. Continuous-time evolution: recall the `dataset representation
+<../user_guide/dataset.html>`_. Assume we have a sequence of 4 events and 1 pad event
 at the end, i.e.,
 
 .. code-block:: bash
@@ -37,7 +42,7 @@ at the end, i.e.,
 
 For the i-th event, i-th dtime denotes the time evolution (e.g., decay in NHP) to the current event and
 (i+1)-th dtime denotes the time evolution to the next event. To compute the non-event loglikelihood,
-we should consider the time evolution after the event happens. Therefore we should use `type_delta_seqs[:, 1:]` with masks specified in the below step.
+we should consider the time evolution after the event happens. Therefore we should use ``time_delta_seqs[:, 1:]`` with masks specified in the below step.
 
 3. Masking: suppose we have predictions of 0,1,2,3-th event and their labels are 1,2,3,4-th events
 where $4$-th event needed to be masked. So we should set the sequence mask as `True, True, True, False`, i.e., `seq_mask=batch_non_pad_mask[:, 1:]`.
@@ -52,7 +57,7 @@ Therefore the following code is a typical example of calling the loglikelihood c
                                                                     lambdas_loss_samples=lambda_t_sample, # seq_len = max_len - 1
                                                                     time_delta_seq=time_delta_seq[:, 1:],
                                                                     seq_mask=batch_non_pad_mask[:, 1:],
-                                                                    lambda_type_mask=type_mask[:, 1:])
+                                                                    type_seq=type_seqs[:, 1:])
 
 
 
@@ -122,13 +127,16 @@ We implement the model based on the author's torch code `Github:ifl-tpp <https:/
 
 A small difference between our implementation and the author's is we ignore the `context_init` (the initial state of the RNN) because in our data setup, we do not need a learnable initial RNN state. This modification generally makes little impact on the learning process.
 
-It is worth noting that the thinning algorithm can not be applied to this model because it is intensity-free. When comparing the performance of the model, we only look at its log-likelihood learning curve.
+IntensityFree exposes a closed-form hazard derived from its inter-event-time
+distribution. Its one-step prediction samples that distribution directly;
+recursive multi-step generation supplies the hazard to the thinning sampler.
 
 
 Fully Neural Network based Model for General Temporal Point Processes (FullyNN)
 ===============================================================================
 
-We implement the model based on the author's keras code `Github:NeuralNetworkPointProcess <https://github.com/omitakahiro/NeuralNetworkPointProcess>`_.
+The implementation follows the paper's cumulative-hazard construction and the
+torch references linked in ``torch_fullynn.py``.
 
 
 ODE-based Temporal Point Process (ODETPP)
@@ -141,3 +149,22 @@ Attentive Neural Hawkes Network (ANHN)
 ======================================
 
 We implement the model based on the author's paper: the attentive model without the graph regularizer is named ANHN.
+
+
+State-Space Point Process (S2P2)
+================================
+
+S2P2 implements `Deep Continuous-Time State-Space Models for Marked Event
+Sequences <https://openreview.net/pdf?id=74SvE2GZwW>`_ (NeurIPS 2025). It uses
+the continuous-time state-space components in ``easy_tpp.ssm`` and a
+mark-specific intensity network.
+
+
+Weighted Score Matching THP (WSMTHP)
+=====================================
+
+WSMTHP implements the THP-style model from `Is Score Matching Suitable for
+Estimating Point Processes? <https://arxiv.org/abs/2410.04037>`_ (NeurIPS
+2024). Training uses the weighted score-matching objective plus mark
+cross-entropy; validation and testing use the model's approximate
+log-likelihood path. Its settings belong under ``model_config.model_specs``.

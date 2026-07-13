@@ -19,16 +19,16 @@ sys.path.insert(0, os.path.abspath('../..'))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'EasyTPP'
-copyright = '2022, Machine Intelligence, Alipay'
+copyright = '2026, Machine Intelligence, Alipay'
 author = 'Machine Intelligence, Alipay'
-release = '0.0.2'
+version = '0.2.4'
+release = '0.2.4'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
     "sphinx.ext.autodoc",
-    'sphinx.ext.viewcode',
     "sphinx.ext.todo",
     "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
@@ -44,16 +44,14 @@ templates_path = ['_templates']
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+# HPO and plotting support are optional at runtime. Mock them so the core API
+# documentation builds from the standard and documentation requirements.
+autodoc_mock_imports = ["matplotlib", "optuna"]
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_static_path = []
 
 autodoc_member_order = "bysource"
-autodoc_default_flags = ["members"]
-autodoc_default_options = {
-    "members": True,
-    "member-order": "bysource",
-    "special-members": "__init__",
-}

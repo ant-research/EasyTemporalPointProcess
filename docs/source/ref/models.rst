@@ -1,50 +1,57 @@
 .. _api-model:
 
+==============
 EasyTPP Models
-====================
+==============
 
+The public torch model classes are exported by ``easy_tpp.model``:
 
+.. automodule:: easy_tpp.model
 
-.. _api-tf_model:
+.. autoclass:: easy_tpp.model.TorchBaseModel
+   :members:
+   :show-inheritance:
 
-model.tf_model module
-------------------------------
+.. autoclass:: easy_tpp.model.TorchANHN
+   :members:
+   :show-inheritance:
 
-.. automodule:: easy_tpp.model.tf_model
-.. autosummary::
-    :toctree: ../generated/
+.. autoclass:: easy_tpp.model.TorchAttNHP
+   :members:
+   :show-inheritance:
 
-    tf_baselayer
-    tf_basemodel
-    tf_nhp
-    tf_fullynn
-    tf_intensity_free
-    tf_ode_tpp
-    tf_rmtpp
-    tf_sahp
-    tf_thp
-    tf_attnhp
-    tf_thinning
+.. autoclass:: easy_tpp.model.TorchFullyNN
+   :members:
+   :show-inheritance:
 
+.. autoclass:: easy_tpp.model.TorchIntensityFree
+   :members:
+   :show-inheritance:
 
-.. _api-torch_model:
+.. autoclass:: easy_tpp.model.TorchNHP
+   :members:
+   :show-inheritance:
 
-model.torch_model module
-------------------------------
+.. autoclass:: easy_tpp.model.TorchODETPP
+   :members:
+   :show-inheritance:
 
-.. automodule:: easy_tpp.model.torch_model
-.. autosummary::
-    :toctree: ../generated/
+.. autoclass:: easy_tpp.model.TorchRMTPP
+   :members:
+   :show-inheritance:
 
-    torch_baselayer
-    torch_basemodel
-    torch_nhp
-    torch_fullynn
-    torch_intensity_free
-    torch_ode_tpp
-    torch_rmtpp
-    torch_sahp
-    torch_thp
-    torch_attnhp
-    torch_thinning
+.. autoclass:: easy_tpp.model.TorchS2P2
+   :members:
+   :show-inheritance:
 
+.. autoclass:: easy_tpp.model.TorchSAHP
+   :members:
+   :show-inheritance:
+
+.. autoclass:: easy_tpp.model.TorchTHP
+   :members:
+   :show-inheritance:
+
+.. autoclass:: easy_tpp.model.TorchWSMTHP
+   :members:
+   :show-inheritance:

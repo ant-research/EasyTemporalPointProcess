@@ -1,56 +1,70 @@
-==============================================
-Thinning Algorithm for Sampling Event Sequence
-==============================================
+================================================
+Thinning Algorithm for Sampling Event Sequences
+================================================
 
-In ``EasyTPP`` we use ``Thinning algorithm`` depicted in Algorithm 2
-in `The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process <https://arxiv.org/abs/1612.09328>`_
-for event sampling.
-
-The implementation of the algorithm
-====================================
+EasyTPP's ``EventSampler`` implements the thinning procedure associated with
+Algorithm 2 of `The Neural Hawkes Process: A Neurally Self-Modulating
+Multivariate Point Process <https://arxiv.org/abs/1612.09328>`_. Its torch
+implementation is in ``easy_tpp/model/torch_model/torch_thinning.py``.
 
 
-We implement the algorithm both in PyTorch and Tensorflow, as seen in *./model/torch_thinning.py* and
-*./model/tf_thinning.py*, which basically follow the same procedure.
+Implementation
+==============
 
-The corresponding code is in function ``draw_next_time_one_step``, which consists of the following steps:
+``draw_next_time_one_step`` performs these operations for every history:
 
-1. Compute the upper bound of the intensity at each event timestamp in function ``compute_intensity_upper_bound``, where we sample some timestamps inside event intervals and output a upper bound intensity matrix [batch_size, seq_len]， denoting the upper bound of prediced intensity (for next time interval) for each sequence at each timestamp.
-2. Sample the exponential distribution with the intensity computed in Step 1 in function ``sample_exp_distribution``, where we simply divide the standard exponential number with the intensity, which is equivalent to sampling with exp(sample_rate), according to `the properties of Exponential Distribution <https://en.wikipedia.org/wiki/Exponential_distribution>`_. The exponential random variables have size [batch_size, seq_len, num_sample, num_exp], where num_sample refers to the number of event times sampled in every interval and num_exp refers to number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm.
-3. Compute the intensities at the sample times proposed in Step 2， with final size `[batch_size, seq_len, num_sample, num_exp]`.
-4. Sample the standard uniform distribution with size `[batch_size, seq_len, num_sample, num_exp]`.
-5. Perform the acceptance sampling with certain probability in function ``sample_accept``.
-6. The earliest sampling dtimes are accepted. For unaccepted sampling dtimes, use boundary/maxsampletime for that draw.
-7. The final predicted dtimes has size `[batch_size, seq_len, num_sample]`, which refers to the sampling dtimes for each sequence at each timestamp, along with an equal weight vector.
-8. The product of the predicted dtimes and the weight is the final predicted dtimes, with size `[batch_size, seq_len]`.
+1. Evaluate total intensity at ``num_samples_boundary`` points and multiply
+   the maximum by ``over_sample_rate`` to obtain a proposal-rate bound.
+2. Draw ``num_exp`` exponential increments at that rate and apply
+   ``torch.cumsum``. The resulting values are accumulated proposal times, not
+   independent absolute times.
+3. Evaluate the model's marked intensities at the proposal times and sum over
+   marks.
+4. Draw uniforms and accept the first proposal satisfying the thinning
+   criterion.
+5. If no proposal is accepted, return ``dtime_max`` for that sample. Average
+   the ``num_sample`` draws with equal weights to predict the next interval.
 
+After a time is sampled, the marked intensities at that time are normalized
+over event types to predict the mark.
 
 .. image:: ../../images/thinning_algo.jpg
-    :alt: thinning_algo
+   :alt: Thinning algorithm
 
 
+One-step and multi-step prediction
+==================================
 
-One-step prediction
-====================================
-By default, once given the parameters of thinning algo (defining a ``thinning`` config as part of ``model_config``), we perform the one-step prediction in model evaluation, i.e., predict the next event given the prefix. The implementation is in function ``prediction_event_one_step`` in BaseModel (i.e., TorchBaseModel or TfBaseModel).
+With a ``thinning`` block in ``model_config``, intensity-based models use
+``TorchBaseModel.predict_one_step_at_every_event`` for next-event prediction.
+Set ``num_step_gen`` above 1 to activate recursive generation through
+``TorchBaseModel.predict_multi_step_since_last_event``.
 
+As of 0.2.4, ``IntensityFree`` also provides the marked intensity required by
+the shared sampler. For its log-normal-mixture inter-event distribution,
 
-Multi-step prediction
-====================================
-The recursive multi-step prediction is activated by setting `num_step_gen` to a number bigger than 1 in the ``thinning`` config.
+.. math::
 
-Be noted that, we generate the multi-step events after the last non-pad event of each sequence. The implementation is in function `predict_multi_step_since_last_event` in BaseModel (i.e., TorchBaseModel or TfBaseModel).
+   \lambda_k(t \mid \mathcal{H}) =
+   \frac{f(t \mid \mathcal{H})}{S(t \mid \mathcal{H})}
+   p(k \mid \mathcal{H}),
 
+where ``f`` and ``S`` are the mixture density and survival function. This
+closed-form hazard resolves generation support tracked in issue #13. The
+model's optimized one-step override samples the mixture distribution directly;
+its recursive multi-step path uses the hazard through the thinning sampler.
+
+Multi-step generation supports right-padded batches with different sequence
+lengths. It computes each row's true length from the non-padding mask, groups
+rows by that length, removes padding, and generates after the last real event.
 
 .. code-block:: yaml
 
     thinning:
-      num_seq: 10
       num_sample: 1
-      num_exp: 500 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
-      look_ahead_time: 10
-      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      num_exp: 500
       over_sample_rate: 5
       num_samples_boundary: 5
       dtime_max: 5
-      num_step_gen: 5    # by default it is single step, i.e., 1
+      patience_counter: 5
+      num_step_gen: 5

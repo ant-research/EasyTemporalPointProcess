@@ -4,7 +4,7 @@ EasyTPP Config Modules
 ============================
 
 
-.. automodule:: config_factory
+.. automodule:: easy_tpp.config_factory
     :members:
     :undoc-members:
     :show-inheritance:

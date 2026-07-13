@@ -4,7 +4,7 @@ EasyTPP Model Runner Modules
 ============================
 
 
-.. automodule:: runner
+.. automodule:: easy_tpp.runner
     :members:
     :undoc-members:
     :show-inheritance:

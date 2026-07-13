@@ -9,32 +9,14 @@ Installation
 Requirements
 =============
 
-.. code-block:: bash
-
-    PyTorch version >= 1.8.0
-    Python version >= 3.7
-    Tensorflow version >= 1.13.1 (only needed when using Tensorflow backend)
-
-
-
-First, we need a python environment whose version is at least greater than 3.7.0. If you don’t have one, please refer to the `Documentation <https://docs.anaconda.com/anaconda/install/>`_ to install and configure the Anaconda environment.
+EasyTPP 0.2.4 requires Python 3.9 or newer and uses PyTorch as its only model
+backend. Create an isolated Python environment before installing the package.
+For example:
 
 .. code-block:: bash
 
-    conda create -n easytpp python=3.8
+    conda create -n easytpp python=3.11
     conda activate easytpp
-
-Then, install Pytorch and keep the version at least greater than 1.8.0.
-
-.. code-block:: bash
-
-    pip install torch
-
-By default, we assume to use PyTorch. If one wants to use Tensorflow backend, please install tensorflow additionally. Both Tensorflow 1.13.1 and 2.x are supported.
-
-.. code-block:: bash
-
-    pip install tensorflow
 
 
 
@@ -60,5 +42,4 @@ Setup from the source：
 
     git clone https://github.com/ant-research/EasyTemporalPointProcess.git
     cd EasyTemporalPointProcess
-    python setup.py install
-
+    pip install -e .
