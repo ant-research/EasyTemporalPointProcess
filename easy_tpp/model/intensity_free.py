@@ -5,7 +5,7 @@ from torch.distributions import Categorical, TransformedDistribution
 from torch.distributions import MixtureSameFamily as TorchMixtureSameFamily
 from torch.distributions import Normal as TorchNormal
 
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 
 
 def clamp_preserve_gradients(x, min_val, max_val):
@@ -104,7 +104,7 @@ class LogNormalMixtureDistribution(TransformedDistribution):
             return self.base_dist.log_cdf(x)
 
 
-class IntensityFree(TorchBaseModel):
+class IntensityFree(BaseModel):
     """Torch implementation of Intensity-Free Learning of Temporal Point Processes, ICLR 2020.
     https://openreview.net/pdf?id=HygOjhEYDH
 

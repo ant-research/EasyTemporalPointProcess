@@ -3,7 +3,7 @@ from torch import nn
 from torch.nn import functional as F
 from torch.autograd import grad
 
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 
 
 class CumulHazardFunctionNetwork(nn.Module):
@@ -78,7 +78,7 @@ class CumulHazardFunctionNetwork(nn.Module):
         return integral_lambda, derivative_integral_lambda
 
 
-class FullyNN(TorchBaseModel):
+class FullyNN(BaseModel):
     """Torch implementation of
         Fully Neural Network based Model for General Temporal Point Processes, NeurIPS 2019.
         https://arxiv.org/abs/1905.09690

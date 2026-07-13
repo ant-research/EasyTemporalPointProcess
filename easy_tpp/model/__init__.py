@@ -1,6 +1,6 @@
 from easy_tpp.model.anhn import ANHN
 from easy_tpp.model.attnhp import AttNHP
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel, TorchBaseModel
 from easy_tpp.model.fullynn import FullyNN
 from easy_tpp.model.intensity_free import IntensityFree
 from easy_tpp.model.nhp import NHP
@@ -36,6 +36,7 @@ __all__ = [
     'SAHP',
     'THP',
     'WSMTHP',
+    'BaseModel',
     'TorchBaseModel',
     'EventSampler',
     'TorchANHN',

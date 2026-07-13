@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 from easy_tpp.model.baselayer import ScaledSoftplus
 
 
@@ -83,7 +83,7 @@ class ContTimeLSTMCell(nn.Module):
         return c_t, h_t
 
 
-class NHP(TorchBaseModel):
+class NHP(BaseModel):
     """Torch implementation of The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process,
        NeurIPS 2017, https://arxiv.org/abs/1612.09328.
     """

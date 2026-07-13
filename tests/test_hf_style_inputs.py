@@ -2,7 +2,7 @@ import pytest
 import torch
 
 from easy_tpp.config_factory import DataSpecConfig, ModelConfig
-from easy_tpp.model import TorchIntensityFree, TorchNHP, TorchRMTPP
+from easy_tpp.model import IntensityFree, NHP, RMTPP
 from easy_tpp.preprocess.dataset import TPPDataset, EventTokenizer, get_data_loader
 
 
@@ -49,7 +49,7 @@ def make_batch_dict():
 
 def test_kwargs_dict_tuple_equivalence():
     torch.manual_seed(0)
-    model = TorchNHP(make_model_config('NHP'))
+    model = NHP(make_model_config('NHP'))
     batch = make_batch_dict()
 
     kwargs_loss, kwargs_events = model.loglike_loss(**batch)
@@ -64,7 +64,7 @@ def test_kwargs_dict_tuple_equivalence():
 
 def test_alias_batch_non_pad_mask():
     torch.manual_seed(0)
-    model = TorchIntensityFree(make_model_config(
+    model = IntensityFree(make_model_config(
         'IntensityFree', {'num_mix_components': 3}
     ))
     batch = make_batch_dict()
@@ -93,7 +93,7 @@ def test_real_dataloader_batch():
         TPPDataset(input_data), 'torch', EventTokenizer(data_config), batch_size=2
     )
     batch = next(iter(loader))
-    model = TorchRMTPP(make_model_config('RMTPP'))
+    model = RMTPP(make_model_config('RMTPP'))
 
     kwargs_result = model.loglike_loss(**batch)
     dict_result = model.loglike_loss(batch)
@@ -103,7 +103,7 @@ def test_real_dataloader_batch():
 
 
 def test_predict_paths_accept_kwargs():
-    model = TorchRMTPP(make_model_config('RMTPP'))
+    model = RMTPP(make_model_config('RMTPP'))
     batch = make_batch_dict()
     legacy_batch = tuple(batch.values())
 

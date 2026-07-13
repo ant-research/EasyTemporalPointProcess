@@ -5,7 +5,7 @@
 import torch
 
 from easy_tpp.config_factory import ModelConfig
-from easy_tpp.model import TorchIntensityFree, TorchRMTPP
+from easy_tpp.model import IntensityFree, RMTPP
 
 PAD = 3
 
@@ -94,7 +94,7 @@ def check_padding_bug():
     print('1. Padding bug in multi-step generation (short row, true length 5)')
     print('=' * 70)
     torch.manual_seed(0)
-    model = TorchRMTPP(make_model_config('RMTPP'))
+    model = RMTPP(make_model_config('RMTPP'))
     batch = make_padded_batch()
     with torch.no_grad():
         old = predict_multi_step_old(model, batch)
@@ -118,7 +118,7 @@ def check_intensity_free_hazard():
     print('2. IntensityFree closed-form hazard lambda(t) = f(t) / S(t)')
     print('=' * 70)
     torch.manual_seed(0)
-    model = TorchIntensityFree(make_model_config(
+    model = IntensityFree(make_model_config(
         'IntensityFree', model_specs={'num_mix_components': 1}))
     batch = make_padded_batch()
     time_seqs, time_delta_seqs, type_seqs = batch[0], batch[1], batch[2]
@@ -153,8 +153,8 @@ def check_end_to_end_generation():
     print('=' * 70)
     batch = make_padded_batch()
     for name, model in [
-        ('RMTPP', TorchRMTPP(make_model_config('RMTPP'))),
-        ('IntensityFree', TorchIntensityFree(make_model_config(
+        ('RMTPP', RMTPP(make_model_config('RMTPP'))),
+        ('IntensityFree', IntensityFree(make_model_config(
             'IntensityFree', model_specs={'num_mix_components': 3}))),
     ]:
         torch.manual_seed(0)

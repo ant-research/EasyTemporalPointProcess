@@ -2,9 +2,9 @@ import torch
 from torch import nn
 import math
 
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 
-class RMTPP(TorchBaseModel):
+class RMTPP(BaseModel):
     """Torch implementation of Recurrent Marked Temporal Point Processes, KDD 2016.
     https://www.kdd.org/kdd2016/papers/files/rpp1081-duA.pdf
     """

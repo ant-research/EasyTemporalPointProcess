@@ -2,10 +2,10 @@ import torch
 import torch.nn as nn
 
 from easy_tpp.model.baselayer import EncoderLayer, MultiHeadAttention, TimePositionalEncoding, ScaledSoftplus
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 
 
-class THP(TorchBaseModel):
+class THP(BaseModel):
     """Torch implementation of Transformer Hawkes Process, ICML 2020, https://arxiv.org/abs/2002.09291.
     Note: Part of the code is collected from https://github.com/yangalan123/anhp-andtt/tree/master/thp.
     """

@@ -11,14 +11,14 @@ from easy_tpp.model.thinning import EventSampler
 from easy_tpp.utils import set_device
 
 
-class TorchBaseModel(nn.Module):
+class BaseModel(nn.Module):
     def __init__(self, model_config):
         """Initialize the BaseModel
 
         Args:
             model_config (EasyTPP.ModelConfig): model spec of configs
         """
-        super(TorchBaseModel, self).__init__()
+        super(BaseModel, self).__init__()
         self.loss_integral_num_sample_per_step = model_config.loss_integral_num_sample_per_step
         self.hidden_size = model_config.hidden_size
         self.num_event_types = model_config.num_event_types  # not include [PAD], [BOS], [EOS]
@@ -55,7 +55,7 @@ class TorchBaseModel(nn.Module):
         """
         model_id = model_config.model_id
 
-        for subclass in TorchBaseModel.__subclasses__():
+        for subclass in BaseModel.__subclasses__():
             if subclass.__name__ == model_id:
                 return subclass(model_config)
 
@@ -325,3 +325,6 @@ class TorchBaseModel(nn.Module):
             label_types.index_copy_(0, row_indices, event_seq_group[:, length - num_step - 1:length])
 
         return pred_dtimes, pred_types, label_dtimes, label_types
+
+
+TorchBaseModel = BaseModel

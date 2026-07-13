@@ -1,7 +1,7 @@
 import torch
 
 from easy_tpp.config_factory import ModelConfig
-from easy_tpp.model import TorchANHN
+from easy_tpp.model import ANHN
 
 
 def make_model_config():
@@ -41,11 +41,11 @@ def make_batch():
 
 
 def test_construction():
-    TorchANHN(make_model_config())
+    ANHN(make_model_config())
 
 
 def test_loglike_loss_runs():
-    model = TorchANHN(make_model_config())
+    model = ANHN(make_model_config())
 
     loss, num_events = model.loglike_loss(**make_batch())
 
@@ -56,7 +56,7 @@ def test_loglike_loss_runs():
 
 
 def test_sample_states_shape():
-    model = TorchANHN(make_model_config())
+    model = ANHN(make_model_config())
     batch = make_batch()
     dtime_seqs = batch['time_delta_seqs'][:, 1:]
     type_seqs = batch['type_seqs'][:, :-1]

@@ -1,7 +1,7 @@
 import torch
 
 from easy_tpp.config_factory import ModelConfig
-from easy_tpp.model import TorchIntensityFree, TorchRMTPP
+from easy_tpp.model import IntensityFree, RMTPP
 
 
 def make_model_config(model_id, model_specs=None):
@@ -47,7 +47,7 @@ def make_padded_batch():
 
 
 def test_padded_batch_labels_are_real_events():
-    model = TorchRMTPP(make_model_config('RMTPP'))
+    model = RMTPP(make_model_config('RMTPP'))
     batch = make_padded_batch()
 
     _, _, label_dtimes, label_types = model.predict_multi_step_since_last_event(batch)
@@ -58,7 +58,7 @@ def test_padded_batch_labels_are_real_events():
 
 def test_intensity_free_multi_step_generation():
     torch.manual_seed(0)
-    model = TorchIntensityFree(make_model_config(
+    model = IntensityFree(make_model_config(
         'IntensityFree',
         model_specs={'num_mix_components': 3},
     ))

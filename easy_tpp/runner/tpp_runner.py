@@ -30,13 +30,13 @@ class TPPRunner(Runner):
 
         if self.use_torch:
             from easy_tpp.utils import set_seed
-            from easy_tpp.model.basemodel import TorchBaseModel
-            from easy_tpp.torch_wrapper import TorchModelWrapper
+            from easy_tpp.model.basemodel import BaseModel
+            from easy_tpp.model_wrapper import ModelWrapper
             from easy_tpp.utils import count_model_params
             set_seed(self.runner_config.trainer_config.seed)
 
-            self.model = TorchBaseModel.generate_model_from_config(model_config=self.runner_config.model_config)
-            self.model_wrapper = TorchModelWrapper(self.model,
+            self.model = BaseModel.generate_model_from_config(model_config=self.runner_config.model_config)
+            self.model_wrapper = ModelWrapper(self.model,
                                                    self.runner_config.base_config,
                                                    self.runner_config.model_config,
                                                    self.runner_config.trainer_config)

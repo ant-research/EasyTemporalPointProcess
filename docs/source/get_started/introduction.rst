@@ -73,9 +73,10 @@ Implemented Models
 ==================
 
 Version 0.2.4 provides the following registered model IDs. Their implementation
-classes are exported from ``easy_tpp.model`` with a ``Torch`` prefix (for
-example, ``NHP`` is ``TorchNHP``). ``TorchBaseModel`` is the common
-implementation base; the other eleven entries are trainable reference models.
+classes are exported from ``easy_tpp.model`` under the plain model names.
+``BaseModel`` is the common implementation base; the other eleven entries are
+trainable reference models. The former ``Torch``-prefixed names remain aliases
+for backward compatibility.
 
 .. list-table::
    :header-rows: 1
@@ -117,6 +118,6 @@ implementation base; the other eleven entries are trainable reference models.
    * - ``WSMTHP``
      - `Is Score Matching Suitable for Estimating Point Processes? <https://arxiv.org/abs/2410.04037>`_
      - NeurIPS 2024
-   * - ``TorchBaseModel``
+   * - ``BaseModel``
      - Common base class (not a paper model)
      - --

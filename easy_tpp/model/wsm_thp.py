@@ -18,7 +18,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 from easy_tpp.model.baselayer import MultiHeadAttention
 
 
@@ -56,7 +56,7 @@ class _EncoderLayer(nn.Module):
 
 
 # Main model
-class WSMTHP(TorchBaseModel):
+class WSMTHP(BaseModel):
     """THP encoder trained with Weighted Score Matching (WSM).
 
     The class name ``WSMTHP`` must match the ``model_id`` field in the YAML config.
@@ -475,7 +475,7 @@ class WSMTHP(TorchBaseModel):
     def loglike_loss(self, batch=None, **kwargs):
         """Compute the WSM training loss.
 
-        Required by EasyTPP's TorchModelWrapper.run_batch().
+        Required by EasyTPP's ModelWrapper.run_batch().
         Despite the method name, this returns the Weighted Score Matching
         objective (NOT log-likelihood). See module docstring for details.
 
@@ -561,7 +561,7 @@ class WSMTHP(TorchBaseModel):
     ):
         """Compute intensities at sampled inter-event times (for thinning-based generation).
 
-        Called by the EventSampler in TorchBaseModel for prediction.
+        Called by the EventSampler in BaseModel for prediction.
 
         Args:
             time_seqs:       [B, N]

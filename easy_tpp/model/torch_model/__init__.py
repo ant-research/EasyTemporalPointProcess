@@ -9,6 +9,7 @@ warnings.warn(
 from easy_tpp.model import (  # noqa: E402,F401
     ANHN,
     AttNHP,
+    BaseModel,
     EventSampler,
     FullyNN,
     IntensityFree,
@@ -35,7 +36,7 @@ from easy_tpp.model import (  # noqa: E402,F401
 
 __all__ = [
     'ANHN', 'AttNHP', 'FullyNN', 'IntensityFree', 'NHP', 'ODETPP', 'RMTPP',
-    'S2P2', 'SAHP', 'THP', 'WSMTHP', 'TorchBaseModel', 'EventSampler',
+    'S2P2', 'SAHP', 'THP', 'WSMTHP', 'BaseModel', 'TorchBaseModel', 'EventSampler',
     'TorchANHN', 'TorchAttNHP', 'TorchFullyNN', 'TorchIntensityFree',
     'TorchNHP', 'TorchODETPP', 'TorchRMTPP', 'TorchS2P2', 'TorchSAHP',
     'TorchTHP', 'TorchWSMTHP',

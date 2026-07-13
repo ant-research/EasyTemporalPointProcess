@@ -4,7 +4,7 @@ import torch
 from torch import nn
 
 from easy_tpp.model.baselayer import ScaledSoftplus
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 from easy_tpp.ssm.models import LLH, Int_Backward_LLH, Int_Forward_LLH
 
 
@@ -34,7 +34,7 @@ class IntensityNet(nn.Module):
         return self.softplus(self.intensity_net(x))
 
 
-class S2P2(TorchBaseModel):
+class S2P2(BaseModel):
     def __init__(self, model_config):
         """Initialize the model
 

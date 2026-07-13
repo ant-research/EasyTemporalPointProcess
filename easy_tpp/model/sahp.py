@@ -3,10 +3,10 @@ import torch.nn as nn
 
 from easy_tpp.model.baselayer import EncoderLayer, MultiHeadAttention, \
     TimeShiftedPositionalEncoding, ScaledSoftplus
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 
 
-class SAHP(TorchBaseModel):
+class SAHP(BaseModel):
     """Torch implementation of Self-Attentive Hawkes Process, ICML 2020.
     Part of the code is collected from https://github.com/yangalan123/anhp-andtt/blob/master/sahp
 

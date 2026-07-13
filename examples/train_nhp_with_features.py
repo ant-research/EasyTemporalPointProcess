@@ -8,7 +8,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 
 from easy_tpp.config_factory import DataSpecConfig, Config
-from easy_tpp.model import TorchNHP as NHP
+from easy_tpp.model import NHP
 from easy_tpp.preprocess import TPPDataset, EventTokenizer
 from easy_tpp.preprocess.data_collator import TPPDataCollator
 from easy_tpp.preprocess.event_tokenizer import BatchEncoding

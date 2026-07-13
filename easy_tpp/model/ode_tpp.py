@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 from easy_tpp.model.baselayer import DNN
-from easy_tpp.model.basemodel import TorchBaseModel
+from easy_tpp.model.basemodel import BaseModel
 from easy_tpp.utils import rk4_step_method
 
 
@@ -139,7 +139,7 @@ class NeuralODE(nn.Module):
         return output_state
 
 
-class ODETPP(TorchBaseModel):
+class ODETPP(BaseModel):
     """Torch implementation of a TPP with Neural ODE state evolution, which is a simplified version of TPP in
     https://arxiv.org/abs/2011.04583, ICLR 2021
 

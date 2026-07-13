@@ -5,10 +5,18 @@ import pytest
 
 
 def test_new_imports():
-    from easy_tpp.model import EventSampler, IntensityFree, NHP, TorchNHP
+    from easy_tpp.model import (
+        BaseModel,
+        EventSampler,
+        IntensityFree,
+        NHP,
+        TorchBaseModel,
+        TorchNHP,
+    )
     from easy_tpp.model.intensity_free import LogNormalMixtureDistribution
 
     assert NHP is TorchNHP
+    assert BaseModel is TorchBaseModel
     assert all((EventSampler, IntensityFree, LogNormalMixtureDistribution))
 
 
@@ -25,7 +33,7 @@ def test_legacy_deep_import_warns():
 
 
 def test_legacy_deep_module_paths():
-    from easy_tpp.model.basemodel import TorchBaseModel as NewTorchBaseModel
+    from easy_tpp.model.basemodel import BaseModel, TorchBaseModel
     from easy_tpp.model.intensity_free import (
         LogNormalMixtureDistribution as NewLogNormalMixtureDistribution,
     )
@@ -39,5 +47,5 @@ def test_legacy_deep_module_paths():
 
     assert (legacy_intensity_free.LogNormalMixtureDistribution
             is NewLogNormalMixtureDistribution)
-    assert legacy_basemodel.TorchBaseModel is NewTorchBaseModel
+    assert legacy_basemodel.TorchBaseModel is BaseModel is TorchBaseModel
     assert legacy_thinning.EventSampler is NewEventSampler

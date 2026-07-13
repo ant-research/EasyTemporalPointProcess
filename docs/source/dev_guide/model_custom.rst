@@ -11,15 +11,16 @@ Create a new TPP Model Class
 =============================
 
 New models inherit from
-`easy_tpp.model.TorchBaseModel <../ref/models.html>`_.
+`easy_tpp.model.BaseModel <../ref/models.html>`_. ``TorchBaseModel`` remains an
+alias for backward compatibility.
 
 .. code-block:: python
 
-    from easy_tpp.model.basemodel import TorchBaseModel
+    from easy_tpp.model.basemodel import BaseModel
 
     # Custom Torch TPP implementations need to
-    # inherit from the TorchBaseModel interface
-    class NewModel(TorchBaseModel):
+    # inherit from the BaseModel interface
+    class NewModel(BaseModel):
         def __init__(self, model_config):
             super(NewModel, self).__init__(model_config)
 
