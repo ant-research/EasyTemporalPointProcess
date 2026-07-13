@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EasyTPP Preprocess Modules &mdash; EasyTPP 0.0.2 documentation</title>
+  <title>EasyTPP Preprocess Modules &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
       <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
@@ -68,11 +68,17 @@
 <p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="config.html"> Config</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Preprocess</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Preprocess</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.preprocess.TPPDataLoader"><code class="docutils literal notranslate"><span class="pre">TPPDataLoader</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.preprocess.EventTokenizer"><code class="docutils literal notranslate"><span class="pre">EventTokenizer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.preprocess.TPPDataset"><code class="docutils literal notranslate"><span class="pre">TPPDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.preprocess.get_data_loader"><code class="docutils literal notranslate"><span class="pre">get_data_loader()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="models.html"> Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html"> Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> Utilities</a></li>
 </ul>
 
@@ -100,8 +106,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="easytpp-preprocess-modules">
-<span id="api-preprocess"></span><h1>EasyTPP Preprocess Modules<a class="headerlink" href="#easytpp-preprocess-modules" title="Permalink to this heading"></a></h1>
+  <section id="module-easy_tpp.preprocess">
+<span id="easytpp-preprocess-modules"></span><span id="api-preprocess"></span><h1>EasyTPP Preprocess Modules<a class="headerlink" href="#module-easy_tpp.preprocess" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.TPPDataLoader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.preprocess.</span></span><span class="sig-name descname"><span class="pre">TPPDataLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.preprocess.TPPDataLoader" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.EventTokenizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.preprocess.</span></span><span class="sig-name descname"><span class="pre">EventTokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.preprocess.EventTokenizer" title="Permalink to this definition"></a></dt>
+<dd><p>Base class for tokenizer event sequences, vendored from huggingface/transformer</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.TPPDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.preprocess.</span></span><span class="sig-name descname"><span class="pre">TPPDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.preprocess.TPPDataset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="easy_tpp.preprocess.get_data_loader">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.preprocess.</span></span><span class="sig-name descname"><span class="pre">get_data_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#easy_tpp.preprocess.TPPDataset" title="easy_tpp.preprocess.dataset.TPPDataset"><span class="pre">TPPDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#easy_tpp.preprocess.EventTokenizer" title="easy_tpp.preprocess.event_tokenizer.EventTokenizer"><span class="pre">EventTokenizer</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.preprocess.get_data_loader" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </section>
 
 
@@ -115,7 +142,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+    <p>&#169; Copyright 2026, Machine Intelligence, Alipay.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

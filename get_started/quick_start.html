@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quick Start &mdash; EasyTPP 0.0.2 documentation</title>
+  <title>Quick Start &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
       <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
@@ -47,12 +47,8 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#download-dataset">Download Dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setup-the-configuration-file">Setup the configuration file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#train-the-model">Train the Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-config">Create a config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-it">Run it</a></li>
 </ul>
 </li>
 </ul>
@@ -80,7 +76,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
 </ul>
 
@@ -110,78 +106,67 @@
              
   <section id="quick-start">
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading"></a></h1>
-<p>We use the <a class="reference internal" href="#taxi" id="id1"><span>[Taxi]</span></a> dataset as an example to show how to use <code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> to train a model. More details and results are provided in <a class="reference external" href="../user_guide/run_train_pipeline.html">Training Pipeline</a>.</p>
-<section id="download-dataset">
-<h2>Download Dataset<a class="headerlink" href="#download-dataset" title="Permalink to this heading"></a></h2>
-<p>The Taxi dataset we used is preprocessed by <a class="reference external" href="https://github.com/iLampard/hypro_tpp">HYPRO</a> . You can either download the dataset (in pickle) from Google Drive <a class="reference external" href="https://drive.google.com/drive/folders/1vNX2gFuGfhoh-vngoebaQlj2-ZIZMiBo">here</a> or the dataset (in json) from <a class="reference external" href="https://huggingface.co/easytpp">HuggingFace</a>.</p>
-<p>Note that if the data sources are pickle files, we need to write the data config (in <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/configs/experiment_config.yaml">Example Config</a>) in the following way</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">taxi</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">data_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pickle</span>
-<span class="w">    </span><span class="nt">train_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/train.pkl</span>
-<span class="w">    </span><span class="nt">valid_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/dev.pkl</span>
-<span class="w">    </span><span class="nt">test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/test.pkl</span>
-</pre></div>
-</div>
-<p>If we choose to directly load from HuggingFace, we can put it this way:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data</span><span class="p">:</span>
+<p>The smallest current workflow is a YAML experiment plus the registered
+<code class="docutils literal notranslate"><span class="pre">Config</span></code> and <code class="docutils literal notranslate"><span class="pre">Runner</span></code> APIs. This example uses the Taxi dataset directly
+from <a class="reference external" href="https://huggingface.co/easytpp/taxi">EasyTPP on Hugging Face</a>.</p>
+<section id="create-a-config">
+<h2>Create a config<a class="headerlink" href="#create-a-config" title="Permalink to this heading"></a></h2>
+<p>Save this as <code class="docutils literal notranslate"><span class="pre">taxi.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">pipeline_config_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runner_config</span>
+
+<span class="nt">data</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">taxi</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">data_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span>
 <span class="w">    </span><span class="nt">train_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">easytpp/taxi</span>
 <span class="w">    </span><span class="nt">valid_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">easytpp/taxi</span>
 <span class="w">    </span><span class="nt">test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">easytpp/taxi</span>
-</pre></div>
-</div>
-<p>Meanwhile, it is also feasible to put the local directory of json files downloaded from HuggingFace in the config:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">taxi</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">data_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span>
-<span class="w">    </span><span class="nt">train_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/train.json</span>
-<span class="w">    </span><span class="nt">valid_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/dev.json</span>
-<span class="w">    </span><span class="nt">test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/taxi/test.json</span>
-</pre></div>
-</div>
-</section>
-<section id="setup-the-configuration-file">
-<h2>Setup the configuration file<a class="headerlink" href="#setup-the-configuration-file" title="Permalink to this heading"></a></h2>
-<p>We provide a preset config file in <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/configs/experiment_config.yaml">Example Config</a>. The details of the configuration can be found in <a class="reference external" href="../user_guide/run_train_pipeline.html">Training Pipeline</a>.</p>
-</section>
-<section id="train-the-model">
-<h2>Train the Model<a class="headerlink" href="#train-the-model" title="Permalink to this heading"></a></h2>
-<p>At this stage we need to write a script to run the training pipeline. There is a preset script <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/train_nhp.py">train_nhp.py</a> and one can simply copy it.</p>
-<p>Taking the pickle data source for example, after the setup of data, config and running script, the directory structure is as follows:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>data
-<span class="w"> </span><span class="p">|</span>______taxi
-<span class="w">         </span><span class="p">|</span>____<span class="w"> </span>train.pkl
-<span class="w">         </span><span class="p">|</span>____<span class="w"> </span>dev.pkl
-<span class="w">         </span><span class="p">|</span>____<span class="w"> </span>test.pkl
+<span class="w">    </span><span class="nt">data_specs</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">num_event_types</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">      </span><span class="nt">pad_token_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">      </span><span class="nt">padding_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">right</span>
+<span class="w">      </span><span class="nt">truncation_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">right</span>
 
-configs
-<span class="w"> </span><span class="p">|</span>______experiment_config.yaml
-
-<span class="w"> </span>train_nhp.py
-</pre></div>
-</div>
-<p>The one can simply run the following command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>train_nhp.py
-</pre></div>
-</div>
-<section id="reference">
-<h3>Reference<a class="headerlink" href="#reference" title="Permalink to this heading"></a></h3>
-<div role="list" class="citation-list">
-<div class="citation" id="taxi" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">Taxi</a><span class="fn-bracket">]</span></span>
-</div>
-</div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>@misc<span class="o">{</span>whong-14-taxi,
-<span class="w">  </span><span class="nv">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>F<span class="o">{</span>OIL<span class="o">}</span>ing<span class="w"> </span><span class="o">{</span>NYC<span class="o">}</span>’s<span class="w"> </span>Taxi<span class="w"> </span>Trip<span class="w"> </span>Data<span class="o">}</span>,
-<span class="w">  </span><span class="nv">author</span><span class="o">={</span>Whong,<span class="w"> </span>Chris<span class="o">}</span>,
-<span class="w">  </span><span class="nv">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="m">2014</span><span class="o">}</span>,
-<span class="w">  </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>https://chriswhong.com/open-data/foil_nyc_taxi/<span class="o">}</span>
-<span class="o">}</span>
+<span class="nt">NHP_train</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">base_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">train</span>
+<span class="w">    </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch</span>
+<span class="w">    </span><span class="nt">dataset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">taxi</span>
+<span class="w">    </span><span class="nt">runner_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">std_tpp</span>
+<span class="w">    </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NHP</span>
+<span class="w">    </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/</span>
+<span class="w">  </span><span class="nt">trainer_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span>
+<span class="w">    </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
+<span class="w">    </span><span class="nt">max_epoch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">shuffle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">acc</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">rmse</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">model_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">hidden_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
+<span class="w">    </span><span class="nt">loss_integral_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">    </span><span class="nt">thinning</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">num_sample</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">num_exp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<span class="w">      </span><span class="nt">over_sample_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">num_samples_boundary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">dtime_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">patience_counter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">num_step_gen</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </pre></div>
 </div>
 </section>
+<section id="run-it">
+<h2>Run it<a class="headerlink" href="#run-it" title="Permalink to this heading"></a></h2>
+<p>Save this as <code class="docutils literal notranslate"><span class="pre">train.py</span></code> and run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">train.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.config_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runner</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">build_from_yaml_file</span><span class="p">(</span><span class="s2">&quot;taxi.yaml&quot;</span><span class="p">,</span> <span class="n">experiment_id</span><span class="o">=</span><span class="s2">&quot;NHP_train&quot;</span><span class="p">)</span>
+<span class="n">runner</span> <span class="o">=</span> <span class="n">Runner</span><span class="o">.</span><span class="n">build_from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The first run downloads the dataset through the Hugging Face <code class="docutils literal notranslate"><span class="pre">datasets</span></code>
+package. To use local pickle or JSON files instead, see <a class="reference external" href="../user_guide/dataset.html">Dataset</a>.</p>
 </section>
 </section>
 
@@ -196,7 +181,7 @@ configs
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+    <p>&#169; Copyright 2026, Machine Intelligence, Alipay.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

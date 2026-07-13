@@ -6,6 +6,18 @@
 ``EasyTPP`` is an easy-to-use development and application toolkit for `Neural Temporal Point Process <https://mathworld.wolfram.com/TemporalPointProcess.html>`_ (*Neural TPP*), with key features in configurability, compatibility and reproducibility. We hope this project could benefit both researchers and practitioners with the goal of easily customized development and open benchmarking.
 
 
+Tutorial Notebooks
+==================
+
+The repository contains five walkthroughs:
+
+* `Dataset loading and inspection <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/notebooks/easytpp_1_dataset.ipynb>`_
+* `TensorBoard and Weights & Biases <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/notebooks/easytpp_2_tfb_wb.ipynb>`_
+* `Model training and evaluation <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/notebooks/easytpp_3_train_eval.ipynb>`_
+* `IntensityFree log-space statistics deep dive <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/notebooks/easytpp_intensityfree_log_stats.ipynb>`_
+* `Multi-step generation deep dive <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/notebooks/easytpp_multistep_generation.ipynb>`_
+
+
 
 .. toctree::
    :hidden:
@@ -52,5 +64,5 @@
     Model  <ref/models.rst>
     Runner  <ref/runner.rst>
     Hyper-parameter Optimization  <ref/hpo.rst>
-    Tf and Torch Wrapper  <ref/wrapper.rst>
+    Torch Wrapper  <ref/wrapper.rst>
     Utilities  <ref/utils.rst>

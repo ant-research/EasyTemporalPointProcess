@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evaluate a Model &mdash; EasyTPP 0.0.2 documentation</title>
+  <title>Evaluate a Model &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
       <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Customize a Model" href="../dev_guide/model_custom.html" />
-    <link rel="prev" title="Training a Model &amp; Configuration Explanation" href="run_train_pipeline.html" /> 
+    <link rel="prev" title="Training a Model and Configuring the Pipeline" href="run_train_pipeline.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,9 +53,8 @@
 <li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run_train_pipeline.html">Model Training</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Prediction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-1-setup-the-config-file">Step 1: Setup the config file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-2-run-the-evaluation-script">Step 2: Run the evaluation script</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#checkout-the-output">Checkout the output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#evaluation-configuration">Evaluation configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-evaluation">Run evaluation</a></li>
 </ul>
 </li>
 </ul>
@@ -77,7 +76,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
 </ul>
 
@@ -107,81 +106,71 @@
              
   <section id="evaluate-a-model">
 <h1>Evaluate a Model<a class="headerlink" href="#evaluate-a-model" title="Permalink to this heading"></a></h1>
-<section id="step-1-setup-the-config-file">
-<h2>Step 1: Setup the config file<a class="headerlink" href="#step-1-setup-the-config-file" title="Permalink to this heading"></a></h2>
-<p>Same as in the training pipeline, firstly we need to initialize the task configuration in the config file.</p>
-<p>Similar to the setup in <a class="reference external" href="./run_train_pipeline.html">Training Pipeline</a>, we set the <cite>stage</cite> to <cite>eval</cite> and pass the <cite>pretrained_model_dir</cite> to <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">model_config</span></code></p>
-<p>Note that the <em>pretrained_model_dir</em> can be found in the log of the training process.</p>
+<p>Evaluation uses the same config and runner API as training. Keep the dataset
+entry and architecture settings used for training, set <code class="docutils literal notranslate"><span class="pre">stage</span></code> to <code class="docutils literal notranslate"><span class="pre">eval</span></code>,
+and point <code class="docutils literal notranslate"><span class="pre">model_config.pretrained_model_dir</span></code> at the saved model.</p>
+<section id="evaluation-configuration">
+<h2>Evaluation configuration<a class="headerlink" href="#evaluation-configuration" title="Permalink to this heading"></a></h2>
+<p>The following experiment can live beside the <code class="docutils literal notranslate"><span class="pre">data.taxi</span></code> entry shown in
+<a class="reference external" href="./run_train_pipeline.html">Training a Model</a>:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">NHP_eval</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">base_config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eval</span>
 <span class="w">    </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch</span>
 <span class="w">    </span><span class="nt">dataset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">taxi</span>
 <span class="w">    </span><span class="nt">runner_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">std_tpp</span>
-<span class="w">    </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;./checkpoints/&#39;</span>
 <span class="w">    </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NHP</span>
+<span class="w">    </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/</span>
 <span class="w">  </span><span class="nt">trainer_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2019</span>
+<span class="w">    </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span>
 <span class="w">    </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
 <span class="w">    </span><span class="nt">max_epoch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">shuffle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">acc</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">rmse</span><span class="p p-Indicator">]</span>
 <span class="w">  </span><span class="nt">model_config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">hidden_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
-<span class="w">    </span><span class="nt">use_ln</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="w">    </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2019</span>
-<span class="w">    </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">    </span><span class="nt">pretrained_model_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/26507_4380788096_231111-101848/models/saved_model</span><span class="w">  </span><span class="c1"># must provide this dir</span>
+<span class="w">    </span><span class="nt">time_emb_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">    </span><span class="nt">num_layers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">num_heads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">use_mc_samples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">loss_integral_num_sample_per_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">    </span><span class="nt">dropout_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">    </span><span class="nt">use_ln</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">pretrained_model_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./checkpoints/&lt;run-id&gt;/models/saved_model</span>
 <span class="w">    </span><span class="nt">thinning</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">num_seq</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 <span class="w">      </span><span class="nt">num_sample</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">      </span><span class="nt">num_exp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w"> </span><span class="c1"># number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm</span>
-<span class="w">      </span><span class="nt">look_ahead_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="w">      </span><span class="nt">patience_counter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"> </span><span class="c1"># the maximum iteration used in adaptive thinning</span>
+<span class="w">      </span><span class="nt">num_exp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
 <span class="w">      </span><span class="nt">over_sample_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">      </span><span class="nt">num_samples_boundary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">      </span><span class="nt">dtime_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">patience_counter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">num_step_gen</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </pre></div>
 </div>
-<p>A complete example of these files can be seen at <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/configs/experiment_config.yaml">examples/example_config.yaml</a> .</p>
+<p>The architecture must match the checkpoint. Thinning is used for next-event
+time prediction by intensity-based models. The supported thinning keys are
+<code class="docutils literal notranslate"><span class="pre">num_sample</span></code>, <code class="docutils literal notranslate"><span class="pre">num_exp</span></code>, <code class="docutils literal notranslate"><span class="pre">over_sample_rate</span></code>,
+<code class="docutils literal notranslate"><span class="pre">num_samples_boundary</span></code>, <code class="docutils literal notranslate"><span class="pre">dtime_max</span></code>, <code class="docutils literal notranslate"><span class="pre">patience_counter</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">num_step_gen</span></code>.</p>
 </section>
-<section id="step-2-run-the-evaluation-script">
-<h2>Step 2: Run the evaluation script<a class="headerlink" href="#step-2-run-the-evaluation-script" title="Permalink to this heading"></a></h2>
-<p>Same as in the training pipeline, we need to initialize a <code class="docutils literal notranslate"><span class="pre">ModelRunner</span></code> object to do the evaluation.</p>
-<p>The following code is an example, which is a copy from <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/train_nhp.py">examples/train_nhp.py</a> .</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.config_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunnerConfig</span>
+<section id="run-evaluation">
+<h2>Run evaluation<a class="headerlink" href="#run-evaluation" title="Permalink to this heading"></a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">Config</span></code>, not a separate evaluation config class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.config_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">easy_tpp.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runner</span>
 
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--config_dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;configs/experiment_config.yaml&#39;</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Dir of configuration yaml to train and evaluate the model.&#39;</span><span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--experiment_id&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;RMTPP_eval&#39;</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Experiment id in the config file.&#39;</span><span class="p">)</span>
-
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-
-    <span class="n">config</span> <span class="o">=</span> <span class="n">RunnerConfig</span><span class="o">.</span><span class="n">build_from_yaml_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_dir</span><span class="p">,</span> <span class="n">experiment_id</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">)</span>
-
-    <span class="n">model_runner</span> <span class="o">=</span> <span class="n">Runner</span><span class="o">.</span><span class="n">build_from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-
-    <span class="n">model_runner</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">build_from_yaml_file</span><span class="p">(</span>
+    <span class="s2">&quot;configs/experiment_config.yaml&quot;</span><span class="p">,</span>
+    <span class="n">experiment_id</span><span class="o">=</span><span class="s2">&quot;NHP_eval&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">runner</span> <span class="o">=</span> <span class="n">Runner</span><span class="o">.</span><span class="n">build_from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
-</section>
-<section id="checkout-the-output">
-<h2>Checkout the output<a class="headerlink" href="#checkout-the-output" title="Permalink to this heading"></a></h2>
-<p>The evaluation result will be print in the console and saved in the logs whose directory is specified in the
-out config file, i.e.:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;output_config_dir&#39;</span>:<span class="w"> </span><span class="s1">&#39;./checkpoints/NHP_test_conttime_20221002-13:19:23/NHP_test_output.yaml&#39;</span>
-</pre></div>
-</div>
+<p>Metrics are printed and written to the log below <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>. When dataset
+time rescaling is active, predicted and target times are restored to their
+original units before RMSE is calculated.</p>
 </section>
 </section>
 
@@ -189,14 +178,14 @@ out config file, i.e.:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="run_train_pipeline.html" class="btn btn-neutral float-left" title="Training a Model &amp; Configuration Explanation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="run_train_pipeline.html" class="btn btn-neutral float-left" title="Training a Model and Configuring the Pipeline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../dev_guide/model_custom.html" class="btn btn-neutral float-right" title="Customize a Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+    <p>&#169; Copyright 2026, Machine Intelligence, Alipay.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

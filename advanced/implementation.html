@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Model Implementation Details &mdash; EasyTPP 0.0.2 documentation</title>
+  <title>Model Implementation Details &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
       <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
       <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -79,6 +79,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#fully-neural-network-based-model-for-general-temporal-point-processes-fullynn">Fully Neural Network based Model for General Temporal Point Processes (FullyNN)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ode-based-temporal-point-process-odetpp">ODE-based Temporal Point Process (ODETPP)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#attentive-neural-hawkes-network-anhn">Attentive Neural Hawkes Network (ANHN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#state-space-point-process-s2p2">State-Space Point Process (S2P2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#weighted-score-matching-thp-wsmthp">Weighted Score Matching THP (WSMTHP)</a></li>
 </ul>
 </li>
 </ul>
@@ -89,7 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
 </ul>
 
@@ -121,20 +123,21 @@
 <h1>Model Implementation Details<a class="headerlink" href="#model-implementation-details" title="Permalink to this heading"></a></h1>
 <section id="basic-structure">
 <h2>Basic structure<a class="headerlink" href="#basic-structure" title="Permalink to this heading"></a></h2>
-<p>In the model folder, <cite>torch_basemodel</cite> (<strong>/model/torch_model/torch_basemodel.py</strong>) / <cite>tf_basemodel</cite> (<strong>/model/tf_model/tf_basemodel.py</strong>) implements functionalities of computing loglikelihood and sampling procedures that are common
-to all the TPP models. In the inherited class, models with specific structures are defined, explained in below sections.</p>
+<p>In the model folder, <code class="docutils literal notranslate"><span class="pre">torch_basemodel.py</span></code> implements shared likelihood,
+sampling, and generation utilities. Concrete model classes inherit from
+<code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code> and may use or override those utilities.</p>
 <section id="computing-the-loglikelihood-of-non-pad-event-sequence">
 <h3>Computing the loglikelihood of non-pad event sequence<a class="headerlink" href="#computing-the-loglikelihood-of-non-pad-event-sequence" title="Permalink to this heading"></a></h3>
-<p>The loglikelihood computation, following the definition in Equation 8 of <a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process</a>, is shared by all the TPP models.</p>
-<dl class="simple">
-<dt>it takes <cite>time_delta_seqs</cite>, <cite>lambda_at_event</cite>, <cite>lambdas_loss_samples</cite>, <cite>seq_mask</cite>,</dt><dd><p><cite>lambda_type_mask</cite> as the input and output the loglikelihood items, please see  <cite>torch_basemodel</cite> (<strong>/model/torch_model/torch_basemodel.py</strong>) / <cite>tf_basemodel</cite> (<strong>/model/tf_model/tf_basemodel.py</strong>)</p>
-</dd>
-</dl>
-<p>for details.</p>
+<p>The shared <code class="docutils literal notranslate"><span class="pre">compute_loglikelihood</span></code> method follows Equation 8 of <a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural
+Hawkes Process: A Neurally Self-Modulating Multivariate Point Process</a>. Models whose objectives have a different
+form implement their own loss.</p>
+<p>It takes <code class="docutils literal notranslate"><span class="pre">time_delta_seq</span></code>, <code class="docutils literal notranslate"><span class="pre">lambda_at_event</span></code>,
+<code class="docutils literal notranslate"><span class="pre">lambdas_loss_samples</span></code>, <code class="docutils literal notranslate"><span class="pre">seq_mask</span></code>, and <code class="docutils literal notranslate"><span class="pre">type_seq</span></code> and returns the event
+term, non-event term, and number of events.</p>
 <p>It is noted that:</p>
 <p>1. Sequential prediction: because we performance sequential prediction, i.e., predict next one given previous, we do not consider the last one as it has no labels. To implement the <cite>forward</cite> function, we take input of <cite>time_seqs[:, :-1]</cite>
 and <cite>type_seqs[:, :-1]</cite>. For <cite>time_delta_seqs</cite> it is different; please see the next point.</p>
-<p>2. Continuous-time evolution: recall the definition in [dataset](./dataset.rst), assume we have a sequence of 4 events and 1 pad event
+<p>2. Continuous-time evolution: recall the <a class="reference external" href="../user_guide/dataset.html">dataset representation</a>. Assume we have a sequence of 4 events and 1 pad event
 at the end, i.e.,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>index:<span class="w">          </span><span class="m">0</span>,<span class="w">          </span><span class="m">1</span>,<span class="w">         </span><span class="m">2</span>,<span class="w">         </span><span class="m">3</span>，<span class="w">     </span><span class="m">4</span>
 dtimes:<span class="w">         </span><span class="m">0</span>，<span class="w">     </span>t_1-t_0,<span class="w">    </span>t_2-t_1,<span class="w">   </span>t_3-t_2,<span class="w">  </span>pad
@@ -144,7 +147,7 @@ non_pad_mask:<span class="w">  </span>True,<span class="w">      </span>True,<sp
 </div>
 <p>For the i-th event, i-th dtime denotes the time evolution (e.g., decay in NHP) to the current event and
 (i+1)-th dtime denotes the time evolution to the next event. To compute the non-event loglikelihood,
-we should consider the time evolution after the event happens. Therefore we should use <cite>type_delta_seqs[:, 1:]</cite> with masks specified in the below step.</p>
+we should consider the time evolution after the event happens. Therefore we should use <code class="docutils literal notranslate"><span class="pre">time_delta_seqs[:,</span> <span class="pre">1:]</span></code> with masks specified in the below step.</p>
 <p>3. Masking: suppose we have predictions of 0,1,2,3-th event and their labels are 1,2,3,4-th events
 where $4$-th event needed to be masked. So we should set the sequence mask as <cite>True, True, True, False</cite>, i.e., <cite>seq_mask=batch_non_pad_mask[:, 1:]</cite>.
 The same logic applies to the attention mask and event type mask.</p>
@@ -153,7 +156,7 @@ The same logic applies to the attention mask and event type mask.</p>
                                                                 <span class="n">lambdas_loss_samples</span><span class="o">=</span><span class="n">lambda_t_sample</span><span class="p">,</span> <span class="c1"># seq_len = max_len - 1</span>
                                                                 <span class="n">time_delta_seq</span><span class="o">=</span><span class="n">time_delta_seq</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
                                                                 <span class="n">seq_mask</span><span class="o">=</span><span class="n">batch_non_pad_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
-                                                                <span class="n">lambda_type_mask</span><span class="o">=</span><span class="n">type_mask</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
+                                                                <span class="n">type_seq</span><span class="o">=</span><span class="n">type_seqs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
 </pre></div>
 </div>
 </section>
@@ -199,11 +202,14 @@ and we factorize it into based model and inherited model.</p>
 <h2>Intensity Free Learning of Temporal Point Process (IntensityFree)<a class="headerlink" href="#intensity-free-learning-of-temporal-point-process-intensityfree" title="Permalink to this heading"></a></h2>
 <p>We implement the model based on the author’s torch code <a class="reference external" href="https://github.com/shchur/ifl-tpp">Github:ifl-tpp</a>.</p>
 <p>A small difference between our implementation and the author’s is we ignore the <cite>context_init</cite> (the initial state of the RNN) because in our data setup, we do not need a learnable initial RNN state. This modification generally makes little impact on the learning process.</p>
-<p>It is worth noting that the thinning algorithm can not be applied to this model because it is intensity-free. When comparing the performance of the model, we only look at its log-likelihood learning curve.</p>
+<p>IntensityFree exposes a closed-form hazard derived from its inter-event-time
+distribution. Its one-step prediction samples that distribution directly;
+recursive multi-step generation supplies the hazard to the thinning sampler.</p>
 </section>
 <section id="fully-neural-network-based-model-for-general-temporal-point-processes-fullynn">
 <h2>Fully Neural Network based Model for General Temporal Point Processes (FullyNN)<a class="headerlink" href="#fully-neural-network-based-model-for-general-temporal-point-processes-fullynn" title="Permalink to this heading"></a></h2>
-<p>We implement the model based on the author’s keras code <a class="reference external" href="https://github.com/omitakahiro/NeuralNetworkPointProcess">Github:NeuralNetworkPointProcess</a>.</p>
+<p>The implementation follows the paper’s cumulative-hazard construction and the
+torch references linked in <code class="docutils literal notranslate"><span class="pre">torch_fullynn.py</span></code>.</p>
 </section>
 <section id="ode-based-temporal-point-process-odetpp">
 <h2>ODE-based Temporal Point Process (ODETPP)<a class="headerlink" href="#ode-based-temporal-point-process-odetpp" title="Permalink to this heading"></a></h2>
@@ -212,6 +218,21 @@ and we factorize it into based model and inherited model.</p>
 <section id="attentive-neural-hawkes-network-anhn">
 <h2>Attentive Neural Hawkes Network (ANHN)<a class="headerlink" href="#attentive-neural-hawkes-network-anhn" title="Permalink to this heading"></a></h2>
 <p>We implement the model based on the author’s paper: the attentive model without the graph regularizer is named ANHN.</p>
+</section>
+<section id="state-space-point-process-s2p2">
+<h2>State-Space Point Process (S2P2)<a class="headerlink" href="#state-space-point-process-s2p2" title="Permalink to this heading"></a></h2>
+<p>S2P2 implements <a class="reference external" href="https://openreview.net/pdf?id=74SvE2GZwW">Deep Continuous-Time State-Space Models for Marked Event
+Sequences</a> (NeurIPS 2025). It uses
+the continuous-time state-space components in <code class="docutils literal notranslate"><span class="pre">easy_tpp.ssm</span></code> and a
+mark-specific intensity network.</p>
+</section>
+<section id="weighted-score-matching-thp-wsmthp">
+<h2>Weighted Score Matching THP (WSMTHP)<a class="headerlink" href="#weighted-score-matching-thp-wsmthp" title="Permalink to this heading"></a></h2>
+<p>WSMTHP implements the THP-style model from <a class="reference external" href="https://arxiv.org/abs/2410.04037">Is Score Matching Suitable for
+Estimating Point Processes?</a> (NeurIPS
+2024). Training uses the weighted score-matching objective plus mark
+cross-entropy; validation and testing use the model’s approximate
+log-likelihood path. Its settings belong under <code class="docutils literal notranslate"><span class="pre">model_config.model_specs</span></code>.</p>
 </section>
 </section>
 
@@ -226,7 +247,7 @@ and we factorize it into based model and inherited model.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+    <p>&#169; Copyright 2026, Machine Intelligence, Alipay.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

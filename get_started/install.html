@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Installation &mdash; EasyTPP 0.0.2 documentation</title>
+  <title>Installation &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
       <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
@@ -80,7 +80,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
 </ul>
 
@@ -113,22 +113,11 @@
 <p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> provides an open-source library for <cite>Neural TPP</cite>, with a fully automated pipeline for model training and prediction.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>PyTorch<span class="w"> </span>version<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span><span class="m">1</span>.8.0
-Python<span class="w"> </span>version<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span><span class="m">3</span>.7
-Tensorflow<span class="w"> </span>version<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span><span class="m">1</span>.13.1<span class="w"> </span><span class="o">(</span>only<span class="w"> </span>needed<span class="w"> </span>when<span class="w"> </span>using<span class="w"> </span>Tensorflow<span class="w"> </span>backend<span class="o">)</span>
-</pre></div>
-</div>
-<p>First, we need a python environment whose version is at least greater than 3.7.0. If you don’t have one, please refer to the <a class="reference external" href="https://docs.anaconda.com/anaconda/install/">Documentation</a> to install and configure the Anaconda environment.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>easytpp<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8
+<p>EasyTPP 0.2.4 requires Python 3.9 or newer and uses PyTorch as its only model
+backend. Create an isolated Python environment before installing the package.
+For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>easytpp<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
 conda<span class="w"> </span>activate<span class="w"> </span>easytpp
-</pre></div>
-</div>
-<p>Then, install Pytorch and keep the version at least greater than 1.8.0.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>torch
-</pre></div>
-</div>
-<p>By default, we assume to use PyTorch. If one wants to use Tensorflow backend, please install tensorflow additionally. Both Tensorflow 1.13.1 and 2.x are supported.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>tensorflow
 </pre></div>
 </div>
 </section>
@@ -145,7 +134,7 @@ conda<span class="w"> </span>activate<span class="w"> </span>easytpp
 <p>Setup from the source：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ant-research/EasyTemporalPointProcess.git
 <span class="nb">cd</span><span class="w"> </span>EasyTemporalPointProcess
-python<span class="w"> </span>setup.py<span class="w"> </span>install
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
 </section>
@@ -163,7 +152,7 @@ python<span class="w"> </span>setup.py<span class="w"> </span>install
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+    <p>&#169; Copyright 2026, Machine Intelligence, Alipay.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

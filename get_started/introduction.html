@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction &mdash; EasyTPP 0.0.2 documentation</title>
+  <title>Introduction &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
       <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,6 +49,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#prepare-data">Prepare Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#model-training-and-prediction">Model Training and Prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implemented-models">Implemented Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
@@ -78,7 +79,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
 </ul>
 
@@ -111,7 +112,8 @@
 <p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> provides an open-source library for <cite>Neural TPP</cite>, with a fully automated pipeline for model training and prediction.</p>
 <section id="framework">
 <h2>Framework<a class="headerlink" href="#framework" title="Permalink to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> supports both Tensorflow and PyTorch: each model has two equivalent versions implemented in Tensorflow 1.13 and Pytorch 1.8 respectively. The data processing and model training / prediction pipeline are compatible with both Tensorflow and Pytorch as well.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> is a PyTorch library. Its data processing, model training,
+evaluation, and generation pipeline all use the torch backend.</p>
 <p>At the module level, <code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> is a package that consists of the following components, which are designed as loose-coupled modules that provide flexibility for users to develop customized functionalities.</p>
 <table class="docutils align-default">
 <thead>
@@ -137,14 +139,21 @@
 </section>
 <section id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> can be installed either by pip or the source. By default it is built based on PyTorch. If one wants to run with the Tensorflow backend, one needs to install Tensorflow additionally.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EasyTPP</span></code> can be installed either from PyPI or from source. PyTorch and the
+other runtime dependencies are installed with the package.</p>
 <p>Please see <a class="reference external" href="./install.html">Installation</a> for details of requirement and installation.</p>
 </section>
 <section id="prepare-data">
 <h2>Prepare Data<a class="headerlink" href="#prepare-data" title="Permalink to this heading"></a></h2>
-<p>By default, we use the data in Gatech format, i.e., each dataset is a dict containing the keys such as <cite>time_since_last_event</cite>, <cite>time_since_start</cite> and <cite>type_event</cite>. <a class="reference external" href="../ref/preprocess.html">Preprocess</a> module
-will preprocess the data and feed it into the model.</p>
-<p>An example of building a pseudo dataloader can be found at <a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/tree/main/examples/data_loader.py">examples</a>. Please refer to <a class="reference external" href="../user_guide/dataset.html">Datatset</a> for more explanations of the <cite>TPP</cite> dataset iterator.</p>
+<p>EasyTPP accepts the legacy pickle representation and JSON files (including
+datasets hosted by the <a class="reference external" href="https://huggingface.co/easytpp">EasyTPP Hugging Face organization</a>). Both representations provide
+<code class="docutils literal notranslate"><span class="pre">time_since_start</span></code>, <code class="docutils literal notranslate"><span class="pre">time_since_last_event</span></code>, <code class="docutils literal notranslate"><span class="pre">type_event</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dim_process</span></code>. The <a class="reference external" href="../ref/preprocess.html">Preprocess</a> module turns these
+fields into padded model batches.</p>
+<p>An example of building a pseudo dataloader can be found in
+<a class="reference external" href="https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/data_loader.py">examples/data_loader.py</a>.
+See <a class="reference external" href="../user_guide/dataset.html">Dataset</a> for the supported input formats and
+the <code class="docutils literal notranslate"><span class="pre">TPPDataLoader</span></code> pipeline.</p>
 </section>
 <section id="model-training-and-prediction">
 <h2>Model Training and Prediction<a class="headerlink" href="#model-training-and-prediction" title="Permalink to this heading"></a></h2>
@@ -154,6 +163,76 @@ will preprocess the data and feed it into the model.</p>
 <li><p>Launch the python script to run the whole pipeline.</p></li>
 </ol>
 <p>Please see <a class="reference external" href="../user_guide/run_train_pipeline.html">Training Pipeline</a> and <a class="reference external" href="../user_guide/run_eval.html">Evaluation Pipeline</a> for more details.</p>
+</section>
+<section id="implemented-models">
+<h2>Implemented Models<a class="headerlink" href="#implemented-models" title="Permalink to this heading"></a></h2>
+<p>Version 0.2.4 provides the following registered model IDs. Their implementation
+classes are exported from <code class="docutils literal notranslate"><span class="pre">easy_tpp.model</span></code> with a <code class="docutils literal notranslate"><span class="pre">Torch</span></code> prefix (for
+example, <code class="docutils literal notranslate"><span class="pre">NHP</span></code> is <code class="docutils literal notranslate"><span class="pre">TorchNHP</span></code>). <code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code> is the common
+implementation base; the other eleven entries are trainable reference models.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 62.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Paper title</p></th>
+<th class="head"><p>Venue / year</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ANHN</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/2211.11758">Attentive Neural Hawkes Network</a></p></td>
+<td><p>IJCNN 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AttNHP</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/2201.00044">Transformer Embeddings of Irregularly Spaced Events and Their Participants</a></p></td>
+<td><p>ICLR 2022</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FullyNN</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/1905.09690">Fully Neural Network based Model for General Temporal Point Processes</a></p></td>
+<td><p>NeurIPS 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">IntensityFree</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/1909.12127">Intensity-Free Learning of Temporal Point Processes</a></p></td>
+<td><p>ICLR 2020</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NHP</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/1612.09328">The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process</a></p></td>
+<td><p>NeurIPS 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ODETPP</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/2011.04583">Neural Spatio-Temporal Point Processes</a> (simplified implementation)</p></td>
+<td><p>ICLR 2021</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RMTPP</span></code></p></td>
+<td><p><a class="reference external" href="https://www.kdd.org/kdd2016/papers/files/rpp1081-duA.pdf">Recurrent Marked Temporal Point Processes: Embedding Event History to Vector</a></p></td>
+<td><p>KDD 2016</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">S2P2</span></code></p></td>
+<td><p><a class="reference external" href="https://openreview.net/pdf?id=74SvE2GZwW">Deep Continuous-Time State-Space Models for Marked Event Sequences</a></p></td>
+<td><p>NeurIPS 2025</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SAHP</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/1907.07561">Self-Attentive Hawkes Process</a></p></td>
+<td><p>ICML 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">THP</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/2002.09291">Transformer Hawkes Process</a></p></td>
+<td><p>ICML 2020</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">WSMTHP</span></code></p></td>
+<td><p><a class="reference external" href="https://arxiv.org/abs/2410.04037">Is Score Matching Suitable for Estimating Point Processes?</a></p></td>
+<td><p>NeurIPS 2024</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code></p></td>
+<td><p>Common base class (not a paper model)</p></td>
+<td><p>–</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 
@@ -168,7 +247,7 @@ will preprocess the data and feed it into the model.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+    <p>&#169; Copyright 2026, Machine Intelligence, Alipay.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

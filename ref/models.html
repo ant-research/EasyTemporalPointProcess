@@ -6,20 +6,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EasyTPP Models &mdash; EasyTPP 0.0.2 documentation</title>
+  <title>EasyTPP Models &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
       <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="easy_tpp.model.torch_model.torch_baselayer" href="../generated/easy_tpp.model.torch_model.torch_baselayer.html" />
+    <link rel="next" title="EasyTPP Model Runner Modules" href="runner.html" />
     <link rel="prev" title="EasyTPP Preprocess Modules" href="preprocess.html" /> 
 </head>
 
@@ -70,26 +70,31 @@
 <li class="toctree-l1"><a class="reference internal" href="config.html"> Config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocess.html"> Preprocess</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-easy_tpp.model.tf_model">model.tf_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-easy_tpp.model.torch_model">model.torch_model module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_baselayer.html">easy_tpp.model.torch_model.torch_baselayer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_basemodel.html">easy_tpp.model.torch_model.torch_basemodel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_nhp.html">easy_tpp.model.torch_model.torch_nhp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_fullynn.html">easy_tpp.model.torch_model.torch_fullynn</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_intensity_free.html">easy_tpp.model.torch_model.torch_intensity_free</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_ode_tpp.html">easy_tpp.model.torch_model.torch_ode_tpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_rmtpp.html">easy_tpp.model.torch_model.torch_rmtpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_sahp.html">easy_tpp.model.torch_model.torch_sahp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_thp.html">easy_tpp.model.torch_model.torch_thp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_attnhp.html">easy_tpp.model.torch_model.torch_attnhp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_thinning.html">easy_tpp.model.torch_model.torch_thinning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.generate_model_from_config"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.generate_model_from_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.get_logits_at_last_step"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.get_logits_at_last_step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.compute_loglikelihood"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.compute_loglikelihood()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.make_dtime_loss_samples"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.make_dtime_loss_samples()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.predict_one_step_at_every_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event"><code class="docutils literal notranslate"><span class="pre">TorchBaseModel.predict_multi_step_since_last_event()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchANHN"><code class="docutils literal notranslate"><span class="pre">TorchANHN</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchAttNHP"><code class="docutils literal notranslate"><span class="pre">TorchAttNHP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchFullyNN"><code class="docutils literal notranslate"><span class="pre">TorchFullyNN</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchIntensityFree"><code class="docutils literal notranslate"><span class="pre">TorchIntensityFree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchNHP"><code class="docutils literal notranslate"><span class="pre">TorchNHP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchODETPP"><code class="docutils literal notranslate"><span class="pre">TorchODETPP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchRMTPP"><code class="docutils literal notranslate"><span class="pre">TorchRMTPP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchS2P2"><code class="docutils literal notranslate"><span class="pre">TorchS2P2</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchSAHP"><code class="docutils literal notranslate"><span class="pre">TorchSAHP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchTHP"><code class="docutils literal notranslate"><span class="pre">TorchTHP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#easy_tpp.model.TorchWSMTHP"><code class="docutils literal notranslate"><span class="pre">TorchWSMTHP</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html"> Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> Utilities</a></li>
 </ul>
 
@@ -119,53 +124,202 @@
              
   <section id="easytpp-models">
 <span id="api-model"></span><h1>EasyTPP Models<a class="headerlink" href="#easytpp-models" title="Permalink to this heading"></a></h1>
-<section id="module-easy_tpp.model.tf_model">
-<span id="model-tf-model-module"></span><span id="api-tf-model"></span><h2>model.tf_model module<a class="headerlink" href="#module-easy_tpp.model.tf_model" title="Permalink to this heading"></a></h2>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-</tbody>
-</table>
-</section>
-<section id="module-easy_tpp.model.torch_model">
-<span id="model-torch-model-module"></span><span id="api-torch-model"></span><h2>model.torch_model module<a class="headerlink" href="#module-easy_tpp.model.torch_model" title="Permalink to this heading"></a></h2>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_baselayer.html#module-easy_tpp.model.torch_model.torch_baselayer" title="easy_tpp.model.torch_model.torch_baselayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_baselayer</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_basemodel.html#module-easy_tpp.model.torch_model.torch_basemodel" title="easy_tpp.model.torch_model.torch_basemodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_basemodel</span></code></a></p></td>
-<td><p>Base model with common functionality</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_nhp.html#module-easy_tpp.model.torch_model.torch_nhp" title="easy_tpp.model.torch_model.torch_nhp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_nhp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_fullynn.html#module-easy_tpp.model.torch_model.torch_fullynn" title="easy_tpp.model.torch_model.torch_fullynn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_fullynn</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_intensity_free.html#module-easy_tpp.model.torch_model.torch_intensity_free" title="easy_tpp.model.torch_model.torch_intensity_free"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_intensity_free</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_ode_tpp.html#module-easy_tpp.model.torch_model.torch_ode_tpp" title="easy_tpp.model.torch_model.torch_ode_tpp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_ode_tpp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_rmtpp.html#module-easy_tpp.model.torch_model.torch_rmtpp" title="easy_tpp.model.torch_model.torch_rmtpp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_rmtpp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_sahp.html#module-easy_tpp.model.torch_model.torch_sahp" title="easy_tpp.model.torch_model.torch_sahp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_sahp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_thp.html#module-easy_tpp.model.torch_model.torch_thp" title="easy_tpp.model.torch_model.torch_thp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_thp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_attnhp.html#module-easy_tpp.model.torch_model.torch_attnhp" title="easy_tpp.model.torch_model.torch_attnhp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_attnhp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../generated/easy_tpp.model.torch_model.torch_thinning.html#module-easy_tpp.model.torch_model.torch_thinning" title="easy_tpp.model.torch_model.torch_thinning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch_thinning</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</section>
+<p>The public torch model classes are exported by <code class="docutils literal notranslate"><span class="pre">easy_tpp.model</span></code>:</p>
+<span class="target" id="module-easy_tpp.model"></span><dl class="py class">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchBaseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.generate_model_from_config">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_model_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.generate_model_from_config" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the model in derived class based on model config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_config</strong> (<em>EasyTPP.ModelConfig</em>) – config of model specs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.get_logits_at_last_step">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_logits_at_last_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_non_pad_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.get_logits_at_last_step" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the hidden states of last non-pad events.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logits</strong> (<em>tensor</em>) – [batch_size, seq_len, hidden_dim], a sequence of logits</p></li>
+<li><p><strong>batch_non_pad_mask</strong> (<em>tensor</em>) – [batch_size, seq_len], a sequence of masks</p></li>
+<li><p><strong>sample_len</strong> (<em>tensor</em>) – default None, use batch_non_pad_mask to find out the last non-mask position</p></li>
+</ul>
+</dd>
+</dl>
+<p>ref: <a class="reference external" href="https://medium.com/analytics-vidhya/understanding-indexing-with-pytorch-gather-33717a84ebc4">https://medium.com/analytics-vidhya/understanding-indexing-with-pytorch-gather-33717a84ebc4</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>retrieve the logits of EOS event</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.compute_loglikelihood">
+<span class="sig-name descname"><span class="pre">compute_loglikelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_at_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas_loss_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.compute_loglikelihood" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the loglikelihood of the event sequence based on Equation (8) of NHP paper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_delta_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], time_delta_seq from model input.</p></li>
+<li><p><strong>lambda_at_event</strong> (<em>tensor</em>) – [batch_size, seq_len, num_event_types], unmasked intensity at</p></li>
+<li><p><strong>event.</strong> (<em>(</em><em>right after</em><em>) </em><em>the</em>) – </p></li>
+<li><p><strong>lambdas_loss_samples</strong> (<em>tensor</em>) – [batch_size, seq_len, num_sample, num_event_types],</p></li>
+<li><p><strong>times.</strong> (<em>intensity at sampling</em>) – </p></li>
+<li><p><strong>seq_mask</strong> (<em>tensor</em>) – [batch_size, seq_len], sequence mask vector to mask the padded events.</p></li>
+<li><p><strong>type_seq</strong> (<em>tensor</em>) – [batch_size, seq_len], sequence of mark ids, with padded events having a mark of self.pad_token_id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>event loglike, non-event loglike, intensity at event with padding events masked</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.make_dtime_loss_samples">
+<span class="sig-name descname"><span class="pre">make_dtime_loss_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_delta_seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.make_dtime_loss_samples" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the time point samples for every interval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time_delta_seq</strong> (<em>tensor</em>) – [batch_size, seq_len].</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>[batch_size, seq_len, n_samples]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event">
+<span class="sig-name descname"><span class="pre">predict_one_step_at_every_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_one_step_at_every_event" title="Permalink to this definition"></a></dt>
+<dd><p>One-step prediction for every event in the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
+<li><p><strong>time_delta_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
+<li><p><strong>type_seqs</strong> (<em>tensor</em>) – [batch_size, seq_len].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>tensors of dtime and type prediction, [batch_size, seq_len].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event">
+<span class="sig-name descname"><span class="pre">predict_multi_step_since_last_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#easy_tpp.model.TorchBaseModel.predict_multi_step_since_last_event" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-step prediction since last event in the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>tuple</em>) – A tuple containing:
+- time_seq_label (tensor): Timestamps of events [batch_size, seq_len].
+- time_delta_seq_label (tensor): Time intervals between events [batch_size, seq_len].
+- event_seq_label (tensor): Event types [batch_size, seq_len].
+- batch_non_pad_mask_label (tensor): Mask for non-padding elements [batch_size, seq_len].
+- attention_mask (tensor): Mask for attention [batch_size, seq_len].</p></li>
+<li><p><strong>forward</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use the entire sequence for prediction. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>tensors of dtime and type prediction, [batch_size, seq_len].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchANHN">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchANHN</span></span><a class="headerlink" href="#easy_tpp.model.TorchANHN" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ANHN</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchAttNHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchAttNHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchAttNHP" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">AttNHP</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchFullyNN">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchFullyNN</span></span><a class="headerlink" href="#easy_tpp.model.TorchFullyNN" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">FullyNN</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchIntensityFree">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchIntensityFree</span></span><a class="headerlink" href="#easy_tpp.model.TorchIntensityFree" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">IntensityFree</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchNHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchNHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchNHP" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">NHP</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchODETPP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchODETPP</span></span><a class="headerlink" href="#easy_tpp.model.TorchODETPP" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ODETPP</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchRMTPP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchRMTPP</span></span><a class="headerlink" href="#easy_tpp.model.TorchRMTPP" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">RMTPP</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchS2P2">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchS2P2</span></span><a class="headerlink" href="#easy_tpp.model.TorchS2P2" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">S2P2</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchSAHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchSAHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchSAHP" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SAHP</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchTHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchTHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchTHP" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">THP</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="easy_tpp.model.TorchWSMTHP">
+<span class="sig-prename descclassname"><span class="pre">easy_tpp.model.</span></span><span class="sig-name descname"><span class="pre">TorchWSMTHP</span></span><a class="headerlink" href="#easy_tpp.model.TorchWSMTHP" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">WSMTHP</span></code></p>
+</dd></dl>
+
 </section>
 
 
@@ -173,13 +327,13 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="preprocess.html" class="btn btn-neutral float-left" title="EasyTPP Preprocess Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../generated/easy_tpp.model.torch_model.torch_baselayer.html" class="btn btn-neutral float-right" title="easy_tpp.model.torch_model.torch_baselayer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="runner.html" class="btn btn-neutral float-right" title="EasyTPP Model Runner Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+    <p>&#169; Copyright 2026, Machine Intelligence, Alipay.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

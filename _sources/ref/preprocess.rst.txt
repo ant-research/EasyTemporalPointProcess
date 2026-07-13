@@ -4,7 +4,12 @@ EasyTPP Preprocess Modules
 ==========================
 
 
-.. automodule:: preprocess
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. automodule:: easy_tpp.preprocess
+
+.. autoclass:: easy_tpp.preprocess.TPPDataLoader
+
+.. autoclass:: easy_tpp.preprocess.EventTokenizer
+
+.. autoclass:: easy_tpp.preprocess.TPPDataset
+
+.. autofunction:: easy_tpp.preprocess.get_data_loader

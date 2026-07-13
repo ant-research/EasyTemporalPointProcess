@@ -4,7 +4,4 @@ EasyTPP Utilities Modules
 ==========================
 
 
-.. automodule:: utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. automodule:: easy_tpp.utils

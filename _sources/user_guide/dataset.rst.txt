@@ -2,24 +2,110 @@
 Expected Dataset Format and Data Processing
 ===========================================
 
-Required format
-===================================
+Supported formats
+=================
 
-In EasyTPP we use the data in Gatech format, i.e., each dataset is a dict containing the following keys as
+``TPPDataLoader`` supports ``pkl`` and ``json``. In both formats event type
+indices start at 0, and ``dim_process`` is the number of event types without
+the padding type configured by ``pad_token_id``.
 
-.. code-block:: bash
+Legacy pickle files
+-------------------
 
-    dim_process: 5 # num of event types (no padding)
-    'train': [[{'idx_event': 2, 'time_since_last_event': 1.0267814, 'time_since_last_same_event': 1.0267814, 'type_event': 3, 'time_since_start': 1.0267814}, {'idx_event': 3, 'time_since_last_event': 0.4029268, 'time_since_last_same_event': 1.4297082, 'type_event': 0, 'time_since_start': 1.4297082},...,],[{}...{}]]
+A pickle file contains ``dim_process`` and one split named ``train``, ``dev``,
+or ``test``. The split is a list of event sequences, and every event must
+provide the three fields read by the loader:
 
-where `dim_process` refers to the number of event types (without padding) and
-`train` (or `dev` / `test`) contains a list of list which corresponds to an event sequence each.
+.. code-block:: python
 
-Each pickle file generates a set of event sequences, each containing three sub sequences:
+    {
+        "dim_process": 5,
+        "train": [
+            [
+                {
+                    "time_since_start": 1.0267814,
+                    "time_since_last_event": 1.0267814,
+                    "type_event": 3,
+                },
+                {
+                    "time_since_start": 1.4297082,
+                    "time_since_last_event": 0.4029268,
+                    "type_event": 0,
+                },
+            ],
+        ],
+    }
 
-1. `time_seqs`: absolute timestamps of the events, correspond to `time_since_last_event`.
-2. `time_delta_seqs`: relative timestamps of the events, correspond to `time_since_last_same_event`.
-3. `type_seqs`: types of the events, correspond to `type_event`. Be noted that the event type index `starts from 0`.
+Use one file per split and configure ``train_dir``, ``valid_dir``, and
+``test_dir`` accordingly.
+
+JSON and Hugging Face datasets
+------------------------------
+
+JSON data represents each event sequence as one record. The loader reads four
+columns: ``time_since_start``, ``time_since_last_event``, ``type_event``, and
+``dim_process``. The first three are equally sized arrays; ``dim_process`` is
+the same scalar number of unpadded event types for every record. Local JSON
+files are loaded as the requested split. For a Hugging Face dataset, ``dev``
+is mapped to its ``validation`` split.
+
+All EasyTPP benchmark datasets are published under the `EasyTPP Hugging Face
+organization <https://huggingface.co/easytpp>`_. Set all three paths to a
+dataset identifier such as ``easytpp/taxi``; the loader selects ``train``,
+``validation``, and ``test`` automatically:
+
+.. code-block:: yaml
+
+    data:
+      taxi:
+        data_format: json
+        train_dir: easytpp/taxi
+        valid_dir: easytpp/taxi
+        test_dir: easytpp/taxi
+        data_specs:
+          num_event_types: 10
+          pad_token_id: 10
+          padding_side: right
+          truncation_side: right
+
+Internally, either input format becomes ``time_seqs`` (from
+``time_since_start``), ``time_delta_seqs`` (from
+``time_since_last_event``), and ``type_seqs`` (from ``type_event``).
+
+
+Time rescaling (0.2.4)
+----------------------
+
+Temporal encodings are not scale-invariant, so rescaling is recommended for
+datasets whose raw inter-event times are large. ``rescale_time`` is a boolean
+and defaults to ``false``. When enabled, both absolute event times and
+inter-event times are divided by a single scale:
+
+* if ``time_scale`` is supplied, its floating-point value is the divisor;
+* otherwise the divisor is the mean of the training inter-event times after
+  the first entry of each sequence, making the mean training interval
+  approximately 1.
+
+Time predictions and their labels are converted back to the original units
+before metrics such as RMSE are computed. The resolved divisor is also copied
+to ``model_config.time_scale`` so the model configuration used by the run
+retains the scale.
+
+.. code-block:: yaml
+
+    data:
+      taxi:
+        data_format: json
+        train_dir: easytpp/taxi
+        valid_dir: easytpp/taxi
+        test_dir: easytpp/taxi
+        data_specs:
+          num_event_types: 10
+          pad_token_id: 10
+          padding_side: right
+          truncation_side: right
+          rescale_time: true
+          # time_scale: 3600.0  # optional explicit divisor
 
 
 Data processing
@@ -32,7 +118,9 @@ Sequence padding
 ----------------
 
 
-time_seqs, time_delta_seqs and type_seqs are firstly padded to `the max length of the whole dataset` and then fed into the model in batch.
+By default, ``time_seqs``, ``time_delta_seqs``, and ``type_seqs`` are padded
+to the longest sequence in each batch. Setting ``padding_strategy`` to
+``max_length`` uses the configured ``max_len`` instead.
 
 .. code-block:: bash
 
@@ -51,13 +139,14 @@ Sequence masking
 ----------------
 
 
-After padding, we perform the masking for the event sequences and generate three more seqs: batch_non_pad_mask, attention_mask, type_mask：
+After padding, we generate two masks for the event sequences:
 
 1. `batch_non_pad_mask`: it indicates the position of masks in the sequence.
 2. `attention_mask`: it indicates the masks used in the attention calculation (one event can only attend to its past events).
-3. `type_mask`: it uses one-hot vector to represent the event type. The padded event is a zero vector.
 
-Finally, each batch contains six elements: time_seqs, time_delta_seqs, event_seq, batch_non_pad_mask, attention_mask, type_mask. The implementation of padding mechanism can be found at `event_tokenizer <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/easy_tpp/preprocess/event_tokenizer.py>`_.
+Finally, each batch contains five elements: `time_seqs`, `time_delta_seqs`,
+`type_seqs`, `batch_non_pad_mask`, and `attention_mask`. The padding mechanism
+is implemented in `event_tokenizer <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/easy_tpp/preprocess/event_tokenizer.py>`_.
 
 
 
@@ -95,22 +184,16 @@ The mask sequences are
     [False, False, False, False,  True,  True],
     [False, False, False, False,  True,  True]]
 
-    # type_mask
-    [[False,  True, False, False, False, False, False, False, False, False, False],
-    [False, False, False, False, False, False, False, False, False, True, False],
-    [False, False, False, False, False,  True, False, False, False, False, False],
-    [True, False, False, False, False, False, False, False, False, False, False],
-    [False, False, False, False, False, False, False, False, False, False, False],
-    [False, False, False, False, False, False, False, False, False, False, False]],
-
-
 The runnable examples of constructing and iterating the dataset object can be found at `examples/event_tokenizer.py <https://github.com/ant-research/EasyTemporalPointProcess/blob/main/examples/event_tokenizer.py>`_
 
 
 Preprocessed Datasets
 ===================================
 
-We have preprocessed some widely-used open source datasets in Gatech format, which can be found at `Google Drive <https://drive.google.com/drive/folders/0BwqmV0EcoUc8UklIR1BKV25YR1U?resourcekey=0-OrlU87jyc1m-dVMmY5aC4w>`_. We use them for validating and benchmarking EasyTPP models.
+We have preprocessed several widely used open-source datasets. Current JSON
+versions are available from `Hugging Face <https://huggingface.co/easytpp>`_;
+legacy Gatech-format pickle files remain available from `Google Drive
+<https://drive.google.com/drive/folders/0BwqmV0EcoUc8UklIR1BKV25YR1U?resourcekey=0-OrlU87jyc1m-dVMmY5aC4w>`_.
 
 - Retweet (`Zhou, 2013 <http://proceedings.mlr.press/v28/zhou13.pdf>`_). This dataset contains time-stamped user retweet event sequences.  The events are categorized into 3 types: retweets by “small,” “medium” and “large” users. Small users have fewer than 120 followers, medium users have fewer than 1363, and the rest are large users. We work on a subset of 5200 most active users with an average sequence length of 70.
 - Taxi (`Whong, 2014 <https://chriswhong.com/open-data/foil_nyc_taxi>`_). This dataset tracks the time-stamped taxi pick-up and drop-off events across the five boroughs of the New York City; each (borough, pick-up or drop-off) combination defines an event type, so there are 10 event types in total. We work on a randomly sampled subset of 2000 drivers and each driver has a sequence. We randomly sampled disjoint train, dev and test sets with 1400, 200 and 400 sequences.

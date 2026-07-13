@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Performance validation of EasyTPP models &mdash; EasyTPP 0.0.2 documentation</title>
+  <title>Performance validation of EasyTPP models &mdash; EasyTPP 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c1dcd045"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4d875023"></script>
       <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
@@ -67,6 +67,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#conttime">Conttime</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#real-dataset">Real dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#taxi">Taxi</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="implementation.html">Implementation Details</a></li>
@@ -78,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ref/models.html"> Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/runner.html"> Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/hpo.html"> Hyper-parameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Tf and Torch Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/wrapper.html"> Torch Wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ref/utils.html"> Utilities</a></li>
 </ul>
 
@@ -130,22 +134,10 @@ the best model is selected based on the performance on the valid set, then we re
 <td><p>0.38656</p></td>
 <td><p>200</p></td>
 </tr>
-<tr class="row-odd"><td><p>Tf_NHP</p></td>
-<td><p>-0.85774</p></td>
-<td><p>0.34014</p></td>
-<td><p>0.38806</p></td>
-<td><p>200</p></td>
-</tr>
-<tr class="row-even"><td><p>Torch_AttNHP</p></td>
+<tr class="row-odd"><td><p>Torch_AttNHP</p></td>
 <td><p>-1.02001</p></td>
 <td><p>0.33678</p></td>
 <td><p>0.36782</p></td>
-<td><p>200</p></td>
-</tr>
-<tr class="row-odd"><td><p>Tf_AttNHP</p></td>
-<td><p>-1.02315</p></td>
-<td><p>0.33816</p></td>
-<td><p>0.19456</p></td>
 <td><p>200</p></td>
 </tr>
 <tr class="row-even"><td><p>Torch_AttNHP</p></td>
@@ -154,28 +146,20 @@ the best model is selected based on the performance on the valid set, then we re
 <td><p>0.37723</p></td>
 <td><p>500</p></td>
 </tr>
-<tr class="row-odd"><td><p>Tf_AttNHP</p></td>
+<tr class="row-odd"><td><p>Torch_THP</p></td>
 <td><p>-0.99827</p></td>
 <td><p>0.33717</p></td>
 <td><p>0.36498</p></td>
-<td><p>500</p></td>
-</tr>
-<tr class="row-even"><td><p>Torch_THP</p></td>
-<td><p>-0.99827</p></td>
-<td><p>0.33717</p></td>
-<td><p>0.36498</p></td>
-<td><p>500</p></td>
-</tr>
-<tr class="row-odd"><td><p>Tf_THP</p></td>
-<td><p>-1.01898</p></td>
-<td><p>0.33677</p></td>
-<td><p>0.37875</p></td>
 <td><p>500</p></td>
 </tr>
 </tbody>
 </table>
-<p>## Real dataset
-### Taxi</p>
+</section>
+</section>
+<section id="real-dataset">
+<h2>Real dataset<a class="headerlink" href="#real-dataset" title="Permalink to this heading"></a></h2>
+<section id="taxi">
+<h3>Taxi<a class="headerlink" href="#taxi" title="Permalink to this heading"></a></h3>
 </section>
 </section>
 </section>
@@ -191,7 +175,7 @@ the best model is selected based on the performance on the valid set, then we re
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Machine Intelligence, Alipay.</p>
+    <p>&#169; Copyright 2026, Machine Intelligence, Alipay.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
