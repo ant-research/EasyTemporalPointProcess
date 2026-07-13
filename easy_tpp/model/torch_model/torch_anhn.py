@@ -18,12 +18,12 @@ class ANHN(TorchBaseModel):
         """
         super(ANHN, self).__init__(model_config)
 
-        self.d_time = model_config['time_emb_size']
-        self.use_norm = model_config['use_ln']
+        self.d_time = model_config.time_emb_size
+        self.use_norm = model_config.use_ln
 
-        self.n_layers = model_config['num_layers']
-        self.n_head = model_config['num_heads']
-        self.dropout = model_config['dropout']
+        self.n_layers = model_config.num_layers
+        self.n_head = model_config.num_heads
+        self.dropout = model_config.dropout_rate
 
         self.layer_rnn = nn.LSTM(input_size=self.hidden_size, hidden_size=self.hidden_size, batch_first=True)
 
@@ -230,14 +230,8 @@ class ANHN(TorchBaseModel):
         # [batch_size, seq_len, num_samples, 1, 1]
         sample_dtimes_ = sample_dtimes[:, :, :, None, None]
 
-        states_samples = []
-        seq_len = intensity_base.size()[1]
-        for _ in range(seq_len):
-            states_samples_ = self.compute_states_at_event_times(mu, alpha, delta, base_elapses + sample_dtimes_)
-            states_samples.append(states_samples_)
-
         # [batch_size, seq_len, num_sample, hidden_size]
-        states_samples = torch.stack(states_samples, dim=1)
+        states_samples = self.compute_states_at_event_times(mu, alpha, delta, base_elapses + sample_dtimes_)
         return states_samples
 
     def compute_intensities_at_sample_times(self, time_seqs, time_delta_seqs, type_seqs, sample_dtimes, **kwargs):
