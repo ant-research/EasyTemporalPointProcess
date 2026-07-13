@@ -159,16 +159,20 @@ class IntensityFree(TorchBaseModel):
 
         return context
 
-    def loglike_loss(self, batch):
+    def loglike_loss(self, batch=None, **kwargs):
         """Compute the loglike loss.
 
         Args:
-            batch (list): batch input.
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer HF-style
+                keyword model inputs.
+            **kwargs: HF-style keyword model inputs.
 
         Returns:
             tuple: loglikelihood loss and num of events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _ = batch
+        time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, attention_mask = \
+            self.resolve_batch_inputs(batch, kwargs)
+        batch_non_pad_mask = seq_non_pad_mask
 
         # [batch_size, seq_len, hidden_size]
         context = self.forward(time_delta_seqs[:, :-1], type_seqs[:, :-1])
@@ -255,18 +259,19 @@ class IntensityFree(TorchBaseModel):
             return marked_intensity[:, -1:, :, :]
         return marked_intensity
 
-    def predict_one_step_at_every_event(self, batch):
+    def predict_one_step_at_every_event(self, batch=None, **kwargs):
         """One-step prediction for every event in the sequence.
 
         Args:
-            time_seqs (tensor): [batch_size, seq_len].
-            time_delta_seqs (tensor): [batch_size, seq_len].
-            type_seqs (tensor): [batch_size, seq_len].
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer passing
+                model inputs as keywords.
+            **kwargs: HF-style keyword model inputs.
 
         Returns:
             tuple: tensors of dtime and type prediction, [batch_size, seq_len].
         """
-        time_seq, time_delta_seq, event_seq, batch_non_pad_mask, _ = batch
+        time_seq, time_delta_seq, event_seq, batch_non_pad_mask, _ = \
+            self.resolve_batch_inputs(batch, kwargs)
 
         # remove the last event, as the prediction based on the last event has no label
         # time_delta_seq should start from 1, because the first one is zero

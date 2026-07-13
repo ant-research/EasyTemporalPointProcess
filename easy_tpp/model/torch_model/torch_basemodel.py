@@ -1,5 +1,8 @@
 """ Base model with common functionality  """
 
+import warnings
+from collections.abc import Mapping
+
 import torch
 from torch import nn
 from torch.nn import functional as F
@@ -57,6 +60,34 @@ class TorchBaseModel(nn.Module):
                 return subclass(model_config)
 
         raise RuntimeError('No model named ' + model_id)
+
+    @staticmethod
+    def resolve_batch_inputs(batch=None, kwargs=None):
+        """Normalize model inputs.
+
+        Returns (time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask,
+        attention_mask). Accepts HF-style keyword arguments; a dict or
+        BatchEncoding; or the legacy positional tuple/list (deprecated).
+        """
+        kwargs = kwargs or {}
+        input_names = ('time_seqs', 'time_delta_seqs', 'type_seqs',
+                       'seq_non_pad_mask', 'attention_mask')
+
+        if batch is None or isinstance(batch, Mapping):
+            inputs = kwargs if batch is None else batch
+            values = [inputs.get(name) for name in input_names]
+            if values[3] is None:
+                values[3] = inputs.get('batch_non_pad_mask')
+            return tuple(values)
+
+        warnings.warn(
+            'Passing a positional batch to a model is deprecated; pass keyword inputs '
+            '(model.loglike_loss(**batch)) instead.',
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        values = tuple(batch)
+        return (values + (None,) * len(input_names))[:len(input_names)]
 
     @staticmethod
     def get_logits_at_last_step(logits, batch_non_pad_mask, sample_len=None):
@@ -147,18 +178,20 @@ class TorchBaseModel(nn.Module):
     def compute_states_at_sample_times(self, **kwargs):
         raise NotImplementedError('This need to implemented in inherited class ! ')
 
-    def predict_one_step_at_every_event(self, batch):
+    def predict_one_step_at_every_event(self, batch=None, **kwargs):
         """One-step prediction for every event in the sequence.
 
         Args:
-            time_seqs (tensor): [batch_size, seq_len].
-            time_delta_seqs (tensor): [batch_size, seq_len].
-            type_seqs (tensor): [batch_size, seq_len].
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer passing
+                time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, and
+                attention_mask as keyword inputs.
+            **kwargs: HF-style keyword model inputs.
 
         Returns:
             tuple: tensors of dtime and type prediction, [batch_size, seq_len].
         """
-        time_seq, time_delta_seq, event_seq, batch_non_pad_mask, _ = batch
+        time_seq, time_delta_seq, event_seq, batch_non_pad_mask, _ = \
+            self.resolve_batch_inputs(batch, kwargs)
 
         # remove the last event, as the prediction based on the last event has no label
         # note: the first dts is 0
@@ -201,22 +234,23 @@ class TorchBaseModel(nn.Module):
         dtimes_pred = torch.sum(accepted_dtimes * weights, dim=-1)  # compute the expected next event time
         return dtimes_pred, types_pred
 
-    def predict_multi_step_since_last_event(self, batch, forward=False):
+    def predict_multi_step_since_last_event(self, batch=None, forward=False, **kwargs):
         """Multi-step prediction since last event in the sequence.
 
         Args:
-            batch (tuple): A tuple containing:
-                - time_seq_label (tensor): Timestamps of events [batch_size, seq_len].
-                - time_delta_seq_label (tensor): Time intervals between events [batch_size, seq_len].
-                - event_seq_label (tensor): Event types [batch_size, seq_len].
-                - batch_non_pad_mask_label (tensor): Mask for non-padding elements [batch_size, seq_len].
-                - attention_mask (tensor): Mask for attention [batch_size, seq_len].
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer passing
+                time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, and
+                attention_mask as keyword inputs.
             forward (bool, optional): Whether to use the entire sequence for prediction. Defaults to False.
+            **kwargs: HF-style keyword model inputs.
 
         Returns:
             tuple: tensors of dtime and type prediction, [batch_size, seq_len].
         """
-        time_seq_label, time_delta_seq_label, event_seq_label, batch_non_pad_mask, _ = batch
+        time_seq_label, time_delta_seq_label, event_seq_label, batch_non_pad_mask, _ = \
+            self.resolve_batch_inputs(batch, kwargs)
+        if batch_non_pad_mask is None:
+            raise ValueError('seq_non_pad_mask is required for multi-step prediction.')
 
         num_step = self.gen_config.num_step_gen
         true_lengths = batch_non_pad_mask.sum(dim=-1)

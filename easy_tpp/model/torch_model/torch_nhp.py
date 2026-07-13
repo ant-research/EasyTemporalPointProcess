@@ -167,16 +167,21 @@ class NHP(TorchBaseModel):
                                       sample_dts[..., None])
         return h_ts
 
-    def loglike_loss(self, batch):
+    def loglike_loss(self, batch=None, **kwargs):
         """Compute the log-likelihood loss.
 
         Args:
-            batch (list): batch input.
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer HF-style
+                keyword model inputs.
+            **kwargs: HF-style keyword model inputs.
 
         Returns:
             tuple: loglikelihood loss and num of events.
         """
-        ts_BN, dts_BN, marks_BN, batch_non_pad_mask, _ = batch
+        time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, attention_mask = \
+            self.resolve_batch_inputs(batch, kwargs)
+        ts_BN, dts_BN, marks_BN, batch_non_pad_mask = \
+            time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask
 
         # 1. compute hidden states at event time
         # left limits of [t_1, ..., t_N]

@@ -204,16 +204,20 @@ class ODETPP(TorchBaseModel):
 
         return left_limits, right_limits
 
-    def loglike_loss(self, batch):
+    def loglike_loss(self, batch=None, **kwargs):
         """Compute the loglike loss.
 
         Args:
-            batch (list): batch input.
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer HF-style
+                keyword model inputs.
+            **kwargs: HF-style keyword model inputs.
 
         Returns:
             list: loglike loss, num events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _ = batch
+        time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, attention_mask = \
+            self.resolve_batch_inputs(batch, kwargs)
+        batch_non_pad_mask = seq_non_pad_mask
 
         # compute hidden states at event time
         # left limits of [t_1, ..., t_N]

@@ -211,7 +211,10 @@ class S2P2(TorchBaseModel):
         # 'seq_len' right limit for [t_0, t_1, ..., t_{N-1}, t_N] for events xs or us
         return ret_val
 
-    def loglike_loss(self, batch, **kwargs):
+    def loglike_loss(self, batch=None, **kwargs):
+        time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, attention_mask = \
+            self.resolve_batch_inputs(batch, kwargs)
+        batch = (time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, attention_mask)
         # hidden states at the left and right limits around event time; note for the shift by 1 in indices:
         # consider a sequence [t0, t1, ..., tN]
         # Produces the following:

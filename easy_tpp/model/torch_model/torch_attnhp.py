@@ -196,16 +196,20 @@ class AttNHP(TorchBaseModel):
 
         return cur_layer_
 
-    def loglike_loss(self, batch):
+    def loglike_loss(self, batch=None, **kwargs):
         """Compute the loglike loss.
 
         Args:
-            batch (list): batch input.
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer HF-style
+                keyword model inputs.
+            **kwargs: HF-style keyword model inputs.
 
         Returns:
             list: loglike loss, num events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, attention_mask = batch
+        time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, attention_mask = \
+            self.resolve_batch_inputs(batch, kwargs)
+        batch_non_pad_mask = seq_non_pad_mask
         # 1. compute event-loglik
         # the prediction of last event has no label, so we proceed to the last but one
         # att mask => diag is False, not mask.

@@ -106,7 +106,11 @@ class TorchModelWrapper:
             for prediction we return prediction.
         """
 
-        batch = batch.to(self.device).values()
+        if hasattr(batch, 'to'):
+            batch = batch.to(self.device)
+        else:
+            batch = {key: value.to(self.device) if hasattr(value, 'to') else value
+                     for key, value in batch.items()}
         if phase in (RunnerPhase.TRAIN, RunnerPhase.VALIDATE):
             # set mode to train
             is_training = (phase == RunnerPhase.TRAIN)
@@ -116,7 +120,7 @@ class TorchModelWrapper:
             grad_flag = is_training if not self.model_id == 'FullyNN' else True
             # run model
             with torch.set_grad_enabled(grad_flag):
-                loss, num_event = self.model.loglike_loss(batch)
+                loss, num_event = self.model.loglike_loss(**batch)
 
             # Assume we dont do prediction on train set
             pred_dtime, pred_type, label_dtime, label_type, mask = None, None, None, None, None
@@ -130,16 +134,18 @@ class TorchModelWrapper:
                 if self.model.event_sampler:
                     self.model.eval()
                     with torch.no_grad():
-                        if batch[1] is not None and batch[2] is not None:
-                            label_dtime, label_type = batch[1][:, 1:].cpu().numpy(), batch[2][:, 1:].cpu().numpy()
-                        if batch[3] is not None:
-                            mask = batch[3][:, 1:].cpu().numpy()
-                        pred_dtime, pred_type = self.model.predict_one_step_at_every_event(batch=batch)
+                        if batch['time_delta_seqs'] is not None and batch['type_seqs'] is not None:
+                            label_dtime = batch['time_delta_seqs'][:, 1:].cpu().numpy()
+                            label_type = batch['type_seqs'][:, 1:].cpu().numpy()
+                        if batch['seq_non_pad_mask'] is not None:
+                            mask = batch['seq_non_pad_mask'][:, 1:].cpu().numpy()
+                        pred_dtime, pred_type = self.model.predict_one_step_at_every_event(**batch)
                         pred_dtime = pred_dtime.detach().cpu().numpy()
                         pred_type = pred_type.detach().cpu().numpy()
             return loss.item(), num_event, (pred_dtime, pred_type), (label_dtime, label_type), (mask,)
         else:
-            pred_dtime, pred_type, label_dtime, label_type = self.model.predict_multi_step_since_last_event(batch=batch)
+            pred_dtime, pred_type, label_dtime, label_type = \
+                self.model.predict_multi_step_since_last_event(**batch)
             pred_dtime = pred_dtime.detach().cpu().numpy()
             pred_type = pred_type.detach().cpu().numpy()
             label_dtime = label_dtime.detach().cpu().numpy()

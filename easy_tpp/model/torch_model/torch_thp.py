@@ -78,16 +78,20 @@ class THP(TorchBaseModel):
 
         return enc_output
 
-    def loglike_loss(self, batch):
+    def loglike_loss(self, batch=None, **kwargs):
         """Compute the loglike loss.
 
         Args:
-            batch (tuple, list): batch input.
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer HF-style
+                keyword model inputs.
+            **kwargs: HF-style keyword model inputs.
 
         Returns:
             tuple: loglike loss, num events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, attention_mask = batch
+        time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, attention_mask = \
+            self.resolve_batch_inputs(batch, kwargs)
+        batch_non_pad_mask = seq_non_pad_mask
 
         # 1. compute event-loglik
         # [batch_size, seq_len, hidden_size]

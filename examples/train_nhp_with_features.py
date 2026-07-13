@@ -1,4 +1,5 @@
 import random
+from collections.abc import Mapping
 from typing import Optional, Union, Dict, Any
 
 import numpy as np
@@ -297,16 +298,28 @@ class NHPV2(NHP):
 
         return hiddens_stack, decay_states_stack
 
-    def loglike_loss(self, batch):
+    def loglike_loss(self, batch=None, **kwargs):
         """Compute the loglike loss.
 
         Args:
-            batch (list): batch input.
+            batch (Mapping or tuple, optional): Legacy batch input. Prefer HF-style
+                keyword model inputs.
+            **kwargs: HF-style keyword model inputs, including loan_amt_seqs and
+                type_mask.
 
         Returns:
             list: loglike loss, num events.
         """
-        time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _, type_mask, loan_amt_seq = batch
+        if batch is None or isinstance(batch, Mapping):
+            inputs = kwargs if batch is None else batch
+            time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, attention_mask = \
+                self.resolve_batch_inputs(batch, kwargs)
+            type_mask = inputs.get('type_mask')
+            loan_amt_seq = inputs.get('loan_amt_seqs')
+            batch = (time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask,
+                     attention_mask, type_mask, loan_amt_seq)
+        else:
+            time_seqs, time_delta_seqs, type_seqs, batch_non_pad_mask, _, type_mask, loan_amt_seq = batch
 
         hiddens_ti, decay_states = self.forward(batch)
 
@@ -392,7 +405,7 @@ def main():
         total_num_event = 0
         for batch in data_loader:
             with torch.set_grad_enabled(True):
-                batch_loss, batch_num_event = model.loglike_loss(batch = batch.values())
+                batch_loss, batch_num_event = model.loglike_loss(**batch)
 
             opt.zero_grad()
             batch_loss.backward()

@@ -472,7 +472,7 @@ class WSMTHP(TorchBaseModel):
         loss = -ll
         return loss, num_events
 
-    def loglike_loss(self, batch):
+    def loglike_loss(self, batch=None, **kwargs):
         """Compute the WSM training loss.
 
         Required by EasyTPP's TorchModelWrapper.run_batch().
@@ -480,16 +480,20 @@ class WSMTHP(TorchBaseModel):
         objective (NOT log-likelihood). See module docstring for details.
 
         Args:
-            batch: tuple unpacked from a BatchEncoding
-                   (time_seqs, time_delta_seqs, type_seqs, non_pad_mask, attn_mask)
+            batch: Legacy mapping or positional batch. Prefer HF-style keyword
+                   model inputs.
+            **kwargs: HF-style keyword model inputs.
         Returns:
             loss:       scalar Tensor (WSM + CE mark loss)
             num_events: int, number of real (non-padded) events in the batch
         """
-        if not self.training:
-            return self.nll_loss(batch)
+        time_seqs, time_delta_seqs, type_seqs, seq_non_pad_mask, attention_mask = \
+            self.resolve_batch_inputs(batch, kwargs)
+        non_pad_mask = seq_non_pad_mask
+        resolved_batch = (time_seqs, time_delta_seqs, type_seqs, non_pad_mask, attention_mask)
 
-        time_seqs, time_delta_seqs, type_seqs, non_pad_mask, _ = batch
+        if not self.training:
+            return self.nll_loss(resolved_batch)
 
         non_pad_mask_f = non_pad_mask.float()              # [B, N]
         non_pad_mask_3d = non_pad_mask_f.unsqueeze(-1)    # [B, N, 1]
