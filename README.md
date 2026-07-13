@@ -37,6 +37,7 @@
 ## News
 <span id='news'/>
 
+- ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [04-10-2026] Added the implementation of the [WSMTHP](https://arxiv.org/abs/2410.04037) model, based on the WSM method presented at NeurIPS'2024.
 - ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [11-06-2025] We have released a new version of ``EasyTPP`` that exclusively supports PyTorch. TensorFlow support has been removed to streamline the codebase and focus on PyTorch-based implementations.
 - ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [11-05-2025] Added the implementation of the [S2P2](https://openreview.net/pdf?id=74SvE2GZwW) model, presented at NeurIPS'2025.
 - ![new](https://img.alicdn.com/imgextra/i4/O1CN01kUiDtl1HVxN6G56vN_!!6000000000764-2-tps-43-19.png) [02-17-2024] ``EasyTPP`` supports HuggingFace dataset API: all datasets have been published in [HuggingFace Repo](https://huggingface.co/easytpp) and see [tutorial notebook](https://github.com/ant-research/EasyTemporalPointProcess/blob/main/notebooks/easytpp_1_dataset.ipynb) for an example of usage.
@@ -78,8 +79,9 @@ We provide reference implementations of various state-of-the-art TPP papers:
 |  5  |   ICML'20   |      THP      | [Transformer Hawkes process](https://arxiv.org/abs/2002.09291)                                                                           | [PyTorch](easy_tpp/model/torch_model/torch_thp.py)                                                                         |
 |  6  |   ICLR'20   | IntensityFree | [Intensity-Free Learning of Temporal Point Processes](https://arxiv.org/abs/1909.12127)                                                  | [PyTorch](easy_tpp/model/torch_model/torch_intensity_free.py)                                                              |
 |  7  |   ICLR'21   |    ODETPP     | [Neural Spatio-Temporal Point Processes (simplified)](https://arxiv.org/abs/2011.04583)                                                  | [PyTorch](easy_tpp/model/torch_model/torch_ode_tpp.py)                                                                     |
-|  8  |   ICLR'22   |    AttNHP     | [Transformer Embeddings of Irregularly Spaced Events and Their Participants](https://arxiv.org/abs/2201.00044)                           | [PyTorch](easy_tpp/model/torch_model/torch_attnhp.py)                                                                     |
-|  9  |   NeurIPS'25   |    S2P2     | [Deep Continuous-Time State-Space Models for Marked Event Sequences](https://openreview.net/pdf?id=74SvE2GZwW)   | [PyTorch](easy_tpp/model/torch_model/torch_s2p2.py)                                                                     |
+|  8  |   ICLR'22   |    AttNHP     | [Transformer Embeddings of Irregularly Spaced Events and Their Participants](https://arxiv.org/abs/2201.00044)                           | [PyTorch](easy_tpp/model/torch_model/torch_attnhp.py)                                                                      |
+|  9  | NeurIPS'24  |    WSMTHP     | [Is Score Matching Suitable for Estimating Point Processes?](https://arxiv.org/abs/2410.04037)                                           | [PyTorch](easy_tpp/model/torch_model/torch_wsm_thp.py)                                                                     |
+| 10  | NeurIPS'25  |     S2P2      | [Deep Continuous-Time State-Space Models for Marked Event Sequences](https://openreview.net/pdf?id=74SvE2GZwW)                           | [PyTorch](easy_tpp/model/torch_model/torch_s2p2.py)                                                                        |
 
 
 
