@@ -279,4 +279,4 @@ The following repositories are used in `EasyTPP`, either in close to original fo
 ## Star History <a href='#top'>[Back to Top]</a>
 <span id='star-history'/>
 
-![Star History Chart](https://api.star-history.com/svg?repos=ant-research/EasyTemporalPointProcess&type=Date)
+![Star History Chart](https://star-history.dera.page/svg?repos=ant-research/EasyTemporalPointProcess&type=Date)
