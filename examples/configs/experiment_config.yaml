@@ -694,6 +694,45 @@ S2P2_train:
       relative_time: True  # If True, predicts the scaling factor to be applied to the dynamics between each pair of subsequent events. See Sec. 3.3 of the paper.
 
 
+# ITHP: Interpretable Transformer Hawkes Process (KDD 2024)
+# Architecture adapted from https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process
+# This Taobao example uses the selected width, LR, and epoch budget. The
+# reported runs also used Adam epsilon 1e-5 and gradient-norm clipping at 1;
+# stock EasyTPP does not apply those settings.
+ITHP_train:
+  base_config:
+    stage: train
+    backend: torch
+    dataset_id: taobao
+    runner_id: std_tpp
+    model_id: ITHP
+    base_dir: './checkpoints/'
+  trainer_config:
+    batch_size: 16
+    max_epoch: 300
+    shuffle: False
+    optimizer: adam
+    learning_rate: 5.e-4
+    valid_freq: 1
+    use_tfb: False
+    metrics: null
+    seed: 2019
+    gpu: -1
+  model_config:
+    hidden_size: 16
+    num_layers: 1
+    dropout_rate: 0.0
+    loss_integral_num_sample_per_step: 20
+    model_specs:
+      d_inner: 128
+      d_k: 16
+      d_v: 32
+      integration_method: mc
+      query_chunk_size: 256
+      use_type_loss: true
+      type_loss_weight: 0.5
+
+
 # WSM-THP: Weighted Score Matching Temporal Hawkes Process
 # Ref: "Is Score Matching Suitable for Estimating Point Processes?" NeurIPS 2024
 # https://arxiv.org/abs/2512.04617
