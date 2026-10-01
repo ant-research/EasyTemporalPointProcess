@@ -699,6 +699,8 @@ S2P2_train:
 # This Taobao example uses the selected width, LR, and epoch budget. The
 # reported runs also used Adam epsilon 1e-5 and gradient-norm clipping at 1;
 # stock EasyTPP does not apply those settings.
+# The reported runs used 20 random samples/interval for training and
+# validation, then 100 samples/interval for held-out test log likelihood.
 ITHP_train:
   base_config:
     stage: train

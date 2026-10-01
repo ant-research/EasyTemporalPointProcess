@@ -105,50 +105,78 @@ class ITHP(BaseModel):
     """Interpretable Transformer Hawkes Process, public-code architecture.
 
     Paper: Meng et al., KDD 2024, https://arxiv.org/abs/2405.16059
+    Relevant pages: https://arxiv.org/pdf/2405.16059#page=3 (Sec. 4.1),
+    https://arxiv.org/pdf/2405.16059#page=4 (Secs. 4.2-4.3),
+    https://arxiv.org/pdf/2405.16059#page=5 (Secs. 4.4-4.5), and
+    https://arxiv.org/pdf/2405.16059#page=9 (Sec. 5.4).
     Authors' code, pinned at commit 5db1bb78f3323667e2cef478e177cd35971c4b43:
     https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process
 
-    Source-to-implementation map:
+    Paper-to-code decisions (line references are to the pinned source below):
 
-    * Paper Sec. 4.1/Eq. (3) concatenates sinusoidal time and learned type
-      embeddings; Sec. 4.2/Eqs. (4)-(5) use unprojected queries and keys.
-      See public ``transformer/Models.py`` lines 50-106 and
-      ``transformer/SubLayers.py`` lines 194-236. This class retains both.
-    * Public ``Models.Encoder`` passes ``n_head`` to ``EncoderLayer``, but its
-      active ``dynamic_v_attention`` never reads that argument. The separate
-      ``MultiHeadAttention`` class is not called by ``EncoderLayer``. See
+    * Retained from paper Sec. 4.1/Eq. (3): concatenate sinusoidal time and
+      learned type embeddings. Sec. 4.2/Eqs. (4)-(5): unprojected queries and
+      keys with projected values. Public ``Models.py`` lines 50-106 and
+      ``SubLayers.py`` lines 194-236 implement these choices too.
+    * The paper's Eqs. (4)-(5) have one attention matrix and do not specify
+      a head-count hyperparameter. Public ``Models.Encoder`` passes ``n_head``
+      to ``EncoderLayer``, but the active ``dynamic_v_attention`` never uses
+      it; the separate ``MultiHeadAttention`` class is inactive. See public
       ``Models.py`` lines 50-68, ``Layers.py`` lines 9-23, and
       ``SubLayers.py`` lines 13-69 and 194-236. ``Main.py`` line 258 defaults
-      to one head. This model has one attention map by construction; EasyTPP's
-      generic ``num_heads`` setting (default 2) has no effect here.
-    * Paper Eq. (7) decodes the weighted value sum directly and scales its
-      dot product by sqrt(2M). The public attention instead scales by
-      sqrt(d_k), then applies a projection, residual, layer norm, and feed-
-      forward block before its type-specific softplus decoder. See public
-      ``SubLayers.py`` lines 194-301, ``Layers.py`` lines 9-23, and
-      ``Models.py`` lines 203-236. We follow that executed decoder, so its
-      attention weights are not an exact additive Hawkes-kernel decomposition.
-    * Paper Sec. 4.5/Eq. (8) describes numerical integration on a fine grid.
-      Public ``Utils.gen_Xne`` lines 104-142 builds a batch-wide 0.1 grid;
-      ``Main.py`` lines 62-72 passes it to ``Models.Transformer.forward``,
-      which sums its intensities (lines 203-236). Here the loss is
-      conditional on the first event and integrates each observed interval:
-      ``integration_method='mc'`` draws independent uniform times (default),
-      ``'trapezoid'`` uses evenly spaced nodes including endpoints, and
-      ``'fixed_grid'`` uses per-interval midpoint cells. This matches the
-      random MC path used by our EasyTPP experiments, not the authors'
-      active 0.1-grid script. Public ``Utils.py`` lines 42-59 contain a
-      separate MC helper, but the active ``Main.py`` path does not call it.
-    * Paper Sec. 4.5 specifies MLE; public ``Main.py`` lines 62-115 adds
-      0.5 times next-type cross entropy during training. We keep that term
-      during training only; validation/test loss is point-process NLL.
-    * Public ``Models.get_subsequent_mask`` (lines 28-36) masks the diagonal
-      and all later keys; ``dynamic_v_attention`` (``SubLayers.py`` lines
-      222-227) softmaxes the fully masked first row.
-      Here an empty-history row has zero attention, and EasyTPP's likelihood
-      scores events only after the first.
+      to one head. We therefore have one attention map and ignore EasyTPP's
+      generic ``num_heads`` setting (whose default is 2).
+    * Paper Eq. (5) scales the 2M-wide query/key dot product by sqrt(2M).
+      Public ``dynamic_v_attention`` instead divides by sqrt(d_k)
+      (``SubLayers.py`` line 222). We retain the executed public rule so the
+      released architecture and our saved checkpoints have the same scores.
+    * Paper Eq. (7) writes a type-specific softplus head directly on the
+      attention-weighted value sum. However, paper Sec. 5.4 explicitly says
+      the encoder keeps a skip connection and requires M_V=2M; Eq. (7) does
+      not show how that connection enters the intensity. Public code resolves
+      this ambiguity with a projection, query residual, layer norm, and GELU
+      feed-forward block before the type-specific decoder (``SubLayers.py``
+      lines 194-301; ``Layers.py`` lines 9-23; ``Models.py`` lines 203-236).
+      We use that executed path, including its forced single encoder layer
+      (``Models.py`` lines 65-68), rather than silently inventing an Eq. (7)
+      variant. Its intensity does not have Eq. (7)'s exact additive form.
+    * Paper Sec. 4.4/Eq. (7) defines a marked intensity at event and
+      non-event times using only preceding events as keys. Public
+      ``Models.Transformer.forward`` loops over candidate types (lines
+      203-236) and excludes grid points as keys (``Models.py`` lines 83-96).
+      We vectorize the same candidate-type computation, using
+      EasyTPP's zero-based marks instead of the public code's one-based marks.
+    * Paper Sec. 4.5/Eq. (8) scores events from the beginning of each
+      sequence and integrates on [0,T] using an unspecified sufficiently
+      fine grid. Public ``Utils.gen_Xne`` (lines 104-142) instead makes a
+      batch-wide 0.1 grid and shifts time by the batch minimum; ``Main.py``
+      lines 62-72 passes it to ``Models.Transformer.forward``. We condition
+      on the first observed event, as EasyTPP baselines do, and integrate
+      each sequence's observed intervals separately to remove dependence
+      on unrelated batch members. No batch-wide time shift is applied.
+    * For that integral, ``integration_method='mc'`` draws independent
+      uniform times per interval by default; ``'trapezoid'`` uses evenly
+      spaced nodes and ``'fixed_grid'`` uses per-interval midpoint cells.
+      This replaces the authors' active 0.1 grid, but retains the stochastic
+      sampler of our original EasyTPP runs. The separate public MC helper
+      (``Utils.py`` lines 42-59) is not called by the active ``Main.py`` path.
+      Our reported runs used 20 draws per interval for training/validation
+      and 100 for test likelihood; sample counts are an approximation choice,
+      not a number specified by paper Sec. 4.5. Even ``fixed_grid`` with
+      ``grid_step=0.1`` is a per-interval midpoint rule, not a reproduction
+      of the public batch-wide grid.
+    * Paper Eq. (8) describes maximum likelihood alone. Public ``Main.py``
+      lines 62-115 adds 0.5 times next-type cross entropy in training. We
+      retain that public training term but report pure point-process NLL on
+      validation/test. Public ``Main.py`` lines 32-47 and 177-208 select a
+      checkpoint using test LL; EasyTPP instead selects by validation LL,
+      keeping the test split held out.
+    * Paper Eqs. (5) and (7) require strictly preceding events. Public
+      ``Models.get_subsequent_mask`` (lines 28-36) masks the entire first
+      row, then ``dynamic_v_attention`` softmaxes its finite mask values
+      (``SubLayers.py`` lines 222-227). We zero empty-history attention and
+      do not score the first event, avoiding future leakage at that row.
 
-    Event indexing and padding follow EasyTPP.
     Select the integration rule through ``model_specs.integration_method``;
     EasyTPP serializes that field but omits ``use_mc_samples`` and ``num_heads``.
 
@@ -227,8 +255,10 @@ class ITHP(BaseModel):
         if self.d_inner <= 0 or self.d_k <= 0 or self.d_v <= 0:
             raise ValueError("ITHP d_inner, d_k, and d_v must be positive.")
         if self.n_layers != 1:
+            # Public Models.Encoder forces one layer, despite its n_layers arg.
             raise ValueError("Released ITHP supports num_layers == 1.")
         if self.d_v != 2 * self.d_model:
+            # Paper Sec. 5.4 states that the skip connection requires M_V=2M.
             raise ValueError("Released ITHP requires d_v == 2 * hidden_size.")
         if self.integration_method not in self.SUPPORTED_INTEGRATION_METHODS:
             supported = ", ".join(sorted(self.SUPPORTED_INTEGRATION_METHODS))
@@ -295,6 +325,8 @@ class ITHP(BaseModel):
 
     @staticmethod
     def _build_history_mask(source_mask, history_indices, query_mask):
+        # Paper Eqs. (5)/(7) use only prior events; zero-history rows are
+        # handled in _ITHPDynamicValueAttention instead of softmaxing -1e9.
         source_positions = torch.arange(
             source_mask.size(1),
             device=source_mask.device,
@@ -705,6 +737,8 @@ class ITHP(BaseModel):
         if time_seqs.size(1) < 2:
             raise ValueError("ITHP requires sequences with at least two events.")
 
+        # EasyTPP compares conditional LL after the first observed event.
+        # Paper Eq. (8) instead writes the full [0,T] sequence likelihood.
         target_mask = batch_non_pad_mask[:, 1:].bool()
         lambda_at_event = self.forward(
             time_seqs=time_seqs,
