@@ -137,14 +137,18 @@ class ITHP(BaseModel):
       ``'trapezoid'`` uses evenly spaced nodes including endpoints, and
       ``'fixed_grid'`` uses per-interval midpoint cells. This matches the
       random MC path used by our EasyTPP experiments, not the authors'
-      active 0.1-grid script. Public ``Utils.py`` lines 42-59 contains a
+      active 0.1-grid script. Public ``Utils.py`` lines 42-59 contain a
       separate MC helper, but the active ``Main.py`` path does not call it.
     * Paper Sec. 4.5 specifies MLE; public ``Main.py`` lines 62-115 adds
       0.5 times next-type cross entropy during training. We keep that term
       during training only; validation/test loss is point-process NLL.
+    * Public ``Models.get_subsequent_mask`` (lines 28-36) masks the diagonal
+      and all later keys; ``dynamic_v_attention`` (``SubLayers.py`` lines
+      222-227) softmaxes the fully masked first row.
+      Here an empty-history row has zero attention, and EasyTPP's likelihood
+      scores events only after the first.
 
-    Event indexing and padding follow EasyTPP. We score events after the first
-    and mask all-history-empty queries, avoiding first-event future leakage.
+    Event indexing and padding follow EasyTPP.
     Select the integration rule through ``model_specs.integration_method``;
     EasyTPP serializes that field but omits ``use_mc_samples`` and ``num_heads``.
 
