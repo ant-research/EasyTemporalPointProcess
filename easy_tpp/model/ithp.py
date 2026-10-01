@@ -128,8 +128,7 @@ class ITHP(BaseModel):
       generic ``num_heads`` setting (whose default is 2).
     * Paper Eq. (5) scales the 2M-wide query/key dot product by sqrt(2M).
       Public ``dynamic_v_attention`` instead divides by sqrt(d_k)
-      (``SubLayers.py`` line 222). We retain the executed public rule so the
-      released architecture and our saved checkpoints have the same scores.
+      (``SubLayers.py`` line 222). We follow the executed public rule.
     * Paper Eq. (7) writes a type-specific softplus head directly on the
       attention-weighted value sum. However, paper Sec. 5.4 explicitly says
       the encoder keeps a skip connection and requires M_V=2M; Eq. (7) does
@@ -157,9 +156,10 @@ class ITHP(BaseModel):
     * For that integral, ``integration_method='mc'`` draws independent
       uniform times per interval by default; ``'trapezoid'`` uses evenly
       spaced nodes and ``'fixed_grid'`` uses per-interval midpoint cells.
-      This replaces the authors' active 0.1 grid, but retains the stochastic
-      sampler of our original EasyTPP runs. The separate public MC helper
-      (``Utils.py`` lines 42-59) is not called by the active ``Main.py`` path.
+      This replaces the authors' active batch-wide 0.1 grid with a
+      per-interval approximation independent of other batch members. The
+      separate public MC helper (``Utils.py`` lines 42-59) is not called by
+      the active ``Main.py`` path.
       Our reported runs used 20 draws per interval for training/validation
       and 100 for test likelihood; sample counts are an approximation choice,
       not a number specified by paper Sec. 4.5. Even ``fixed_grid`` with
@@ -182,8 +182,7 @@ class ITHP(BaseModel):
 
     Our reported runs used Adam epsilon 1e-5 and gradient-norm clipping at 1.
     EasyTPP's standard runner does not apply those settings, so fresh training
-    here does not exactly reproduce that training path. Saved checkpoints load
-    unchanged.
+    here does not exactly reproduce that training path.
 
     Pinned code for the line references above:
     https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/transformer/Models.py
@@ -191,7 +190,6 @@ class ITHP(BaseModel):
     https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/transformer/SubLayers.py
     https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/Main.py
     https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/Utils.py
-    Our prior MC sampler: https://github.com/andrewwarrington/HHP/blob/76fbcf00c33f3d2d8e937c5984e9a1e17b218cde/EasyTPP/easy_tpp/model/torch_model/torch_basemodel.py#L170-L197
     """
 
     SUPPORTED_INTEGRATION_METHODS = {"mc", "trapezoid", "fixed_grid"}
@@ -292,7 +290,7 @@ class ITHP(BaseModel):
         """Draw random MC times or fixed trapezoid nodes per interval.
 
         Upstream EasyTPP's BaseModel currently returns ``linspace`` for both
-        modes; overriding it preserves the stochastic rule of our runs.
+        modes; overriding it implements the selected integration method.
         """
         if self.use_mc_samples:
             ratios = torch.rand(
