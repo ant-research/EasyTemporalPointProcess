@@ -72,6 +72,26 @@ def test_mc_is_random_and_trapezoid_is_fixed():
     assert torch.equal(trapezoid_model.make_dtime_loss_samples(dtimes), expected)
 
 
+def test_legacy_num_heads_setting_does_not_change_active_attention():
+    one_head_config = make_config('fixed_grid')
+    one_head_config.num_heads = 1
+    four_head_config = make_config('fixed_grid')
+    four_head_config.num_heads = 4
+
+    torch.manual_seed(13)
+    one_head_model = ITHP(one_head_config).eval()
+    torch.manual_seed(13)
+    four_head_model = ITHP(four_head_config).eval()
+
+    for key, value in one_head_model.state_dict().items():
+        torch.testing.assert_close(value, four_head_model.state_dict()[key])
+    batch = make_batch()
+    torch.testing.assert_close(
+        one_head_model(batch['time_seqs'], batch['type_seqs'], batch['seq_non_pad_mask']),
+        four_head_model(batch['time_seqs'], batch['type_seqs'], batch['seq_non_pad_mask']),
+    )
+
+
 def test_padding_does_not_change_valid_likelihood():
     model = ITHP(make_config())
     model.eval()

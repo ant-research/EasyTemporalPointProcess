@@ -721,6 +721,8 @@ ITHP_train:
   model_config:
     hidden_size: 16
     num_layers: 1
+    # The public CLI defaults to n_head=1, but its active attention ignores it.
+    # ITHP has one attention map and does not use EasyTPP's num_heads setting.
     dropout_rate: 0.0
     loss_integral_num_sample_per_step: 20
     model_specs:

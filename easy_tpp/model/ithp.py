@@ -25,10 +25,12 @@ class _ITHPPositionwiseFeedForward(nn.Module):
 
 
 class _ITHPDynamicValueAttention(nn.Module):
-    """ITHP attention without learned query or key projections."""
+    """Public-code attention: direct query/key dot product, one attention map."""
 
     def __init__(self, d_model, d_k, d_v, dropout):
         super().__init__()
+        # Released SubLayers.dynamic_v_attention scales by sqrt(d_k), whereas
+        # paper Eqs. (4)-(5) use sqrt(2M) for the concatenated query/key.
         self.scale = math.sqrt(d_k)
         self.w_vs = nn.Linear(2 * d_model, d_v, bias=False)
         self.fc = nn.Linear(d_v, 2 * d_model)
@@ -100,20 +102,64 @@ class _ITHPEncoderLayer(nn.Module):
 
 
 class ITHP(BaseModel):
-    """Interpretable Transformer Hawkes Process.
+    """Interpretable Transformer Hawkes Process, public-code architecture.
 
-    The architecture follows the KDD 2024 authors' public implementation:
+    Paper: Meng et al., KDD 2024, https://arxiv.org/abs/2405.16059
+    Authors' code, pinned at commit 5db1bb78f3323667e2cef478e177cd35971c4b43:
     https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process
-    Paper: https://arxiv.org/abs/2405.16059
-    Event indexing, padding, likelihood evaluation, and sampling are adapted
-    to EasyTPP. Attention has one head by construction; ``num_heads`` is not
-    used. Select integration with ``model_specs.integration_method`` so the
-    choice survives EasyTPP's config serialization.
+
+    Source-to-implementation map:
+
+    * Paper Sec. 4.1/Eq. (3) concatenates sinusoidal time and learned type
+      embeddings; Sec. 4.2/Eqs. (4)-(5) use unprojected queries and keys.
+      See public ``transformer/Models.py`` lines 50-106 and
+      ``transformer/SubLayers.py`` lines 194-236. This class retains both.
+    * Public ``Models.Encoder`` passes ``n_head`` to ``EncoderLayer``, but its
+      active ``dynamic_v_attention`` never reads that argument. The separate
+      ``MultiHeadAttention`` class is not called by ``EncoderLayer``. See
+      ``Models.py`` lines 50-68, ``Layers.py`` lines 9-23, and
+      ``SubLayers.py`` lines 13-69 and 194-236. ``Main.py`` line 258 defaults
+      to one head. This model has one attention map by construction; EasyTPP's
+      generic ``num_heads`` setting (default 2) has no effect here.
+    * Paper Eq. (7) decodes the weighted value sum directly and scales its
+      dot product by sqrt(2M). The public attention instead scales by
+      sqrt(d_k), then applies a projection, residual, layer norm, and feed-
+      forward block before its type-specific softplus decoder. See public
+      ``SubLayers.py`` lines 194-301, ``Layers.py`` lines 9-23, and
+      ``Models.py`` lines 203-236. We follow that executed decoder, so its
+      attention weights are not an exact additive Hawkes-kernel decomposition.
+    * Paper Sec. 4.5/Eq. (8) describes numerical integration on a fine grid.
+      Public ``Utils.gen_Xne`` lines 104-142 builds a batch-wide 0.1 grid;
+      ``Main.py`` lines 62-72 passes it to ``Models.Transformer.forward``,
+      which sums its intensities (lines 203-236). Here the loss is
+      conditional on the first event and integrates each observed interval:
+      ``integration_method='mc'`` draws independent uniform times (default),
+      ``'trapezoid'`` uses evenly spaced nodes including endpoints, and
+      ``'fixed_grid'`` uses per-interval midpoint cells. This matches the
+      random MC path used by our EasyTPP experiments, not the authors'
+      active 0.1-grid script. Public ``Utils.py`` lines 42-59 contains a
+      separate MC helper, but the active ``Main.py`` path does not call it.
+    * Paper Sec. 4.5 specifies MLE; public ``Main.py`` lines 62-115 adds
+      0.5 times next-type cross entropy during training. We keep that term
+      during training only; validation/test loss is point-process NLL.
+
+    Event indexing and padding follow EasyTPP. We score events after the first
+    and mask all-history-empty queries, avoiding first-event future leakage.
+    Select the integration rule through ``model_specs.integration_method``;
+    EasyTPP serializes that field but omits ``use_mc_samples`` and ``num_heads``.
 
     Our reported runs used Adam epsilon 1e-5 and gradient-norm clipping at 1.
     EasyTPP's standard runner does not apply those settings, so fresh training
     here does not exactly reproduce that training path. Saved checkpoints load
     unchanged.
+
+    Pinned code for the line references above:
+    https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/transformer/Models.py
+    https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/transformer/Layers.py
+    https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/transformer/SubLayers.py
+    https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/Main.py
+    https://github.com/waystogetthere/Interpretable-Transformer-Hawkes-Process/blob/5db1bb78f3323667e2cef478e177cd35971c4b43/Utils.py
+    Our prior MC sampler: https://github.com/andrewwarrington/HHP/blob/76fbcf00c33f3d2d8e937c5984e9a1e17b218cde/EasyTPP/easy_tpp/model/torch_model/torch_basemodel.py#L170-L197
     """
 
     SUPPORTED_INTEGRATION_METHODS = {"mc", "trapezoid", "fixed_grid"}
@@ -209,7 +255,11 @@ class ITHP(BaseModel):
             raise ValueError("ITHP type_loss_weight cannot be negative.")
 
     def make_dtime_loss_samples(self, time_delta_seq):
-        """Draw independent uniform times for MC or fixed times for quadrature."""
+        """Draw random MC times or fixed trapezoid nodes per interval.
+
+        Upstream EasyTPP's BaseModel currently returns ``linspace`` for both
+        modes; overriding it preserves the stochastic rule of our runs.
+        """
         if self.use_mc_samples:
             ratios = torch.rand(
                 (*time_delta_seq.shape, self.loss_integral_num_sample_per_step),
