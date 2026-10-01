@@ -2,6 +2,7 @@ from easy_tpp.model.anhn import ANHN
 from easy_tpp.model.attnhp import AttNHP
 from easy_tpp.model.basemodel import BaseModel, TorchBaseModel
 from easy_tpp.model.fullynn import FullyNN
+from easy_tpp.model.ithp import ITHP
 from easy_tpp.model.intensity_free import IntensityFree
 from easy_tpp.model.nhp import NHP
 from easy_tpp.model.ode_tpp import ODETPP
@@ -15,6 +16,7 @@ from easy_tpp.model.wsm_thp import WSMTHP
 TorchANHN = ANHN
 TorchAttNHP = AttNHP
 TorchFullyNN = FullyNN
+TorchITHP = ITHP
 TorchIntensityFree = IntensityFree
 TorchNHP = NHP
 TorchODETPP = ODETPP
@@ -28,6 +30,7 @@ __all__ = [
     'ANHN',
     'AttNHP',
     'FullyNN',
+    'ITHP',
     'IntensityFree',
     'NHP',
     'ODETPP',
@@ -42,6 +45,7 @@ __all__ = [
     'TorchANHN',
     'TorchAttNHP',
     'TorchFullyNN',
+    'TorchITHP',
     'TorchIntensityFree',
     'TorchNHP',
     'TorchODETPP',
