@@ -4,7 +4,7 @@
   <a href="PyVersion">
     <img alt="Python Version" src="https://img.shields.io/badge/python-3.9+-blue.svg">
   </a>
-  <a href="LICENSE-CODE">
+  <a href="LICENCE">
     <img alt="Code License" src="https://img.shields.io/badge/license-Apache-000000.svg?&color=f5de53">
   </a>
   <a href="commit">
@@ -232,7 +232,7 @@ python run_retweet.py
 
 ## License <a href='#top'>[Back to Top]</a>
 
-This project is licensed under the [Apache License (Version 2.0)](https://github.com/alibaba/EasyNLP/blob/master/LICENSE). This toolkit also contains some code modified from other repos under other open-source licenses. See the [NOTICE](https://github.com/ant-research/EasyTPP/blob/master/NOTICE) file for more information.
+This project is licensed under the [Apache License (Version 2.0)](LICENCE). This toolkit also contains some code modified from other repos under other open-source licenses. See the [NOTICE](https://github.com/ant-research/EasyTPP/blob/master/NOTICE) file for more information.
 
 
 ## Todo List <a href='#top'>[Back to Top]</a>
