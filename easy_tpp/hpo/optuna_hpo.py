@@ -3,6 +3,7 @@ import os
 import sys
 
 import optuna
+from omegaconf import OmegaConf
 from optuna.samplers import TPESampler
 from optuna.trial import TrialState
 
@@ -257,7 +258,12 @@ class OptunaTuner(HyperTuner):
                 # add model path into trial
                 trial.set_user_attr("model_dir", runner.runner_config.model_dir)
                 # trial.set_user_attr("model_config", runner.runner_config.model_config)
-                trial.set_user_attr("runner_config", runner.runner_config.get_yaml_config())
+                # convert OmegaConf containers to plain types
+                runner_config_dict = OmegaConf.to_container(
+                    OmegaConf.create(runner.runner_config.get_yaml_config()),
+                    resolve=True
+                )
+                trial.set_user_attr("runner_config", runner_config_dict)
 
                 logger.info(f'End trial {trial.number} ! Cost time: {timer.end()}')
 
