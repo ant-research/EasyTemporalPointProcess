@@ -181,10 +181,7 @@ class OptunaTuner(HyperTuner):
             logger.info(f"\t{key}: {value}")
 
         best_metric = trial.value
-        best_runner_config = RunnerConfig.parse_from_yaml_config(
-            trial.user_attrs['runner_config'],
-            data_config=base_runner_config.data_config,
-        )
+        best_runner_config = self._build_runner_config_from_storage(study, trial)
         return best_metric, best_runner_config
 
     def _get_objective_func(
