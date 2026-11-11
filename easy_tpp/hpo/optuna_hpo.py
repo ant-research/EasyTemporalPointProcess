@@ -3,6 +3,7 @@ import os
 import sys
 
 import optuna
+from omegaconf import OmegaConf
 from optuna.samplers import TPESampler
 from optuna.trial import TrialState
 
@@ -180,10 +181,7 @@ class OptunaTuner(HyperTuner):
             logger.info(f"\t{key}: {value}")
 
         best_metric = trial.value
-        best_runner_config = RunnerConfig.parse_from_yaml_config(
-            trial.user_attrs['runner_config'],
-            data_config=base_runner_config.data_config,
-        )
+        best_runner_config = self._build_runner_config_from_storage(study, trial)
         return best_metric, best_runner_config
 
     def _get_objective_func(
@@ -233,8 +231,7 @@ class OptunaTuner(HyperTuner):
 
             runner = Runner.build_from_config(
                 runner_config=runner_config,
-                unique_model_dir=True,
-                skip_data_loader=True,
+                unique_model_dir=True
             )
             try:
                 # train model
@@ -258,7 +255,12 @@ class OptunaTuner(HyperTuner):
                 # add model path into trial
                 trial.set_user_attr("model_dir", runner.runner_config.model_dir)
                 # trial.set_user_attr("model_config", runner.runner_config.model_config)
-                trial.set_user_attr("runner_config", runner.runner_config.get_yaml_config())
+                # convert OmegaConf containers to plain types
+                runner_config_dict = OmegaConf.to_container(
+                    OmegaConf.create(runner.runner_config.get_yaml_config()),
+                    resolve=True
+                )
+                trial.set_user_attr("runner_config", runner_config_dict)
 
                 logger.info(f'End trial {trial.number} ! Cost time: {timer.end()}')
 

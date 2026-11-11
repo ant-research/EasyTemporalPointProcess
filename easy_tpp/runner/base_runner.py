@@ -28,17 +28,15 @@ class Runner(Registrable):
 
         self.save_log()
 
-        skip_data_loader = kwargs.get('skip_data_loader', False)
-        if not skip_data_loader:
-            # build data reader
-            data_config = self.runner_config.data_config
-            backend = self.runner_config.base_config.backend
-            kwargs = self.runner_config.trainer_config.get_yaml_config()
-            self._data_loader = TPPDataLoader(
-                data_config=data_config,
-                backend=backend,
-                **kwargs
-            )
+        # build data reader
+        data_config = self.runner_config.data_config
+        backend = self.runner_config.base_config.backend
+        kwargs = self.runner_config.trainer_config.get_yaml_config()
+        self._data_loader = TPPDataLoader(
+            data_config=data_config,
+            backend=backend,
+            **kwargs
+        )
 
         # Needed for Intensity Free model
         mean_log_inter_time, std_log_inter_time, min_dt, max_dt = (
