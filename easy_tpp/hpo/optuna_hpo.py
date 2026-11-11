@@ -233,8 +233,7 @@ class OptunaTuner(HyperTuner):
 
             runner = Runner.build_from_config(
                 runner_config=runner_config,
-                unique_model_dir=True,
-                skip_data_loader=True,
+                unique_model_dir=True
             )
             try:
                 # train model
